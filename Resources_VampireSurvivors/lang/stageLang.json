@@ -1,0 +1,271 @@
+{
+	"xx": {
+	},
+	"ar": {
+		"english": "Arabic",
+		"native": "العربية",
+		"api": "arabic",
+		"translations":{
+
+		}
+	},
+	"bg": {
+		"english": "Bulgarian",
+		"native": "български език",
+		"api": "bulgarian",
+		"translations":{
+			
+		}
+	},
+	"zh-CN": {
+		"english": "Chinese (Simplified)",
+		"native": "简体中文",
+		"api": "schinese",
+		"translations":{
+			
+		}
+	},
+	"zh-TW": {
+		"english": "Chinese (Traditional)",
+		"native": "繁體中文",
+		"api": "tchinese",
+		"translations":{
+			
+		}
+	},
+	"cs": {
+		"english": "Czech",
+		"native": "čeština",
+		"api": "czech",
+		"translations":{
+			
+		}
+	},
+	"da": {
+		"english": "Danish",
+		"native": "Dansk",
+		"api": "danish",
+		"translations":{
+			
+		}
+	},
+	"nl": {
+		"english": "Dutch",
+		"native": "Nederlands",
+		"api": "dutch",
+		"translations":{
+			
+		}
+	},
+	"en": {
+		"english": "English",
+		"native": "English",
+		"api": "english",
+		"translations":{			
+			"FOREST":{
+				"stageName": "Mad Forest",
+				"description": "The Castle is a lie, but there's still free roast chicken here, so it's all good.",
+				"tips": "",
+				"hyperTips": "50% Gold bonus"
+			},
+			"SINKING":{
+				"stageName": "Old Sanctuary",
+				"description": "Let's check this sinking old sanctuary in Greece real quick, the legend says there's roast chicken in the walls.",
+				"tips": "",
+				"hyperTips": "Gold multiplier: x1.5"
+			},
+			"ENTRANCE":{
+
+			},
+			"LIBRARY":{
+				"stageName": "Inlaid Library",
+				"description": "This quiet, long library is the ideal place where to rest, meditate, and forage for roast chicken. But what's a stone mask doing here?",
+				"tips": "",
+				"hyperTips": "50% Gold bonus\n10% Luck bonus"
+			},
+			"TEST":{
+
+			},
+			"TESTONE":{
+
+			},
+			"CASTLE":{
+
+			},
+			"GREENACRES":{
+				"stageName": "Green Acres",
+				"description": "A place where mortals are not allowed. Fate changes every minute.",
+				"tips": "Enemies health +50%",
+				"hyperTips": "50% Gold bonus\n10% Luck bonus"
+			}
+		}
+	},
+	"fi": {
+		"english": "Finnish",
+		"native": "Suomi",
+		"api": "finnish",
+		"translations":{
+			
+		}
+	},
+	"fr": {
+		"english": "French",
+		"native": "Français",
+		"api": "french",
+		"translations":{
+			
+		}
+	},
+	"de": {
+		"english": "German",
+		"native": "Deutsch",
+		"api": "german",
+		"translations":{
+			
+		}
+	},
+	"el": {
+		"english": "Greek",
+		"native": "Ελληνικά",
+		"api": "greek",
+		"translations":{
+			
+		}
+	},
+	"hu": {
+		"english": "Hungarian",
+		"native": "Magyar",
+		"api": "hungarian",
+		"translations":{
+			
+		}
+	},
+	"it": {
+		"english": "Italian",
+		"native": "Italiano",
+		"api": "italian",
+		"translations":{
+			
+		}
+	},
+	"ja": {
+		"english": "Japanese",
+		"native": "日本語",
+		"api": "japanese",
+		"translations":{
+			
+		}
+	},
+	"ko": {
+		"english": "Korean",
+		"native": "한국어",
+		"api": "koreana",
+		"translations":{
+			
+		}
+	},
+	"no": {
+		"english": "Norwegian",
+		"native": "Norsk",
+		"api": "norwegian",
+		"translations":{
+			
+		}
+	},
+	"pl": {
+		"english": "Polish",
+		"native": "Polski",
+		"api": "polish",
+		"translations":{
+			
+		}
+	},
+	"pt": {
+		"english": "Portuguese",
+		"native": "Português",
+		"api": "portuguese",
+		"translations":{
+			
+		}
+	},
+	"pt-BR": {
+		"english": "Portuguese-Brazil",
+		"native": "Português-Brasil",
+		"api": "brazilian",
+		"translations":{
+			
+		}
+	},
+	"ro": {
+		"english": "Romanian",
+		"native": "Română",
+		"api": "romanian",
+		"translations":{
+			
+		}
+	},
+	"ru": {
+		"english": "Russian",
+		"native": "Русский",
+		"api": "russian",
+		"translations":{
+			
+		}
+	},
+	"es": {
+		"english": "Spanish-Spain",
+		"native": "Español-España",
+		"api": "spanish",
+		"translations":{
+			
+		}
+	},
+	"es-419": {
+		"english": "Spanish-Latin America",
+		"native": "Español-Latinoamérica",
+		"api": "latam",
+		"translations":{
+			
+		}
+	},
+	"sv": {
+		"english": "Swedish",
+		"native": "Svenska",
+		"api": "swedish",
+		"translations":{
+			
+		}
+	},
+	"th": {
+		"english": "Thai",
+		"native": "ไทย",
+		"api": "thai",
+		"translations":{
+			
+		}
+	},
+	"tr": {
+		"english": "Turkish",
+		"native": "Türkçe",
+		"api": "turkish",
+		"translations":{
+			
+		}
+	},
+	"uk": {
+		"english": "Ukrainian",
+		"native": "Українська",
+		"api": "ukrainian",
+		"translations":{
+			
+		}
+	},
+	"vn": {
+		"english": "Vietnamese",
+		"native": "Tiếng Việt",
+		"api": "vietnamese",
+		"translations":{
+			
+		}
+	}
+  }

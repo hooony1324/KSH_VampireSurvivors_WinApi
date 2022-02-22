@@ -1,0 +1,343 @@
+{
+	"xx": {
+	},
+	"ar": {
+		"english": "Arabic",
+		"native": "العربية",
+		"api": "arabic",
+		"translations":{
+
+		}
+	},
+	"bg": {
+		"english": "Bulgarian",
+		"native": "български език",
+		"api": "bulgarian",
+		"translations":{
+			
+		}
+	},
+	"zh-CN": {
+		"english": "Chinese (Simplified)",
+		"native": "简体中文",
+		"api": "schinese",
+		"translations":{
+			
+		}
+	},
+	"zh-TW": {
+		"english": "Chinese (Traditional)",
+		"native": "繁體中文",
+		"api": "tchinese",
+		"translations":{
+			
+		}
+	},
+	"cs": {
+		"english": "Czech",
+		"native": "čeština",
+		"api": "czech",
+		"translations":{
+			
+		}
+	},
+	"da": {
+		"english": "Danish",
+		"native": "Dansk",
+		"api": "danish",
+		"translations":{
+			
+		}
+	},
+	"nl": {
+		"english": "Dutch",
+		"native": "Nederlands",
+		"api": "dutch",
+		"translations":{
+			
+		}
+	},
+	"en": {
+		"english": "English",
+		"native": "English",
+		"api": "english",
+		"translations":{
+			
+			"ReachLV5":{
+				"description": "Reach Level 5."
+			},
+			"ReachLV10":{
+				"description": "Reach Level 10."
+			},
+			"Have6DifferentWeapons":{
+				"description": "Hold 6 different weapons at once."
+			},
+			"GetFireWandToLevel4":{
+				"description": "Get Fire Wand to Level 4."
+			},
+			"GetHolyBookToLevel4":{
+				"description": "Get King Bible to Level 4."
+			},
+			"GetHolyWaterToLevel4":{
+				"description": "Get Santa Water to Level 4."
+			},
+			"GetLightningRingToLevel4":{
+				"description": "Get Lightning Ring to Level 4."
+			},
+			"GetMagicMissileToLevel7":{
+				"description": "Get Magic Wand to Level 7."
+			},
+			"GetPeachoneToLevel7":{
+				"description": "Get Peachone to Level 7."
+			},
+			"GetRunetracerToLevel7":{
+				"description": "Get Runetracer to Level 7."
+			},
+			"Survive1Minute":{
+				"description": "Survive 1 minute with any character."
+			},
+			"Survive5MinutesWithDiamond":{
+				"description": "Survive 5 minutes with Pasqualina."
+			},
+			"Survive10Minutes":{
+				"description": "Survive 10 minutes with any character."
+			},
+			"Survive20Minutes":{
+				"description": "Survive 20 minutes with any character."
+			},
+			"Destroy20Candles":{
+				"description": "Destroy 20 light sources."
+			},
+			"Eat5PotRoast":{
+				"description": "Find 5 Floor Chickens."
+			},
+			"FindAClover":{
+				"description": "Find a Little Clover."
+			},
+			"FindAVacuum":{
+				"description": "Find a Vacuum."
+			},
+			"FindAnOrologion":{
+				"description": "Find an Orologion."
+			},
+			"FindARosary":{
+				"description": "Find a Rosary."
+			},
+			"Defeat5000Enemies":{
+				"description": "Defeat a total of 5000 enemies."
+			},
+			"Defeat3000Skeletons":{
+				"description": "Defeat a total of 3000 skeletons."
+			},    
+			"DefeatBossMadForest":{
+				"description": "Defeat the giant Blue Venus in the Mad Forest."
+			},   
+		
+			"ReachLV20InMadForest":{
+				"description": "Reach Level 20 in Mad Forest."
+			},       
+			"DefeatBossLibrary":{
+				"description": "Defeat the Nesuferit in the Inlaid Library."
+			},  
+			"Survive5MinutesWithKnife":{
+				"description": "Survive 5 minutes with Gennaro."
+			},  
+			"FindAStoneMask":{
+				"description": "Find a Stone Mask."
+			},
+			"GetGarlicToLevel7":{
+				"description": "Get Garlic to Level 7."
+			},
+		
+			"EvolveWhip":{
+				"description": "Evolve the Whip."
+			},
+			"EvolveMagicWand":{
+				"description": "Evolve the Magic Wand."
+			},
+			"EvolveKnife":{
+				"description": "Evolve the Knife."
+			},
+			"EvolveAxe":{
+				"description": "Evolve the Axe."
+			},
+			"EvolveCross":{
+				"description": "Evolve the Cross."
+			},
+			"EvolveKingBible":{
+				"description": "Evolve the King Bible."
+			},
+			"EvolveFireWand":{
+				"description": "Evolve the Fire Wand."
+			}
+		}
+	},
+	"fi": {
+		"english": "Finnish",
+		"native": "Suomi",
+		"api": "finnish",
+		"translations":{
+			
+		}
+	},
+	"fr": {
+		"english": "French",
+		"native": "Français",
+		"api": "french",
+		"translations":{
+			
+		}
+	},
+	"de": {
+		"english": "German",
+		"native": "Deutsch",
+		"api": "german",
+		"translations":{
+			
+		}
+	},
+	"el": {
+		"english": "Greek",
+		"native": "Ελληνικά",
+		"api": "greek",
+		"translations":{
+			
+		}
+	},
+	"hu": {
+		"english": "Hungarian",
+		"native": "Magyar",
+		"api": "hungarian",
+		"translations":{
+			
+		}
+	},
+	"it": {
+		"english": "Italian",
+		"native": "Italiano",
+		"api": "italian",
+		"translations":{
+			
+		}
+	},
+	"ja": {
+		"english": "Japanese",
+		"native": "日本語",
+		"api": "japanese",
+		"translations":{
+			
+		}
+	},
+	"ko": {
+		"english": "Korean",
+		"native": "한국어",
+		"api": "koreana",
+		"translations":{
+			
+		}
+	},
+	"no": {
+		"english": "Norwegian",
+		"native": "Norsk",
+		"api": "norwegian",
+		"translations":{
+			
+		}
+	},
+	"pl": {
+		"english": "Polish",
+		"native": "Polski",
+		"api": "polish",
+		"translations":{
+			
+		}
+	},
+	"pt": {
+		"english": "Portuguese",
+		"native": "Português",
+		"api": "portuguese",
+		"translations":{
+			
+		}
+	},
+	"pt-BR": {
+		"english": "Portuguese-Brazil",
+		"native": "Português-Brasil",
+		"api": "brazilian",
+		"translations":{
+			
+		}
+	},
+	"ro": {
+		"english": "Romanian",
+		"native": "Română",
+		"api": "romanian",
+		"translations":{
+			
+		}
+	},
+	"ru": {
+		"english": "Russian",
+		"native": "Русский",
+		"api": "russian",
+		"translations":{
+			
+		}
+	},
+	"es": {
+		"english": "Spanish-Spain",
+		"native": "Español-España",
+		"api": "spanish",
+		"translations":{
+			
+		}
+	},
+	"es-419": {
+		"english": "Spanish-Latin America",
+		"native": "Español-Latinoamérica",
+		"api": "latam",
+		"translations":{
+			
+		}
+	},
+	"sv": {
+		"english": "Swedish",
+		"native": "Svenska",
+		"api": "swedish",
+		"translations":{
+			
+		}
+	},
+	"th": {
+		"english": "Thai",
+		"native": "ไทย",
+		"api": "thai",
+		"translations":{
+			
+		}
+	},
+	"tr": {
+		"english": "Turkish",
+		"native": "Türkçe",
+		"api": "turkish",
+		"translations":{
+			
+		}
+	},
+	"uk": {
+		"english": "Ukrainian",
+		"native": "Українська",
+		"api": "ukrainian",
+		"translations":{
+			
+		}
+	},
+	"vn": {
+		"english": "Vietnamese",
+		"native": "Tiếng Việt",
+		"api": "vietnamese",
+		"translations":{
+			
+		}
+	}
+  }
