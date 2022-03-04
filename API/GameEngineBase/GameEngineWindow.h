@@ -1,5 +1,6 @@
 #pragma once
 #include <Windows.h>
+#include <string>
 
 // Ό³Έν :
 class GameEngineWindow
@@ -13,7 +14,7 @@ public:
 		return *Inst_;
 	}
 
-	static GameEngineWindow& Destroy()
+	static void Destroy()
 	{
 		if (nullptr != Inst_)
 		{
@@ -23,13 +24,16 @@ public:
 	}
 
 public:
-	void CreateGameWindow(HINSTANCE _hInst);
+	void RegClass(HINSTANCE _hInst);
+	void CreateGameWindow(HINSTANCE _hInst, const std::string& _Title);
 	void ShowGameWindow();
 
 protected:
 
 private:
+	HINSTANCE hInst_;
 	HWND hWnd_;
+	std::string Title_;
 
 	// constrcuter destructer
 	GameEngineWindow();
