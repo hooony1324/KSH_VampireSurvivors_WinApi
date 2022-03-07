@@ -3,6 +3,11 @@
 #include <GameEngineBase/GameEngineWindow.h>
 #include <GameEngineBase/GameEngineDebug.h>
 
+void GameLoop()
+{
+    Rectangle(GameEngineWindow::GETDC(), 100, 100, 200, 200);
+}
+
 int APIENTRY WinMain(_In_ HINSTANCE hInstance,
     _In_opt_ HINSTANCE hPrevInstance,
     _In_ LPSTR    lpCmdLine,
@@ -12,11 +17,7 @@ int APIENTRY WinMain(_In_ HINSTANCE hInstance,
     
     GameEngineWindow::GetInst().CreateGameWindow(hInstance, "GameWindow");
     GameEngineWindow::GetInst().ShowGameWindow();
-
-    while (true)
-    {
-
-    }
-
+    GameEngineWindow::GetInst().MessageLoop(GameLoop);
+    
     GameEngineWindow::Destroy();
 } 
