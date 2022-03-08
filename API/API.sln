@@ -17,7 +17,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Level3", "Level3", "{FA39D6
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GameApp", "GameApp\GameApp.vcxproj", "{8480DCC1-0A15-49FA-98D7-869F7F357C96}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GameContents", "GameContents\GameContents.vcxproj", "{73AE6684-A5E9-46BA-BB58-7634ACEC0780}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "GameContents", "GameEngineContents\GameContents.vcxproj", "{73AE6684-A5E9-46BA-BB58-7634ACEC0780}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

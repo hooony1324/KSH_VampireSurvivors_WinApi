@@ -15,7 +15,7 @@ int APIENTRY WinMain(_In_ HINSTANCE hInstance,
 {
     GameEngineDebug::LeakCheckOn();
     
-    GameEngineWindow::GetInst().CreateGameWindow(hInstance, "GameWindow");
+    GameEngineWindow::GetInst().CreateGameWindow(hInstance, "Vampire Survivors");
     GameEngineWindow::GetInst().ShowGameWindow();
     GameEngineWindow::GetInst().MessageLoop(GameLoop);
     

@@ -154,8 +154,8 @@
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GameEngineBase\GameEngineBase.vcxproj">
-      <Project>{076c39c5-3dd2-40ef-9ae9-0cd116d6409a}</Project>
+    <ProjectReference Include="..\GameEngineContents\GameContents.vcxproj">
+      <Project>{73ae6684-a5e9-46ba-bb58-7634acec0780}</Project>
     </ProjectReference>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
