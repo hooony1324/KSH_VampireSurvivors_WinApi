@@ -8,3 +8,18 @@ GameEngine::~GameEngine()
 {
 }
 
+void GameEngine::GameInit()
+{
+
+}
+
+void GameEngine::GameLoop()
+{
+
+}
+
+void GameEngine::GameEnd()
+{
+
+}
+

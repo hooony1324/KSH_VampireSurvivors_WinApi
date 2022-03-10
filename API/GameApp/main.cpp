@@ -2,10 +2,18 @@
 
 #include <GameEngineBase/GameEngineWindow.h>
 #include <GameEngineBase/GameEngineDebug.h>
+#include <GameEngineContents/VampireSurvivorsGame.h>
+
+VampireSurvivorsGame vsGame;
+
+void GameInit()
+{
+    vsGame.GameInit();
+}
 
 void GameLoop()
 {
-    Rectangle(GameEngineWindow::GETDC(), 100, 100, 200, 200);
+    vsGame.GameLoop();
 }
 
 int APIENTRY WinMain(_In_ HINSTANCE hInstance,
@@ -17,7 +25,7 @@ int APIENTRY WinMain(_In_ HINSTANCE hInstance,
     
     GameEngineWindow::GetInst().CreateGameWindow(hInstance, "Vampire Survivors");
     GameEngineWindow::GetInst().ShowGameWindow();
-    GameEngineWindow::GetInst().MessageLoop(GameLoop);
+    GameEngineWindow::GetInst().MessageLoop(GameLoop, GameInit);
     
     GameEngineWindow::Destroy();
 } 

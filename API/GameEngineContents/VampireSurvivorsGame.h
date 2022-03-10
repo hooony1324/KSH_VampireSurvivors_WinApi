@@ -1,7 +1,8 @@
 #pragma once
+#include "GameEngine/GameEngine.h"
 
 // Ό³Έν :
-class VampireSurvivorsGame
+class VampireSurvivorsGame : public GameEngine 
 {
 public:
 	// constrcuter destructer
@@ -13,6 +14,10 @@ public:
 	VampireSurvivorsGame(VampireSurvivorsGame&& _Other) noexcept = delete;
 	VampireSurvivorsGame& operator=(const VampireSurvivorsGame& _Other) = delete;
 	VampireSurvivorsGame& operator=(VampireSurvivorsGame&& _Other) noexcept = delete;
+
+	void GameInit() override;
+	void GameLoop() override;
+	void GameEnd() override;
 
 protected:
 
