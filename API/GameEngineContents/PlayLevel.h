@@ -15,8 +15,9 @@ public:
 	PlayLevel& operator=(const PlayLevel& _Other) = delete;
 	PlayLevel& operator=(PlayLevel&& _Other) noexcept = delete;
 
-	void Loading() override;
 protected:
+	void Loading() override;
+	void Update() override;
 
 private:
 

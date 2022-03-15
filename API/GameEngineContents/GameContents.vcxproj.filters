@@ -20,7 +20,7 @@
     <ClCompile Include="Player.cpp">
       <Filter>Play</Filter>
     </ClCompile>
-    <ClCompile Include="Monster.cpp">
+    <ClCompile Include="Enemies.cpp">
       <Filter>Play</Filter>
     </ClCompile>
   </ItemGroup>
@@ -44,7 +44,7 @@
     <ClInclude Include="Player.h">
       <Filter>Play</Filter>
     </ClInclude>
-    <ClInclude Include="Monster.h">
+    <ClInclude Include="Enemies.h">
       <Filter>Play</Filter>
     </ClInclude>
   </ItemGroup>
@@ -60,6 +60,9 @@
     </Filter>
     <Filter Include="Level">
       <UniqueIdentifier>{d98ea108-b567-4d11-9d82-845a7fb321a4}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Play\Monsters">
+      <UniqueIdentifier>{d7670c53-db8a-4cea-8baa-63e80cfd5927}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

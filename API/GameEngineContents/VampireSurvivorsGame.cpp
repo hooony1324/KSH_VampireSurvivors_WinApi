@@ -16,6 +16,7 @@ void VampireSurvivorsGame::GameInit()
 	CreateLevel<TitleLevel>("Title");
 	CreateLevel<PlayLevel>("Play");
 	CreateLevel<EndingLevel>("Ending");
+	ChangeLevel("Title");
 }
 
 void VampireSurvivorsGame::GameLoop()

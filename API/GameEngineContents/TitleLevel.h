@@ -15,8 +15,9 @@ public:
 	TitleLevel& operator=(const TitleLevel& _Other) = delete;
 	TitleLevel& operator=(TitleLevel&& _Other) noexcept = delete;
 
-	void Loading() override;
 protected:
+	void Loading() override;
+	void Update() override;
 
 private:
 

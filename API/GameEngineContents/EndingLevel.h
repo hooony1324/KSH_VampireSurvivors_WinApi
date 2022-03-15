@@ -15,8 +15,9 @@ public:
 	EndingLevel& operator=(const EndingLevel& _Other) = delete;
 	EndingLevel& operator=(EndingLevel&& _Other) noexcept = delete;
 
-	void Loading() override;
 protected:
+	void Loading() override;
+	void Update() override;
 
 private:
 
