@@ -1,7 +1,8 @@
 #pragma once
+#include <GameEngine/GameEngineActor.h>
 
 // Ό³Έν :
-class TitleLogo
+class TitleLogo : public GameEngineActor
 {
 public:
 	// constrcuter destructer
@@ -15,6 +16,8 @@ public:
 	TitleLogo& operator=(TitleLogo&& _Other) noexcept = delete;
 
 protected:
+	void Start();
+	void Render();
 
 private:
 

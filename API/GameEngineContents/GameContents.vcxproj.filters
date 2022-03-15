@@ -23,6 +23,9 @@
     <ClCompile Include="Enemies.cpp">
       <Filter>Play</Filter>
     </ClCompile>
+    <ClCompile Include="TitleBackGround.cpp">
+      <Filter>Title</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="VampireSurvivorsGame.h" />
@@ -46,6 +49,9 @@
     </ClInclude>
     <ClInclude Include="Enemies.h">
       <Filter>Play</Filter>
+    </ClInclude>
+    <ClInclude Include="TitleBackGround.h">
+      <Filter>Title</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
