@@ -1,11 +1,13 @@
 #include "GameEngine.h"
 #include <GameEngineBase/GameEngineWindow.h>
 #include "GameEngineLevel.h"
+#include "GameEngineImageManager.h"
 
 std::map<std::string, GameEngineLevel*> GameEngine::AllLevel_;
 GameEngineLevel* GameEngine::CurrentLevel_ = nullptr;
 GameEngineLevel* GameEngine::NextLevel_ = nullptr;
 GameEngine* GameEngine::UserContents_ = nullptr;
+GameEngineImage* GameEngine::BackBufferImage_ = nullptr;
 
 GameEngine::GameEngine() 
 {
@@ -13,6 +15,11 @@ GameEngine::GameEngine()
 
 GameEngine::~GameEngine() 
 {
+}
+
+HDC GameEngine::BackBufferDC()
+{
+    return BackBufferImage_->ImageDC();
 }
 
 void GameEngine::GameInit()
@@ -52,24 +59,29 @@ void GameEngine::WindowCreate()
 void GameEngine::EngineInit()
 {
     UserContents_->GameInit();
+
+    // BackBuffer를 만든다
+    BackBufferImage_ = GameEngineImageManager::GetInst()->Create("BackBuffer", GameEngineWindow::GetScale());
 }
 
 void GameEngine::EngineLoop()
 {
     UserContents_->GameLoop();
 
+    // Level 변경(게임 시작시 ChangeLevel()로 NextLevel_이 설정되어 있음)
     if (nullptr != NextLevel_)
     {
+        // 다음 레벨로 가기전에 SceneChangeEnd 호출
         if (nullptr != CurrentLevel_)
         {
-            CurrentLevel_->SceneChangeEnd();
+            CurrentLevel_->LevelChangeEnd();
         }
-
+        // 다음 레벨로 이동
         CurrentLevel_ = NextLevel_;
-
+        // 레벨 이동후 SceneChangeStart 호출
         if (nullptr != CurrentLevel_)
         {
-            CurrentLevel_->SceneChangeStart();
+            CurrentLevel_->LevelChangeStart();
         }
 
         NextLevel_ = nullptr;
@@ -100,6 +112,8 @@ void GameEngine::EngineEnd()
         }
         delete StartIter->second;
     }
+
+    GameEngineImageManager::Destroy();
 
     GameEngineWindow::Destroy();
 

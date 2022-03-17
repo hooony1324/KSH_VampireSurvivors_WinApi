@@ -12,3 +12,7 @@ void TitleBackGround::Start()
 {
 }
 
+void TitleBackGround::Render()
+{
+}
+

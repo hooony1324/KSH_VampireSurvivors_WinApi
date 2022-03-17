@@ -28,17 +28,18 @@ protected:
 	// 이 레벨이 현재 레벨일 때 해야할 일을 실행
 	virtual void Update() = 0;
 	// CurrentLevel => NextLevel 시 현재의 레벨이 실행하는 함수
-	virtual void SceneChangeStart() {}
+	virtual void LevelChangeStart() {}
 	// CurrentLevle => NextLevel 시 현재 이전의 레벨이 실행하는 함수
-	virtual void SceneChangeEnd() {}
+	virtual void LevelChangeEnd() {}
 
 	template<typename ActorType>
 	ActorType* CreateActor(const std::string& _Name, int _Order)
 	{
 		ActorType* NewActor = new ActorType();
+		GameEngineActor* StartActor = NewActor;
 		NewActor->SetName(_Name);
 		NewActor->SetLevel(this);
-
+		StartActor->Start();
 		std::list<GameEngineActor*>& Group = AllActor_[_Order];
 		Group.push_back(NewActor);
 
