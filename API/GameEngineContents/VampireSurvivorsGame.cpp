@@ -14,7 +14,7 @@ VampireSurvivorsGame::~VampireSurvivorsGame()
 
 void VampireSurvivorsGame::GameInit()
 {
-	GameEngineWindow::GetInst().SetWindowScaleAndPosition({ 100, 100 }, { 1280, 720 });
+	GameEngineWindow::GetInst().SetWindowScaleAndPosition({ 100, 100 }, { 1280, 800 });
 
 	// Level을 맵 형태로 관리
 	CreateLevel<TitleLevel>("Title");

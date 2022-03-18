@@ -7,6 +7,7 @@ std::map<std::string, GameEngineLevel*> GameEngine::AllLevel_;
 GameEngineLevel* GameEngine::CurrentLevel_ = nullptr;
 GameEngineLevel* GameEngine::NextLevel_ = nullptr;
 GameEngine* GameEngine::UserContents_ = nullptr;
+GameEngineImage* GameEngine::WindowMainImage_ = nullptr;
 GameEngineImage* GameEngine::BackBufferImage_ = nullptr;
 
 GameEngine::GameEngine() 
@@ -60,7 +61,9 @@ void GameEngine::EngineInit()
 {
     UserContents_->GameInit();
 
-    // BackBuffer를 만든다
+    // 화면에 보여줄 이미지 버퍼
+    WindowMainImage_ = GameEngineImageManager::GetInst()->Create("WindowMain", GameEngineWindow::GetHDC());
+    // 더블버퍼링용 이미지 버퍼
     BackBufferImage_ = GameEngineImageManager::GetInst()->Create("BackBuffer", GameEngineWindow::GetScale());
 }
 
@@ -95,6 +98,7 @@ void GameEngine::EngineLoop()
     CurrentLevel_->Update();
     CurrentLevel_->ActorUpdate();
     CurrentLevel_->ActorRender();
+    WindowMainImage_->BitCopy(BackBufferImage_);
 }
 
 void GameEngine::EngineEnd()

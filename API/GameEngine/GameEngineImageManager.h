@@ -26,6 +26,10 @@ public:
 		Inst_ = nullptr;
 	}
 
+	GameEngineImage* Create(const std::string& _Name, float4 _Scale);
+
+	GameEngineImage* Create(const std::string& _Name, HDC _DC);
+
 private:
 	// constrcuter destructer
 	GameEngineImageManager();
@@ -36,10 +40,6 @@ private:
 	GameEngineImageManager(GameEngineImageManager&& _Other) noexcept = delete;
 	GameEngineImageManager& operator=(const GameEngineImageManager& _Other) = delete;
 	GameEngineImageManager& operator=(GameEngineImageManager&& _Other) noexcept = delete;
-
-public:
-
-	GameEngineImage* Create(const std::string& _Name, float4 _Scale);
 
 protected:
 
