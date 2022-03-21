@@ -22,7 +22,7 @@
     <VCProjectVersion>16.0</VCProjectVersion>
     <Keyword>Win32Proj</Keyword>
     <ProjectGuid>{73ae6684-a5e9-46ba-bb58-7634acec0780}</ProjectGuid>
-    <RootNamespace>GameContents</RootNamespace>
+    <RootNamespace>GameEngineContents</RootNamespace>
     <WindowsTargetPlatformVersion>10.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
@@ -235,7 +235,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GameEngine\GameEngine.vcxproj">
+    <ProjectReference Include="..\GameEngineContents\GameEngineContents.vcxproj">
       <Project>{3f1ddf02-157d-4347-8381-e733ca8be7d2}</Project>
     </ProjectReference>
   </ItemGroup>
