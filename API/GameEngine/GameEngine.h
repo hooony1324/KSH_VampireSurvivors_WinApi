@@ -77,6 +77,7 @@ private:
 	static GameEngineLevel* NextLevel_;
 	static GameEngine* UserContents_;
 
+	// WindowMainImage_ 현재 윈도우의 HDC를 받아옴
 	static GameEngineImage* WindowMainImage_;	// 화면에 나오는 이미지 버퍼
 	static GameEngineImage* BackBufferImage_;	// 깜빡임 해결용 이미지 버퍼
 

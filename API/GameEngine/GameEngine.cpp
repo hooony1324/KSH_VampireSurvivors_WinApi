@@ -61,9 +61,9 @@ void GameEngine::EngineInit()
 {
     UserContents_->GameInit();
 
-    // 화면에 보여줄 이미지 버퍼
+    // 화면에 보여줄 이미지 버퍼 받아옴
     WindowMainImage_ = GameEngineImageManager::GetInst()->Create("WindowMain", GameEngineWindow::GetHDC());
-    // 더블버퍼링용 이미지 버퍼
+    // 더블버퍼링용 이미지 버퍼 생성
     BackBufferImage_ = GameEngineImageManager::GetInst()->Create("BackBuffer", GameEngineWindow::GetScale());
 }
 

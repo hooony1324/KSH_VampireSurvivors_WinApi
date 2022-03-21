@@ -16,10 +16,11 @@ public:
 	TitleLogo& operator=(TitleLogo&& _Other) noexcept = delete;
 
 protected:
+
+private:
 	void Start() override;
 	void Render() override;
 
-private:
 
 };
 

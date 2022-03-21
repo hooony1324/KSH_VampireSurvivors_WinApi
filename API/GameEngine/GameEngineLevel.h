@@ -23,7 +23,7 @@ public:
 
 protected:
 	
-	// 리소스나 액터를 생성하는 단계
+	// 래벨 생성 시, 리소스나 액터를 가져오는 단계
 	virtual void Loading() = 0;
 	// 이 레벨이 현재 레벨일 때 해야할 일을 실행
 	virtual void Update() = 0;
@@ -47,7 +47,7 @@ protected:
 	}
 
 private:
-	// list이유 : 복잡한 컨텐츠의 경우 Actor간 순서변경/삭제 가 일어날 수 있기 때문
+	// list이유 : 렌더링 순서, 복잡한 컨텐츠의 경우 Actor간 순서변경/삭제 가 일어날 수 있음
 	std::map<int, std::list<GameEngineActor*>> AllActor_;
 
 	void ActorUpdate();

@@ -1,12 +1,13 @@
 #pragma once
+#include <GameEngine/GameEngineActor.h>
 
-// 설명 :
-class Enemies
+// 설명 : 
+class Enemies : public GameEngineActor
 {
 public:
 	// constrcuter destructer
 	Enemies();
-	virtual ~Enemies();
+	~Enemies();
 
 	// delete Function
 	Enemies(const Enemies& _Other) = delete;
@@ -17,6 +18,7 @@ public:
 protected:
 
 private:
-
+	void Start() override;
+	void Render() override;
 };
 

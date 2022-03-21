@@ -1,7 +1,8 @@
 #pragma once
+#include <GameEngine/GameEngineLevel.h>
 
 // Ό³Έν :
-class EndingCredit
+class EndingCredit : public GameEngineLevel
 {
 public:
 	// constrcuter destructer
@@ -17,6 +18,7 @@ public:
 protected:
 
 private:
-
+	void Loading() override;
+	void Update() override;
 };
 

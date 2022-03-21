@@ -29,6 +29,7 @@ GameEngineImage::~GameEngineImage()
     }
 }
 
+// BackBuffer 생성 용
 bool GameEngineImage::Create(float4 _Scale)
 {
     if (true == _Scale.IsZero2D())
@@ -51,11 +52,13 @@ bool GameEngineImage::Create(float4 _Scale)
     // SelectObject()는 새로운 BitMap을 받고 이전의 BitMap을 반환해줌
     OldBitMap_ = (HBITMAP)SelectObject(ImageDC_, BitMap_);
 
+    // 현재 비트맵 정보 Info_에 저장
     ImageScaleCheck();
 
     return true;
 }
 
+// Window의 버퍼 받아오는 용
 bool GameEngineImage::Create(HDC _DC)
 {
     ImageDC_ = _DC;
@@ -70,7 +73,7 @@ void GameEngineImage::BitCopy(GameEngineImage* _Other)
 
 void GameEngineImage::BitCopy(GameEngineImage* _Other, const float4& _CopyPos, const float4& _OtherPivot, const float4& _OtherPivotScale)
 {
-    // DC에 다른 DC를 복사해주는 윈도우 함수
+    // 현제 윈도우(ImageDC)에 백버퍼(_Other)를 복사해주는 윈도우 함수
     BitBlt(
         ImageDC_,               // 이 변수에 붙여넣기함
         _CopyPos.ix(),          // 붙여넣을 이미지 위치 x
@@ -82,12 +85,15 @@ void GameEngineImage::BitCopy(GameEngineImage* _Other, const float4& _CopyPos, c
         _OtherPivot.iy(),       // 복사할 변수 시작점 y
         SRCCOPY                 // 복사하라는 명령
     );
+    
 }
 
 void GameEngineImage::ImageScaleCheck()
 {
     // DC 내부에 박혀있는 BITMAP을 꺼내오는 함수
     HBITMAP CurrentBitMap = (HBITMAP)GetCurrentObject(ImageDC_, OBJ_BITMAP);
+
+    // Info_에 BitMap정보(bmWidth, bmHeight, ...) 저장
     GetObject(BitMap_, sizeof(BITMAP), &Info_);
 }
 

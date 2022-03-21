@@ -8,3 +8,11 @@ Enemies::~Enemies()
 {
 }
 
+void Enemies::Start()
+{
+}
+
+void Enemies::Render()
+{
+}
+

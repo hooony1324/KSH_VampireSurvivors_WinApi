@@ -49,5 +49,8 @@
     <Filter Include="Resources\Manager">
       <UniqueIdentifier>{3cae72ea-e3ba-47c4-8473-54f54bc39d33}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Object\Actor\SubObject">
+      <UniqueIdentifier>{a2fa4c3e-7079-46d9-aa26-25aab85c76f2}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
 </Project>

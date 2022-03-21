@@ -20,11 +20,14 @@
     <ClCompile Include="Player.cpp">
       <Filter>Play</Filter>
     </ClCompile>
-    <ClCompile Include="Enemies.cpp">
-      <Filter>Play</Filter>
-    </ClCompile>
     <ClCompile Include="TitleBackGround.cpp">
       <Filter>Title</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemies.cpp">
+      <Filter>Play\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Library.cpp">
+      <Filter>Play\Map</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -47,11 +50,14 @@
     <ClInclude Include="Player.h">
       <Filter>Play</Filter>
     </ClInclude>
-    <ClInclude Include="Enemies.h">
-      <Filter>Play</Filter>
-    </ClInclude>
     <ClInclude Include="TitleBackGround.h">
       <Filter>Title</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemies.h">
+      <Filter>Play\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Library.h">
+      <Filter>Play\Map</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -67,8 +73,11 @@
     <Filter Include="Level">
       <UniqueIdentifier>{d98ea108-b567-4d11-9d82-845a7fb321a4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Play\Monsters">
+    <Filter Include="Play\Enemies">
       <UniqueIdentifier>{d7670c53-db8a-4cea-8baa-63e80cfd5927}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Play\Map">
+      <UniqueIdentifier>{a3ad6481-289c-4513-a081-c8cc07e1ce45}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
