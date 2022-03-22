@@ -1,10 +1,12 @@
 #pragma once
-
 #include <GameEngineBase/GameEngineNameObject.h>
 #include <GameEngineBase/GameEngineMath.h>
+#include "GameEngineEnum.h"
+#include <list>
 
 // Ό³Έν :
 class GameEngineLevel;
+class GameEngineRenderer;
 class GameEngineActor : public GameEngineNameObject
 {
 	friend GameEngineLevel;
@@ -54,5 +56,17 @@ private:
 		Level_ = _Level;
 	}
 
+	////////////////////Render////////////////////
+public:
+	GameEngineRenderer* CreateRenderer(const std::string& _Image,
+		RenderPivot _PivotType = RenderPivot::CENTER, const float4& _PivotPos = { 0,0 });
+
+	void Rendering();
+
+private:
+	std::list<GameEngineRenderer*>::iterator StartRenderIter;
+	std::list<GameEngineRenderer*>::iterator EndRenderIter;
+
+	std::list<GameEngineRenderer*> RenderList_;
 };
 

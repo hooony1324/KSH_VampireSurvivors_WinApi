@@ -2,82 +2,106 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="VampireSurvivorsGame.cpp" />
-    <ClCompile Include="EndingLevel.cpp">
-      <Filter>Level</Filter>
-    </ClCompile>
     <ClCompile Include="PlayLevel.cpp">
-      <Filter>Level</Filter>
+      <Filter>0.Level</Filter>
     </ClCompile>
     <ClCompile Include="TitleLevel.cpp">
-      <Filter>Level</Filter>
-    </ClCompile>
-    <ClCompile Include="EndingCredit.cpp">
-      <Filter>Ending</Filter>
+      <Filter>0.Level</Filter>
     </ClCompile>
     <ClCompile Include="TitleLogo.cpp">
-      <Filter>Title</Filter>
-    </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>Play</Filter>
+      <Filter>1.Title</Filter>
     </ClCompile>
     <ClCompile Include="TitleBackGround.cpp">
-      <Filter>Title</Filter>
-    </ClCompile>
-    <ClCompile Include="Enemies.cpp">
-      <Filter>Play\Enemies</Filter>
+      <Filter>1.Title</Filter>
     </ClCompile>
     <ClCompile Include="Library.cpp">
-      <Filter>Play\Map</Filter>
+      <Filter>2.Play\Map</Filter>
+    </ClCompile>
+    <ClCompile Include="Mud.cpp">
+      <Filter>2.Play\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>2.Play\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Suora.cpp">
+      <Filter>2.Play\Player\Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="Old.cpp">
+      <Filter>2.Play\Player\Characters</Filter>
+    </ClCompile>
+    <ClCompile Include="ResultLevel.cpp">
+      <Filter>0.Level</Filter>
+    </ClCompile>
+    <ClCompile Include="ResultBackGround.cpp">
+      <Filter>3.Result</Filter>
+    </ClCompile>
+    <ClCompile Include="ResultBoard.cpp">
+      <Filter>3.Result</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="VampireSurvivorsGame.h" />
-    <ClInclude Include="EndingLevel.h">
-      <Filter>Level</Filter>
-    </ClInclude>
     <ClInclude Include="PlayLevel.h">
-      <Filter>Level</Filter>
+      <Filter>0.Level</Filter>
     </ClInclude>
     <ClInclude Include="TitleLevel.h">
-      <Filter>Level</Filter>
-    </ClInclude>
-    <ClInclude Include="EndingCredit.h">
-      <Filter>Ending</Filter>
+      <Filter>0.Level</Filter>
     </ClInclude>
     <ClInclude Include="TitleLogo.h">
-      <Filter>Title</Filter>
-    </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>Play</Filter>
+      <Filter>1.Title</Filter>
     </ClInclude>
     <ClInclude Include="TitleBackGround.h">
-      <Filter>Title</Filter>
-    </ClInclude>
-    <ClInclude Include="Enemies.h">
-      <Filter>Play\Enemies</Filter>
+      <Filter>1.Title</Filter>
     </ClInclude>
     <ClInclude Include="Library.h">
-      <Filter>Play\Map</Filter>
+      <Filter>2.Play\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Mud.h">
+      <Filter>2.Play\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>2.Play\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Suora.h">
+      <Filter>2.Play\Player\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="Old.h">
+      <Filter>2.Play\Player\Characters</Filter>
+    </ClInclude>
+    <ClInclude Include="ResultLevel.h">
+      <Filter>0.Level</Filter>
+    </ClInclude>
+    <ClInclude Include="ResultBackGround.h">
+      <Filter>3.Result</Filter>
+    </ClInclude>
+    <ClInclude Include="ResultBoard.h">
+      <Filter>3.Result</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <Filter Include="Ending">
-      <UniqueIdentifier>{17c9d227-3ee1-416c-b183-5bd1d146e572}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Play">
-      <UniqueIdentifier>{267bd74e-a014-4cb1-bbc4-5c9c37718be9}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Title">
-      <UniqueIdentifier>{a1af0295-5ec4-49ba-ba07-e0db2f9ac90f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="Level">
+    <Filter Include="0.Level">
       <UniqueIdentifier>{d98ea108-b567-4d11-9d82-845a7fb321a4}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Play\Enemies">
+    <Filter Include="3.Result">
+      <UniqueIdentifier>{17c9d227-3ee1-416c-b183-5bd1d146e572}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2.Play">
+      <UniqueIdentifier>{267bd74e-a014-4cb1-bbc4-5c9c37718be9}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2.Play\Enemies">
       <UniqueIdentifier>{d7670c53-db8a-4cea-8baa-63e80cfd5927}</UniqueIdentifier>
     </Filter>
-    <Filter Include="Play\Map">
+    <Filter Include="2.Play\Map">
       <UniqueIdentifier>{a3ad6481-289c-4513-a081-c8cc07e1ce45}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2.Play\Player">
+      <UniqueIdentifier>{c18ab25f-cdab-4701-a8ed-9a10a3fd881c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2.Play\Player\Characters">
+      <UniqueIdentifier>{100e96c3-7e80-49ea-9d6d-5543c07c6264}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="1.Title">
+      <UniqueIdentifier>{a1af0295-5ec4-49ba-ba07-e0db2f9ac90f}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

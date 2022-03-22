@@ -11,8 +11,8 @@ Library::~Library()
 
 void Library::Start()
 {
-	SetPosition({ 0, 0 });
-	SetScale({ 1280, 800 });
+	SetPosition(GameEngineWindow::GetScale().Half());
+	SetScale(GameEngineWindow::GetScale());
 }
 
 void Library::Update()

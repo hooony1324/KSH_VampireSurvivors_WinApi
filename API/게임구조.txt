@@ -56,8 +56,10 @@
 	  - 위치를 받고 스폰하는 기능
 	  - 플레이어 추격 기능
 	  @ 일반 몬스터
-	    
-	  @ 보스 몬스터
+	    - 죽으면 경험치 떨굼
+		- medusa몬스터 위아래로 움직임 있음
+
+	  @ 보스 몬스터 (크기와 체력을 늘려 소환)
 	    - 죽으면 보물상자 떨굼
 
 	# 아이템
@@ -87,3 +89,103 @@
 		처치한 적
 
 	# 종료 버튼
+
+
+
+### 몬스터 스폰 정보(도서관) ###
+
+	- 5초마다 몬스터 생성, 레벨 별 최대 몬스터 수 유지
+	- 시작 시 왼쪽 위 경험치 보석, 먹으면 2레벨(5%)
+	- 시작 시 ShadeRed 1마리, Mud1마리, 무더기 Mud6마리
+	- 1분 되면 Mud 40마리
+	- ~ 2분까지 몬스터는 Mud, ShadeRed
+	- 2분 Medusa1 5마리 등장
+	- 2분 Ecto1 25마리, Mud 20마리등장
+	- 3분 XLMummy 1마리(보스) 등장
+	- 3분 Mummy 20마리 등장
+
+	4분
+	- Mud1, Mummy 양쪽에 생성
+
+	5분
+	- 메두사는 위아래 움직임 있음
+	- Medusa1, Mummy
+	- 10초 XLMummy 등장
+
+	6분
+	- Ecto1 10, dulahan1 10
+	- ShadeRed 1마리
+
+	7분
+	- ecto1, dulahan 2배
+	- ShadeRed 1마리
+
+	8분
+	- Ghost, Ecto1
+	- Ecto2(보스) 등장
+
+	9분
+	- Mummy, Ghost 45마리씩 등장
+
+	10분
+	- ecto2, Ghost, Buer(보스), ShadeRed 등장
+
+	11분
+	- medusa1, buer 많이 등장
+
+	12분
+	- Bat4(보스), medusa, dulahan
+
+	13분
+	- Mud(보스), dulahan, mummy
+
+	14분
+	- Ecto2, medusa, mummy
+
+	15분
+	- XLMedusa(보스), medusa, 
+
+	16분
+	- 슈아 박쥐, Dullahan2, Witch1
+
+	17분
+	- Ecto2, witch1, 
+
+	18분
+	- buer, witch1, witch2(보스)
+
+	19분
+	- dullahan2, witch1
+
+	20분
+	- XLCount2_i(보스)등장, dullahan2, buer
+
+	21분
+	- buer등장
+
+	22분
+	- witch2, buer 등장, ShadeRed 3마리
+
+	23분 
+	- 듈라한2, buer(보스), witch2, 
+
+	24분
+	- witch2
+
+	25분
+	- Skull2, witch2, XLBat, 
+
+	26분
+	- XL메두사, XL메두사(보스)
+
+	27분
+	- XL메두사, XL메두사(보스), 머리메두사
+
+	28분
+	- XL메두사, witch1, 머리메두사, 
+
+	29분
+	- Mud(보스크기), buer(보스크기), medusa1(머리메두사), buer(보스크기), ecto2(보스크기),
+
+	30분
+	- 사신등장

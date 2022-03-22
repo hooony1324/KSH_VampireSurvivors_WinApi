@@ -151,19 +151,15 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="EndingCredit.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="EndingLevel.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="Enemies.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
     <ClInclude Include="Library.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="Mud.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="Old.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -172,6 +168,22 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="PlayLevel.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ResultBackGround.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ResultBoard.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ResultLevel.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="Suora.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -193,19 +205,15 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="EndingCredit.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="EndingLevel.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="Enemies.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
     <ClCompile Include="Library.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Mud.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Old.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -214,6 +222,22 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="PlayLevel.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="ResultBackGround.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="ResultBoard.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="ResultLevel.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Suora.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -235,7 +259,7 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\GameEngineContents\GameEngineContents.vcxproj">
+    <ProjectReference Include="..\GameEngine\GameEngine.vcxproj">
       <Project>{3f1ddf02-157d-4347-8381-e733ca8be7d2}</Project>
     </ProjectReference>
   </ItemGroup>

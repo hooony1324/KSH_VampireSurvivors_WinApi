@@ -3,6 +3,9 @@
 #include <assert.h>
 #include <Windows.h>
 
+// 내가 추가한거(지워야됨)
+#define _CRTDBG_MAP_ALLOC
+
 // 설명 :
 class GameEngineDebug
 {
@@ -28,3 +31,6 @@ private:
 MessageBoxA(nullptr, Text, "Error", MB_OK); \
 assert(false);
 
+#define MsgBoxAssertString(Text) 	MessageBeep(0); \
+MessageBoxA(nullptr, (Text).c_str(), "Error", MB_OK); \
+assert(false); 

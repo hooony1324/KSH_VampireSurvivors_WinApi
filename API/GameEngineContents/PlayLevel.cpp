@@ -10,17 +10,18 @@ PlayLevel::~PlayLevel()
 {
 }
 
-// 리소스, 액터 생성, 맵 생성
+// 미리 로드해두면 좋은
 void PlayLevel::Loading()
 {
-	CreateActor<Library>("Map_Library", 0);
-	CreateActor<Player>("Player", 1);
+
 }
 
-// 레벨 변경시 진입
+// 레벨 변경시 진입 (Title -> Play -> Result)
+// 맵, 캐릭터, .. 가 선택 되면 해당하는 맵으로 액터를 생성해야 함
 void PlayLevel::LevelChangeStart()
 {
-	
+	CreateActor<Library>("Library", 0);
+	CreateActor<Player>("Player", 1);
 }
 
 // GameEngine : CurrentLevle->LevelUpdate()

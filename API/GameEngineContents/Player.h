@@ -1,7 +1,7 @@
 #pragma once
 #include <GameEngine/GameEngineActor.h>
 
-// 설명 :
+// 설명 : 
 class Player : public GameEngineActor
 {
 public:
@@ -20,5 +20,8 @@ protected:
 private:
 	void Start() override;
 	void Render() override;
+
+private:
+
 };
 

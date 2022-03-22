@@ -1,27 +1,33 @@
 #include "GameEngineWindow.h"
 #include "GameEngineDebug.h"
 
-LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
+LRESULT CALLBACK MessageProcess(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
     switch (message)
     {
     case WM_DESTROY:
-        // 윈도우를 종료하고 모든 
+    {
         GameEngineWindow::GetInst().Off();
-        return DefWindowProc(hWnd, message, wParam, lParam);
+        break;
+    }
     case WM_PAINT:
     {
         PAINTSTRUCT ps;
         HDC hdc = BeginPaint(hWnd, &ps);
         // TODO: 여기에 hdc를 사용하는 그리기 코드를 추가합니다...
         EndPaint(hWnd, &ps);
-        return DefWindowProc(hWnd, message, wParam, lParam);
-    }
-    default:
         break;
     }
+    case WM_CLOSE:
+    {
+        GameEngineWindow::GetInst().Off();
+        break;
+    }
+    default:
+        return DefWindowProc(hWnd, message, wParam, lParam);
+    }
 
-    return DefWindowProc(hWnd, message, wParam, lParam);
+    return 0;
 }
 
 GameEngineWindow* GameEngineWindow::Inst_ = new GameEngineWindow();
@@ -54,7 +60,7 @@ void GameEngineWindow::RegClass(HINSTANCE _hInst)
     WNDCLASSEXA wcex;
     wcex.cbSize = sizeof(WNDCLASSEX);
     wcex.style = CS_HREDRAW | CS_VREDRAW;
-    wcex.lpfnWndProc = WndProc;
+    wcex.lpfnWndProc = MessageProcess;
     wcex.cbClsExtra = 0;
     wcex.cbWndExtra = 0;
     wcex.hInstance = _hInst;

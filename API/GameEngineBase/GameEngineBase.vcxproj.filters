@@ -13,6 +13,9 @@
     <Filter Include="Math">
       <UniqueIdentifier>{2bfc5399-69e0-4f83-a12d-d68d97c1fe7d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="String">
+      <UniqueIdentifier>{9cfad496-09d2-4436-b08b-cc746bbbc5d7}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GameEngineWindow.h">
@@ -27,6 +30,9 @@
     <ClInclude Include="GameEngineMath.h">
       <Filter>Math</Filter>
     </ClInclude>
+    <ClInclude Include="GameEngineString.h">
+      <Filter>String</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEngineWindow.cpp">
@@ -40,6 +46,9 @@
     </ClCompile>
     <ClCompile Include="GameEngineMath.cpp">
       <Filter>Math</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineString.cpp">
+      <Filter>String</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>

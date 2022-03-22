@@ -70,9 +70,17 @@ void GameEngineLevel::ActorRender()
 	{
 		std::list<GameEngineActor*>& Group = GroupStart->second;
 
+		// ·»´õ¸µÀ» °¢ÀÚ ´Ù ³¡³»°í ·»´õÇÑ´Ù.
 		StartActor = Group.begin();
 		EndActor = Group.end();
+		for (; StartActor != EndActor; ++StartActor)
+		{
+			(*StartActor)->Rendering();
+		}
 
+		// ·»´õ
+		StartActor = Group.begin();
+		EndActor = Group.end();
 		for (; StartActor != EndActor; ++StartActor)
 		{
 			(*StartActor)->Render();
