@@ -17,6 +17,18 @@ GameEngineRenderer::~GameEngineRenderer()
 {
 }
 
+void GameEngineRenderer::SetImageScale()
+{
+	if (nullptr == Image_)
+	{
+		MsgBoxAssert("존재하지 않는 이미지로 크기를 조절하려고 했습니다.");
+		return;
+	}
+
+	ScaleMode_ = RenderScaleMode::Image;
+	RenderScale_ = Image_->GetScale();
+}
+
 void GameEngineRenderer::SetImage(const std::string& _Name)
 {
 	GameEngineImage* FindImage = GameEngineImageManager::GetInst()->Find(_Name);
@@ -33,29 +45,16 @@ void GameEngineRenderer::Render()
 {
 	if (nullptr == Image_)
 	{
-		MsgBoxAssert("렌더러에 이미지가 세팅되어 있지 않아 랜더링 실패하였습니다");
+		MsgBoxAssert("렌더러에 이미지가 세팅되어 있지 않아 랜더링을 실패하였습니다");
 		return;
 	}
 
 	float4 RenderPos = GetActor()->GetPosition() + RenderPivot_;
 
-	float4 RenderScale = RenderScale_;
-
-	switch (ScaleMode_)
-	{
-	case RenderScaleMode::Image:
-		RenderScale = Image_->GetScale();
-		break;
-	case RenderScaleMode::User:
-		break;
-	default:
-		break;
-	}
-
 	switch (PivotType_)
 	{
 	case RenderPivot::CENTER:
-		GameEngine::BackBufferImage()->TransCopyCenterScale(Image_, RenderPos, RenderScale, TransColor_);
+		GameEngine::BackBufferImage()->TransCopyCenterScale(Image_, RenderPos, RenderScale_, TransColor_);
 		break;
 	case RenderPivot::BOT:
 		// GameEngine::BackBufferImage()->TransCopyCenterScale(Image_, RenderPos, RenderScale, TransColor_);

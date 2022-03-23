@@ -1,5 +1,7 @@
 #include "GameEngineImageManager.h"
-#include "GameEngineBase/GameEngineDebug.h"
+#include <GameEngineBase/GameEngineDebug.h>
+#include <GameEngineBase/GameEngineString.h>
+#include <GameEngineBase/GameEnginePath.h>
 
 GameEngineImageManager* GameEngineImageManager::Inst_ = new GameEngineImageManager();
 
@@ -24,7 +26,9 @@ GameEngineImageManager::~GameEngineImageManager()
 
 GameEngineImage* GameEngineImageManager::Find(const std::string& _Name)
 {
-	std::map<std::string, GameEngineImage*>::iterator FindIter = AllRes.find(_Name);
+	std::string EngineName = GameEngineString::ToUpperReturn(_Name);
+
+	std::map<std::string, GameEngineImage*>::iterator FindIter = AllRes.find(EngineName);
 
 	if (AllRes.end() == FindIter)
 	{
@@ -36,77 +40,80 @@ GameEngineImage* GameEngineImageManager::Find(const std::string& _Name)
 
 GameEngineImage* GameEngineImageManager::Create(const std::string& _Name, const float4& _Scale)
 {
-	if (AllRes.end() != AllRes.find(_Name))
+	std::string EngineName = GameEngineString::ToUpperReturn(_Name);
+
+	if (AllRes.end() != AllRes.find(EngineName))
 	{
 		MsgBoxAssert("이미 존재하는 이름의 이미지를 생성하려고 했습니다");
 		return nullptr;
 	}
 
 	GameEngineImage* NewImage = new GameEngineImage();
-	NewImage->SetName(_Name);
+	NewImage->SetName(EngineName);
 
 	if (false == NewImage->Create(_Scale))
 	{
 		delete NewImage;
-		MsgBoxAssert((_Name + "이미지를 생성하는데 실패하였습니다").c_str());
+		MsgBoxAssert((EngineName + "이미지를 생성하는데 실패하였습니다").c_str());
 		return nullptr;
 	}
 
-	AllRes.insert(std::make_pair(_Name, NewImage));
+	AllRes.insert(std::make_pair(EngineName, NewImage));
 
 	return NewImage;
 }
 
 GameEngineImage* GameEngineImageManager::Create(const std::string& _Name, HDC _DC)
 {
-	if (AllRes.end() != AllRes.find(_Name))
+	std::string EngineName = GameEngineString::ToUpperReturn(_Name);
+
+	if (AllRes.end() != AllRes.find(EngineName))
 	{
 		MsgBoxAssert("이미 존재하는 이름의 이미지를 또 만들려고 했습니다.");
 		return nullptr;
 	}
 
 	GameEngineImage* NewImage = new GameEngineImage();
-	NewImage->SetName(_Name);
+	NewImage->SetName(EngineName);
 
 	if (false == NewImage->Create(_DC))
 	{
 		delete NewImage;
-		MsgBoxAssert((_Name + "이미지를 생성하는데 실패했습니다.").c_str());
+		MsgBoxAssert((EngineName + "이미지를 생성하는데 실패했습니다.").c_str());
 		return nullptr;
 	}
 
-	AllRes.insert(std::make_pair(_Name, NewImage));
+	AllRes.insert(std::make_pair(EngineName, NewImage));
 
 	return NewImage;
 }
 
 GameEngineImage* GameEngineImageManager::Load(const std::string& _Path)
 {
-	// 무시
-	// Create();
-
-	return nullptr;
+	GameEnginePath NewPath = GameEnginePath(_Path);
+	return Load(_Path, NewPath.GetFileName());
 }
 
 GameEngineImage* GameEngineImageManager::Load(const std::string& _Path, const std::string& _Name)
 {
-	if (AllRes.end() != AllRes.find(_Name))
+	std::string EngineName = GameEngineString::ToUpperReturn(_Name);
+	if (AllRes.end() != AllRes.find(EngineName))
 	{
 		MsgBoxAssert("이미 같은 이름의 이미지가 존재합니다.");
 		return nullptr;
 	}
 
 	GameEngineImage* NewImage = new GameEngineImage();
-	NewImage->SetName(_Name);
+	NewImage->SetName(EngineName);
 
 	if (false == NewImage->Load(_Path))
 	{
 		delete NewImage;
-		MsgBoxAssert((_Name + "이미지를 생성하는데 실패했습니다.").c_str());
+		MsgBoxAssert((EngineName + "이미지를 생성하는데 실패했습니다.").c_str());
 		return nullptr;
 	}
 
-	AllRes.insert(std::make_pair(_Name, NewImage));
+	AllRes.insert(std::make_pair(EngineName, NewImage));
 	
 	return NewImage;
 }

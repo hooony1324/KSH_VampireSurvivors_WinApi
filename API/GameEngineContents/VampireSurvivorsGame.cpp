@@ -3,6 +3,8 @@
 #include "ResultLevel.h"
 #include "TitleLevel.h"
 #include <GameEngineBase/GameEngineWindow.h>
+#include <GameEngineBase/GameEngineDirectory.h>
+#include <GameEngineBase/GameEngineFile.h>
 #include <GameEngine/GameEngineImageManager.h>
 
 VampireSurvivorsGame::VampireSurvivorsGame() 
@@ -39,13 +41,17 @@ void VampireSurvivorsGame::GameEnd()
 
 void VampireSurvivorsGame::ResourceLoad()
 {
-	// TitleLevel
-	GameEngineImageManager::GetInst()->Load("../Resources/introBG.bmp", "introBG.bmp");
+	GameEngineDirectory ResourcesDir;
+	ResourcesDir.MoveParent("API");
+	ResourcesDir.Move("Resources");
+	ResourcesDir.Move("Image");
 
-	// PlayLevel
-	GameEngineImageManager::GetInst()->Load("../Resources/Old3_01.bmp", "Old_idle.bmp");
+	// 폴더안에 모든 이미지 파일을 찾는다.
+	std::vector<GameEngineFile> AllImageFileList = ResourcesDir.GetAllFile("Bmp");
 
-	// ResultLevel
+	for (size_t i = 0; i < AllImageFileList.size(); i++)
+	{
+		GameEngineImageManager::GetInst()->Load(AllImageFileList[i].GetFullPath());
+	}
 	
-
 }

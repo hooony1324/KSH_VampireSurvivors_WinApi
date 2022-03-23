@@ -8,13 +8,19 @@ class GameEngineString
 public:
 	static void ToUpper(std::string& _Text)
 	{
-		std::transform(_Text.begin(), _Text.end(), _Text.begin(), std::toupper);
+		for (size_t i = 0; i < _Text.size(); i++)
+		{
+			_Text[i] = std::toupper(_Text[i]);
+		}
 	}
 
 	static std::string ToUpperReturn(const std::string& _Text)
 	{
 		std::string NewText = _Text;
-		std::transform(NewText.begin(), NewText.end(), NewText.begin(), std::toupper);
+		for (size_t i = 0; i < _Text.size(); i++)
+		{
+			NewText[i] = std::toupper(NewText[i]);
+		}
 		return NewText;
 	}
 
