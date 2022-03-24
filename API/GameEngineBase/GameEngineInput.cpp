@@ -68,6 +68,7 @@ void GameEngineInput::CreateKey(std::string _Name, int _Key)
 		return;
 	}
 
+	// 소문자 -> 대문자
 	if ('a' <= _Key && 'z' >= _Key)
 	{
 		_Key = std::toupper(_Key);

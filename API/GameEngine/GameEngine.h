@@ -36,7 +36,7 @@ public:
 	{
 		GameEngineDebug::LeakCheckOn();
 
-		GameType UserGame;
+		GameType UserGame;			// == VampireSurvivorGame UserGame;
 		UserContents_ = &UserGame;
 
 		WindowCreate();

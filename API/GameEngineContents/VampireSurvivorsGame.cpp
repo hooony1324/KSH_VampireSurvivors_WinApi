@@ -5,6 +5,7 @@
 #include <GameEngineBase/GameEngineWindow.h>
 #include <GameEngineBase/GameEngineDirectory.h>
 #include <GameEngineBase/GameEngineFile.h>
+#include <GameEngineBase/GameEngineInput.h>
 #include <GameEngine/GameEngineImageManager.h>
 
 VampireSurvivorsGame::VampireSurvivorsGame() 
@@ -27,10 +28,32 @@ void VampireSurvivorsGame::GameInit()
 	CreateLevel<PlayLevel>("Play");
 	CreateLevel<ResultLevel>("Result");
 	ChangeLevel("Play");
+
+
+	// 모든 레벨을 통합한 키 세팅
+	if (false == GameEngineInput::GetInst()->IsKey("MoveLeft"))
+	{
+		GameEngineInput::GetInst()->CreateKey("MoveLeft", 'A');
+		GameEngineInput::GetInst()->CreateKey("MoveRight", 'D');
+		GameEngineInput::GetInst()->CreateKey("MoveUp", 'W');
+		GameEngineInput::GetInst()->CreateKey("MoveDown", 'S');
+		GameEngineInput::GetInst()->CreateKey("SpaceBar", VK_SPACE);
+		GameEngineInput::GetInst()->CreateKey("Esc", VK_ESCAPE);
+
+		// ChangeLevel(임시)
+		GameEngineInput::GetInst()->CreateKey("ChangeLevelRight", VK_RIGHT);
+		GameEngineInput::GetInst()->CreateKey("ChangeLevelLeft", VK_LEFT);
+
+		// Volume
+		GameEngineInput::GetInst()->CreateKey("VolumeUp", VK_UP);
+		GameEngineInput::GetInst()->CreateKey("VolumeDown", VK_DOWN);
+	}
 }
 
 void VampireSurvivorsGame::GameLoop()
 {
+
+
 
 }
 
@@ -56,10 +79,11 @@ void VampireSurvivorsGame::ResourceLoad()
 		{
 			GameEngineImageManager::GetInst()->Load(AllImageFileList[i].GetFullPath());
 		}
+
+		ResourcesDir.MoveParent("Resources");
 	}
 
 	// tilesets 디렉토리 탐색
-	ResourcesDir.MoveParent("Resources");
 	{
 		ResourcesDir.Move("tilesets");
 
@@ -70,6 +94,8 @@ void VampireSurvivorsGame::ResourceLoad()
 		{
 			GameEngineImageManager::GetInst()->Load(AllImageFileList[i].GetFullPath());
 		}
+
+		ResourcesDir.MoveParent("Resources");
 	}
 	
 	

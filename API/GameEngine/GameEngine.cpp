@@ -25,21 +25,6 @@ HDC GameEngine::BackBufferDC()
     return BackBufferImage_->ImageDC();
 }
 
-void GameEngine::GameInit()
-{
-
-}
-
-void GameEngine::GameLoop()
-{
-
-}
-
-void GameEngine::GameEnd()
-{
-
-}
-
 void GameEngine::ChangeLevel(const std::string& _Name)
 {
     std::map<std::string, GameEngineLevel*>::iterator FindIter = AllLevel_.find(_Name);

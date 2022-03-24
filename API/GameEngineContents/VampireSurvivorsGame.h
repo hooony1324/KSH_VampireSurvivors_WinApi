@@ -19,9 +19,11 @@ public:
 	void GameLoop() override;
 	void GameEnd() override;
 
+	
 protected:
 
 private:
+
 	void ResourceLoad();
 };
 

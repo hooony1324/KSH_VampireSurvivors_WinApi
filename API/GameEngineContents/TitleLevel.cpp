@@ -19,10 +19,11 @@ void TitleLevel::Loading()
 
 void TitleLevel::LevelChangeStart()
 {
+
 }
 
 void TitleLevel::Update()
 {
-	
+
 }
 
