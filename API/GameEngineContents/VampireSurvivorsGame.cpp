@@ -44,14 +44,33 @@ void VampireSurvivorsGame::ResourceLoad()
 	GameEngineDirectory ResourcesDir;
 	ResourcesDir.MoveParent("API");
 	ResourcesDir.Move("Resources");
-	ResourcesDir.Move("Image");
-
-	// 폴더안에 모든 이미지 파일을 찾는다.
-	std::vector<GameEngineFile> AllImageFileList = ResourcesDir.GetAllFile("Bmp");
-
-	for (size_t i = 0; i < AllImageFileList.size(); i++)
+	
+	// characters 디렉토리 탐색
 	{
-		GameEngineImageManager::GetInst()->Load(AllImageFileList[i].GetFullPath());
+		ResourcesDir.Move("characters");
+
+		// 폴더안에 모든 파일(확장자 .bmp) 얻어옴
+		std::vector<GameEngineFile> AllImageFileList = ResourcesDir.GetAllFile("Bmp");
+
+		for (size_t i = 0; i < AllImageFileList.size(); i++)
+		{
+			GameEngineImageManager::GetInst()->Load(AllImageFileList[i].GetFullPath());
+		}
 	}
+
+	// tilesets 디렉토리 탐색
+	ResourcesDir.MoveParent("Resources");
+	{
+		ResourcesDir.Move("tilesets");
+
+		// 폴더안에 모든 파일(확장자 .bmp) 얻어옴
+		std::vector<GameEngineFile> AllImageFileList = ResourcesDir.GetAllFile("Bmp");
+
+		for (size_t i = 0; i < AllImageFileList.size(); i++)
+		{
+			GameEngineImageManager::GetInst()->Load(AllImageFileList[i].GetFullPath());
+		}
+	}
+	
 	
 }

@@ -2,6 +2,8 @@
 #include <GameEngineBase/GameEngineWindow.h>
 #include "GameEngineLevel.h"
 #include "GameEngineImageManager.h"
+#include <GameEngineBase/GameEngineInput.h>
+#include <GameEngineBase/GameEngineTime.h>
 
 std::map<std::string, GameEngineLevel*> GameEngine::AllLevel_;
 GameEngineLevel* GameEngine::CurrentLevel_ = nullptr;
@@ -69,6 +71,8 @@ void GameEngine::EngineInit()
 
 void GameEngine::EngineLoop()
 {
+    GameEngineTime::GetInst()->Update();
+
     UserContents_->GameLoop();
 
     // Level 변경(게임 시작시 ChangeLevel()로 NextLevel_이 설정되어 있음)
@@ -88,12 +92,15 @@ void GameEngine::EngineLoop()
         }
 
         NextLevel_ = nullptr;
+        GameEngineTime::GetInst()->Reset();
     }
 
     if (nullptr == CurrentLevel_)
     {
         MsgBoxAssert("Level is nullptr, GameEngine Loop Error!");
     }
+
+    GameEngineInput::GetInst()->Update();
 
     CurrentLevel_->Update();
     CurrentLevel_->ActorUpdate();
@@ -120,6 +127,8 @@ void GameEngine::EngineEnd()
     GameEngineImageManager::Destroy();
 
     GameEngineWindow::Destroy();
+    GameEngineInput::Destroy();
+    GameEngineTime::Destroy();
 
 }
 
