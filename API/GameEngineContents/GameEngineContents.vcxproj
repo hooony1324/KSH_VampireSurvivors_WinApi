@@ -155,6 +155,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Character.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="Library.h">
       <SubType>
       </SubType>
@@ -209,6 +213,10 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Character.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="Library.cpp">
       <SubType>
       </SubType>

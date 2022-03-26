@@ -3,6 +3,14 @@
 #include "Library.h"
 #include <GameEngine/GameEngine.h>
 
+enum class RENDER_ORDER
+{
+	BACKGROUND,
+	PLAYER,
+	MONSTER,
+	UI,
+};
+
 PlayLevel::PlayLevel() 
 {
 }
@@ -21,8 +29,8 @@ void PlayLevel::Loading()
 // 맵, 캐릭터, .. 가 선택 되면 해당하는 맵으로 액터를 생성해야 함
 void PlayLevel::LevelChangeStart()
 {
-	CreateActor<Library>("Library", 0);
-	CreateActor<Player>("Player", 1);
+	CreateActor<Library>((int)RENDER_ORDER::BACKGROUND);
+	CreateActor<Player>((int)RENDER_ORDER::PLAYER);
 }
 
 // GameEngine : CurrentLevle->LevelUpdate()

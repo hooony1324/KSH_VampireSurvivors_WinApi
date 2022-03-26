@@ -17,7 +17,7 @@ void ResultBoard::Start()
 	SetPosition(GameEngineWindow::GetScale().Half());
 	SetScale({ 700, 700 });
 
-	//CreateRenderer("introBG.bmp");
+
 }
 
 void ResultBoard::Update()
@@ -26,5 +26,5 @@ void ResultBoard::Update()
 
 void ResultBoard::Render()
 {
-	DebugRectRender();
+
 }

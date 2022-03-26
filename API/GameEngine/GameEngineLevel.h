@@ -33,7 +33,7 @@ protected:
 	virtual void LevelChangeEnd() {}
 
 	template<typename ActorType>
-	ActorType* CreateActor(const std::string& _Name, int _Order)
+	ActorType* CreateActor(int _Order = 0, const std::string& _Name = "")
 	{
 		ActorType* NewActor = new ActorType();
 		GameEngineActor* StartActor = NewActor;
@@ -43,7 +43,7 @@ protected:
 		std::list<GameEngineActor*>& Group = AllActor_[_Order];
 		Group.push_back(NewActor);
 
-		return nullptr;
+		return NewActor;
 	}
 
 private:
@@ -52,5 +52,6 @@ private:
 
 	void ActorUpdate();
 	void ActorRender();
+	void ActorRelease();
 };
 

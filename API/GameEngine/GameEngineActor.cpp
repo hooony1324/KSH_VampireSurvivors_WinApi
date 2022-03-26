@@ -53,8 +53,6 @@ GameEngineRenderer* GameEngineActor::CreateRenderer(
 
 	RenderList_.push_back(NewRenderer);
 	return NewRenderer;
-
-	return nullptr;
 }
 
 GameEngineRenderer* GameEngineActor::CreateRendererToScale(const std::string& _Image, const float4& _Scale, RenderPivot _PivotType, const float4& _PivotPos)

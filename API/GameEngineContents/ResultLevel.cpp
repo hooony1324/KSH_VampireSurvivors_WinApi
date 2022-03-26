@@ -18,8 +18,8 @@ void ResultLevel::Loading()
 
 void ResultLevel::LevelChangeStart()
 {
-	CreateActor<ResultBackGround>("BackGround", 0);
-	CreateActor<ResultBoard>("ResultBoard", 1);
+	CreateActor<ResultBackGround>(0);
+	CreateActor<ResultBoard>(0);
 }
 
 void ResultLevel::Update()

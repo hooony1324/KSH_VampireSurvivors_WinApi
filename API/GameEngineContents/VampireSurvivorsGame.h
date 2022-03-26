@@ -23,7 +23,8 @@ public:
 protected:
 
 private:
-
 	void ResourceLoad();
+	std::string Levels[3] = {"Title", "Play", "Result"};
+	int LevelIndex = 0;
 };
 

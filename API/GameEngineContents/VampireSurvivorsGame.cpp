@@ -27,7 +27,7 @@ void VampireSurvivorsGame::GameInit()
 	CreateLevel<TitleLevel>("Title");
 	CreateLevel<PlayLevel>("Play");
 	CreateLevel<ResultLevel>("Result");
-	ChangeLevel("Play");
+	ChangeLevel("Title");
 
 
 	// 모든 레벨을 통합한 키 세팅
@@ -52,8 +52,23 @@ void VampireSurvivorsGame::GameInit()
 
 void VampireSurvivorsGame::GameLoop()
 {
+	if (true == GameEngineInput::GetInst()->IsDown("ChangeLevelRight"))
+	{
+		LevelIndex++;
+		LevelIndex %= 3;
+		GameEngine::ChangeLevel(Levels[LevelIndex]);
+	}
 
-
+	if (true == GameEngineInput::GetInst()->IsDown("ChangeLevelLeft"))
+	{
+		LevelIndex--;
+		if (LevelIndex < 0)
+		{
+			LevelIndex = 2;
+		}
+		LevelIndex %= 3;
+		GameEngine::ChangeLevel(Levels[LevelIndex]);
+	}
 
 }
 
@@ -97,6 +112,22 @@ void VampireSurvivorsGame::ResourceLoad()
 
 		ResourcesDir.MoveParent("Resources");
 	}
+
+	// UI 디렉토리 탐색
+	{
+		ResourcesDir.Move("UI");
+
+		// 폴더안에 모든 파일(확장자 .bmp) 얻어옴
+		std::vector<GameEngineFile> AllImageFileList = ResourcesDir.GetAllFile("Bmp");
+
+		for (size_t i = 0; i < AllImageFileList.size(); i++)
+		{
+			GameEngineImageManager::GetInst()->Load(AllImageFileList[i].GetFullPath());
+		}
+
+		ResourcesDir.MoveParent("Resources");
+	}
+
 	
 	
 }

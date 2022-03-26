@@ -14,7 +14,7 @@ void Library::Start()
 	SetPosition(GameEngineWindow::GetScale().Half());
 	SetScale(GameEngineWindow::GetScale());
 
-	CreateRendererToScale("LibraryTile.bmp", GameEngineWindow::GetScale(), RenderPivot::CENTER);
+	CreateRenderer("LibraryTile.bmp");
 }
 
 void Library::Update()

@@ -23,7 +23,7 @@ void GameEngineTime::Reset()
 void GameEngineTime::Update()
 {
 	QueryPerformanceCounter(reinterpret_cast<LARGE_INTEGER*>(&CurrentCount_));
-	RealDeltaTime_ = static_cast<double>(CurrentCount_) - static_cast<double>(PrevCount_) / static_cast<double>(SecondCount_);
+	RealDeltaTime_ = (static_cast<double>(CurrentCount_) - static_cast<double>(PrevCount_)) / static_cast<double>(SecondCount_);
 	PrevCount_ = CurrentCount_;
 	DeltaTime_ = static_cast<float>(RealDeltaTime_);
 }

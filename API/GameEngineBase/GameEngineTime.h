@@ -26,9 +26,9 @@ public:
 	void Reset();
 	void Update();
 
-	inline float GetDeltaTime()
+	static inline float GetDeltaTime()
 	{
-		return DeltaTime_;
+		return Inst_->DeltaTime_;
 	}
 
 protected:

@@ -38,6 +38,9 @@
     <ClCompile Include="ResultBoard.cpp">
       <Filter>3.Result</Filter>
     </ClCompile>
+    <ClCompile Include="Character.cpp">
+      <Filter>2.Play\Player\Characters</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="VampireSurvivorsGame.h" />
@@ -76,6 +79,9 @@
     </ClInclude>
     <ClInclude Include="ResultBoard.h">
       <Filter>3.Result</Filter>
+    </ClInclude>
+    <ClInclude Include="Character.h">
+      <Filter>2.Play\Player\Characters</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

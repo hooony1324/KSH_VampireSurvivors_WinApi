@@ -3,6 +3,12 @@
 #include "TitleLogo.h"
 #include "GameEngine/GameEngine.h"
 
+enum class RENDER_ORDER
+{
+	BACKGROUND,
+	UI,
+};
+
 TitleLevel::TitleLevel() 
 {
 }
@@ -13,8 +19,8 @@ TitleLevel::~TitleLevel()
 
 void TitleLevel::Loading()
 {
-	CreateActor<TitleBackGround>("Title", 0);
-	CreateActor<TitleLogo>("Title", 1);
+	CreateActor<TitleBackGround>((int)RENDER_ORDER::BACKGROUND);
+	CreateActor<TitleLogo>((int)RENDER_ORDER::UI);
 }
 
 void TitleLevel::LevelChangeStart()

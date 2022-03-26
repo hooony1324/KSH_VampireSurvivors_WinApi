@@ -2,6 +2,7 @@
 #include <GameEngine/GameEngineActor.h>
 
 // 설명 : 
+class Character;
 class Player : public GameEngineActor
 {
 public:
@@ -15,6 +16,7 @@ public:
 	Player& operator=(const Player& _Other) = delete;
 	Player& operator=(Player&& _Other) noexcept = delete;
 
+	void SetCharacter(Character _Type);
 protected:
 
 private:
@@ -22,7 +24,10 @@ private:
 	void Update() override;
 	void Render() override;
 
-private:
+	// 기본 능력치 (체력, 스피드, 공격력, ...)
+	float Speed_;
+
+
 
 };
 
