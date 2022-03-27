@@ -63,4 +63,16 @@ private:
 	float4 RenderImageScale_;
 	float4 RenderImagePivot_;
 	unsigned int TransColor_;
+
+	// 내가 추가함
+public:
+	GameEngineImage& GetImage()
+	{
+		return *Image_;
+	}
+
+	float4 GetPivot()
+	{
+		return RenderPivot_;
+	}
 };

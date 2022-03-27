@@ -34,7 +34,7 @@ public:
 		return IsUpdate_ && false == IsDeath_;
 	}
 
-	inline 	void Death()
+	inline void Death()
 	{
 		IsDeath_ = true;
 	}

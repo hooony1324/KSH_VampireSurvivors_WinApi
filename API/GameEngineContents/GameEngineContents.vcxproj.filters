@@ -38,6 +38,9 @@
     <ClCompile Include="Projectile.cpp">
       <Filter>2.Play\Projectile</Filter>
     </ClCompile>
+    <ClCompile Include="Enemy.cpp">
+      <Filter>2.Play\Enemies</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="VampireSurvivorsGame.h" />
@@ -76,6 +79,9 @@
     </ClInclude>
     <ClInclude Include="Projectile.h">
       <Filter>2.Play\Projectile</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>2.Play\Enemies</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

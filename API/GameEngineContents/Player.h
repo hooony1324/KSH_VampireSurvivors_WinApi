@@ -17,6 +17,8 @@ public:
 	Player& operator=(Player&& _Other) noexcept = delete;
 
 	void SetCharacter(Character _Type);
+	void KillPlayer();
+
 protected:
 
 private:
@@ -44,5 +46,7 @@ private:
 
 	int Revival_;			// ºÎÈ° È½¼ö
 
+	// Update
+	GameEngineRenderer* Hp_Red;
 };
 

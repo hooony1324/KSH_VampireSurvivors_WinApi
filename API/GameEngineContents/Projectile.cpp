@@ -14,10 +14,10 @@ Projectile::~Projectile()
 
 void Projectile::Start()
 {
-	CreateRenderer("hit17x21.bmp");
+	CreateRenderer("sword.bmp");
 }
 
 void Projectile::Update()
 {
-	SetMove(float4::RIGHT * GameEngineTime::GetDeltaTime() * 200.0f);
+	SetMove(float4{ 2, 1 } *GameEngineTime::GetDeltaTime() * 200.0f);
 }

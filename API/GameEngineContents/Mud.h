@@ -1,8 +1,8 @@
 #pragma once
-#include <GameEngine/GameEngineActor.h>
+#include "Enemy.h"
 
 // Ό³Έν :
-class Mud : public GameEngineActor
+class Mud : public Enemy
 {
 public:
 	// constrcuter destructer

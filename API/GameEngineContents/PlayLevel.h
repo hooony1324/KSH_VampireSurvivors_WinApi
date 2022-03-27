@@ -1,6 +1,8 @@
 #pragma once
 #include "GameEngine/GameEngineLevel.h"
 
+
+class Player;
 // Ό³Έν :
 class PlayLevel : public GameEngineLevel
 {
@@ -22,6 +24,7 @@ protected:
 	void LevelChangeEnd() override;
 
 private:
-
+	Player* Player_;
+	
 };
 

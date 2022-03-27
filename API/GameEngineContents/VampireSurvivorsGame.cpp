@@ -39,7 +39,7 @@ void VampireSurvivorsGame::GameInit()
 		GameEngineInput::GetInst()->CreateKey("MoveDown", 'S');
 		GameEngineInput::GetInst()->CreateKey("SpaceBar", VK_SPACE);
 		GameEngineInput::GetInst()->CreateKey("Esc", VK_ESCAPE);
-
+		
 		// ChangeLevel(임시)
 		GameEngineInput::GetInst()->CreateKey("ChangeLevelNext", VK_RIGHT);
 		GameEngineInput::GetInst()->CreateKey("ChangeLevelPrev", VK_LEFT);
@@ -47,6 +47,11 @@ void VampireSurvivorsGame::GameInit()
 		// Volume
 		GameEngineInput::GetInst()->CreateKey("VolumeUp", VK_UP);
 		GameEngineInput::GetInst()->CreateKey("VolumeDown", VK_DOWN);
+
+		// 삭제해도 됨
+		GameEngineInput::GetInst()->CreateKey("KillPlayer", 'K');
+		GameEngineInput::GetInst()->CreateKey("PlayerDamaged", 'P');
+
 	}
 }
 

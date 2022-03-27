@@ -53,5 +53,8 @@ private:
 	void ActorUpdate();
 	void ActorRender();
 	void ActorRelease();
+
+	// 따로 추가한 기능
+public:
 };
 

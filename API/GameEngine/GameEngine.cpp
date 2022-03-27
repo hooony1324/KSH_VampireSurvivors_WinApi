@@ -92,6 +92,7 @@ void GameEngine::EngineLoop()
     CurrentLevel_->ActorRender();
     WindowMainImage_->BitCopy(BackBufferImage_);
 
+    // Death วั Actor Realease
     CurrentLevel_->ActorRelease();
 }
 

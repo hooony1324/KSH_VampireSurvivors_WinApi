@@ -2,6 +2,7 @@
 #include <GameEngine/GameEngineActor.h>
 
 // 설명 :
+// 플레이어의 발사체( 칼, 매직, 도끼, ...)
 class Projectile : public GameEngineActor
 {
 public:
