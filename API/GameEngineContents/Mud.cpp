@@ -12,3 +12,15 @@ Mud::~Mud()
 {
 }
 
+void Mud::Start()
+{
+
+}
+
+void Mud::Update()
+{
+}
+
+void Mud::Render()
+{
+}

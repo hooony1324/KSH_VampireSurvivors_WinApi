@@ -41,8 +41,8 @@ void VampireSurvivorsGame::GameInit()
 		GameEngineInput::GetInst()->CreateKey("Esc", VK_ESCAPE);
 
 		// ChangeLevel(임시)
-		GameEngineInput::GetInst()->CreateKey("ChangeLevelRight", VK_RIGHT);
-		GameEngineInput::GetInst()->CreateKey("ChangeLevelLeft", VK_LEFT);
+		GameEngineInput::GetInst()->CreateKey("ChangeLevelNext", VK_RIGHT);
+		GameEngineInput::GetInst()->CreateKey("ChangeLevelPrev", VK_LEFT);
 
 		// Volume
 		GameEngineInput::GetInst()->CreateKey("VolumeUp", VK_UP);
@@ -52,23 +52,6 @@ void VampireSurvivorsGame::GameInit()
 
 void VampireSurvivorsGame::GameLoop()
 {
-	if (true == GameEngineInput::GetInst()->IsDown("ChangeLevelRight"))
-	{
-		LevelIndex++;
-		LevelIndex %= 3;
-		GameEngine::ChangeLevel(Levels[LevelIndex]);
-	}
-
-	if (true == GameEngineInput::GetInst()->IsDown("ChangeLevelLeft"))
-	{
-		LevelIndex--;
-		if (LevelIndex < 0)
-		{
-			LevelIndex = 2;
-		}
-		LevelIndex %= 3;
-		GameEngine::ChangeLevel(Levels[LevelIndex]);
-	}
 
 }
 
@@ -82,12 +65,12 @@ void VampireSurvivorsGame::ResourceLoad()
 	GameEngineDirectory ResourcesDir;
 	ResourcesDir.MoveParent("API");
 	ResourcesDir.Move("Resources");
+
+	std::string Directories[] = {"characters", "tilesets", "illustrations", "vfx"};
 	
-	// characters 디렉토리 탐색
+	for (std::string& Dir : Directories)
 	{
-		ResourcesDir.Move("characters");
-
-		// 폴더안에 모든 파일(확장자 .bmp) 얻어옴
+		ResourcesDir.Move(Dir);
 		std::vector<GameEngineFile> AllImageFileList = ResourcesDir.GetAllFile("Bmp");
 
 		for (size_t i = 0; i < AllImageFileList.size(); i++)
@@ -97,37 +80,5 @@ void VampireSurvivorsGame::ResourceLoad()
 
 		ResourcesDir.MoveParent("Resources");
 	}
-
-	// tilesets 디렉토리 탐색
-	{
-		ResourcesDir.Move("tilesets");
-
-		// 폴더안에 모든 파일(확장자 .bmp) 얻어옴
-		std::vector<GameEngineFile> AllImageFileList = ResourcesDir.GetAllFile("Bmp");
-
-		for (size_t i = 0; i < AllImageFileList.size(); i++)
-		{
-			GameEngineImageManager::GetInst()->Load(AllImageFileList[i].GetFullPath());
-		}
-
-		ResourcesDir.MoveParent("Resources");
-	}
-
-	// UI 디렉토리 탐색
-	{
-		ResourcesDir.Move("UI");
-
-		// 폴더안에 모든 파일(확장자 .bmp) 얻어옴
-		std::vector<GameEngineFile> AllImageFileList = ResourcesDir.GetAllFile("Bmp");
-
-		for (size_t i = 0; i < AllImageFileList.size(); i++)
-		{
-			GameEngineImageManager::GetInst()->Load(AllImageFileList[i].GetFullPath());
-		}
-
-		ResourcesDir.MoveParent("Resources");
-	}
-
-	
 	
 }

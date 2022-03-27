@@ -18,13 +18,10 @@ public:
 	void GameInit() override;
 	void GameLoop() override;
 	void GameEnd() override;
-
 	
 protected:
 
 private:
 	void ResourceLoad();
-	std::string Levels[3] = {"Title", "Play", "Result"};
-	int LevelIndex = 0;
 };
 

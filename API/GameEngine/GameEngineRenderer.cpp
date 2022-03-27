@@ -33,6 +33,7 @@ void GameEngineRenderer::SetImageScale()
 
 void GameEngineRenderer::SetImage(const std::string& _Name)
 {
+
 	GameEngineImage* FindImage = GameEngineImageManager::GetInst()->Find(_Name);
 	if (nullptr == FindImage)
 	{

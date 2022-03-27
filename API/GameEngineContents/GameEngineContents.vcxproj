@@ -167,15 +167,15 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="Old.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
     <ClInclude Include="Player.h">
       <SubType>
       </SubType>
     </ClInclude>
     <ClInclude Include="PlayLevel.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="Projectile.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -188,10 +188,6 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="ResultLevel.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="Suora.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -225,15 +221,15 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="Old.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
     <ClCompile Include="Player.cpp">
       <SubType>
       </SubType>
     </ClCompile>
     <ClCompile Include="PlayLevel.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="Projectile.cpp">
       <SubType>
       </SubType>
     </ClCompile>
@@ -246,10 +242,6 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="ResultLevel.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="Suora.cpp">
       <SubType>
       </SubType>
     </ClCompile>

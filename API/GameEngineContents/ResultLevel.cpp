@@ -1,6 +1,8 @@
 #include "ResultLevel.h"
 #include "ResultBackGround.h"
 #include "ResultBoard.h"
+#include <GameEngine/GameEngine.h>
+#include <GameEngineBase/GameEngineInput.h>
 
 
 ResultLevel::ResultLevel() 
@@ -24,5 +26,9 @@ void ResultLevel::LevelChangeStart()
 
 void ResultLevel::Update()
 {
+	if (true == GameEngineInput::GetInst()->IsDown("ChangeLevelNext"))
+	{
+		GameEngine::GlobalEngine().ChangeLevel("Title");
+	}
 }
 

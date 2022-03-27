@@ -56,7 +56,7 @@ protected:
 
 private:
 	GameEngineImage* Image_;
-	RenderPivot PivotType_; // ºæ≈Õ bot
+	RenderPivot PivotType_;
 	RenderScaleMode ScaleMode_;
 	float4 RenderPivot_;
 	float4 RenderScale_;

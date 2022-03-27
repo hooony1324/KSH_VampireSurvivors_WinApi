@@ -2,6 +2,7 @@
 #include "Player.h"
 #include "Library.h"
 #include <GameEngine/GameEngine.h>
+#include <GameEngineBase/GameEngineInput.h>
 
 enum class RENDER_ORDER
 {
@@ -36,7 +37,15 @@ void PlayLevel::LevelChangeStart()
 // GameEngine : CurrentLevle->LevelUpdate()
 void PlayLevel::Update()
 {
+	if (true == GameEngineInput::GetInst()->IsDown("ChangeLevelNext"))
+	{
+		GameEngine::GlobalEngine().ChangeLevel("Result");
+	}
+}
 
+void PlayLevel::LevelChangeEnd()
+{
+	
 }
 
 

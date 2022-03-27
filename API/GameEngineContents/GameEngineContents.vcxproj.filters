@@ -23,12 +23,6 @@
     <ClCompile Include="Player.cpp">
       <Filter>2.Play\Player</Filter>
     </ClCompile>
-    <ClCompile Include="Suora.cpp">
-      <Filter>2.Play\Player\Characters</Filter>
-    </ClCompile>
-    <ClCompile Include="Old.cpp">
-      <Filter>2.Play\Player\Characters</Filter>
-    </ClCompile>
     <ClCompile Include="ResultLevel.cpp">
       <Filter>0.Level</Filter>
     </ClCompile>
@@ -39,7 +33,10 @@
       <Filter>3.Result</Filter>
     </ClCompile>
     <ClCompile Include="Character.cpp">
-      <Filter>2.Play\Player\Characters</Filter>
+      <Filter>2.Play\Player</Filter>
+    </ClCompile>
+    <ClCompile Include="Projectile.cpp">
+      <Filter>2.Play\Projectile</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -65,12 +62,6 @@
     <ClInclude Include="Player.h">
       <Filter>2.Play\Player</Filter>
     </ClInclude>
-    <ClInclude Include="Suora.h">
-      <Filter>2.Play\Player\Characters</Filter>
-    </ClInclude>
-    <ClInclude Include="Old.h">
-      <Filter>2.Play\Player\Characters</Filter>
-    </ClInclude>
     <ClInclude Include="ResultLevel.h">
       <Filter>0.Level</Filter>
     </ClInclude>
@@ -81,7 +72,10 @@
       <Filter>3.Result</Filter>
     </ClInclude>
     <ClInclude Include="Character.h">
-      <Filter>2.Play\Player\Characters</Filter>
+      <Filter>2.Play\Player</Filter>
+    </ClInclude>
+    <ClInclude Include="Projectile.h">
+      <Filter>2.Play\Projectile</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -103,11 +97,11 @@
     <Filter Include="2.Play\Player">
       <UniqueIdentifier>{c18ab25f-cdab-4701-a8ed-9a10a3fd881c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="2.Play\Player\Characters">
-      <UniqueIdentifier>{100e96c3-7e80-49ea-9d6d-5543c07c6264}</UniqueIdentifier>
-    </Filter>
     <Filter Include="1.Title">
       <UniqueIdentifier>{a1af0295-5ec4-49ba-ba07-e0db2f9ac90f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2.Play\Projectile">
+      <UniqueIdentifier>{62b75236-71c0-4b9e-89cd-ec9706f7d35c}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

@@ -2,6 +2,7 @@
 #include "TitleBackGround.h"
 #include "TitleLogo.h"
 #include "GameEngine/GameEngine.h"
+#include "GameEngineBase/GameEngineInput.h"
 
 enum class RENDER_ORDER
 {
@@ -30,6 +31,9 @@ void TitleLevel::LevelChangeStart()
 
 void TitleLevel::Update()
 {
-
+	if (true == GameEngineInput::GetInst()->IsDown("ChangeLevelNext"))
+	{
+		GameEngine::GlobalEngine().ChangeLevel("Play");
+	}
 }
 

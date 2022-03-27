@@ -21,17 +21,6 @@ public:
 	GameEngineLevel& operator=(const GameEngineLevel& _Other) = delete;
 	GameEngineLevel& operator=(GameEngineLevel&& _Other) noexcept = delete;
 
-protected:
-	
-	// 래벨 생성 시, 리소스나 액터를 가져오는 단계
-	virtual void Loading() = 0;
-	// 이 레벨이 현재 레벨일 때 해야할 일을 실행
-	virtual void Update() = 0;
-	// CurrentLevel => NextLevel 시 현재의 레벨이 실행하는 함수
-	virtual void LevelChangeStart() {}
-	// CurrentLevle => NextLevel 시 현재 이전의 레벨이 실행하는 함수
-	virtual void LevelChangeEnd() {}
-
 	template<typename ActorType>
 	ActorType* CreateActor(int _Order = 0, const std::string& _Name = "")
 	{
@@ -45,6 +34,17 @@ protected:
 
 		return NewActor;
 	}
+
+protected:
+	
+	// 래벨 생성 시, 리소스나 액터를 가져오는 단계
+	virtual void Loading() = 0;
+	// 이 레벨이 현재 레벨일 때 해야할 일을 실행
+	virtual void Update() = 0;
+	// CurrentLevel => NextLevel 시 현재의 레벨이 실행하는 함수
+	virtual void LevelChangeStart() {}
+	// CurrentLevle => NextLevel 시 현재 이전의 레벨이 실행하는 함수
+	virtual void LevelChangeEnd() {}
 
 private:
 	// list이유 : 렌더링 순서, 복잡한 컨텐츠의 경우 Actor간 순서변경/삭제 가 일어날 수 있음
