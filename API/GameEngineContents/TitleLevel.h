@@ -2,6 +2,7 @@
 #include "GameEngine/GameEngineLevel.h"
 
 // Ό³Έν :
+class Character;
 class TitleLevel : public GameEngineLevel
 {
 public:
@@ -19,9 +20,10 @@ protected:
 	void Loading() override;
 	void LevelChangeStart() override;
 	void Update() override;
+	void LevelChangeEnd() override;
 
 private:
-
+	
 	
 };
 

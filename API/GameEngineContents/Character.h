@@ -1,17 +1,20 @@
 #pragma once
+#include <string>
 
 // 설명 :
-// Title레벨 에서 캐릭터를 설정하고 Play레벨에 Character정보 넘겨준다
-// 캐릭터 정보
-// 이름 : 포, 클레리씨, etc..
-// 능력치 : 체력, 공격력 등
-// 
-// 
 class Character
 {
 public:
+	enum class Type
+	{
+		Old = 0,
+		Cavallo,
+		Imelda,
+	};
+
+public:
 	// constrcuter destructer
-	Character();
+	Character();		// 디폴트 캐릭터는 "old.bmp" 입니다
 	~Character();
 
 	// delete Function
@@ -20,14 +23,39 @@ public:
 	Character& operator=(const Character& _Other) = delete;
 	Character& operator=(Character&& _Other) noexcept = delete;
 
+	void SetDefault();
+	void SetOld();
+	void SetCavallo();
+	void SetImelda();
+
 protected:
 
-private:
-
 public:
-	int Hp_;
-	int Speed_;
-	int Damage_;
+	// 캐릭터 이미지 이름 ex)old.bmp
+	std::string ImageName_;
+	std::string Name_;
+
+	// 기본 능력치 (체력, 스피드, 공격력, ...)
+	float Speed_;			// 이동속도
+	float Hp_;				// 체력
+	float Recovery_;		// 체력 재생
+	float Guard_;			// 방어력
+	float Power_;			// 괴력
+	float Range_;			// 공격 범위(성서, 마늘, 성수, 번개 등 범위 공격만 해당)
+	float ShootSpeed_;		// 투사체 속도
+	float ShootNum_;		// 투사체 수
+	float Duration_;		// 스킬 지속시간
+
+
+	// 패시브
+	float Luck_;			// 아이템 확률 3개 -> 4개
+	float Growth_;			// 경험치 획득시 추가 경험치
+	float Greed_;			// 돈 획득시 추가 돈
+	float Magnet_;			// 아이템 획득 범위
+	int Revival_;			// 부활 횟수
+
+
+	// 무기 리스트(벡터 예정) WeaponList* wpList;
 
 };
 

@@ -32,14 +32,17 @@
     <ClCompile Include="ResultBoard.cpp">
       <Filter>3.Result</Filter>
     </ClCompile>
-    <ClCompile Include="Character.cpp">
-      <Filter>2.Play\Player</Filter>
-    </ClCompile>
     <ClCompile Include="Projectile.cpp">
       <Filter>2.Play\Projectile</Filter>
     </ClCompile>
     <ClCompile Include="Enemy.cpp">
       <Filter>2.Play\Enemies</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerInfo.cpp">
+      <Filter>Global</Filter>
+    </ClCompile>
+    <ClCompile Include="Character.cpp">
+      <Filter>Global</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -74,14 +77,17 @@
     <ClInclude Include="ResultBoard.h">
       <Filter>3.Result</Filter>
     </ClInclude>
-    <ClInclude Include="Character.h">
-      <Filter>2.Play\Player</Filter>
-    </ClInclude>
     <ClInclude Include="Projectile.h">
       <Filter>2.Play\Projectile</Filter>
     </ClInclude>
     <ClInclude Include="Enemy.h">
       <Filter>2.Play\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="PlayerInfo.h">
+      <Filter>Global</Filter>
+    </ClInclude>
+    <ClInclude Include="Character.h">
+      <Filter>Global</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -108,6 +114,9 @@
     </Filter>
     <Filter Include="2.Play\Projectile">
       <UniqueIdentifier>{62b75236-71c0-4b9e-89cd-ec9706f7d35c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Global">
+      <UniqueIdentifier>{f365aa1a-4da0-4ba1-a327-1504a6728078}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

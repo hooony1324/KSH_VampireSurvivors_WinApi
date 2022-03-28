@@ -90,7 +90,7 @@ void GameEngineLevel::ActorRender()
 			// 레벨의 ActorList관리
 			// 엑터의 이미지에 관한 설정(피벗, 스케일 등) 후
 			// 버퍼에 Copy 일어남
-			(*StartActor)->Rendering();
+			(*StartActor)->Renderering();
 		}
 
 

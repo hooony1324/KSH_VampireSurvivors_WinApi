@@ -38,6 +38,18 @@ void GameEngineActor::DebugRectRender()
 	);
 }
 
+GameEngineRenderer* GameEngineActor::CreateRenderer(RenderPivot _PivotType, const float4& _PivotPos)
+{
+	GameEngineRenderer* NewRenderer = new GameEngineRenderer();
+
+	NewRenderer->SetActor(this);
+	NewRenderer->SetPivot(_PivotPos);
+	NewRenderer->SetType(_PivotType);
+
+	RenderList_.push_back(NewRenderer);
+	return NewRenderer;
+}
+
 GameEngineRenderer* GameEngineActor::CreateRenderer(
 	const std::string& _Image,
 	RenderPivot _PivotType,
@@ -47,7 +59,6 @@ GameEngineRenderer* GameEngineActor::CreateRenderer(
 
 	NewRenderer->SetActor(this);
 	NewRenderer->SetImage(_Image);
-	NewRenderer->SetImageScale();//여기 수정함
 	NewRenderer->SetPivot(_PivotPos);
 	NewRenderer->SetType(_PivotType);
 
@@ -69,7 +80,7 @@ GameEngineRenderer* GameEngineActor::CreateRendererToScale(const std::string& _I
 	return NewRenderer;
 }
 
-void GameEngineActor::Rendering()
+void GameEngineActor::Renderering()
 {
 	// RenderList의 GameEngineRenderer* 순회
 	// ex) Player의 RenderList{무기, 스킬, 캐릭터, ...} 순회하며 각 Renderer의 Render()호출

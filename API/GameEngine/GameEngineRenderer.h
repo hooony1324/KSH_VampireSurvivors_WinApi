@@ -50,7 +50,7 @@ public:
 
 	void SetImage(const std::string& _Name);
 
-	void SetIndex(size_t _Index);
+	void SetIndex(size_t _Index, float4 _Scale);
 
 protected:
 	void Render();
@@ -67,11 +67,6 @@ private:
 
 	// 내가 추가함
 public:
-	GameEngineImage& GetImage()
-	{
-		return *Image_;
-	}
-
 	float4 GetPivot()
 	{
 		return RenderPivot_;

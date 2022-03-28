@@ -4,6 +4,10 @@
 #include "GameEngine/GameEngine.h"
 #include "GameEngineBase/GameEngineInput.h"
 
+#include "Character.h"
+#include "PlayerInfo.h"
+
+
 enum class RENDER_ORDER
 {
 	BACKGROUND,
@@ -34,6 +38,11 @@ void TitleLevel::Update()
 	if (true == GameEngineInput::GetInst()->IsDown("ChangeLevelNext"))
 	{
 		GameEngine::GlobalEngine().ChangeLevel("Play");
+
 	}
 }
 
+void TitleLevel::LevelChangeEnd()
+{
+	PlayerInfo::GetInst()->ChangeCharacter(Character::Type::Imelda);
+}

@@ -2,6 +2,7 @@
 #include "GameEngine/GameEngine.h"
 
 // Ό³Έν :
+class PlayerInfo;
 class VampireSurvivorsGame : public GameEngine 
 {
 public:
@@ -23,5 +24,7 @@ protected:
 
 private:
 	void ResourceLoad();
+
+public:
 };
 

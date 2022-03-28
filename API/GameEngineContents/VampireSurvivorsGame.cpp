@@ -8,6 +8,8 @@
 #include <GameEngineBase/GameEngineInput.h>
 #include <GameEngine/GameEngineImageManager.h>
 
+#include "PlayerInfo.h"
+
 VampireSurvivorsGame::VampireSurvivorsGame() 
 {
 }
