@@ -51,6 +51,7 @@ GameEngineInput::~GameEngineInput()
 {
 }
 
+// 등록한 적이 있는 키 확인
 bool GameEngineInput::IsKey(std::string _Name)
 {
 	std::string UpperKey = GameEngineString::ToUpperReturn(_Name);

@@ -28,6 +28,7 @@ Player::Player()
 	, Greed_(1)
 	, Magnet_(1)
 	, Revival_(0)
+	, Hp_BarRed_(nullptr)	// 체력 바
 {
 
 }
@@ -44,8 +45,10 @@ void Player::Start()
 	// ImageManager에 미리 Load가 되어 있어야(GameInit->ResourceLoad) Renderer를 생성할 수 있다
 	CreateRenderer("old.bmp"); // { 62, 52 }
 	CreateRenderer("hpbar_back.bmp", RenderPivot::CENTER, { 0, 40 });
-	Hp_Red = CreateRenderer("hpbar.bmp", RenderPivot::CENTER, { 0, 40 });
 
+	// 체력 바 설정
+	Hp_BarRed_ = CreateRenderer("hpbar.bmp", RenderPivot::CENTER, { 0, 40 });
+	Hp_BarSize_ = Hp_BarRed_->GetScale();
 	
 }
 
@@ -77,7 +80,7 @@ void Player::Update()
 		Ptr->SetPosition(GetPosition());
 	}
 
-	// 삭제해도 됨
+	// 삭제해도 됨 삭제해도 됨 삭제해도 됨 삭제해도 됨 삭제해도 됨 삭제해도 됨
 	if (true == GameEngineInput::GetInst()->IsDown("KillPlayer"))
 	{
 		KillPlayer();
@@ -86,15 +89,13 @@ void Player::Update()
 	if (true == GameEngineInput::GetInst()->IsDown("PlayerDamaged"))
 	{
 		Hp_ -= 10;
-		float4 HpBarSize = Hp_Red->GetImage().GetScale();
-		float newSize = HpBarSize.x * (Hp_ / 100);
-		float4 newPivot = float4{ 0 - ((HpBarSize.x - newSize)/2.0f), Hp_Red->GetPivot().y };
-		Hp_Red->SetScale(float4{ newSize, HpBarSize.y });
-		Hp_Red->SetPivot(newPivot);
+		
+		float newSize = Hp_BarSize_.x * (Hp_ / 100);
+		Hp_BarPivot_ = float4{ 0 - ((Hp_BarSize_.x - newSize)/2), Hp_BarRed_->GetPivot().y };
+		Hp_BarRed_->SetScale(float4{ newSize, Hp_BarSize_.y });
+		Hp_BarRed_->SetPivot(Hp_BarPivot_);
 	}
-
-
-	// ~삭제해도 됨
+	// ~삭제해도 됨 삭제해도 됨 삭제해도 됨 삭제해도 됨 삭제해도 됨 삭제해도 됨
 }
 
 void Player::Render()
@@ -102,7 +103,7 @@ void Player::Render()
 
 }
 
-void Player::SetCharacter(Character _Type)
+void Player::SetCharacter(Character* _Type)
 {
 	
 }

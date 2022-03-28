@@ -1,6 +1,12 @@
 #pragma once
 
 // 설명 :
+// Title레벨 에서 캐릭터를 설정하고 Play레벨에 Character정보 넘겨준다
+// 캐릭터 정보
+// 이름 : 포, 클레리씨, etc..
+// 능력치 : 체력, 공격력 등
+// 
+// 
 class Character
 {
 public:

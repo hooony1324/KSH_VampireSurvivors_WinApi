@@ -41,6 +41,7 @@ public:
 
 	void SetImageScale();
 
+	// 그리는 크기만 바꾸는 함수
 	inline void SetScale(const float4& _Scale)
 	{
 		ScaleMode_ = RenderScaleMode::User;
@@ -74,5 +75,10 @@ public:
 	float4 GetPivot()
 	{
 		return RenderPivot_;
+	}
+
+	float4 GetScale()
+	{
+		return RenderScale_;
 	}
 };

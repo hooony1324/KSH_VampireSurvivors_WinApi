@@ -19,5 +19,6 @@ void Projectile::Start()
 
 void Projectile::Update()
 {
-	SetMove(float4{ 2, 1 } *GameEngineTime::GetDeltaTime() * 200.0f);
+	// 몬스터를 향해 발사하는 기능 추가해야됨
+	SetMove(float4::RIGHT *GameEngineTime::GetDeltaTime() * 200.0f);
 }
