@@ -41,8 +41,6 @@ void PlayLevel::Loading()
 // 맵, 캐릭터, .. 가 선택 되면 해당하는 맵으로 액터를 생성해야 함
 void PlayLevel::LevelChangeStart()
 {
-	Player_->CreateRenderer(PlayerInfo::GetInst()->Character_->ImageName_);
-
 
 	
 

@@ -44,5 +44,5 @@ void TitleLevel::Update()
 
 void TitleLevel::LevelChangeEnd()
 {
-	PlayerInfo::GetInst()->ChangeCharacter(Character::Type::Imelda);
+	PlayerInfo::GetInst()->ChangeCharacter(Character::Type::Cavallo);
 }

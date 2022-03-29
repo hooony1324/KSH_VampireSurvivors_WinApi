@@ -14,6 +14,8 @@
 #include "Character.h"
 #include "PlayerInfo.h"
 
+#include <GameEngine/GameEngineRenderer.h>
+
 Player::Player() 
 	: Hp_BarRed_(nullptr)	// 체력 바
 {
@@ -29,6 +31,9 @@ void Player::Start()
 	SetPosition(GameEngineWindow::GetScale().Half());
 	SetScale({ 100, 100 }); // 액터의 스케일, 이미지의 스케일이 아님
 
+	
+	GameEngineRenderer* Player = CreateRenderer();
+	Player->CreateAnimation("Cavallo_WalkRight.bmp", "Cavallo_WalkRight.bmp", 0, 3, 0.1f, true);
 	
 	CreateRenderer("hpbar_back.bmp", RenderPivot::CENTER, { 0, 40 });
 

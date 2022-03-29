@@ -2,6 +2,7 @@
 #include "GameEngineImageManager.h"
 #include "GameEngine.h"
 #include <GameEngineBase/GameEngineDebug.h>
+#include <GameEngineBase/GameEngineTime.h>
 
 #pragma comment(lib, "msimg32.lib")
 
@@ -45,7 +46,7 @@ void GameEngineRenderer::SetImage(const std::string& _Name)
 	SetImageScale();
 }
 
-void GameEngineRenderer::SetIndex(size_t _Index, float4 _Scale)
+void GameEngineRenderer::SetIndex(size_t _Index)
 {
 	if (false == Image_->IsCut())
 	{
@@ -53,22 +54,33 @@ void GameEngineRenderer::SetIndex(size_t _Index, float4 _Scale)
 		return;
 	}
 
-	RenderImagePivot_ = Image_->GetCutPivot(_Index);
-	if (-1.0f == _Scale.x ||
-		-1.0f == _Scale.y)
-	{
-		RenderScale_ = Image_->GetCutScale(_Index);
-	}
-	else
-	{
-		RenderScale_ = _Scale;
-	}
 
+	RenderImagePivot_ = Image_->GetCutPivot(_Index);
+	RenderScale_ = Image_->GetCutScale(_Index);
 	RenderImageScale_ = Image_->GetCutScale(_Index);
+
+	//RenderImagePivot_ = Image_->GetCutPivot(_Index);
+	//if (-1.0f == _Scale.x ||
+	//	-1.0f == _Scale.y)
+	//{
+	//	RenderScale_ = Image_->GetCutScale(_Index);
+	//}
+	//else
+	//{
+	//	RenderScale_ = _Scale;
+	//}
+
+	//RenderImageScale_ = Image_->GetCutScale(_Index);
 }
 
 void GameEngineRenderer::Render()
 {
+	// 렌더러가 애니메이션 타입인지 먼저 확인
+	if (nullptr != CurrentAnimation_)
+	{
+		CurrentAnimation_->Update();
+	}
+
 	if (nullptr == Image_)
 	{
 		MsgBoxAssert("렌더러에 이미지가 세팅되어 있지 않아 랜더링을 실패하였습니다");
@@ -90,3 +102,77 @@ void GameEngineRenderer::Render()
 	}
 }
 
+/////////////// Animation //////////////////////
+
+void GameEngineRenderer::CreateAnimation(
+	const std::string& _Image,
+	const std::string& _Name,
+	int _StartIndex,
+	int _EndIndex,
+	float _InterTime,
+	bool _Loop /*= true*/)
+{
+	GameEngineImage* FindImage = GameEngineImageManager::GetInst()->Find(_Image);
+
+	if (nullptr == FindImage)
+	{
+		MsgBoxAssert("존재하지 않는 이미지로 애니메이션을 만들려고 했습니다.");
+		return;
+	}
+
+	if (Animations_.end() != Animations_.find(_Name))
+	{
+		MsgBoxAssert("이미 존재하는 애니메이션을 또 만들려고 했습니다..");
+		return;
+	}
+
+	//FrameAnimation Animation;
+	//Animation.insert(std::make_pair(, FrameAnimation()));
+	FrameAnimation& NewAnimation = Animations_[_Name];
+	NewAnimation.Renderer_ = this;
+	NewAnimation.Image_ = FindImage;
+	NewAnimation.CurrentFrame_ = _StartIndex;
+	NewAnimation.StartFrame_ = _StartIndex;
+	NewAnimation.EndFrame_ = _EndIndex;
+	NewAnimation.CurrentInterTime_ = _InterTime;
+	NewAnimation.InterTime_ = _InterTime;
+	NewAnimation.Loop_ = _Loop;
+}
+
+void GameEngineRenderer::ChangeAnimation(const std::string& _Name)
+{
+	std::map<std::string, FrameAnimation>::iterator FindIter = Animations_.find(_Name);
+
+	if (Animations_.end() == FindIter)
+	{
+		MsgBoxAssert("존재하지 않는 애니메이션으로 체인지 하려고 했습니다.");
+		return;
+	}
+
+	CurrentAnimation_ = &FindIter->second;
+}
+
+void GameEngineRenderer::FrameAnimation::Update()
+{
+	CurrentInterTime_ -= GameEngineTime::GetInst()->GetDeltaTime();
+	if (0 >= CurrentInterTime_)
+	{
+		CurrentInterTime_ = InterTime_;
+		++CurrentFrame_;
+
+		if (EndFrame_ < CurrentFrame_)
+		{
+			if (true == Loop_)
+			{
+				CurrentFrame_ = StartFrame_;
+			}
+			else
+			{
+				CurrentFrame_ = EndFrame_;
+			}
+		}
+	}
+
+	Renderer_->Image_ = Image_;
+	Renderer_->SetIndex(CurrentFrame_);
+}
