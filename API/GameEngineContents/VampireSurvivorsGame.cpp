@@ -29,10 +29,10 @@ void VampireSurvivorsGame::GameInit()
 	CreateLevel<TitleLevel>("Title");
 	CreateLevel<PlayLevel>("Play");
 	CreateLevel<ResultLevel>("Result");
-	ChangeLevel("Title");
+	ChangeLevel("Play");
 
 
-	// 모든 레벨을 통합한 키 세팅
+	// 키 세팅
 	if (false == GameEngineInput::GetInst()->IsKey("MoveLeft"))
 	{
 		GameEngineInput::GetInst()->CreateKey("MoveLeft", 'A');
@@ -55,6 +55,11 @@ void VampireSurvivorsGame::GameInit()
 		GameEngineInput::GetInst()->CreateKey("PlayerDamaged", 'P');
 
 	}
+
+	// 애니메이션용 이미지는 Cut선행되어야 함
+	GameEngineImage* Image = GameEngineImageManager::GetInst()->Find("Cavallo_WalkRight.bmp");
+	Image->Cut({ 60, 64 });
+
 }
 
 void VampireSurvivorsGame::GameLoop()

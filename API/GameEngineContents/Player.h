@@ -24,7 +24,7 @@ private:
 	void Render() override;
 
 private:
-
+	GameEngineRenderer* PlayerRenderer_;
 	GameEngineRenderer* Hp_BarRed_;
 	float4				Hp_BarSize_;
 	float4				Hp_BarPivot_;

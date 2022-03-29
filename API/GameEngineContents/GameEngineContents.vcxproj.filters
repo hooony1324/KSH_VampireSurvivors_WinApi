@@ -44,6 +44,9 @@
     <ClCompile Include="Character.cpp">
       <Filter>Global</Filter>
     </ClCompile>
+    <ClCompile Include="GameStartButton.cpp">
+      <Filter>1.Title</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="VampireSurvivorsGame.h" />
@@ -88,6 +91,9 @@
     </ClInclude>
     <ClInclude Include="Character.h">
       <Filter>Global</Filter>
+    </ClInclude>
+    <ClInclude Include="GameStartButton.h">
+      <Filter>1.Title</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

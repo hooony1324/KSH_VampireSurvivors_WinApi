@@ -17,7 +17,7 @@ void ResultBackGround::Start()
 	SetPosition(GameEngineWindow::GetScale().Half());
 	SetScale(GameEngineWindow::GetScale());
 
-	CreateRenderer("introBG.bmp");
+	CreateRenderer("resultBG.bmp");
 }
 
 void ResultBackGround::Update()

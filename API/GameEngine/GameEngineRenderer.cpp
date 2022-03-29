@@ -75,7 +75,7 @@ void GameEngineRenderer::SetIndex(size_t _Index)
 
 void GameEngineRenderer::Render()
 {
-	// 렌더러가 애니메이션 타입인지 먼저 확인
+	// 애니메이션 업데이트를 하며 Image_를 세팅해줌
 	if (nullptr != CurrentAnimation_)
 	{
 		CurrentAnimation_->Update();

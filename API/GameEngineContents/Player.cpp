@@ -18,6 +18,7 @@
 
 Player::Player() 
 	: Hp_BarRed_(nullptr)	// 체력 바
+	, PlayerRenderer_(nullptr)
 {
 
 }
@@ -31,9 +32,13 @@ void Player::Start()
 	SetPosition(GameEngineWindow::GetScale().Half());
 	SetScale({ 100, 100 }); // 액터의 스케일, 이미지의 스케일이 아님
 
-	
-	GameEngineRenderer* Player = CreateRenderer();
-	Player->CreateAnimation("Cavallo_WalkRight.bmp", "Cavallo_WalkRight.bmp", 0, 3, 0.1f, true);
+
+	PlayerInfo::GetInst()->ChangeCharacter(Character::Type::Cavallo);
+
+	GameEngineRenderer* PlayerRenderer_ = CreateRenderer();
+	PlayerRenderer_->CreateAnimation("Cavallo_WalkRight.bmp", "Walk_Right", 0, 3, 0.12f, true);
+	PlayerRenderer_->ChangeAnimation("Walk_Right"); 
+
 	
 	CreateRenderer("hpbar_back.bmp", RenderPivot::CENTER, { 0, 40 });
 
@@ -54,6 +59,7 @@ void Player::Update()
 
 	if (true == GameEngineInput::GetInst()->IsPress("MoveRight"))
 	{
+		
 		SetMove(float4::RIGHT * GameEngineTime::GetDeltaTime() * Speed);
 	}
 
