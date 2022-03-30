@@ -16,6 +16,7 @@ private:
 		bool Up_;			// 이미 누른 상태에서 땔 때
 		bool Free_;			// 땐 상태
 
+		float Time_;
 		int Key_;			
 
 		bool KeyCheck()
@@ -23,7 +24,7 @@ private:
 			return 0 != GetAsyncKeyState(Key_);
 		}
 
-		void Update();
+		void Update(float _DeltaTime);
 
 		void Reset()
 		{
@@ -54,14 +55,15 @@ public:
 	}
 
 public:
-	void Update();
-	void CreateKey(std::string _Name, int _Key);
+	void Update(float _DeltaTime = 0.0f);
+	void CreateKey(const std::string _Name, int _Key);
 
-	bool IsDown(std::string _Name);
-	bool IsUp(std::string _Name);
-	bool IsPress(std::string _Name);
-	bool IsFree(std::string _Name);
-	bool IsKey(std::string _Name);
+	float GetTime(const std::string& _Name);
+	bool IsDown(const std::string& _Name);
+	bool IsUp(const std::string& _Name);
+	bool IsPress(const std::string& _Name);
+	bool IsFree(const std::string& _Name);
+	bool IsKey(const std::string& _Name);
 
 protected:
 

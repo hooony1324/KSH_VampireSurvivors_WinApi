@@ -202,6 +202,11 @@ void GameEngineImage::CutCount(int _x, int _y)
     Cut(Scale);
 }
 
+int GameEngineImage::GetImagePixel(int _x, int _y)
+{
+    return GetPixel(ImageDC_, _x, _y);
+}
+
 void GameEngineImage::ImageScaleCheck()
 {
     // DC 내부에 박혀있는 BITMAP을 리턴하는 함수

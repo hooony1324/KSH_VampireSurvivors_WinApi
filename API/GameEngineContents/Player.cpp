@@ -36,8 +36,9 @@ void Player::Start()
 	PlayerInfo::GetInst()->ChangeCharacter(Character::Type::Cavallo);
 
 	GameEngineRenderer* PlayerRenderer_ = CreateRenderer();
+	PlayerRenderer_->CreateAnimation("Cavallo_WalkRight.bmp", "Idle_Right", 0, 0, 0.1f, false);
 	PlayerRenderer_->CreateAnimation("Cavallo_WalkRight.bmp", "Walk_Right", 0, 3, 0.12f, true);
-	PlayerRenderer_->ChangeAnimation("Walk_Right"); 
+	PlayerRenderer_->ChangeAnimation("Idle_Right"); 
 
 	
 	CreateRenderer("hpbar_back.bmp", RenderPivot::CENTER, { 0, 40 });

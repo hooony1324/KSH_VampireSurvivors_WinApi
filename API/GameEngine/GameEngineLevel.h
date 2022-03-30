@@ -1,7 +1,8 @@
 #pragma once
-#include "GameEngineBase/GameEngineNameObject.h"
 #include <list>
 #include <map>
+#include <GameEngineBase/GameEngineNameObject.h>
+#include <GAmeEngineBase/GameEngineMath.h>
 
 // 설명 :
 class GameEngine;
@@ -35,6 +36,21 @@ public:
 		return NewActor;
 	}
 
+	inline float4 GetCameraPos()
+	{
+		return CameraPos_;
+	}
+
+	inline void MoveCameraPos(const float4& _Value)
+	{
+		CameraPos_ += _Value;
+	}
+
+	inline void SetCameraPos(const float4& _Value)
+	{
+		CameraPos_ = _Value;
+	}
+
 protected:
 	
 	// 래벨 생성 시, 리소스나 액터를 가져오는 단계
@@ -54,7 +70,7 @@ private:
 	void ActorRender();
 	void ActorRelease();
 
-	// 따로 추가한 기능
-public:
+	float4 CameraPos_;
+
 };
 

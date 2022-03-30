@@ -2,6 +2,7 @@
 #include "GameEngineActor.h"
 
 GameEngineLevel::GameEngineLevel() 
+	: CameraPos_(float4::ZERO)
 {
 }
 

@@ -14,7 +14,7 @@ void Library::Start()
 	SetPosition(GameEngineWindow::GetScale().Half());
 	SetScale(GameEngineWindow::GetScale());
 
-	CreateRenderer("LibraryTile.bmp");
+	CreateRenderer("Library_Base_x2.bmp");
 }
 
 void Library::Update()

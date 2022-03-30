@@ -14,7 +14,7 @@ Projectile::~Projectile()
 
 void Projectile::Start()
 {
-	CreateRenderer("sword.bmp");
+  	CreateRenderer("sword.bmp");
 }
 
 void Projectile::Update()

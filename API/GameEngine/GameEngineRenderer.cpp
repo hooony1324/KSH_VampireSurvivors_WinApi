@@ -1,6 +1,7 @@
 #include "GameEngineRenderer.h"
 #include "GameEngineImageManager.h"
 #include "GameEngine.h"
+#include "GameEngineLevel.h"
 #include <GameEngineBase/GameEngineDebug.h>
 #include <GameEngineBase/GameEngineTime.h>
 
@@ -12,6 +13,7 @@ GameEngineRenderer::GameEngineRenderer()
 	, ScaleMode_(RenderScaleMode::Image)
 	, TransColor_(RGB(255, 0, 255)) // Magenta색 투명처리
 	, RenderImagePivot_({ 0, 0 })
+	, IsCameraEffect_(true)
 {
 }
 
@@ -46,7 +48,7 @@ void GameEngineRenderer::SetImage(const std::string& _Name)
 	SetImageScale();
 }
 
-void GameEngineRenderer::SetIndex(size_t _Index)
+void GameEngineRenderer::SetIndex(size_t _Index, const float4& _Scale)
 {
 	if (false == Image_->IsCut())
 	{
@@ -54,23 +56,17 @@ void GameEngineRenderer::SetIndex(size_t _Index)
 		return;
 	}
 
+	if (_Scale.x <= 0 || _Scale.y <= 0)
+	{
+		RenderScale_ = Image_->GetCutScale(_Index);
+	}
+	else
+	{
+		RenderScale_ = _Scale;
+	}
 
 	RenderImagePivot_ = Image_->GetCutPivot(_Index);
-	RenderScale_ = Image_->GetCutScale(_Index);
 	RenderImageScale_ = Image_->GetCutScale(_Index);
-
-	//RenderImagePivot_ = Image_->GetCutPivot(_Index);
-	//if (-1.0f == _Scale.x ||
-	//	-1.0f == _Scale.y)
-	//{
-	//	RenderScale_ = Image_->GetCutScale(_Index);
-	//}
-	//else
-	//{
-	//	RenderScale_ = _Scale;
-	//}
-
-	//RenderImageScale_ = Image_->GetCutScale(_Index);
 }
 
 void GameEngineRenderer::Render()
@@ -89,14 +85,23 @@ void GameEngineRenderer::Render()
 
 	float4 RenderPos = GetActor()->GetPosition() + RenderPivot_;
 
+	if (true == IsCameraEffect_)
+	{
+		RenderPos -= GetActor()->GetLevel()->GetCameraPos();
+	}
+
 	switch (PivotType_)
 	{
 	case RenderPivot::CENTER:
 		GameEngine::BackBufferImage()->TransCopy(Image_, RenderPos - RenderScale_.Half(), RenderScale_, RenderImagePivot_, RenderImageScale_, TransColor_);
 		break;
 	case RenderPivot::BOT:
-		// GameEngine::BackBufferImage()->TransCopyCenterScale(Image_, RenderPos, RenderScale, TransColor_);
+	{
+		float4 Scale = RenderScale_.Half();
+		Scale.y *= 2.0f;
+		GameEngine::BackBufferImage()->TransCopy(Image_, RenderPos - Scale, RenderScale_, RenderImagePivot_, RenderImageScale_, TransColor_);
 		break;
+	}
 	default:
 		break;
 	}
