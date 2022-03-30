@@ -11,9 +11,9 @@ GameEngineRenderer::GameEngineRenderer()
 	: Image_(nullptr)
 	, PivotType_(RenderPivot::CENTER)
 	, ScaleMode_(RenderScaleMode::Image)
-	, TransColor_(RGB(255, 0, 255)) // Magenta색 투명처리
+	, TransColor_(RGB(255, 0, 255))			// 투명처리할 색
 	, RenderImagePivot_({ 0, 0 })
-	, IsCameraEffect_(true)
+	, IsCameraEffect_(true)				// 카메라 영향 받는지의 여부
 {
 }
 

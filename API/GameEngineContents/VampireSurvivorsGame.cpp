@@ -69,7 +69,7 @@ void VampireSurvivorsGame::GameLoop()
 
 void VampireSurvivorsGame::GameEnd()
 {
-
+	PlayerInfo::GetInst()->Destroy();
 }
 
 void VampireSurvivorsGame::ResourceLoad()

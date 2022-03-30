@@ -15,7 +15,7 @@ Mud::~Mud()
 void Mud::Start()
 {
 	CreateRenderer("Mud_0.bmp");
-	SetPosition({ 800, 400 });
+	SetPosition({ 800, 600 });
 }
 
 void Mud::Update()

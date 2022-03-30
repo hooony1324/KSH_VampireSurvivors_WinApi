@@ -3,6 +3,7 @@
 
 // 설명 : 
 class Character;
+class GameEngineImage;
 class Player : public GameEngineActor
 {
 public:
@@ -19,11 +20,19 @@ public:
 	void KillPlayer();
 
 private:
+	float Gravity_;
+	float AccGravity_;
+	GameEngineImage* MapColImage_;
+
 	void Start() override;
 	void Update() override;
 	void Render() override;
 
+
+// 내가 추가한 내용
 private:
+	Character*			PlayerStat_;
+
 	GameEngineRenderer* PlayerRenderer_;
 	GameEngineRenderer* Hp_BarRed_;
 	float4				Hp_BarSize_;

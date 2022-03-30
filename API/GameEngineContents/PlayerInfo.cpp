@@ -41,5 +41,10 @@ PlayerInfo::PlayerInfo()
 
 PlayerInfo::~PlayerInfo() 
 {
+	if (nullptr != Character_)
+	{
+		delete Character_;
+		Character_ = nullptr;
+	}
 }
 
