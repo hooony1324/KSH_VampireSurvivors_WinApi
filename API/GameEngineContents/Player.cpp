@@ -16,11 +16,14 @@
 #include "PlayerInfo.h"
 
 #include <GameEngine/GameEngineRenderer.h>
+#include <cmath>
 
 Player::Player() 
 	: Hp_BarRed_(nullptr)
 	, PlayerRenderer_(nullptr)
 	, Gravity_(100.0f)
+	, MoveDir_(float4::ZERO)
+	, HeadDir_(float4::RIGHT)
 {
 
 }
@@ -40,6 +43,7 @@ void Player::Start()
 	PlayerRenderer_ = CreateRenderer();
 	PlayerRenderer_->CreateAnimation("Cavallo_WalkRight.bmp", "Idle_Right", 0, 0, 0.1f, false);
 	PlayerRenderer_->CreateAnimation("Cavallo_WalkRight.bmp", "Walk_Right", 0, 3, 0.12f, true);
+	PlayerRenderer_->CreateAnimation("Cavallo_WalkLeft.bmp", "Idle_Left", 0, 0, 0.1f, false);
 	PlayerRenderer_->CreateAnimation("Cavallo_WalkLeft.bmp", "Walk_Left", 0, 3, 0.12f, true);
 	PlayerRenderer_->ChangeAnimation("Idle_Right"); 
 
@@ -54,7 +58,7 @@ void Player::Start()
 
 void Player::Update()
 {
-	
+
 
 	if (nullptr == MapColImage_)
 	{
@@ -63,29 +67,61 @@ void Player::Update()
 
 	PlayerStat_ = PlayerInfo::GetInst()->Character_;
 	float Speed = PlayerStat_->Speed_;
-	
-	float4 CheckPos;
-	float4 MoveDir = float4::ZERO;
+
+	//////////////////플레이어 이동/////////////////
+	MoveDir_ = float4::ZERO;
 
 
-	if (true == GameEngineInput::GetInst()->IsPress("MoveLeft"))
+	bool MoveLeft = GameEngineInput::GetInst()->IsPress("MoveLeft");
+	bool MoveRight = GameEngineInput::GetInst()->IsPress("MoveRight");
+	bool MoveUp = GameEngineInput::GetInst()->IsPress("MoveUp");
+	bool MoveDown = GameEngineInput::GetInst()->IsPress("MoveDown");
+
+	bool StopLeft = GameEngineInput::GetInst()->IsUp("MoveLeft");
+	bool StopRight = GameEngineInput::GetInst()->IsUp("MoveRight");
+	bool StopUp = GameEngineInput::GetInst()->IsUp("MoveUp");
+	bool StopDown = GameEngineInput::GetInst()->IsUp("MoveDown");
+
+	if (MoveLeft)
 	{
-		MoveDir = float4::LEFT;
+		MoveDir_ = float4::LEFT;
+		HeadDir_ = float4::LEFT;
 	}
 
-	if (true == GameEngineInput::GetInst()->IsPress("MoveRight"))
+	if (MoveRight)
 	{
-		MoveDir = float4::RIGHT;
+		MoveDir_ = float4::RIGHT;
+		HeadDir_ = float4::RIGHT;
 	}
 
-	if (true == GameEngineInput::GetInst()->IsPress("MoveUp"))
+	if (MoveUp)
 	{
-		MoveDir = float4::UP;
+		MoveDir_ = float4::UP;
 	}
 
-	if (true == GameEngineInput::GetInst()->IsPress("MoveDown"))
+	if (MoveDown)
 	{
-		MoveDir = float4::DOWN;
+		MoveDir_ = float4::DOWN;
+	}
+
+	if (MoveLeft && MoveUp)
+	{
+		MoveDir_ = (float4::LEFT + float4::UP) * (float)(1 / sqrt(2));
+	}
+
+	if (MoveUp && MoveRight)
+	{
+		MoveDir_ = (float4::UP + float4::RIGHT) * (float)(1 / sqrt(2));
+	}
+
+	if (MoveRight && MoveDown)
+	{
+		MoveDir_ = (float4::RIGHT + float4::DOWN) * (float)(1 / sqrt(2));
+	}
+
+	if (MoveDown && MoveLeft)
+	{
+		MoveDir_ = (float4::DOWN + float4::LEFT) * (float)(1 / sqrt(2));
 	}
 
 	if (true == GameEngineInput::GetInst()->IsDown("SpaceBar"))
@@ -97,10 +133,10 @@ void Player::Update()
 	// 중력 적용
 	/*AccGravity_ += GameEngineTime::GetDeltaTime() * Gravity_;
 	SetMove(float4::DOWN * GameEngineTime::GetDeltaTime() * AccGravity_);*/
-	
+
 	// Pixel 충돌
-	float4 NextPosTop = GetPosition() + (MoveDir * GameEngineTime::GetDeltaTime() * Speed) + float4(0, -40);
-	float4 NextPosBot = GetPosition() + (MoveDir * GameEngineTime::GetDeltaTime() * Speed) + float4(0, 40);
+	float4 NextPosTop = GetPosition() + (MoveDir_ * GameEngineTime::GetDeltaTime() * Speed) + float4(0, -40);
+	float4 NextPosBot = GetPosition() + (MoveDir_ * GameEngineTime::GetDeltaTime() * Speed) + float4(0, 40);
 
 	int NextTopColor = MapColImage_->GetImagePixel(NextPosTop);
 	int NextBotColor = MapColImage_->GetImagePixel(NextPosBot);
@@ -109,20 +145,31 @@ void Player::Update()
 		Speed = 0;
 	}
 
-	if (MoveDir == float4::LEFT)
+	if (HeadDir_ == float4::LEFT && MoveDir_ != float4::ZERO)
 	{
 		PlayerRenderer_->ChangeAnimation("Walk_Left");
 	}
-	else if (MoveDir == float4::RIGHT)
+	else if (MoveDir_ != float4::ZERO)
 	{
 		PlayerRenderer_->ChangeAnimation("Walk_Right");
 	}
-	else
+
+	SetMove(MoveDir_ * GameEngineTime::GetDeltaTime() * Speed);
+
+	if (StopLeft || StopRight || StopUp || StopDown)
 	{
-		PlayerRenderer_->ChangeAnimation("Idle_Right");
+		if (HeadDir_ == float4::RIGHT)
+		{
+			PlayerRenderer_->ChangeAnimation("Idle_Right");
+		}
+		else
+		{
+			PlayerRenderer_->ChangeAnimation("Idle_Left");
+		}
 	}
-	SetMove(MoveDir * GameEngineTime::GetDeltaTime() * Speed);
-	
+
+
+
 	GetLevel()->SetCameraPos(GetPosition() - GameEngineWindow::GetScale().Half());
 	
 

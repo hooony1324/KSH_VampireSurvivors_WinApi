@@ -32,6 +32,8 @@ private:
 // 내가 추가한 내용
 private:
 	Character*			PlayerStat_;
+	float4				MoveDir_;
+	float4				HeadDir_;
 
 	GameEngineRenderer* PlayerRenderer_;
 	GameEngineRenderer* Hp_BarRed_;
