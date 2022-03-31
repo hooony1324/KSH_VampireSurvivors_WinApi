@@ -47,6 +47,21 @@
     <ClCompile Include="GameStartButton.cpp">
       <Filter>1.Title</Filter>
     </ClCompile>
+    <ClCompile Include="ExpBar.cpp">
+      <Filter>2.Play\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="WeaponInventory.cpp">
+      <Filter>2.Play\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>2.Play\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="ExpObb.cpp">
+      <Filter>2.Play\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="Coin.cpp">
+      <Filter>2.Play\Item</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="VampireSurvivorsGame.h" />
@@ -95,6 +110,21 @@
     <ClInclude Include="GameStartButton.h">
       <Filter>1.Title</Filter>
     </ClInclude>
+    <ClInclude Include="ExpBar.h">
+      <Filter>2.Play\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="WeaponInventory.h">
+      <Filter>2.Play\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>2.Play\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="ExpObb.h">
+      <Filter>2.Play\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="Coin.h">
+      <Filter>2.Play\Item</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="0.Level">
@@ -123,6 +153,12 @@
     </Filter>
     <Filter Include="Global">
       <UniqueIdentifier>{f365aa1a-4da0-4ba1-a327-1504a6728078}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2.Play\UI">
+      <UniqueIdentifier>{ce325ebb-26fb-49ee-a347-8bcb3163f065}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2.Play\Item">
+      <UniqueIdentifier>{a1bae2c5-4a5a-4ab0-b76a-7c421ff0dd19}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

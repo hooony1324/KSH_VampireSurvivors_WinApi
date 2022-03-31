@@ -37,9 +37,10 @@ void Player::Start()
 	// 플레이어 이미지 관련 설정
 	PlayerInfo::GetInst()->ChangeCharacter(Character::Type::Cavallo);
 
-	GameEngineRenderer* PlayerRenderer_ = CreateRenderer();
+	PlayerRenderer_ = CreateRenderer();
 	PlayerRenderer_->CreateAnimation("Cavallo_WalkRight.bmp", "Idle_Right", 0, 0, 0.1f, false);
 	PlayerRenderer_->CreateAnimation("Cavallo_WalkRight.bmp", "Walk_Right", 0, 3, 0.12f, true);
+	PlayerRenderer_->CreateAnimation("Cavallo_WalkLeft.bmp", "Walk_Left", 0, 3, 0.12f, true);
 	PlayerRenderer_->ChangeAnimation("Idle_Right"); 
 
 
@@ -74,7 +75,6 @@ void Player::Update()
 
 	if (true == GameEngineInput::GetInst()->IsPress("MoveRight"))
 	{
-		
 		MoveDir = float4::RIGHT;
 	}
 
@@ -109,6 +109,18 @@ void Player::Update()
 		Speed = 0;
 	}
 
+	if (MoveDir == float4::LEFT)
+	{
+		PlayerRenderer_->ChangeAnimation("Walk_Left");
+	}
+	else if (MoveDir == float4::RIGHT)
+	{
+		PlayerRenderer_->ChangeAnimation("Walk_Right");
+	}
+	else
+	{
+		PlayerRenderer_->ChangeAnimation("Idle_Right");
+	}
 	SetMove(MoveDir * GameEngineTime::GetDeltaTime() * Speed);
 	
 	GetLevel()->SetCameraPos(GetPosition() - GameEngineWindow::GetScale().Half());
@@ -123,11 +135,7 @@ void Player::Update()
 	if (true == GameEngineInput::GetInst()->IsDown("PlayerDamaged"))
 	{
 		PlayerStat_->Hp_ -= 10;
-		
-		float newSize = Hp_BarSize_.x * (PlayerStat_->Hp_ / 100);
-		Hp_BarPivot_ = float4{ 0 - ((Hp_BarSize_.x - newSize)/2), Hp_BarRed_->GetPivot().y };
-		Hp_BarRed_->SetScale(float4{ newSize, Hp_BarSize_.y });
-		Hp_BarRed_->SetPivot(Hp_BarPivot_);
+
 	}
 	// ~삭제해도 됨 삭제해도 됨 삭제해도 됨 삭제해도 됨 삭제해도 됨 삭제해도 됨
 }
@@ -135,6 +143,11 @@ void Player::Update()
 void Player::Render()
 {
 
+	// 체력 바
+	float newSize = Hp_BarSize_.x * (PlayerStat_->Hp_ / 100);
+	Hp_BarPivot_ = float4{ 0 - ((Hp_BarSize_.x - newSize) / 2), Hp_BarRed_->GetPivot().y };
+	Hp_BarRed_->SetScale(float4{ newSize, Hp_BarSize_.y });
+	Hp_BarRed_->SetPivot(Hp_BarPivot_);
 }
 
 void Player::KillPlayer()

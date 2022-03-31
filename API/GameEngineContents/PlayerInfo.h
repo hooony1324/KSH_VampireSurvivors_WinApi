@@ -32,6 +32,7 @@ public:
 	int EearnedGold_;
 	int CharacterLevel_;
 	int KillCount_;
+	float Exp_;
 
 	Character* Character_;
 	void ChangeCharacter(Character::Type _Type);
