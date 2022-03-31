@@ -7,9 +7,12 @@
 // 설명 :
 class GameEngine;
 class GameEngineActor;
+class GameEngineCollision;
 class GameEngineLevel : public GameEngineNameObject
 {
 	friend GameEngine;
+	friend GameEngineActor;
+	friend GameEngineCollision;
 public:
 	// constrcuter destructer
 	GameEngineLevel();
@@ -72,5 +75,10 @@ private:
 
 	float4 CameraPos_;
 
+private:
+	// 콜라이더는 엑터가 삭제, 콜라이더들은 Level이 관리
+	std::map<std::string, std::list<GameEngineCollision*>> AllCollision_;
+
+	void AddCollision(const std::string& _GroupName, GameEngineCollision* _Collision);
 };
 

@@ -8,6 +8,7 @@
 // Ό³Έν :
 class GameEngineLevel;
 class GameEngineRenderer;
+class GameEngineCollision;
 class GameEngineActor : public GameEngineNameObject, public GameEngineUpdateObject
 {
 	friend GameEngineLevel;
@@ -84,5 +85,12 @@ private:
 	std::list<GameEngineRenderer*>::iterator EndRenderIter;
 
 	std::list<GameEngineRenderer*> RenderList_;
+
+	////////////////////Collision////////////////////
+public:
+	GameEngineCollision* CreateCollision(const std::string& _GroupName, float4 _Scale, float4 _Pivot{ 0, 0 });
+
+private:
+	std::list<GameEngineCollision*> CollisionList_;
 };
 

@@ -11,3 +11,11 @@ enum class RenderScaleMode
 	Image,		// 불러온 이미지 설정값으로 사용
 	User,		// 유저가 커스텀한 설정값으로 사용
 };
+
+enum class CollisionType
+{
+	Point,
+	Circle,
+	Rect,
+	Max
+};
