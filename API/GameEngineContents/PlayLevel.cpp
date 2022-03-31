@@ -1,13 +1,17 @@
 #include "PlayLevel.h"
+#include <GameEngineBase/GameEngineWindow.h>
 #include <GameEngine/GameEngine.h>
 #include <GameEngineBase/GameEngineInput.h>
+#include <GameEngineBase/GameEngineTime.h>
+
+#include "PlayerInfo.h"
+#include "ExpBar.h"
+#include "WeaponSlots.h"
+
 #include "Player.h"
 #include "Library.h"
 #include "Mud.h"
-
 #include "Enemy.h"
-#include "PlayerInfo.h"
-
 
 enum class RENDER_ORDER
 {
@@ -32,10 +36,12 @@ void PlayLevel::Loading()
 	Player_ = CreateActor<Player>((int)RENDER_ORDER::PLAYER);
 
 	// Library 맵 환경 설정
-	CreateActor<Library>((int)RENDER_ORDER::BACKGROUND);
+	Map_ = CreateActor<Library>((int)RENDER_ORDER::BACKGROUND);
 	CreateActor<Mud>((int)RENDER_ORDER::MONSTER);
 	
-
+	GameEngineActor* ExpUI = CreateActor<ExpBar>((int)RENDER_ORDER::UI);
+	GameEngineActor* WeaponUI = CreateActor<WeaponSlots>((int)RENDER_ORDER::UI);
+	
 }
 
 // 레벨 변경시 진입 (Title -> Play -> Result)
@@ -52,6 +58,22 @@ void PlayLevel::Update()
 	{
 		GameEngine::GlobalEngine().ChangeLevel("Result");
 	}
+
+	float4 PlayerPos = Player_->GetPosition();
+	float MapLeftX = GameEngineWindow::GetScale().Half().x;
+	float MapRightX = Map_->GetScale().x - GameEngineWindow::GetScale().Half().x - 64;
+	
+	if (PlayerPos.x <= MapLeftX)
+	{
+		Player_->SetPosition({ MapRightX, PlayerPos.y });
+	}
+
+	if (PlayerPos.x >= MapRightX)
+	{
+		Player_->SetPosition({ MapLeftX, PlayerPos.y});
+	}
+
+	int a = 0;
 }
 
 void PlayLevel::LevelChangeEnd()

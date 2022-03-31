@@ -58,19 +58,18 @@ void Player::Start()
 
 void Player::Update()
 {
-
+	float4 PlayerPos_ = GetPosition();
 
 	if (nullptr == MapColImage_)
 	{
 		MsgBoxAssert("맵 콜라이더가 로드되지 않았습니다");
 	}
 
+	//////////////////플레이어 이동/////////////////
 	PlayerStat_ = PlayerInfo::GetInst()->Character_;
 	float Speed = PlayerStat_->Speed_;
 
-	//////////////////플레이어 이동/////////////////
 	MoveDir_ = float4::ZERO;
-
 
 	bool MoveLeft = GameEngineInput::GetInst()->IsPress("MoveLeft");
 	bool MoveRight = GameEngineInput::GetInst()->IsPress("MoveRight");
@@ -127,7 +126,7 @@ void Player::Update()
 	if (true == GameEngineInput::GetInst()->IsDown("SpaceBar"))
 	{
 		Projectile* Bullet = GetLevel()->CreateActor<Projectile>();
-		Bullet->SetPosition(GetPosition());
+		Bullet->SetPosition(PlayerPos_);
 	}
 
 	// 중력 적용
@@ -135,8 +134,8 @@ void Player::Update()
 	SetMove(float4::DOWN * GameEngineTime::GetDeltaTime() * AccGravity_);*/
 
 	// Pixel 충돌
-	float4 NextPosTop = GetPosition() + (MoveDir_ * GameEngineTime::GetDeltaTime() * Speed) + float4(0, -40);
-	float4 NextPosBot = GetPosition() + (MoveDir_ * GameEngineTime::GetDeltaTime() * Speed) + float4(0, 40);
+	float4 NextPosTop = PlayerPos_ + (MoveDir_ * GameEngineTime::GetDeltaTime() * Speed) + float4(0, -40);
+	float4 NextPosBot = PlayerPos_ + (MoveDir_ * GameEngineTime::GetDeltaTime() * Speed) + float4(0, 40);
 
 	int NextTopColor = MapColImage_->GetImagePixel(NextPosTop);
 	int NextBotColor = MapColImage_->GetImagePixel(NextPosBot);
@@ -168,10 +167,8 @@ void Player::Update()
 		}
 	}
 
+	GetLevel()->SetCameraPos(PlayerPos_ - GameEngineWindow::GetScale().Half());
 
-
-	GetLevel()->SetCameraPos(GetPosition() - GameEngineWindow::GetScale().Half());
-	
 
 	// 삭제해도 됨 삭제해도 됨 삭제해도 됨 삭제해도 됨 삭제해도 됨 삭제해도 됨
 	if (true == GameEngineInput::GetInst()->IsDown("KillPlayer"))
@@ -189,7 +186,17 @@ void Player::Update()
 
 void Player::Render()
 {
+	HpBarRender();
 
+}
+
+void Player::KillPlayer()
+{
+	GameEngineUpdateObject::Death();
+}
+
+void Player::HpBarRender()
+{
 	// 체력 바
 	float newSize = Hp_BarSize_.x * (PlayerStat_->Hp_ / 100);
 	Hp_BarPivot_ = float4{ 0 - ((Hp_BarSize_.x - newSize) / 2), Hp_BarRed_->GetPivot().y };
@@ -197,8 +204,4 @@ void Player::Render()
 	Hp_BarRed_->SetPivot(Hp_BarPivot_);
 }
 
-void Player::KillPlayer()
-{
-	GameEngineUpdateObject::Death();
-}
 

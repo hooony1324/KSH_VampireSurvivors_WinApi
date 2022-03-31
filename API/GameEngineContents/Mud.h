@@ -22,6 +22,7 @@ protected:
 	void Render() override;
 
 private:
+	GameEngineRenderer* Mud_;
 
 };
 

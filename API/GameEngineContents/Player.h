@@ -17,8 +17,6 @@ public:
 	Player& operator=(const Player& _Other) = delete;
 	Player& operator=(Player&& _Other) noexcept = delete;
 
-	void KillPlayer();
-
 private:
 	float Gravity_;
 	float AccGravity_;
@@ -32,6 +30,7 @@ private:
 // 내가 추가한 내용
 private:
 	Character*			PlayerStat_;
+	float4				PlayerPos_;
 	float4				MoveDir_;
 	float4				HeadDir_;
 
@@ -39,5 +38,8 @@ private:
 	GameEngineRenderer* Hp_BarRed_;
 	float4				Hp_BarSize_;
 	float4				Hp_BarPivot_;
+
+	void KillPlayer();
+	void HpBarRender();
 };
 

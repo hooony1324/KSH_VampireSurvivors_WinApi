@@ -50,9 +50,6 @@
     <ClCompile Include="ExpBar.cpp">
       <Filter>2.Play\UI</Filter>
     </ClCompile>
-    <ClCompile Include="WeaponInventory.cpp">
-      <Filter>2.Play\UI</Filter>
-    </ClCompile>
     <ClCompile Include="Timer.cpp">
       <Filter>2.Play\UI</Filter>
     </ClCompile>
@@ -61,6 +58,9 @@
     </ClCompile>
     <ClCompile Include="Coin.cpp">
       <Filter>2.Play\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="WeaponSlots.cpp">
+      <Filter>2.Play\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -113,9 +113,6 @@
     <ClInclude Include="ExpBar.h">
       <Filter>2.Play\UI</Filter>
     </ClInclude>
-    <ClInclude Include="WeaponInventory.h">
-      <Filter>2.Play\UI</Filter>
-    </ClInclude>
     <ClInclude Include="Timer.h">
       <Filter>2.Play\UI</Filter>
     </ClInclude>
@@ -124,6 +121,9 @@
     </ClInclude>
     <ClInclude Include="Coin.h">
       <Filter>2.Play\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="WeaponSlots.h">
+      <Filter>2.Play\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

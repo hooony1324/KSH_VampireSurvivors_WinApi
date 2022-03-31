@@ -80,7 +80,7 @@ void VampireSurvivorsGame::ResourceLoad()
 	ResourcesDir.MoveParent("API");
 	ResourcesDir.Move("Resources");
 
-	std::string Directories[] = {"characters", "tilesets", "illustrations", "vfx"};
+	std::string Directories[] = {"characters", "tilesets", "illustrations", "vfx", "UI"};
 	
 	for (std::string& Dir : Directories)
 	{

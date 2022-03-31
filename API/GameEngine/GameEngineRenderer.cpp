@@ -85,6 +85,7 @@ void GameEngineRenderer::Render()
 
 	float4 RenderPos = GetActor()->GetPosition() + RenderPivot_;
 
+	// 카메라 위치로 RenderPos조정(모든 이미지, UI는 영향받으면 안됨)
 	if (true == IsCameraEffect_)
 	{
 		RenderPos -= GetActor()->GetLevel()->GetCameraPos();
