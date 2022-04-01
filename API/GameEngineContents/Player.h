@@ -26,8 +26,6 @@ private:
 	void Update() override;
 	void Render() override;
 
-
-// 내가 추가한 내용
 private:
 	Character*			PlayerStat_;
 	float4				PlayerPos_;
@@ -39,7 +37,9 @@ private:
 	float4				Hp_BarSize_;
 	float4				Hp_BarPivot_;
 
+	void PlayerMove();
 	void KillPlayer();
+	void Attacked(int _Damage);
 	void HpBarRender();
 };
 

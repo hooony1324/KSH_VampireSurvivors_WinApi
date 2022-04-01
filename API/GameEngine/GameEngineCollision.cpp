@@ -34,7 +34,7 @@ GameEngineCollision::GameEngineCollision()
     : Pivot_(float4::ZERO)
     , Scale_(float4::ZERO)
 {
-    CollisionCheckArray[static_cast<int>(CollisionType::Rect)][static_cast<int>(CollisionType::Rect)] = RectToRect;
+
 }
 
 GameEngineCollision::~GameEngineCollision() 
@@ -83,7 +83,8 @@ bool GameEngineCollision::CollisionResult(const std::string& _TargetGroup, std::
 {
     size_t StartSize = _TargetGroup.size();
 
-    std::map<std::string, std::list<GameEngineCollision*>>::iterator FindTargetGroup = GetActor()->GetLevel()->AllCollision_.find(_TargetGroup);
+    std::map<std::string, std::list<GameEngineCollision*>>::iterator FindTargetGroup 
+        = GetActor()->GetLevel()->AllCollision_.find(_TargetGroup);
 
     if (FindTargetGroup == GetActor()->GetLevel()->AllCollision_.end())
     {

@@ -62,7 +62,7 @@ void PlayLevel::Update()
 
 	float4 PlayerPos = Player_->GetPosition();
 	float MapLeftX = GameEngineWindow::GetScale().Half().x;
-	float MapRightX = Map_->GetScale().x - GameEngineWindow::GetScale().Half().x - 64;
+	float MapRightX = Map_->GetScale().x - GameEngineWindow::GetScale().Half().x - 64; // 64 -> 부드럽게 넘어가기 위함
 	
 	if (PlayerPos.x <= MapLeftX)
 	{
@@ -79,6 +79,24 @@ void PlayLevel::Update()
 void PlayLevel::LevelChangeEnd()
 {
 	
+}
+
+void PlayLevel::InfiniteMap()
+{
+	PlayerPos_ = Player_->GetPosition();
+	float MapLeftX = GameEngineWindow::GetScale().Half().x;
+	float MapRightX = Map_->GetScale().x - MapLeftX - 64; // 64 -> 부드럽게 넘어가기 위함
+
+	if (PlayerPos_.x <= MapLeftX)
+	{
+		Player_->SetPosition({ MapRightX, PlayerPos_.y });
+	}
+
+	if (PlayerPos_.x >= MapRightX)
+	{
+		Player_->SetPosition({ MapLeftX, PlayerPos_.y });
+	}
+
 }
 
 

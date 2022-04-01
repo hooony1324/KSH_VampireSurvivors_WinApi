@@ -12,14 +12,14 @@ Library::~Library()
 
 void Library::Start()
 {
+	// Library_Books_x2
+	// - Pos   { 0, 0 }
+	// - Scale 3686 x 1844
+	Map_ = CreateRenderer("Library_BaseLoop_x2.bmp", RenderPivot::CENTER);
 	SetPosition({ 0, 0 });
-
-	// Library_Books_x2 : 3686 x 1844
-	GameEngineRenderer* Map = CreateRenderer("Library_BaseLoop_x2.bmp", RenderPivot::CENTER);
-	float4 MapPivot = Map->GetScale().Half();
-	Map->SetPivot(MapPivot);
+	SetScale(Map_->GetScale());
+	Map_->SetPivot(Map_->GetScale().Half());
 	
-	SetScale(Map->GetScale());
 	
 }
 

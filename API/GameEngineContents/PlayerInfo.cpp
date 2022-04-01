@@ -9,19 +9,19 @@ void PlayerInfo::ChangeCharacter(Character::Type _Type)
 	switch (_Type)
 	{
 	case Character::Type::Old:
-		Character_->SetOld();
+		Character_->SetCharacter(Character::Type::Old);
 		break;
 	case Character::Type::Cavallo:
-		Character_->SetCavallo();
+		Character_->SetCharacter(Character::Type::Cavallo);
 		break;
 	case Character::Type::Imelda:
-		Character_->SetImelda();
+		Character_->SetCharacter(Character::Type::Imelda);
 		break;
 
 		// ...
 
 	default:
-		Character_->SetDefault();
+		Character_->SetCharacter(Character::Type::Cavallo);
 		break;
 	}
 		
@@ -34,9 +34,12 @@ PlayerInfo::PlayerInfo()
 	, CharacterLevel_(0)
 	, KillCount_(0)
 	, Character_(new Character())
+	, CurrentExp_(0)
+	, MaxExp_(0)
+	, PlayerLevel_(0)
 
 {
-	
+	MaxExp_ = 100;
 }
 
 PlayerInfo::~PlayerInfo() 

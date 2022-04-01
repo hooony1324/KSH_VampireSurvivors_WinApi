@@ -39,34 +39,54 @@ void Player::Start()
 
 	// 플레이어 이미지 관련 설정
 	PlayerInfo::GetInst()->ChangeCharacter(Character::Type::Cavallo);
+	PlayerStat_ = PlayerInfo::GetInst()->GetCharacter();
 
 	PlayerRenderer_ = CreateRenderer();
-	PlayerRenderer_->CreateAnimation("Cavallo_WalkRight.bmp", "Idle_Right", 0, 0, 0.1f, false);
-	PlayerRenderer_->CreateAnimation("Cavallo_WalkRight.bmp", "Walk_Right", 0, 3, 0.12f, true);
-	PlayerRenderer_->CreateAnimation("Cavallo_WalkLeft.bmp", "Idle_Left", 0, 0, 0.1f, false);
-	PlayerRenderer_->CreateAnimation("Cavallo_WalkLeft.bmp", "Walk_Left", 0, 3, 0.12f, true);
+	PlayerRenderer_->CreateAnimation(PlayerStat_->WalkRightAnim_, "Idle_Right", 0, 0, 0.1f, false);
+	PlayerRenderer_->CreateAnimation(PlayerStat_->WalkRightAnim_, "Walk_Right", 0, 3, 0.12f, true);
+	PlayerRenderer_->CreateAnimation(PlayerStat_->WalkLeftAnim_, "Idle_Left", 0, 0, 0.1f, false);
+	PlayerRenderer_->CreateAnimation(PlayerStat_->WalkLeftAnim_, "Walk_Left", 0, 3, 0.12f, true);
 	PlayerRenderer_->ChangeAnimation("Idle_Right"); 
 
-
+	// 체력바
 	CreateRenderer("hpbar_back.bmp", RenderPivot::CENTER, { 0, 40 });
 	Hp_BarRed_ = CreateRenderer("hpbar.bmp", RenderPivot::CENTER, { 0, 40 });
 	Hp_BarSize_ = Hp_BarRed_->GetScale();
 
-
 	MapColImage_ = GameEngineImageManager::GetInst()->Find("Library_Books_x2_Col.bmp");
-}
-
-void Player::Update()
-{
-	float4 PlayerPos_ = GetPosition();
 
 	if (nullptr == MapColImage_)
 	{
 		MsgBoxAssert("맵 콜라이더가 로드되지 않았습니다");
 	}
+}
+
+void Player::Update()
+{
+	PlayerStat_ = PlayerInfo::GetInst()->GetCharacter();
+	PlayerPos_ = GetPosition();
+
+	PlayerMove();
+
+	GetLevel()->SetCameraPos(PlayerPos_ - GameEngineWindow::GetScale().Half());
+
+
+	// 충돌
+
+
+}
+
+void Player::Render()
+{
+	HpBarRender();
+
+}
+
+void Player::PlayerMove()
+{
 
 	//////////////////플레이어 이동/////////////////
-	PlayerStat_ = PlayerInfo::GetInst()->Character_;
+
 	float Speed = PlayerStat_->Speed_;
 
 	MoveDir_ = float4::ZERO;
@@ -166,33 +186,23 @@ void Player::Update()
 			PlayerRenderer_->ChangeAnimation("Idle_Left");
 		}
 	}
-
-	GetLevel()->SetCameraPos(PlayerPos_ - GameEngineWindow::GetScale().Half());
-
-
-	// 삭제해도 됨 삭제해도 됨 삭제해도 됨 삭제해도 됨 삭제해도 됨 삭제해도 됨
-	if (true == GameEngineInput::GetInst()->IsDown("KillPlayer"))
-	{
-		KillPlayer();
-	}
-
-	if (true == GameEngineInput::GetInst()->IsDown("PlayerDamaged"))
-	{
-		PlayerStat_->Hp_ -= 10;
-
-	}
-	// ~삭제해도 됨 삭제해도 됨 삭제해도 됨 삭제해도 됨 삭제해도 됨 삭제해도 됨
-}
-
-void Player::Render()
-{
-	HpBarRender();
-
 }
 
 void Player::KillPlayer()
 {
 	GameEngineUpdateObject::Death();
+}
+
+void Player::Attacked(int _Damage)
+{
+	int Hp = PlayerStat_->Hp_ -= _Damage;
+
+	if (Hp <= 0)
+	{
+		// 예시
+		// PlayerRenderer_->ChangeAnimation("CavalloDead");
+		Death();
+	}
 }
 
 void Player::HpBarRender()

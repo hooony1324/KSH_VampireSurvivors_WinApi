@@ -24,7 +24,10 @@ protected:
 	void LevelChangeEnd() override;
 
 private:
-	GameEngineActor* Player_;
-	GameEngineActor* Map_;
+	GameEngineActor*	Player_;
+	GameEngineActor*	Map_;
+	float4				PlayerPos_;
+
+	void InfiniteMap();
 };
 

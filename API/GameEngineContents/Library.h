@@ -21,5 +21,7 @@ private:
 	virtual void Start();
 	virtual void Update();
 	virtual void Render();
+
+	GameEngineRenderer* Map_;
 };
 

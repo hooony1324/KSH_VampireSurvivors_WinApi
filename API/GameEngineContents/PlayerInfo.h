@@ -32,12 +32,18 @@ public:
 	int EearnedGold_;
 	int CharacterLevel_;
 	int KillCount_;
-	float Exp_;
+	float CurrentExp_;
+	float MaxExp_;
+	int PlayerLevel_;
 
-	Character* Character_;
 	void ChangeCharacter(Character::Type _Type);
+	inline Character* GetCharacter()
+	{
+		return Character_;
+	}
 
-protected:
+private:
+	Character* Character_;
 
 private:
 	// constrcuter destructer

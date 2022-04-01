@@ -12,3 +12,14 @@ Timer::~Timer()
 {
 }
 
+void Timer::Start()
+{
+}
+
+void Timer::Update()
+{
+}
+
+void Timer::Render()
+{
+}

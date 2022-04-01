@@ -10,6 +10,7 @@ public:
 		Old = 0,
 		Cavallo,
 		Imelda,
+		MAX
 	};
 
 public:
@@ -23,17 +24,15 @@ public:
 	Character& operator=(const Character& _Other) = delete;
 	Character& operator=(Character&& _Other) noexcept = delete;
 
-	void SetDefault();
-	void SetOld();
-	void SetCavallo();
-	void SetImelda();
+	void SetCharacter(Type _CharacterType);
 
-protected:
 
 public:
-	// 캐릭터 이미지 이름 ex)old.bmp
+	// 캐릭터 생성 정보
 	std::string ImageName_;
 	std::string Name_;
+	std::string WalkRightAnim_;
+	std::string WalkLeftAnim_;
 
 	// 기본 능력치 (체력, 스피드, 공격력, ...)
 	float Speed_;			// 이동속도
