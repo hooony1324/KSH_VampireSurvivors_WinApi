@@ -71,6 +71,7 @@ private:
 
 	void ActorUpdate();
 	void ActorRender();
+	void CollisionDebugRender();
 	void ActorRelease();
 
 	float4 CameraPos_;

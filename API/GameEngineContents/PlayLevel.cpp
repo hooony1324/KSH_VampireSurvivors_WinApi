@@ -23,6 +23,7 @@ enum class RENDER_ORDER
 
 PlayLevel::PlayLevel()
 	: Player_(nullptr)
+	, Map_(nullptr)
 {
 }
 
@@ -56,7 +57,7 @@ void PlayLevel::Update()
 {
 	if (true == GameEngineInput::GetInst()->IsDown("ChangeLevelNext"))
 	{
-		GameEngine::GlobalEngine().ChangeLevel("Result");
+		GameEngine::GetInst().ChangeLevel("Result");
 	}
 
 	float4 PlayerPos = Player_->GetPosition();
@@ -73,7 +74,6 @@ void PlayLevel::Update()
 		Player_->SetPosition({ MapLeftX, PlayerPos.y});
 	}
 
-	int a = 0;
 }
 
 void PlayLevel::LevelChangeEnd()

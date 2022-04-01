@@ -1,6 +1,7 @@
 #include "GameEngineActorSubObject.h"
 
-GameEngineActorSubObject::GameEngineActorSubObject() 
+GameEngineActorSubObject::GameEngineActorSubObject()
+	: Actor_(nullptr)
 {
 }
 

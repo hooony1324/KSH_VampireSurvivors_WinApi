@@ -28,7 +28,7 @@ void ResultLevel::Update()
 {
 	if (true == GameEngineInput::GetInst()->IsDown("ChangeLevelNext"))
 	{
-		GameEngine::GlobalEngine().ChangeLevel("Title");
+		GameEngine::GetInst().ChangeLevel("Title");
 	}
 }
 

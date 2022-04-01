@@ -37,7 +37,7 @@ void TitleLevel::Update()
 {
 	if (true == GameEngineInput::GetInst()->IsDown("ChangeLevelNext"))
 	{
-		GameEngine::GlobalEngine().ChangeLevel("Play");
+		GameEngine::GetInst().ChangeLevel("Play");
 
 	}
 }

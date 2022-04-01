@@ -2,6 +2,8 @@
 #include "GameEngineActorSubObject.h"
 #include "GameEngineEnum.h"
 #include <map>
+#include <vector>
+
 
 // 설명 :
 class GameEngineImage;
@@ -30,11 +32,31 @@ public:
 		Scale_ = _Scale;
 	}
 
+	inline float4 GetCollisionPos()
+	{
+		return GetActor()->GetPosition() + Pivot_;
+	}
+
+	inline GameEngineRect GetRect()
+	{
+		return GameEngineRect(GetActor()->GetPosition() + Pivot_, Scale_);
+	}
+
+	// 충돌한 대상이 있는지 없는지만 체크하는 함수
 	bool CollisionCheck(
 		const std::string& _TargetGroup,
 		CollisionType _This = CollisionType::Circle,
 		CollisionType _Target = CollisionType::Circle
 	);
+
+	bool CollisionResult(
+		const std::string& _TargetGroup,
+		std::vector<GameEngineCollision*>& _ColResult,
+		CollisionType _This = CollisionType::Circle,
+		CollisionType _Target = CollisionType::Circle
+	);
+
+	void DebugRender();
 
 protected:
 

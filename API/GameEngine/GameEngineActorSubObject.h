@@ -2,7 +2,7 @@
 #include <GameEngine/GameEngineActor.h>
 
 // Ό³Έν :
-class GameEngineActorSubObject
+class GameEngineActorSubObject : public GameEngineUpdateObject
 {
 	friend GameEngineActor;
 
