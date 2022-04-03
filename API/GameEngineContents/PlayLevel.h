@@ -1,8 +1,11 @@
 #pragma once
 #include "GameEngine/GameEngineLevel.h"
-
+#include <list>
+#include <vector>
 
 class Player;
+class Enemy;
+
 // 설명 :
 class PlayLevel : public GameEngineLevel
 {
@@ -23,11 +26,30 @@ protected:
 	void Update() override;
 	void LevelChangeEnd() override;
 
+	// UI
 private:
-	GameEngineActor*	Player_;
+	std::vector<GameEngineActor*> VecUI_;
+	GameEngineActor* ExpUI_;
+	GameEngineActor* WeaponUI_;
+	GameEngineActor* TimerUI_;
+	GameEngineActor* CoinUI_;
+	GameEngineActor* LevelUI_;
+	GameEngineActor* KillCountUI_;
+
+	
+
+private:
 	GameEngineActor*	Map_;
+	Player*				Player_;
 	float4				PlayerPos_;
 
+	// 큐 로 하면 좋을듯
+	Enemy*				Enemy_;
+	std::list<Enemy*>	Enemies_;
+
+	void Respawn(int _x, int _y);
 	void InfiniteMap();
+
+	
 };
 

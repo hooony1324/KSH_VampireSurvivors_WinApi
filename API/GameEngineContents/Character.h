@@ -1,5 +1,6 @@
 #pragma once
 #include <string>
+#include <GameEngineBase/GameEngineMath.h>
 
 // 설명 :
 class Character
@@ -25,9 +26,11 @@ public:
 	Character& operator=(Character&& _Other) noexcept = delete;
 
 	void SetCharacter(Type _CharacterType);
-
+	void SetPos(float4 _PlayerPos);
 
 public:
+	float4 Position_;
+
 	// 캐릭터 생성 정보
 	std::string ImageName_;
 	std::string Name_;

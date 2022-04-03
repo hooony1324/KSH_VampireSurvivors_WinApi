@@ -1,25 +1,25 @@
-#include "Timer.h"
+#include "LevelUI.h"
 #include <GameEngine/GameEngine.h>
 #include <GameEngineBase/GameEngineWindow.h>
 #include <GameEngine/GameEngineImageManager.h>
 //#include <GameEngineBase/GameEngineDebug.h>
 
-Timer::Timer() 
+LevelUI::LevelUI() 
 {
 }
 
-Timer::~Timer() 
+LevelUI::~LevelUI() 
 {
 }
 
-void Timer::Start()
+void LevelUI::Start()
 {
 }
 
-void Timer::Update()
+void LevelUI::Update()
 {
 }
 
-void Timer::Render()
+void LevelUI::Render()
 {
 }

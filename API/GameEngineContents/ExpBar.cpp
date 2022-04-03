@@ -15,15 +15,15 @@ ExpBar::~ExpBar()
 
 void ExpBar::Start()
 {
-	SetPosition({ 0, 0 });
-	SetScale({ 1280, 40 });
+	SetPosition({GameEngineWindow::GetScale().Half().x, 15});
+	SetScale({ 1280, 30 });
 
 	GameEngineRenderer* BlackBar = CreateRenderer("ExpBar.bmp");
-	BlackBar->SetPivot(BlackBar->GetScale().Half());
+	//BlackBar->SetPivot(BlackBar->GetScale().Half());
 	BlackBar->CameraEffectOff();
 
 	GameEngineRenderer* BlueBar = CreateRenderer("ExpBarBlue.bmp");
-	BlueBar->SetPivot(BlueBar->GetScale().Half());
+	//BlueBar->SetPivot(BlueBar->GetScale().Half());
 	BlueBar->CameraEffectOff();
 }
 
@@ -33,4 +33,5 @@ void ExpBar::Update()
 
 void ExpBar::Render()
 {
+	
 }

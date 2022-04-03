@@ -39,7 +39,7 @@ void GameEngine::ChangeLevel(const std::string& _Name)
 
 void GameEngine::WindowCreate()
 {
-    GameEngineWindow::GetInst().CreateGameWindow(nullptr, "GameWindow");
+    GameEngineWindow::GetInst().CreateGameWindow(nullptr, "Vampire Survivors");
     GameEngineWindow::GetInst().ShowGameWindow();
     GameEngineWindow::GetInst().MessageLoop(EngineInit, EngineLoop);
 }
@@ -60,17 +60,18 @@ void GameEngine::EngineLoop()
 
     UserContents_->GameLoop();
 
-    // Level 변경(게임 시작시 ChangeLevel()로 NextLevel_이 설정되어 있음)
     if (nullptr != NextLevel_)
     {
-        // 다음 레벨로 가기전에 SceneChangeEnd 호출
         if (nullptr != CurrentLevel_)
         {
             CurrentLevel_->LevelChangeEnd();
+
+            // 내가 추가함
+            CurrentLevel_->ActorRelease();
         }
-        // 다음 레벨로 이동
+
         CurrentLevel_ = NextLevel_;
-        // 레벨 이동후 SceneChangeStart 호출
+
         if (nullptr != CurrentLevel_)
         {
             CurrentLevel_->LevelChangeStart();
@@ -97,7 +98,6 @@ void GameEngine::EngineLoop()
     CurrentLevel_->CollisionDebugRender();
     WindowMainImage_->BitCopy(BackBufferImage_);
 
-    // Death 한 Actor Realease
     CurrentLevel_->ActorRelease();
 }
 

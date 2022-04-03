@@ -50,9 +50,6 @@
     <ClCompile Include="ExpBar.cpp">
       <Filter>2.Play\UI</Filter>
     </ClCompile>
-    <ClCompile Include="Timer.cpp">
-      <Filter>2.Play\UI</Filter>
-    </ClCompile>
     <ClCompile Include="ExpObb.cpp">
       <Filter>2.Play\Item</Filter>
     </ClCompile>
@@ -60,6 +57,18 @@
       <Filter>2.Play\Item</Filter>
     </ClCompile>
     <ClCompile Include="WeaponSlots.cpp">
+      <Filter>2.Play\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="CoinUI.cpp">
+      <Filter>2.Play\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelUI.cpp">
+      <Filter>2.Play\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="TimerUI.cpp">
+      <Filter>2.Play\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="KillCountUI.cpp">
       <Filter>2.Play\UI</Filter>
     </ClCompile>
   </ItemGroup>
@@ -113,9 +122,6 @@
     <ClInclude Include="ExpBar.h">
       <Filter>2.Play\UI</Filter>
     </ClInclude>
-    <ClInclude Include="Timer.h">
-      <Filter>2.Play\UI</Filter>
-    </ClInclude>
     <ClInclude Include="ExpObb.h">
       <Filter>2.Play\Item</Filter>
     </ClInclude>
@@ -123,6 +129,18 @@
       <Filter>2.Play\Item</Filter>
     </ClInclude>
     <ClInclude Include="WeaponSlots.h">
+      <Filter>2.Play\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="CoinUI.h">
+      <Filter>2.Play\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelUI.h">
+      <Filter>2.Play\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="TimerUI.h">
+      <Filter>2.Play\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="KillCountUI.h">
       <Filter>2.Play\UI</Filter>
     </ClInclude>
   </ItemGroup>

@@ -15,14 +15,16 @@ public:
 	Mud& operator=(const Mud& _Other) = delete;
 	Mud& operator=(Mud&& _Other) noexcept = delete;
 
+	void KillEnemy() override;
+
 protected:
 
 	void Start() override;
-	void Update() override;
 	void Render() override;
 
 private:
-	GameEngineRenderer* Mud_;
 
+	GameEngineRenderer* Mud_;
+	GameEngineCollision* MudCol_;
 };
 

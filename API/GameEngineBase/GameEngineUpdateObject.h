@@ -44,7 +44,7 @@ public:
 		IsDeath_ = true;
 	}
 
-	// Update주기로부터 Release, Death()로 DeathTime_을 설정시 IsReleasUpdate_는 true
+	// DeathTime설정되면 ReleaseUpdate를 Actor Update주기에 추가
 	void ReleaseUpdate()
 	{
 		if (false == IsReleaseUpdate_)

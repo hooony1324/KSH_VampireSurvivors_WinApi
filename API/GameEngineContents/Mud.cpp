@@ -4,6 +4,7 @@
 #include <GameEngine/GameEngineImageManager.h>
 //#include <GameEngineBase/GameEngineDebug.h>
 #include <GameEngine/GameEngineRenderer.h>
+#include <GameEngine/GameEngineCollision.h>
 
 Mud::Mud() 
 {
@@ -11,20 +12,22 @@ Mud::Mud()
 
 Mud::~Mud() 
 {
+
+}
+
+void Mud::KillEnemy()
+{
+	MudCol_->Death();
+	GameEngineUpdateObject::Death();
 }
 
 void Mud::Start()
 {
 	Mud_ = CreateRenderer("Mud_0.bmp");
-	SetPosition({ 800, 600 });
+	SetPosition({ 1000, 600 });
 
-	GameEngineUpdateObject::On();
-}
-
-void Mud::Update()
-{
-	// 플레이어 위치 추적
-
+	MudCol_ = CreateCollision("Monster", { 40, 40 });
+	
 }
 
 void Mud::Render()

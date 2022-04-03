@@ -125,4 +125,9 @@ void Character::SetCharacter(Type _CharacterType)
 	}
 }
 
+void Character::SetPos(float4 _PlayerPos)
+{
+	Position_ = _PlayerPos;
+}
+
 

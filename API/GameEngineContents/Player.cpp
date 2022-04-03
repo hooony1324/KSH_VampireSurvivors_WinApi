@@ -7,6 +7,7 @@
 #include <GameEngineBase/GameEngineInput.h>
 #include <GameEngineBase/GameEngineTime.h>
 #include <GameEngine/GameEngineRenderer.h>
+#include <GameEngine/GameEngineCollision.h>
 
 // 총알
 #include <GameEngine/GameEngineLevel.h>
@@ -24,8 +25,10 @@ Player::Player()
 	, Gravity_(100.0f)
 	, MoveDir_(float4::ZERO)
 	, HeadDir_(float4::RIGHT)
+	, Hitable_(true)
+	, HitTime_(1.0f)
 {
-
+	InvincibleTime_ = HitTime_;
 }
 
 Player::~Player() 
@@ -34,10 +37,10 @@ Player::~Player()
 
 void Player::Start()
 {
-	SetPosition({ 200, 600 });
+	SetPosition({ 800, 800 });
 	SetScale({ 100, 100 });
 
-	// 플레이어 이미지 관련 설정
+	// 플레이어 이미지, 애니메이션 관련 설정
 	PlayerInfo::GetInst()->ChangeCharacter(Character::Type::Cavallo);
 	PlayerStat_ = PlayerInfo::GetInst()->GetCharacter();
 
@@ -48,7 +51,7 @@ void Player::Start()
 	PlayerRenderer_->CreateAnimation(PlayerStat_->WalkLeftAnim_, "Walk_Left", 0, 3, 0.12f, true);
 	PlayerRenderer_->ChangeAnimation("Idle_Right"); 
 
-	// 체력바
+	// -체력바
 	CreateRenderer("hpbar_back.bmp", RenderPivot::CENTER, { 0, 40 });
 	Hp_BarRed_ = CreateRenderer("hpbar.bmp", RenderPivot::CENTER, { 0, 40 });
 	Hp_BarSize_ = Hp_BarRed_->GetScale();
@@ -59,20 +62,45 @@ void Player::Start()
 	{
 		MsgBoxAssert("맵 콜라이더가 로드되지 않았습니다");
 	}
+
+	// 충돌 테스트
+	PlayerCol_ = CreateCollision("Player", { 35, 45 });
+
+	// 몬스터가 충돌하면 리스폰
+	CreateCollision("EnemyCollector", { 30, 700 }, { -400, 0 });
+	CreateCollision("EnemyCollector", { 30, 700 }, { 400, 0 });
 }
 
 void Player::Update()
 {
 	PlayerStat_ = PlayerInfo::GetInst()->GetCharacter();
 	PlayerPos_ = GetPosition();
+	PlayerInfo::GetInst()->GetCharacter()->SetPos(PlayerPos_);
 
 	PlayerMove();
 
 	GetLevel()->SetCameraPos(PlayerPos_ - GameEngineWindow::GetScale().Half());
 
 
-	// 충돌
-
+	// 충돌 테스트
+	bool BumpMonster = false;
+	if (nullptr != PlayerCol_)
+	{
+		BumpMonster = PlayerCol_->CollisionCheck("Monster", CollisionType::Rect, CollisionType::Rect);
+	}
+	if (true == BumpMonster)
+	{
+		Attacked(90);
+	}
+	{
+		if (false == Hitable_)
+		InvincibleTime_ -= GameEngineTime::GetDeltaTime();
+		if (0 >= InvincibleTime_)
+		{
+			Hitable_ = true;
+			InvincibleTime_ = HitTime_;
+		}
+	}
 
 }
 
@@ -84,11 +112,7 @@ void Player::Render()
 
 void Player::PlayerMove()
 {
-
-	//////////////////플레이어 이동/////////////////
-
 	float Speed = PlayerStat_->Speed_;
-
 	MoveDir_ = float4::ZERO;
 
 	bool MoveLeft = GameEngineInput::GetInst()->IsPress("MoveLeft");
@@ -190,18 +214,25 @@ void Player::PlayerMove()
 
 void Player::KillPlayer()
 {
+	PlayerCol_->Death();
 	GameEngineUpdateObject::Death();
 }
 
 void Player::Attacked(int _Damage)
 {
-	int Hp = PlayerStat_->Hp_ -= _Damage;
+	if (false == Hitable_ || true == IsDeath())
+	{
+		return;
+	}
 
-	if (Hp <= 0)
+	PlayerStat_->Hp_ -= _Damage;
+	Hitable_ = false;
+
+	if (PlayerStat_->Hp_ <= 0)
 	{
 		// 예시
 		// PlayerRenderer_->ChangeAnimation("CavalloDead");
-		Death();
+		GameEngine::GetInst().ChangeLevel("Result");
 	}
 }
 
