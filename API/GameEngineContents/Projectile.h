@@ -22,6 +22,6 @@ protected:
 	void Update() override;
 
 private:
-
+	float4 ShootDir_;
 };
 

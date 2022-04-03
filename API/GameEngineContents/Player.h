@@ -47,8 +47,11 @@ private:
 	void Attacked(int _Damage);
 	void HpBarRender();
 
+	GameEngineCollision* EnemyCollectorL_;
+	GameEngineCollision* EnemyCollectorR_;
 
-	GameEngineCollision* EnemyCollector_;
+	// 플레이어 공격
+	void Shoot(float4 _ShootDir);
 	
 };
 

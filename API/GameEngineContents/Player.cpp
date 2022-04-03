@@ -67,8 +67,8 @@ void Player::Start()
 	PlayerCol_ = CreateCollision("Player", { 35, 45 });
 
 	// 몬스터가 충돌하면 리스폰
-	CreateCollision("EnemyCollector", { 30, 700 }, { -400, 0 });
-	CreateCollision("EnemyCollector", { 30, 700 }, { 400, 0 });
+	EnemyCollectorL_ = CreateCollision("EnemyCollector", { 30, 700 }, { -400, 0 });
+	EnemyCollectorR_ = CreateCollision("EnemyCollector", { 30, 700 }, { 400, 0 });
 }
 
 void Player::Update()
@@ -78,6 +78,11 @@ void Player::Update()
 	PlayerInfo::GetInst()->GetCharacter()->SetPos(PlayerPos_);
 
 	PlayerMove();
+
+	if (true == GameEngineInput::GetInst()->IsDown("SpaceBar"))
+	{
+		Shoot(float4::RIGHT);
+	}
 
 	GetLevel()->SetCameraPos(PlayerPos_ - GameEngineWindow::GetScale().Half());
 
@@ -167,11 +172,7 @@ void Player::PlayerMove()
 		MoveDir_ = (float4::DOWN + float4::LEFT) * (float)(1 / sqrt(2));
 	}
 
-	if (true == GameEngineInput::GetInst()->IsDown("SpaceBar"))
-	{
-		Projectile* Bullet = GetLevel()->CreateActor<Projectile>();
-		Bullet->SetPosition(PlayerPos_);
-	}
+
 
 	// 중력 적용
 	/*AccGravity_ += GameEngineTime::GetDeltaTime() * Gravity_;
@@ -214,6 +215,8 @@ void Player::PlayerMove()
 
 void Player::KillPlayer()
 {
+	EnemyCollectorL_->Death();
+	EnemyCollectorR_->Death();
 	PlayerCol_->Death();
 	GameEngineUpdateObject::Death();
 }
@@ -243,6 +246,13 @@ void Player::HpBarRender()
 	Hp_BarPivot_ = float4{ 0 - ((Hp_BarSize_.x - newSize) / 2), Hp_BarRed_->GetPivot().y };
 	Hp_BarRed_->SetScale(float4{ newSize, Hp_BarSize_.y });
 	Hp_BarRed_->SetPivot(Hp_BarPivot_);
+}
+
+void Player::Shoot(float4 _ShootDir)
+{
+	Projectile* Bullet = GetLevel()->CreateActor<Projectile>();
+	Bullet->Death(5);
+	Bullet->SetPosition(PlayerPos_);
 }
 
 
