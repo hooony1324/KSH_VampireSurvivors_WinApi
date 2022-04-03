@@ -79,8 +79,10 @@ void Player::Update()
 
 	PlayerMove();
 
+
 	if (true == GameEngineInput::GetInst()->IsDown("SpaceBar"))
 	{
+		float4 cPos = GetCameraEffectPosition();
 		Shoot(float4::RIGHT);
 	}
 

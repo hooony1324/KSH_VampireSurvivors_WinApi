@@ -48,6 +48,7 @@ GameEngineActor::~GameEngineActor()
 
 }
 
+// Actor 말고 Collision이나 Render만 파괴(게임도중, 레벨 마무리)
 void GameEngineActor::Release()
 {
 	{

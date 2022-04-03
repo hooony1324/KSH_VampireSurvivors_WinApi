@@ -79,6 +79,7 @@ bool GameEngineCollision::CollisionCheck(
     return false;
 }
 
+// 충돌한 그룹(_ColResult)정보를 push_back해서 돌려준다
 bool GameEngineCollision::CollisionResult(const std::string& _TargetGroup, std::vector<GameEngineCollision*>& _ColResult, CollisionType _This, CollisionType _Target)
 {
     size_t StartSize = _ColResult.size();
