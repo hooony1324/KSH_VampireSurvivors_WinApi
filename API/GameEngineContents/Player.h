@@ -17,8 +17,6 @@ public:
 	Player& operator=(const Player& _Other) = delete;
 	Player& operator=(Player&& _Other) noexcept = delete;
 
-	void KillPlayer();
-
 private:
 	float Gravity_;
 	float AccGravity_;
@@ -44,14 +42,18 @@ private:
 	float4					Hp_BarPivot_;
 
 	void PlayerMove();
-	void Attacked(int _Damage);
 	void HpBarRender();
 
-	GameEngineCollision* EnemyCollectorL_;
-	GameEngineCollision* EnemyCollectorR_;
 
-	// 플레이어 공격
+
+	// 플레이어 공격/피격
+	void Attacked(int _Damage);
 	void Shoot(float4 _ShootDir);
+
+
+// FSM
+// Player_Stat
+	void PlayerStat();
 	
 };
 

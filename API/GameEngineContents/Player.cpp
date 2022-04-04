@@ -52,8 +52,8 @@ void Player::Start()
 	PlayerRenderer_->ChangeAnimation("Idle_Right"); 
 
 	// -체력바
-	CreateRenderer("hpbar_back.bmp", RenderPivot::CENTER, { 0, 40 });
-	Hp_BarRed_ = CreateRenderer("hpbar.bmp", RenderPivot::CENTER, { 0, 40 });
+	CreateRenderer("hpbar_back.bmp", static_cast<int>(EngineMax::RENDERORDERMAX), RenderPivot::CENTER, {0, 40});
+	Hp_BarRed_ = CreateRenderer("hpbar.bmp", static_cast<int>(EngineMax::RENDERORDERMAX), RenderPivot::CENTER, { 0, 40 });
 	Hp_BarSize_ = Hp_BarRed_->GetScale();
 
 	MapColImage_ = GameEngineImageManager::GetInst()->Find("Library_Books_x2_Col.bmp");
@@ -66,19 +66,14 @@ void Player::Start()
 	// 충돌 테스트
 	PlayerCol_ = CreateCollision("Player", { 35, 45 });
 
-	// 몬스터가 충돌하면 리스폰
-	EnemyCollectorL_ = CreateCollision("EnemyCollector", { 30, 700 }, { -400, 0 });
-	EnemyCollectorR_ = CreateCollision("EnemyCollector", { 30, 700 }, { 400, 0 });
+
 }
 
 void Player::Update()
 {
 	PlayerStat_ = PlayerInfo::GetInst()->GetCharacter();
-	PlayerPos_ = GetPosition();
-	PlayerInfo::GetInst()->GetCharacter()->SetPos(PlayerPos_);
 
 	PlayerMove();
-
 
 	if (true == GameEngineInput::GetInst()->IsDown("SpaceBar"))
 	{
@@ -97,7 +92,7 @@ void Player::Update()
 	}
 	if (true == BumpMonster)
 	{
-		Attacked(90);
+		Attacked(10);
 	}
 	{
 		if (false == Hitable_)
@@ -119,6 +114,11 @@ void Player::Render()
 
 void Player::PlayerMove()
 {
+	// PlayerInfo에 플레이어 위치 정보 업데이트
+	PlayerPos_ = GetPosition();
+	PlayerInfo::GetInst()->GetCharacter()->SetPos(PlayerPos_);
+
+
 	float Speed = PlayerStat_->Speed_;
 	MoveDir_ = float4::ZERO;
 
@@ -215,12 +215,13 @@ void Player::PlayerMove()
 	}
 }
 
-void Player::KillPlayer()
+void Player::HpBarRender()
 {
-	EnemyCollectorL_->Death();
-	EnemyCollectorR_->Death();
-	PlayerCol_->Death();
-	GameEngineUpdateObject::Death();
+	// 체력 바
+	float newSize = Hp_BarSize_.x * (PlayerStat_->Hp_ / 100);
+	Hp_BarPivot_ = float4{ 0 - ((Hp_BarSize_.x - newSize) / 2), Hp_BarRed_->GetPivot().y };
+	Hp_BarRed_->SetScale(float4{ newSize, Hp_BarSize_.y });
+	Hp_BarRed_->SetPivot(Hp_BarPivot_);
 }
 
 void Player::Attacked(int _Damage)
@@ -239,15 +240,6 @@ void Player::Attacked(int _Damage)
 		// PlayerRenderer_->ChangeAnimation("CavalloDead");
 		GameEngine::GetInst().ChangeLevel("Result");
 	}
-}
-
-void Player::HpBarRender()
-{
-	// 체력 바
-	float newSize = Hp_BarSize_.x * (PlayerStat_->Hp_ / 100);
-	Hp_BarPivot_ = float4{ 0 - ((Hp_BarSize_.x - newSize) / 2), Hp_BarRed_->GetPivot().y };
-	Hp_BarRed_->SetScale(float4{ newSize, Hp_BarSize_.y });
-	Hp_BarRed_->SetPivot(Hp_BarPivot_);
 }
 
 void Player::Shoot(float4 _ShootDir)

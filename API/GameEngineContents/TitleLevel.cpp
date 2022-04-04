@@ -24,13 +24,13 @@ TitleLevel::~TitleLevel()
 
 void TitleLevel::Loading()
 {
-	CreateActor<TitleBackGround>((int)RENDER_ORDER::BACKGROUND);
-	CreateActor<TitleLogo>((int)RENDER_ORDER::UI);
+
 }
 
 void TitleLevel::LevelChangeStart()
 {
-
+	BG_ = CreateActor<TitleBackGround>((int)RENDER_ORDER::BACKGROUND);
+	Logo_ = CreateActor<TitleLogo>((int)RENDER_ORDER::UI);
 }
 
 void TitleLevel::Update()
@@ -44,5 +44,7 @@ void TitleLevel::Update()
 
 void TitleLevel::LevelChangeEnd()
 {
+	BG_->Death();
+	Logo_->Death();
 	PlayerInfo::GetInst()->ChangeCharacter(Character::Type::Cavallo);
 }

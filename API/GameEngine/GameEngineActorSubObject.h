@@ -22,10 +22,11 @@ public:
 		return Actor_;
 	}
 
+	// Actor는 있지만 Actor의 Collision/Renderer 따로 제거한 상황을 위해
 	inline bool IsUpdate() override
 	{
-		//     나의 IsUpdate_ && false == IsDeath_
-		return GameEngineUpdateObject::IsUpdate() || Actor_->IsUpdate();
+
+		return GameEngineUpdateObject::IsUpdate() && Actor_->IsUpdate();
 	}
 
 	inline bool IsDeath() override

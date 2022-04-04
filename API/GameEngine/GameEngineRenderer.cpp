@@ -70,6 +70,26 @@ void GameEngineRenderer::SetIndex(size_t _Index, const float4& _Scale)
 	RenderImageScale_ = Image_->GetCutScale(_Index);
 }
 
+void GameEngineRenderer::SetOrder(int _Order)
+{
+	if (nullptr == GetActor())
+	{
+		MsgBoxAssert("액터가 세팅되지 않습니다.");
+	}
+
+	if (nullptr == GetActor()->GetLevel())
+	{
+		MsgBoxAssert("레벨이 세팅되지 않았습니다.");
+	}
+
+	if (_Order == GetOrder())
+	{
+		return;
+	}
+
+	GetActor()->GetLevel()->ChangeRenderOrder(this, _Order);
+}
+
 void GameEngineRenderer::Render()
 {
 	// 애니메이션 업데이트를 하며 Image_를 세팅해줌
@@ -133,8 +153,6 @@ void GameEngineRenderer::CreateAnimation(
 		return;
 	}
 
-	//FrameAnimation Animation;
-	//Animation.insert(std::make_pair(, FrameAnimation()));
 	FrameAnimation& NewAnimation = Animations_[_Name];
 	NewAnimation.Renderer_ = this;
 	NewAnimation.Image_ = FindImage;

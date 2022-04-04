@@ -25,6 +25,7 @@ void Mud::Start()
 {
 	Mud_ = CreateRenderer("Mud_0.bmp");
 	SetPosition({ 1000, 600 });
+	SetScale({ 100, 100 });
 
 	MudCol_ = CreateCollision("Monster", { 40, 40 });
 	

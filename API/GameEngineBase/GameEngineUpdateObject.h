@@ -66,10 +66,19 @@ public:
 		DeathTime_ = _Time;
 	}
 
+	inline int GetOrder()
+	{
+		return Order_;
+	}
 
+	virtual inline void SetOrder(int _Order)
+	{
+		Order_ = _Order;
+	}
 
 
 private:
+	int Order_;
 	bool IsReleaseUpdate_;
 	float DeathTime_;
 

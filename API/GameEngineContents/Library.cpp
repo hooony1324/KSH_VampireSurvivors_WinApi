@@ -15,7 +15,7 @@ void Library::Start()
 	// Library_Books_x2
 	// - Pos   { 0, 0 }
 	// - Scale 3686 x 1844
-	Map_ = CreateRenderer("Library_BaseLoop_x2.bmp", RenderPivot::CENTER);
+	Map_ = CreateRenderer("Library_BaseLoop_x2.bmp", 0 ,RenderPivot::CENTER);
 	SetPosition({ 0, 0 });
 	SetScale(Map_->GetScale());
 	Map_->SetPivot(Map_->GetScale().Half());

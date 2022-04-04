@@ -20,8 +20,8 @@ void ResultLevel::Loading()
 
 void ResultLevel::LevelChangeStart()
 {
-	CreateActor<ResultBackGround>(0);
-	CreateActor<ResultBoard>(0);
+	BG_ = CreateActor<ResultBackGround>();
+	Board_ = CreateActor<ResultBoard>(1);
 }
 
 void ResultLevel::Update()
@@ -32,5 +32,11 @@ void ResultLevel::Update()
 	{
 		GameEngine::GetInst().ChangeLevel("Title");
 	}
+}
+
+void ResultLevel::LevelChangeEnd()
+{
+	BG_->Death();
+	Board_->Death();
 }
 

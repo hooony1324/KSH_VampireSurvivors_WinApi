@@ -8,11 +8,13 @@
 class GameEngine;
 class GameEngineActor;
 class GameEngineCollision;
+class GameEngineRenderer;
 class GameEngineLevel : public GameEngineNameObject
 {
 	friend GameEngine;
 	friend GameEngineActor;
 	friend GameEngineCollision;
+	friend GameEngineRenderer;
 public:
 	// constrcuter destructer
 	GameEngineLevel();
@@ -75,6 +77,13 @@ private:
 	void ActorRelease();
 
 	float4 CameraPos_;
+
+private:
+	std::map<int, std::list<GameEngineRenderer*>> AllRenderer_;
+
+	void AddRenderer(GameEngineRenderer* _Renderer);
+
+	void ChangeRenderOrder(GameEngineRenderer* _Renderer, int _NewOrder);
 
 private:
 	// 콜라이더는 엑터가 삭제, 콜라이더들은 Level이 관리

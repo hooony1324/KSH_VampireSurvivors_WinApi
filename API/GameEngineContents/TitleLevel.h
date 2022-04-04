@@ -24,6 +24,8 @@ protected:
 
 private:
 	
+	GameEngineActor* BG_;
+	GameEngineActor* Logo_;
 	
 };
 

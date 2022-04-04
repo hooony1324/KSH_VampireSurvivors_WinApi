@@ -16,6 +16,7 @@
 #include "Library.h"
 #include "Mud.h"
 #include "Enemy.h"
+#include "EnemyController.h"
 
 
 enum class RENDER_ORDER
@@ -49,27 +50,25 @@ void PlayLevel::LevelChangeStart()
 	// Library 맵 환경 설정
 	Map_ = CreateActor<Library>((int)RENDER_ORDER::BACKGROUND, "Map");
 
-	Enemy_ = CreateActor<Mud>((int)RENDER_ORDER::MONSTER, "Enemies");
+	Enemy_ = CreateActor<Mud>((int)RENDER_ORDER::MONSTER, "Enemy");
 
 	Player_ = CreateActor<Player>((int)RENDER_ORDER::PLAYER, "Player");
+
+	EnemyController_ = CreateActor<EnemyController>((int)RENDER_ORDER::MONSTER, "EController");
 	
 
-	ExpUI_ = CreateActor<ExpBar>((int)RENDER_ORDER::UI);
-	WeaponUI_ = CreateActor<WeaponSlots>((int)RENDER_ORDER::UI);
-	TimerUI_ = CreateActor<TimerUI>((int)RENDER_ORDER::UI);
-	CoinUI_ = CreateActor<CoinUI>((int)RENDER_ORDER::UI);
-	LevelUI_ = CreateActor<LevelUI>((int)RENDER_ORDER::UI);
-	KillCountUI_ = CreateActor<KillCountUI>((int)RENDER_ORDER::UI);
+	ExpUI_ = CreateActor<ExpBar>((int)RENDER_ORDER::UI, "UI");
+	WeaponUI_ = CreateActor<WeaponSlots>((int)RENDER_ORDER::UI, "UI");
+	TimerUI_ = CreateActor<TimerUI>((int)RENDER_ORDER::UI, "UI");
+	CoinUI_ = CreateActor<CoinUI>((int)RENDER_ORDER::UI, "UI");
+	LevelUI_ = CreateActor<LevelUI>((int)RENDER_ORDER::UI, "UI");
+	KillCountUI_ = CreateActor<KillCountUI>((int)RENDER_ORDER::UI, "UI");
 
 
 }
 
 void PlayLevel::Update()
 {
-	if (nullptr == Player_)
-	{
-		MsgBoxAssert("플레이어가 선택되지 않았습니다");
-	}
 
 	// 테스트용
 	if (true == GameEngineInput::GetInst()->IsDown("ChangeLevelNext"))
@@ -80,40 +79,48 @@ void PlayLevel::Update()
 
 	InfiniteMap();
 
+	EnemyController_->SetPosition(Player_->GetPosition());
 }
 
 void PlayLevel::LevelChangeEnd()
 {
-	// 콜라이더 있음
-	Player_->KillPlayer(); // 콜라이더 Death -> 액터 Death
-	Enemy_->KillEnemy();
-
-	// 콜라이더 없음
-	Map_->Death();
-
 	ExpUI_->Death();
 	WeaponUI_->Death();
 	TimerUI_->Death();
 	CoinUI_->Death();
 	LevelUI_->Death();
 	KillCountUI_->Death();
-	
+
+	Player_->Death();
+	Enemy_->Death();
+
+	Map_->Death();
+
+	EnemyController_->Death();
 }
 
 void PlayLevel::InfiniteMap()
 {
 	PlayerPos_ = Player_->GetPosition();
+
 	float MapLeftX = GameEngineWindow::GetScale().Half().x;
 	float MapRightX = Map_->GetScale().x - MapLeftX - 64; // 64 -> 부드럽게 넘어가기 위함
 
+	float4 NewPlayerPos;
+	float4 EnemyPos = Enemy_->GetPosition();
+	EnemyPos = { EnemyPos.x - PlayerPos_.x, EnemyPos.y };
 	if (PlayerPos_.x <= MapLeftX)
 	{
-		Player_->SetPosition({ MapRightX, PlayerPos_.y });
+		NewPlayerPos = { MapRightX, PlayerPos_.y };
+		Player_->SetPosition(NewPlayerPos);
+		Enemy_->SetPosition({NewPlayerPos.x + EnemyPos.x, EnemyPos.y});
 	}
 
 	if (PlayerPos_.x >= MapRightX)
 	{
-		Player_->SetPosition({ MapLeftX, PlayerPos_.y });
+		NewPlayerPos = { MapLeftX, PlayerPos_.y };
+		Player_->SetPosition(NewPlayerPos);
+		Enemy_->SetPosition({ NewPlayerPos.x + EnemyPos.x, EnemyPos.y });
 	}
 
 }

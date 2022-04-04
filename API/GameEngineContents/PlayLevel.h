@@ -5,6 +5,7 @@
 
 class Player;
 class Enemy;
+class EnemyController;
 
 // 설명 :
 class PlayLevel : public GameEngineLevel
@@ -37,11 +38,13 @@ private:
 	GameEngineActor* KillCountUI_;
 
 	
-
+	// Map관련
 private:
 	GameEngineActor*	Map_;
 	Player*				Player_;
 	float4				PlayerPos_;
+
+	EnemyController*	EnemyController_;
 
 	// 큐 로 하면 좋을듯
 	Enemy*				Enemy_;

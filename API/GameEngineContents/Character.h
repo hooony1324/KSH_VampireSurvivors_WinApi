@@ -2,7 +2,7 @@
 #include <string>
 #include <GameEngineBase/GameEngineMath.h>
 
-// 설명 :
+// 설명 : 
 class Character
 {
 public:
