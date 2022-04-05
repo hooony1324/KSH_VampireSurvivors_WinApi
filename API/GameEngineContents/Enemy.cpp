@@ -21,7 +21,9 @@ void Enemy::Update()
 
 	float4 DestDir = float4::Normalized(EnemyPos, PlayerPos);
 
-	SetMove(DestDir * GameEngineTime::GetDeltaTime() * 100.0f);
+	//SetMove(DestDir * GameEngineTime::GetDeltaTime() * 100.0f);
 
+
+	// 플레이어 공격 충돌체크
 }
 

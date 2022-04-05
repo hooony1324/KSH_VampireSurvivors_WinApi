@@ -34,6 +34,7 @@ private:
 	bool					Hitable_; // 플레이어 무적여부
 	float					InvincibleTime_;
 	float					HitTime_;	// 피격시 무적시간
+	float					Speed_;
 
 	GameEngineCollision*	PlayerCol_;
 	GameEngineRenderer*		PlayerRenderer_;
@@ -43,7 +44,6 @@ private:
 
 	void PlayerMove();
 	void HpBarRender();
-
 
 
 	// 플레이어 공격/피격

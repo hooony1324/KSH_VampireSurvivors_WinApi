@@ -30,6 +30,7 @@ public:
 	static float4 DOWN;
 	static float4 ZERO;
 
+	// 내가 추가함
 	// A->B 로 향하는 벡터를 반환
 	static float4 Normalized(float4 _PosA, float4 _PosB)
 	{

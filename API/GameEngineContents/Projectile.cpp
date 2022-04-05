@@ -4,9 +4,9 @@
 #include <GameEngine/GameEngineImageManager.h>
 //#include <GameEngineBase/GameEngineDebug.h>
 
+#include "PlayerInfo.h"
 Projectile::Projectile() 
 {
-	CreateRenderer("sword.bmp");
 }
 
 Projectile::~Projectile() 
@@ -15,11 +15,15 @@ Projectile::~Projectile()
 
 void Projectile::Start()
 {
+	CreateRenderer("sword.bmp");
+	StartPos_ = PlayerInfo::GetInst()->GetCharacter()->Position_;
 	ShootDir_ = float4::RIGHT;
 }
 
 void Projectile::Update()
 {
-	// 몬스터를 향해 발사하는 기능 추가해야됨
-	SetMove(ShootDir_ *GameEngineTime::GetDeltaTime() * 200.0f);
+	
+	
+	ProjPos_ += ShootDir_;
+	// SetMove(ShootDir_ *GameEngineTime::GetDeltaTime() * 200.0f);
 }

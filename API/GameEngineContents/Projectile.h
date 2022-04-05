@@ -23,5 +23,7 @@ protected:
 
 private:
 	float4 ShootDir_;
+	float4 StartPos_;
+	float4 ProjPos_;
 };
 

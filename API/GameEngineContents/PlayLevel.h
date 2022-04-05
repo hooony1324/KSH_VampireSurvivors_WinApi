@@ -6,6 +6,7 @@
 class Player;
 class Enemy;
 class EnemyController;
+class Library;
 
 // 설명 :
 class PlayLevel : public GameEngineLevel
@@ -40,7 +41,11 @@ private:
 	
 	// Map관련
 private:
-	GameEngineActor*	Map_;
+	
+	float				MapLeftX_;
+	float				MapRightX_;
+
+	Library*			Map_;
 	Player*				Player_;
 	float4				PlayerPos_;
 
@@ -49,6 +54,8 @@ private:
 	// 큐 로 하면 좋을듯
 	Enemy*				Enemy_;
 	std::list<Enemy*>	Enemies_;
+
+	// Projectile은 Level에서 관리
 
 	void Respawn(int _x, int _y);
 	void InfiniteMap();

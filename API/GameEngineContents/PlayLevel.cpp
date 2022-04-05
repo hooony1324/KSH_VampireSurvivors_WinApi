@@ -49,6 +49,13 @@ void PlayLevel::LevelChangeStart()
 {	
 	// Library 맵 환경 설정
 	Map_ = CreateActor<Library>((int)RENDER_ORDER::BACKGROUND, "Map");
+	Map_->SetPosition({ 0, 0 });
+	Map_->SetScale({ 4096, 1824 });
+	
+	MapLeftX_ = GameEngineWindow::GetScale().Half().x;
+	MapRightX_ = Map_->GetScale().x - MapLeftX_ /*- 64*/;
+	
+	
 
 	Enemy_ = CreateActor<Mud>((int)RENDER_ORDER::MONSTER, "Enemy");
 
@@ -77,9 +84,8 @@ void PlayLevel::Update()
 		GameEngine::GetInst().ChangeLevel("Result");
 	}
 
-	InfiniteMap();
-
 	EnemyController_->SetPosition(Player_->GetPosition());
+
 }
 
 void PlayLevel::LevelChangeEnd()
@@ -99,30 +105,7 @@ void PlayLevel::LevelChangeEnd()
 	EnemyController_->Death();
 }
 
-void PlayLevel::InfiniteMap()
-{
-	PlayerPos_ = Player_->GetPosition();
 
-	float MapLeftX = GameEngineWindow::GetScale().Half().x;
-	float MapRightX = Map_->GetScale().x - MapLeftX - 64; // 64 -> 부드럽게 넘어가기 위함
 
-	float4 NewPlayerPos;
-	float4 EnemyPos = Enemy_->GetPosition();
-	EnemyPos = { EnemyPos.x - PlayerPos_.x, EnemyPos.y };
-	if (PlayerPos_.x <= MapLeftX)
-	{
-		NewPlayerPos = { MapRightX, PlayerPos_.y };
-		Player_->SetPosition(NewPlayerPos);
-		Enemy_->SetPosition({NewPlayerPos.x + EnemyPos.x, EnemyPos.y});
-	}
-
-	if (PlayerPos_.x >= MapRightX)
-	{
-		NewPlayerPos = { MapLeftX, PlayerPos_.y };
-		Player_->SetPosition(NewPlayerPos);
-		Enemy_->SetPosition({ NewPlayerPos.x + EnemyPos.x, EnemyPos.y });
-	}
-
-}
 
 

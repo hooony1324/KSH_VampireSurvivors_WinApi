@@ -37,7 +37,7 @@ Player::~Player()
 
 void Player::Start()
 {
-	SetPosition({ 800, 800 });
+	SetPosition({ 900, 600 });
 	SetScale({ 100, 100 });
 
 	// 플레이어 이미지, 애니메이션 관련 설정
@@ -56,15 +56,10 @@ void Player::Start()
 	Hp_BarRed_ = CreateRenderer("hpbar.bmp", static_cast<int>(EngineMax::RENDERORDERMAX), RenderPivot::CENTER, { 0, 40 });
 	Hp_BarSize_ = Hp_BarRed_->GetScale();
 
-	MapColImage_ = GameEngineImageManager::GetInst()->Find("Library_Books_x2_Col.bmp");
+	
 
-	if (nullptr == MapColImage_)
-	{
-		MsgBoxAssert("맵 콜라이더가 로드되지 않았습니다");
-	}
-
-	// 충돌 테스트
-	PlayerCol_ = CreateCollision("Player", { 35, 45 });
+	// 충돌
+	PlayerCol_ = CreateCollision("Player", { 36, 46 });
 
 
 }
@@ -110,6 +105,10 @@ void Player::Render()
 {
 	HpBarRender();
 
+	TCHAR szBuff[64] = "";
+	sprintf_s(szBuff, "Player X: %d, Y: %d", GetPosition().ix(), GetPosition().iy());
+	TextOut(GameEngine::GetInst().BackBufferDC(), GetCameraEffectPosition().ix(), GetCameraEffectPosition().iy() - 50, szBuff, strlen(szBuff));
+
 }
 
 void Player::PlayerMove()
@@ -118,9 +117,11 @@ void Player::PlayerMove()
 	PlayerPos_ = GetPosition();
 	PlayerInfo::GetInst()->GetCharacter()->SetPos(PlayerPos_);
 
+	Speed_ = PlayerStat_->Speed_;
 
-	float Speed = PlayerStat_->Speed_;
 	MoveDir_ = float4::ZERO;
+
+
 
 	bool MoveLeft = GameEngineInput::GetInst()->IsPress("MoveLeft");
 	bool MoveRight = GameEngineInput::GetInst()->IsPress("MoveRight");
@@ -181,15 +182,14 @@ void Player::PlayerMove()
 	SetMove(float4::DOWN * GameEngineTime::GetDeltaTime() * AccGravity_);*/
 
 	// Pixel 충돌
-	float4 NextPosTop = PlayerPos_ + (MoveDir_ * GameEngineTime::GetDeltaTime() * Speed) + float4(0, -40);
-	float4 NextPosBot = PlayerPos_ + (MoveDir_ * GameEngineTime::GetDeltaTime() * Speed) + float4(0, 40);
-
-	int NextTopColor = MapColImage_->GetImagePixel(NextPosTop);
-	int NextBotColor = MapColImage_->GetImagePixel(NextPosBot);
-	if (RGB(0, 0, 0) == NextTopColor || RGB(0, 0, 0) == NextBotColor)
-	{
-		Speed = 0;
-	}
+	float4 NextPosTop = PlayerPos_ + (MoveDir_ * GameEngineTime::GetDeltaTime() * Speed_) + float4(0, -40);
+	float4 NextPosBot = PlayerPos_ + (MoveDir_ * GameEngineTime::GetDeltaTime() * Speed_) + float4(0, 40);
+	//int NextTopColor = MapColImage_->GetImagePixel(NextPosTop);
+	//int NextBotColor = MapColImage_->GetImagePixel(NextPosBot);
+	//if (RGB(0, 0, 0) == NextTopColor || RGB(0, 0, 0) == NextBotColor)
+	//{
+	//	Speed = 0;
+	//}
 
 	if (HeadDir_ == float4::LEFT && MoveDir_ != float4::ZERO)
 	{
@@ -200,7 +200,7 @@ void Player::PlayerMove()
 		PlayerRenderer_->ChangeAnimation("Walk_Right");
 	}
 
-	SetMove(MoveDir_ * GameEngineTime::GetDeltaTime() * Speed);
+	SetMove(MoveDir_ * GameEngineTime::GetDeltaTime() * Speed_);
 
 	if (StopLeft || StopRight || StopUp || StopDown)
 	{
@@ -223,6 +223,7 @@ void Player::HpBarRender()
 	Hp_BarRed_->SetScale(float4{ newSize, Hp_BarSize_.y });
 	Hp_BarRed_->SetPivot(Hp_BarPivot_);
 }
+
 
 void Player::Attacked(int _Damage)
 {
