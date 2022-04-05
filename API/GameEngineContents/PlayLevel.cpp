@@ -124,8 +124,7 @@ void PlayLevel::InfiniteMap()
 	float MapRightX = 4230;
 
 	float4 NewPlayerPos;
-	float4 EnemyPos = Enemy_->GetPosition();
-	EnemyPos = { EnemyPos.x - PlayerPos_.x, EnemyPos.y };
+	float4 EnemyPos;
 	if (PlayerPos_.x <= MapLeftX)
 	{
 		NewPlayerPos = { MapRightX, PlayerPos_.y };
@@ -133,6 +132,7 @@ void PlayLevel::InfiniteMap()
 		
 		for (Enemy* Ptr : Enemies_)
 		{
+			EnemyPos = Ptr->GetPosition() - float4{ PlayerPos_.x, 0 };  // 플레이어와 상대적인 거리(X축 만)
 			Ptr->SetPosition({ NewPlayerPos.x + EnemyPos.x, EnemyPos.y });
 		}
 	}
@@ -144,6 +144,7 @@ void PlayLevel::InfiniteMap()
 
 		for (Enemy* Ptr : Enemies_)
 		{
+			EnemyPos = Ptr->GetPosition() - float4{ PlayerPos_.x, 0 };
 			Ptr->SetPosition({ NewPlayerPos.x + EnemyPos.x, EnemyPos.y });
 		}
 	}

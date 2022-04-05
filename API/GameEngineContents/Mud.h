@@ -16,6 +16,7 @@ public:
 	Mud& operator=(const Mud& _Other) = delete;
 	Mud& operator=(Mud&& _Other) noexcept = delete;
 
+	void TestMud() {}
 
 protected:
 
@@ -24,19 +25,26 @@ protected:
 	void Render() override;
 
 private:
+	// 기본 정보
+	float Speed_;
+	int Hp_;
 
+
+
+
+	// 피격
 	GameEngineRenderer* Mud_;
 	GameEngineCollision* MudCol_;
+	GameEngineCollision* AttackCheck_;
 
+
+	// 서로 밀어내기
+	void BlockOther();
 	GameEngineCollision* OtherBlockUp_;
 	GameEngineCollision* OtherBlockDown_;
 	GameEngineCollision* OtherBlockLeft_;
 	GameEngineCollision* OtherBlockRight_;
-
-	void BlockOther();
 	std::vector<GameEngineCollision*> Others_;
 
-
-	float Speed_;
 };
 

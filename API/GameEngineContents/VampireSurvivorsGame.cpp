@@ -99,5 +99,8 @@ void VampireSurvivorsGame::ResourceLoad()
 	GameEngineImage* ImageWL = GameEngineImageManager::GetInst()->Find("Cavallo_WalkLeft.bmp");
 	ImageWL->Cut({ 60, 64 });
 
-	GameEngineImageManager::GetInst()->Find("Mud_Idle.bmp")->Cut({ 70, 70 });
+	GameEngineImageManager::GetInst()->Find("Mud_IdleLeft.bmp")->Cut({ 70, 70 });
+	GameEngineImageManager::GetInst()->Find("Mud_IdleRight.bmp")->Cut({ 70, 70 });
+	GameEngineImageManager::GetInst()->Find("Mud_Dead.bmp")->Cut({ 70, 70 });
+
 }
