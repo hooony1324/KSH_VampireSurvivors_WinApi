@@ -16,7 +16,6 @@ public:
 	Mud& operator=(const Mud& _Other) = delete;
 	Mud& operator=(Mud&& _Other) noexcept = delete;
 
-	void PushOther();
 
 protected:
 
@@ -34,6 +33,7 @@ private:
 	GameEngineCollision* OtherBlockLeft_;
 	GameEngineCollision* OtherBlockRight_;
 
+	void BlockOther();
 	std::vector<GameEngineCollision*> Others_;
 
 
