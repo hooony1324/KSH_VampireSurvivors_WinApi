@@ -47,17 +47,16 @@ void PlayLevel::Loading()
 // 맵, 캐릭터, .. 가 선택 되면 해당하는 맵으로 액터를 생성해야 함
 void PlayLevel::LevelChangeStart()
 {	
-	// Library 맵 환경 설정
-	Map_ = CreateActor<Library>((int)RENDER_ORDER::BACKGROUND, "Map");
-	Map_->SetPosition({ 0, 0 });
-	Map_->SetScale({ 4096, 1824 });
-	
-	MapLeftX_ = GameEngineWindow::GetScale().Half().x;
-	MapRightX_ = Map_->GetScale().x - MapLeftX_ /*- 64*/;
+	CreateInfiniteMap();
 	
 	
 
-	Enemy_ = CreateActor<Mud>((int)RENDER_ORDER::MONSTER, "Enemy");
+	for (int i = 0; i < 5; i++)
+	{
+		Enemy_ = CreateActor<Mud>((int)RENDER_ORDER::MONSTER, "Enemy");
+		Enemy_->SetPosition(float4{1300, i*40 + 600.0f});
+		Enemies_.push_back(Enemy_);
+	}
 
 	Player_ = CreateActor<Player>((int)RENDER_ORDER::PLAYER, "Player");
 
@@ -84,7 +83,10 @@ void PlayLevel::Update()
 		GameEngine::GetInst().ChangeLevel("Result");
 	}
 
+	InfiniteMap();
+
 	EnemyController_->SetPosition(Player_->GetPosition());
+
 
 }
 
@@ -105,6 +107,48 @@ void PlayLevel::LevelChangeEnd()
 	EnemyController_->Death();
 }
 
+void PlayLevel::CreateInfiniteMap()
+{
+	Map_ = CreateActor<Library>((int)RENDER_ORDER::MONSTER, "Library");
+	Map_->SetPosition(float4::ZERO);
+	Map_->SetScale({ 100, 100 });
+	
+	
+}
+
+void PlayLevel::InfiniteMap()
+{
+	PlayerPos_ = Player_->GetPosition();
+	//640 - 4230
+	float MapLeftX = 640;
+	float MapRightX = 4230;
+
+	float4 NewPlayerPos;
+	float4 EnemyPos = Enemy_->GetPosition();
+	EnemyPos = { EnemyPos.x - PlayerPos_.x, EnemyPos.y };
+	if (PlayerPos_.x <= MapLeftX)
+	{
+		NewPlayerPos = { MapRightX, PlayerPos_.y };
+		Player_->SetPosition(NewPlayerPos);
+		
+		for (Enemy* Ptr : Enemies_)
+		{
+			Ptr->SetPosition({ NewPlayerPos.x + EnemyPos.x, EnemyPos.y });
+		}
+	}
+
+	if (PlayerPos_.x >= MapRightX)
+	{
+		NewPlayerPos = { MapLeftX, PlayerPos_.y };
+		Player_->SetPosition(NewPlayerPos);
+
+		for (Enemy* Ptr : Enemies_)
+		{
+			Ptr->SetPosition({ NewPlayerPos.x + EnemyPos.x, EnemyPos.y });
+		}
+	}
+
+}
 
 
 

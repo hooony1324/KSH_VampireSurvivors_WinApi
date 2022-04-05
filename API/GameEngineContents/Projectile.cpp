@@ -22,8 +22,5 @@ void Projectile::Start()
 
 void Projectile::Update()
 {
-	
-	
-	ProjPos_ += ShootDir_;
-	// SetMove(ShootDir_ *GameEngineTime::GetDeltaTime() * 200.0f);
+	SetMove(ShootDir_ *GameEngineTime::GetDeltaTime() * 200.0f);
 }

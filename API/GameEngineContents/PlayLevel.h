@@ -41,7 +41,8 @@ private:
 	
 	// Map관련
 private:
-	
+	void CreateInfiniteMap();
+
 	float				MapLeftX_;
 	float				MapRightX_;
 
@@ -53,11 +54,9 @@ private:
 
 	// 큐 로 하면 좋을듯
 	Enemy*				Enemy_;
-	std::list<Enemy*>	Enemies_;
+	std::vector<Enemy*>	Enemies_;
 
-	// Projectile은 Level에서 관리
 
-	void Respawn(int _x, int _y);
 	void InfiniteMap();
 
 	

@@ -24,10 +24,6 @@ void Library::Start()
 	// 도서관 책장 위치y : 415 1420
 	MapWallTop_ = CreateCollision("MapWall", float4{ Map_->GetScale().x, 40 }, { Map_->GetScale().Half().x, 340});
 	MapWallBot_ = CreateCollision("MapWall", float4{ Map_->GetScale().x, 40 }, { Map_->GetScale().Half().x, 1440 });
-
-	// 무한맵 : 충돌시 맵 엑터 생성(PlayLevel)
-	MapLeftX_ = GameEngineWindow::GetScale().Half().x;
-	MapRightX_ = Map_->GetScale().x - MapLeftX_ /*- 64*/;
 	
 }
 

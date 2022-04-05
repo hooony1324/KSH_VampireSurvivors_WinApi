@@ -15,10 +15,8 @@ public:
 	Enemy& operator=(const Enemy& _Other) = delete;
 	Enemy& operator=(Enemy&& _Other) noexcept = delete;
 
-	virtual void KillEnemy() = 0;
 
 private:
-	void Update() override;
 
 };
 

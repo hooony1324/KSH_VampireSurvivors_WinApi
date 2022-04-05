@@ -7,6 +7,7 @@
 #include <GameEngineBase/GameEngineFile.h>
 #include <GameEngineBase/GameEngineInput.h>
 #include <GameEngine/GameEngineImageManager.h>
+#include <GameEngine/GameEngineFolderImage.h>
 
 #include "PlayerInfo.h"
 
@@ -62,6 +63,7 @@ void VampireSurvivorsGame::GameInit()
 
 	GameEngineImage* ImageWL = GameEngineImageManager::GetInst()->Find("Cavallo_WalkLeft.bmp");
 	ImageWL->Cut({ 60, 64 });
+
 }
 
 void VampireSurvivorsGame::GameLoop()
@@ -80,7 +82,7 @@ void VampireSurvivorsGame::ResourceLoad()
 	ResourcesDir.MoveParent("API");
 	ResourcesDir.Move("Resources");
 
-	std::string Directories[] = {"characters", "tilesets", "illustrations", "vfx", "UI"};
+	std::string Directories[] = {"characters", "tilesets", "illustrations", "vfx", "UI", "enemies"};
 	
 	for (std::string& Dir : Directories)
 	{

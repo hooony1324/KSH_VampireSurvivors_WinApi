@@ -37,7 +37,7 @@ Player::~Player()
 
 void Player::Start()
 {
-	SetPosition({ 900, 600 });
+	SetPosition({ 1000, 700 });
 	SetScale({ 100, 100 });
 
 	// 플레이어 이미지, 애니메이션 관련 설정
@@ -67,12 +67,12 @@ void Player::Start()
 void Player::Update()
 {
 	PlayerStat_ = PlayerInfo::GetInst()->GetCharacter();
+	PlayerInfo::GetInst()->GetCharacter()->SetPos(GetPosition());
 
 	PlayerMove();
 
 	if (true == GameEngineInput::GetInst()->IsDown("SpaceBar"))
 	{
-		float4 cPos = GetCameraEffectPosition();
 		Shoot(float4::RIGHT);
 	}
 
@@ -105,23 +105,20 @@ void Player::Render()
 {
 	HpBarRender();
 
-	TCHAR szBuff[64] = "";
-	sprintf_s(szBuff, "Player X: %d, Y: %d", GetPosition().ix(), GetPosition().iy());
-	TextOut(GameEngine::GetInst().BackBufferDC(), GetCameraEffectPosition().ix(), GetCameraEffectPosition().iy() - 50, szBuff, strlen(szBuff));
+	TCHAR Buffer[100] = "";
+	sprintf_s(Buffer, "Player { %d, %d }", GetPosition().ix(), GetPosition().iy());
+	TextOut(GameEngine::GetInst().BackBufferDC(), GetCameraEffectPosition().ix(), GetCameraEffectPosition().iy() - 50, Buffer, strlen(Buffer));
 
 }
 
 void Player::PlayerMove()
 {
-	// PlayerInfo에 플레이어 위치 정보 업데이트
+
 	PlayerPos_ = GetPosition();
-	PlayerInfo::GetInst()->GetCharacter()->SetPos(PlayerPos_);
 
 	Speed_ = PlayerStat_->Speed_;
 
 	MoveDir_ = float4::ZERO;
-
-
 
 	bool MoveLeft = GameEngineInput::GetInst()->IsPress("MoveLeft");
 	bool MoveRight = GameEngineInput::GetInst()->IsPress("MoveRight");
@@ -182,8 +179,8 @@ void Player::PlayerMove()
 	SetMove(float4::DOWN * GameEngineTime::GetDeltaTime() * AccGravity_);*/
 
 	// Pixel 충돌
-	float4 NextPosTop = PlayerPos_ + (MoveDir_ * GameEngineTime::GetDeltaTime() * Speed_) + float4(0, -40);
-	float4 NextPosBot = PlayerPos_ + (MoveDir_ * GameEngineTime::GetDeltaTime() * Speed_) + float4(0, 40);
+	//float4 NextPosTop = PlayerPos_ + (MoveDir_ * GameEngineTime::GetDeltaTime() * Speed_) + float4(0, -40);
+	//float4 NextPosBot = PlayerPos_ + (MoveDir_ * GameEngineTime::GetDeltaTime() * Speed_) + float4(0, 40);
 	//int NextTopColor = MapColImage_->GetImagePixel(NextPosTop);
 	//int NextBotColor = MapColImage_->GetImagePixel(NextPosBot);
 	//if (RGB(0, 0, 0) == NextTopColor || RGB(0, 0, 0) == NextBotColor)
@@ -245,9 +242,10 @@ void Player::Attacked(int _Damage)
 
 void Player::Shoot(float4 _ShootDir)
 {
-	Projectile* Bullet = GetLevel()->CreateActor<Projectile>();
+	Projectile* Bullet = GetLevel()->CreateActor<Projectile>(200, "Bullets");
+	Bullet->SetPosition(GetPosition());
 	Bullet->Death(5);
-	Bullet->SetPosition(PlayerPos_);
+	
 }
 
 

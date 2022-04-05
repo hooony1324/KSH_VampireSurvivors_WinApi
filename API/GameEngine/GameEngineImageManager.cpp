@@ -11,15 +11,32 @@ GameEngineImageManager::GameEngineImageManager()
 
 GameEngineImageManager::~GameEngineImageManager()
 {
-	std::map<std::string, GameEngineImage*>::iterator StartIter = AllRes.begin();
-	std::map<std::string, GameEngineImage*>::iterator EndIter = AllRes.end();
-
-	for (; StartIter != EndIter; ++StartIter)
 	{
-		if (nullptr != StartIter->second)
+		std::map<std::string, GameEngineFolderImage*>::iterator StartIter = AllFolderRes.begin();
+		std::map<std::string, GameEngineFolderImage*>::iterator EndIter = AllFolderRes.end();
+
+		for (; StartIter != EndIter; ++StartIter)
 		{
-			delete StartIter->second;
-			StartIter->second = nullptr;
+			if (nullptr != StartIter->second)
+			{
+				delete StartIter->second;
+				StartIter->second = nullptr;
+			}
+		}
+	}
+
+
+	{
+		std::map<std::string, GameEngineImage*>::iterator StartIter = AllRes.begin();
+		std::map<std::string, GameEngineImage*>::iterator EndIter = AllRes.end();
+
+		for (; StartIter != EndIter; ++StartIter)
+		{
+			if (nullptr != StartIter->second)
+			{
+				delete StartIter->second;
+				StartIter->second = nullptr;
+			}
 		}
 	}
 }
@@ -91,7 +108,7 @@ GameEngineImage* GameEngineImageManager::Create(const std::string& _Name, const 
 GameEngineImage* GameEngineImageManager::Load(const std::string& _Path)
 {
 	GameEnginePath NewPath = GameEnginePath(_Path);
-	return Load(_Path, NewPath.GetFileName());
+	return GameEngineImageManager::Load(_Path, NewPath.GetFileName());	//경로와 파일이름(ex.idle.bmp)을 Map의 key,value로 넣기위해 각각 넘겨준다.
 }
 
 GameEngineImage* GameEngineImageManager::Load(const std::string& _Path, const std::string& _Name)
@@ -117,3 +134,63 @@ GameEngineImage* GameEngineImageManager::Load(const std::string& _Path, const st
 
 	return NewImage;
 }
+
+//////////////////////////////////////////////////////// 폴더 이미지
+
+GameEngineFolderImage* GameEngineImageManager::FolderImageFind(const std::string& _Name)
+{
+	std::string EngineName = GameEngineString::ToUpperReturn(_Name);
+
+	std::map<std::string, GameEngineFolderImage*>::iterator FindIter = AllFolderRes.find(EngineName);
+
+	if (AllFolderRes.end() == FindIter)
+	{
+		// MsgBoxAssert("이미 존재하는 이름의 이미지를 또 만들려고 했습니다.");
+		return nullptr;
+	}
+
+	return FindIter->second;
+}
+
+GameEngineFolderImage* GameEngineImageManager::FolderImageLoad(const std::string& _Path)
+{
+	GameEnginePath NewPath = GameEnginePath(_Path);
+	return GameEngineImageManager::FolderImageLoad(_Path, NewPath.GetFileName());	//경로와 파일이름(ex.idle.bmp)을 Map의 key,value로 넣기위해 각각 넘겨준다.
+
+}
+
+GameEngineFolderImage* GameEngineImageManager::FolderImageLoad(const std::string& _Path, const std::string& _Name)
+{
+	std::string EngineName = GameEngineString::ToUpperReturn(_Name);
+	if (AllFolderRes.end() != AllFolderRes.find(EngineName))
+	{
+		MsgBoxAssert("이미 존재하는 이름의 폴더 이미지를 또 만들려고 했습니다.");
+		return nullptr;
+	}
+
+	GameEngineFolderImage* NewImage = new GameEngineFolderImage();
+	NewImage->SetName(EngineName);
+
+	if (false == NewImage->Load(_Path))
+	{
+		delete NewImage;
+		MsgBoxAssert((_Name + "이미지를 생성하는데 실패했습니다.").c_str());
+		return nullptr;
+	}
+
+	AllFolderRes.insert(std::make_pair(EngineName, NewImage));
+
+	return NewImage;
+}
+
+
+
+
+
+
+
+
+
+
+
+
