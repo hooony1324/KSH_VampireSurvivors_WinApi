@@ -1,44 +1,39 @@
-#include "Mud.h"
-#include <GameEngine/GameEngine.h>
-#include <GameEngineBase/GameEngineWindow.h>
-#include <GameEngine/GameEngineImageManager.h>
-//#include <GameEngineBase/GameEngineDebug.h>
+#include "ShadeRed.h"
 #include <GameEngine/GameEngineRenderer.h>
 #include <GameEngine/GameEngineCollision.h>
 
 #include "PlayerInfo.h"
 #include "Vector2D.h"
 
-Mud::Mud() 
-	: Speed_(80.0f)
+ShadeRed::ShadeRed() 
+	: Speed_(120.0f)
 	, Hp_(100)
 {
 }
 
-Mud::~Mud() 
+ShadeRed::~ShadeRed() 
 {
-
 }
 
-void Mud::Start()
+void ShadeRed::Start()
 {
-	//Mud_ = CreateRenderer("Mud_0.bmp");
-	Mud_ = CreateRenderer();
-	Mud_->CreateAnimation("Mud_IdleLeft.bmp", "Mud_IdleLeft", 0, 3, 0.2f, true);
-	Mud_->CreateAnimation("Mud_IdleRight.bmp", "Mud_IdleRight", 0, 3, 0.2f, true);
-	Mud_->CreateAnimation("Mud_Dead.bmp", "Mud_Dead", 0, 27, 0.1f, false);
-	Mud_->ChangeAnimation("Mud_IdleRight");
+	//ShadeRed_ = CreateRenderer("ShadeRed_0.bmp");
+	ShadeRed_ = CreateRenderer();
+	ShadeRed_->CreateAnimation("ShadeRed_IdleLeft.bmp", "ShadeRed_IdleLeft", 0, 2, 0.2f, true);
+	ShadeRed_->CreateAnimation("ShadeRed_IdleRight.bmp", "ShadeRed_IdleRight", 0, 2, 0.2f, true);
+	ShadeRed_->CreateAnimation("ShadeRed_Dead.bmp", "ShadeRed_Dead", 0, 29, 0.1f, false);
+	ShadeRed_->ChangeAnimation("ShadeRed_IdleRight");
 	SetScale({ 100, 100 });
 
-	MudCol_ = CreateCollision("Monster", { 30, 30 });
-	
-	OtherBlockUp_ = CreateCollision("OtherGuard", { 36, 4}, {0, -20});
-	OtherBlockDown_ = CreateCollision("OtherGuard", { 36, 4}, {0, 20});
+	ShadeRedCol_ = CreateCollision("Monster", { 30, 30 });
+
+	OtherBlockUp_ = CreateCollision("OtherGuard", { 36, 4 }, { 0, -20 });
+	OtherBlockDown_ = CreateCollision("OtherGuard", { 36, 4 }, { 0, 20 });
 	OtherBlockLeft_ = CreateCollision("OtherGuard", { 4, 36 }, { -20, 0 });
-	OtherBlockRight_ = CreateCollision("OtherGuard", { 4, 36}, {20, 0});
+	OtherBlockRight_ = CreateCollision("OtherGuard", { 4, 36 }, { 20, 0 });
 }
 
-void Mud::Update()
+void ShadeRed::Update()
 {
 	float4 PlayerPos = PlayerInfo::GetInst()->GetCharacter()->Position_;
 	float4 EnemyPos = GetPosition();
@@ -49,22 +44,22 @@ void Mud::Update()
 
 	if (0 >= DestDir.x)
 	{
-		Mud_->ChangeAnimation("Mud_IdleLeft");
+		ShadeRed_->ChangeAnimation("ShadeRed_IdleLeft");
 	}
 	else
 	{
-		Mud_->ChangeAnimation("Mud_IdleRight");
+		ShadeRed_->ChangeAnimation("ShadeRed_IdleRight");
 	}
 
 	BlockOther();
 
 }
 
-void Mud::Render()
+void ShadeRed::Render()
 {
 }
 
-void Mud::BlockOther()
+void ShadeRed::BlockOther()
 {
 	// À§¿¡ ºÎµúÈù ³à¼® À§·Î
 	if (true == OtherBlockUp_->CollisionResult("Monster", Others_, CollisionType::Rect, CollisionType::Rect))

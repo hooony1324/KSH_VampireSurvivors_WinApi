@@ -2,6 +2,7 @@
 #include <GameEngine/GameEngineActor.h>
 
 // 설명 :
+// 모든 Enemy의 위치정보 알고 있음
 // 화면 밖에 벗어난 Enemy들을 Respawn해주는 액터
 class EnemyController : public GameEngineActor
 {

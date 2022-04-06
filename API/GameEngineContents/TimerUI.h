@@ -15,13 +15,15 @@ public:
 	TimerUI& operator=(const TimerUI& _Other) = delete;
 	TimerUI& operator=(TimerUI&& _Other) noexcept = delete;
 
-protected:
+	
 
+protected:
 	void Start() override;
 	void Update() override;
 	void Render() override;
 
 private:
+	float Time_;
 
 };
 

@@ -93,14 +93,18 @@ void VampireSurvivorsGame::ResourceLoad()
 	}
 
 	// 애니메이션용 이미지는 Cut선행되어야 함
-	GameEngineImage* ImageWR = GameEngineImageManager::GetInst()->Find("Cavallo_WalkRight.bmp");
-	ImageWR->Cut({ 60, 64 });
+	GameEngineImageManager::GetInst()->Find("Cavallo_WalkRight.bmp")->Cut({ 56, 56 });
+	GameEngineImageManager::GetInst()->Find("Cavallo_WalkLeft.bmp")->Cut({ 56, 56 });
 
-	GameEngineImage* ImageWL = GameEngineImageManager::GetInst()->Find("Cavallo_WalkLeft.bmp");
-	ImageWL->Cut({ 60, 64 });
 
 	GameEngineImageManager::GetInst()->Find("Mud_IdleLeft.bmp")->Cut({ 70, 70 });
 	GameEngineImageManager::GetInst()->Find("Mud_IdleRight.bmp")->Cut({ 70, 70 });
 	GameEngineImageManager::GetInst()->Find("Mud_Dead.bmp")->Cut({ 70, 70 });
+
+	GameEngineImageManager::GetInst()->Find("ShadeRed_IdleLeft.bmp")->Cut({ 70, 70 });
+	GameEngineImageManager::GetInst()->Find("ShadeRed_IdleRight.bmp")->Cut({ 70, 70 });
+	GameEngineImageManager::GetInst()->Find("ShadeRed_Dead.bmp")->Cut({ 140, 140 });
+
+
 
 }

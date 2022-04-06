@@ -1,5 +1,4 @@
 #pragma once
-#include <cmath>
 
 // 설명 :
 class GameEngineMath
@@ -29,15 +28,6 @@ public:
 	static float4 UP;
 	static float4 DOWN;
 	static float4 ZERO;
-
-	// 내가 추가함
-	// A->B 로 향하는 벡터를 반환
-	static float4 Normalized(float4 _PosA, float4 _PosB)
-	{
-		float4 Distance = _PosB - _PosA;
-		float Ratio = 1 / static_cast<float>(sqrt((pow(Distance.x, 2) + pow(Distance.y, 2))));
-		return Distance * Ratio;
-	}
 
 public:
 	float x;

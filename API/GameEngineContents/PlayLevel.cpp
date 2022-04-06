@@ -14,9 +14,11 @@
 
 #include "Player.h"
 #include "Library.h"
-#include "Mud.h"
 #include "Enemy.h"
+#include "Mud.h"
+#include "ShadeRed.h"
 #include "EnemyController.h"
+#include "Projectile.h"
 
 
 enum class RENDER_ORDER
@@ -47,21 +49,25 @@ void PlayLevel::Loading()
 // 맵, 캐릭터, .. 가 선택 되면 해당하는 맵으로 액터를 생성해야 함
 void PlayLevel::LevelChangeStart()
 {	
-	CreateInfiniteMap();
-	
-	
+	CreateInfiniteMap();	
 
 	for (int i = 0; i < 5; i++)
 	{
 		Enemy_ = CreateActor<Mud>((int)RENDER_ORDER::MONSTER, "Enemy");
-		Enemy_->SetPosition(float4{1300, i*40 + 600.0f});
+		Enemy_->SetPosition(float4{1500, i*40 + 600.0f});
+		Enemies_.push_back(Enemy_);
+	}
+
+	for (int i = 0; i < 2; i++)
+	{
+		Enemy_ = CreateActor<ShadeRed>((int)RENDER_ORDER::MONSTER, "Enemy");
+		Enemy_->SetPosition(float4{ 1100, i * 40 + 600.0f });
 		Enemies_.push_back(Enemy_);
 	}
 
 	Player_ = CreateActor<Player>((int)RENDER_ORDER::PLAYER, "Player");
 
 	EnemyController_ = CreateActor<EnemyController>((int)RENDER_ORDER::MONSTER, "EController");
-	
 
 	ExpUI_ = CreateActor<ExpBar>((int)RENDER_ORDER::UI, "UI");
 	WeaponUI_ = CreateActor<WeaponSlots>((int)RENDER_ORDER::UI, "UI");
@@ -86,7 +92,6 @@ void PlayLevel::Update()
 	InfiniteMap();
 
 	EnemyController_->SetPosition(Player_->GetPosition());
-
 
 }
 
@@ -122,6 +127,10 @@ void PlayLevel::InfiniteMap()
 	//640 - 4230
 	float MapLeftX = 640;
 	float MapRightX = 4230;
+	if (PlayerPos_.x > MapLeftX && PlayerPos_.x < MapRightX)
+	{
+		return;
+	}
 
 	float4 NewPlayerPos;
 	float4 EnemyPos;
@@ -129,7 +138,7 @@ void PlayLevel::InfiniteMap()
 	{
 		NewPlayerPos = { MapRightX, PlayerPos_.y };
 		Player_->SetPosition(NewPlayerPos);
-		
+
 		for (Enemy* Ptr : Enemies_)
 		{
 			EnemyPos = Ptr->GetPosition() - float4{ PlayerPos_.x, 0 };  // 플레이어와 상대적인 거리(X축 만)

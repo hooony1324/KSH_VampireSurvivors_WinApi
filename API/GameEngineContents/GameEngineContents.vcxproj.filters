@@ -80,6 +80,12 @@
     <ClCompile Include="EnemyController.cpp">
       <Filter>2.Play\Map</Filter>
     </ClCompile>
+    <ClCompile Include="Vector2D.cpp">
+      <Filter>Global</Filter>
+    </ClCompile>
+    <ClCompile Include="ShadeRed.cpp">
+      <Filter>2.Play\Enemies</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="VampireSurvivorsGame.h" />
@@ -157,6 +163,12 @@
     </ClInclude>
     <ClInclude Include="EnemyController.h">
       <Filter>2.Play\Map</Filter>
+    </ClInclude>
+    <ClInclude Include="Vector2D.h">
+      <Filter>Global</Filter>
+    </ClInclude>
+    <ClInclude Include="ShadeRed.h">
+      <Filter>2.Play\Enemies</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

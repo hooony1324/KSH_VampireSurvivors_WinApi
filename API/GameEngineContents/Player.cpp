@@ -15,9 +15,9 @@
 
 #include "Character.h"
 #include "PlayerInfo.h"
+#include "Vector2D.h"
 
 #include <GameEngine/GameEngineRenderer.h>
-#include <cmath>
 
 Player::Player() 
 	: Hp_BarRed_(nullptr)
@@ -107,7 +107,7 @@ void Player::Render()
 
 	TCHAR Buffer[100] = "";
 	sprintf_s(Buffer, "Player { %d, %d }", GetPosition().ix(), GetPosition().iy());
-	TextOut(GameEngine::GetInst().BackBufferDC(), GetCameraEffectPosition().ix(), GetCameraEffectPosition().iy() - 50, Buffer, strlen(Buffer));
+	TextOutA(GameEngine::GetInst().BackBufferDC(), GetCameraEffectPosition().ix(), GetCameraEffectPosition().iy() - 50, Buffer, strlen(Buffer));
 
 }
 
@@ -154,25 +154,48 @@ void Player::PlayerMove()
 
 	if (MoveLeft && MoveUp)
 	{
-		MoveDir_ = (float4::LEFT + float4::UP) * (float)(1 / sqrt(2));
+		MoveDir_ = Vector2D::Normalized((float4::LEFT + float4::UP));
 	}
 
 	if (MoveUp && MoveRight)
 	{
-		MoveDir_ = (float4::UP + float4::RIGHT) * (float)(1 / sqrt(2));
+		MoveDir_ = Vector2D::Normalized((float4::UP + float4::RIGHT));
 	}
 
 	if (MoveRight && MoveDown)
 	{
-		MoveDir_ = (float4::RIGHT + float4::DOWN) * (float)(1 / sqrt(2));
+		MoveDir_ = Vector2D::Normalized((float4::RIGHT + float4::DOWN));
 	}
 
 	if (MoveDown && MoveLeft)
 	{
-		MoveDir_ = (float4::DOWN + float4::LEFT) * (float)(1 / sqrt(2));
+		MoveDir_ = Vector2D::Normalized((float4::DOWN + float4::LEFT));
 	}
 
+	// 머리 방향에 따른 Idle애니메이션
+	if (HeadDir_ == float4::LEFT && MoveDir_ != float4::ZERO)
+	{
+		PlayerRenderer_->ChangeAnimation("Walk_Left");
+	}
+	else if (MoveDir_ != float4::ZERO)
+	{
+		PlayerRenderer_->ChangeAnimation("Walk_Right");
+	}
 
+	SetMove(MoveDir_ * GameEngineTime::GetDeltaTime() * Speed_);
+
+	// 움직이고 난 후에 Idle애니메이션
+	if (StopLeft || StopRight || StopUp || StopDown)
+	{
+		if (HeadDir_ == float4::RIGHT)
+		{
+			PlayerRenderer_->ChangeAnimation("Idle_Right");
+		}
+		else
+		{
+			PlayerRenderer_->ChangeAnimation("Idle_Left");
+		}
+	}
 
 	// 중력 적용
 	/*AccGravity_ += GameEngineTime::GetDeltaTime() * Gravity_;
@@ -187,29 +210,6 @@ void Player::PlayerMove()
 	//{
 	//	Speed = 0;
 	//}
-
-	if (HeadDir_ == float4::LEFT && MoveDir_ != float4::ZERO)
-	{
-		PlayerRenderer_->ChangeAnimation("Walk_Left");
-	}
-	else if (MoveDir_ != float4::ZERO)
-	{
-		PlayerRenderer_->ChangeAnimation("Walk_Right");
-	}
-
-	SetMove(MoveDir_ * GameEngineTime::GetDeltaTime() * Speed_);
-
-	if (StopLeft || StopRight || StopUp || StopDown)
-	{
-		if (HeadDir_ == float4::RIGHT)
-		{
-			PlayerRenderer_->ChangeAnimation("Idle_Right");
-		}
-		else
-		{
-			PlayerRenderer_->ChangeAnimation("Idle_Left");
-		}
-	}
 }
 
 void Player::HpBarRender()

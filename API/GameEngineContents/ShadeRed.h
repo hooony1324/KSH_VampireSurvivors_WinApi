@@ -1,22 +1,23 @@
 #pragma once
 #include "Enemy.h"
 #include <vector>
+
 // 설명 :
-class GameEngineCollision;
-class Mud : public Enemy
+class ShadeRed : public Enemy
 {
 public:
 	// constrcuter destructer
-	Mud();
-	~Mud();
+	ShadeRed();
+	~ShadeRed();
 
 	// delete Function
-	Mud(const Mud& _Other) = delete;
-	Mud(Mud&& _Other) noexcept = delete;
-	Mud& operator=(const Mud& _Other) = delete;
-	Mud& operator=(Mud&& _Other) noexcept = delete;
+	ShadeRed(const ShadeRed& _Other) = delete;
+	ShadeRed(ShadeRed&& _Other) noexcept = delete;
+	ShadeRed& operator=(const ShadeRed& _Other) = delete;
+	ShadeRed& operator=(ShadeRed&& _Other) noexcept = delete;
 
 private:
+
 	void Start() override;
 	void Update() override;
 	void Render() override;
@@ -27,8 +28,8 @@ private:
 
 
 	// 피격
-	GameEngineRenderer* Mud_;
-	GameEngineCollision* MudCol_;
+	GameEngineRenderer* ShadeRed_;
+	GameEngineCollision* ShadeRedCol_;
 	GameEngineCollision* AttackCheck_;
 
 
