@@ -3,6 +3,7 @@
 #include <GameEngine/GameEngine.h>
 #include <GameEngineBase/GameEngineInput.h>
 #include <GameEngineBase/GameEngineTime.h>
+#include <GameEngine/GameEngineActor.h>
 
 #include "PlayerInfo.h"
 #include "ExpBar.h"
@@ -19,6 +20,10 @@
 #include "ShadeRed.h"
 #include "EnemyController.h"
 #include "Projectile.h"
+#include "WeaponSystem.h"
+
+float MapLeftX = 640;
+float MapRightX = 4230;
 
 
 enum class RENDER_ORDER
@@ -66,6 +71,7 @@ void PlayLevel::LevelChangeStart()
 	}
 
 	Player_ = CreateActor<Player>((int)RENDER_ORDER::PLAYER, "Player");
+	WeaponSystem_ = CreateActor<WeaponSystem>((int)RENDER_ORDER::PLAYER, "PlayerWeapon");
 
 	EnemyController_ = CreateActor<EnemyController>((int)RENDER_ORDER::MONSTER, "EController");
 
@@ -75,7 +81,6 @@ void PlayLevel::LevelChangeStart()
 	CoinUI_ = CreateActor<CoinUI>((int)RENDER_ORDER::UI, "UI");
 	LevelUI_ = CreateActor<LevelUI>((int)RENDER_ORDER::UI, "UI");
 	KillCountUI_ = CreateActor<KillCountUI>((int)RENDER_ORDER::UI, "UI");
-
 
 }
 
@@ -89,9 +94,19 @@ void PlayLevel::Update()
 		GameEngine::GetInst().ChangeLevel("Result");
 	}
 
+
+	if (true == GameEngineInput::GetInst()->IsDown("SpaceBar"))
+	{
+ 		Projectile* Bullet = CreateActor<Projectile>((int)RENDER_ORDER::PLAYER, "Bullet");
+		Bullet->SetPosition(Player_->GetPosition());
+		Bullet->Death(5);
+		Bullets_.push_back(Bullet);
+	}
+
 	InfiniteMap();
 
 	EnemyController_->SetPosition(Player_->GetPosition());
+	WeaponSystem_->SetPosition(Player_->GetPosition());
 
 }
 
@@ -125,36 +140,47 @@ void PlayLevel::InfiniteMap()
 {
 	PlayerPos_ = Player_->GetPosition();
 	//640 - 4230
-	float MapLeftX = 640;
-	float MapRightX = 4230;
+
+	float4 TeleportValue = { MapRightX - MapLeftX, 0 };
 	if (PlayerPos_.x > MapLeftX && PlayerPos_.x < MapRightX)
 	{
 		return;
 	}
 
-	float4 NewPlayerPos;
-	float4 EnemyPos;
+	float4 TargetPos;
 	if (PlayerPos_.x <= MapLeftX)
 	{
-		NewPlayerPos = { MapRightX, PlayerPos_.y };
-		Player_->SetPosition(NewPlayerPos);
+		Player_->SetPosition(PlayerPos_ + TeleportValue);
 
 		for (Enemy* Ptr : Enemies_)
 		{
-			EnemyPos = Ptr->GetPosition() - float4{ PlayerPos_.x, 0 };  // 플레이어와 상대적인 거리(X축 만)
-			Ptr->SetPosition({ NewPlayerPos.x + EnemyPos.x, EnemyPos.y });
+			TargetPos = Ptr->GetPosition() + TeleportValue;
+			//Ptr->SetPosition({ NewPlayerPos.x + EnemyPos.x, EnemyPos.y });
+			Ptr->SetPosition(TargetPos);
+		}
+
+		for (Projectile* Ptr : Bullets_)
+		{
+			TargetPos = Ptr->GetPosition() + TeleportValue;
+			Ptr->SetPosition(TargetPos);
 		}
 	}
 
 	if (PlayerPos_.x >= MapRightX)
 	{
-		NewPlayerPos = { MapLeftX, PlayerPos_.y };
-		Player_->SetPosition(NewPlayerPos);
+		Player_->SetPosition(PlayerPos_ - TeleportValue);
 
 		for (Enemy* Ptr : Enemies_)
 		{
-			EnemyPos = Ptr->GetPosition() - float4{ PlayerPos_.x, 0 };
-			Ptr->SetPosition({ NewPlayerPos.x + EnemyPos.x, EnemyPos.y });
+			TargetPos = Ptr->GetPosition() - TeleportValue;
+			//Ptr->SetPosition({ NewPlayerPos.x + EnemyPos.x, EnemyPos.y });
+			Ptr->SetPosition(TargetPos);
+		}
+
+		for (Projectile* Ptr : Bullets_)
+		{
+			TargetPos = Ptr->GetPosition() - TeleportValue;
+			Ptr->SetPosition(TargetPos);
 		}
 	}
 

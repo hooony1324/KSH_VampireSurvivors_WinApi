@@ -7,6 +7,8 @@ class Player;
 class Enemy;
 class EnemyController;
 class Library;
+class Projectile;
+class WeaponSystem;
 
 // 설명 :
 class PlayLevel : public GameEngineLevel
@@ -49,12 +51,15 @@ private:
 	Library*			Map_;
 	Player*				Player_;
 	float4				PlayerPos_;
+	WeaponSystem*		WeaponSystem_;
 
 	EnemyController*	EnemyController_;
 
 	// 큐 로 하면 좋을듯
 	Enemy*				Enemy_;
 	std::vector<Enemy*>	Enemies_;
+
+	std::vector<Projectile*> Bullets_;
 
 
 	void InfiniteMap();

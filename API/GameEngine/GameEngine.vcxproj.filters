@@ -32,6 +32,9 @@
     <ClInclude Include="GameEngineFolderImage.h">
       <Filter>Resources</Filter>
     </ClInclude>
+    <ClInclude Include="GameEngineRendererTileMap.h">
+      <Filter>Contents</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEngine.cpp" />
@@ -62,6 +65,9 @@
     <ClCompile Include="GameEngineFolderImage.cpp">
       <Filter>Resources</Filter>
     </ClCompile>
+    <ClCompile Include="GameEngineRendererTileMap.cpp">
+      <Filter>Contents</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Object">
@@ -81,6 +87,9 @@
     </Filter>
     <Filter Include="Global">
       <UniqueIdentifier>{6d8e5a7f-4c28-4e2b-a978-f26347243b8f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Contents">
+      <UniqueIdentifier>{c1d514dd-1ba8-461a-99c3-1371831d336a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

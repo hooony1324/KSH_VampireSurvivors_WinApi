@@ -8,16 +8,12 @@
 #include <GameEngineBase/GameEngineTime.h>
 #include <GameEngine/GameEngineRenderer.h>
 #include <GameEngine/GameEngineCollision.h>
-
-// ÃÑ¾Ë
 #include <GameEngine/GameEngineLevel.h>
-#include "Projectile.h"
 
 #include "Character.h"
 #include "PlayerInfo.h"
 #include "Vector2D.h"
 
-#include <GameEngine/GameEngineRenderer.h>
 
 Player::Player() 
 	: Hp_BarRed_(nullptr)
@@ -60,7 +56,7 @@ void Player::Start()
 
 	// Ãæµ¹
 	PlayerCol_ = CreateCollision("Player", { 36, 46 });
-
+	
 
 }
 
@@ -70,11 +66,6 @@ void Player::Update()
 	PlayerInfo::GetInst()->GetCharacter()->SetPos(GetPosition());
 
 	PlayerMove();
-
-	if (true == GameEngineInput::GetInst()->IsDown("SpaceBar"))
-	{
-		Shoot(float4::RIGHT);
-	}
 
 	GetLevel()->SetCameraPos(PlayerPos_ - GameEngineWindow::GetScale().Half());
 
@@ -240,12 +231,5 @@ void Player::Attacked(int _Damage)
 	}
 }
 
-void Player::Shoot(float4 _ShootDir)
-{
-	Projectile* Bullet = GetLevel()->CreateActor<Projectile>(200, "Bullets");
-	Bullet->SetPosition(GetPosition());
-	Bullet->Death(5);
-	
-}
 
 

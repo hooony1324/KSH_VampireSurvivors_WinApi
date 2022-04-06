@@ -6,6 +6,9 @@
 #include <GameEngine/GameEngineCollision.h>
 
 #include "PlayerInfo.h"
+#include "Vector2D.h"
+
+
 Projectile::Projectile() 
 {
 }
@@ -16,13 +19,14 @@ Projectile::~Projectile()
 
 void Projectile::Start()
 {
+
 	CreateRenderer("sword.bmp");
-	StartPos_ = PlayerInfo::GetInst()->GetCharacter()->Position_;
-	ShootDir_ = float4::RIGHT; // shootdir 외부에서 세팅 가능해야됨
+	ShootDir_ = float4::RIGHT; // 외부에서 설정되지 않으면 랜덤
+
+
 }
 
 void Projectile::Update()
 {
-	ProjVec_ += ShootDir_ * GameEngineTime::GetDeltaTime() * 200.0f;
-	SetPosition(StartPos_ + ProjVec_);
+	SetMove(ShootDir_);
 }

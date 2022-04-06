@@ -7,11 +7,16 @@ class Vector2D
 {
 public:
 
+	static float4 GetVector(float4 _PosA, float4 _PosB)
+	{
+		return _PosB - _PosA;
+	}
+
 	// 두 개의 위치가 있을 때
 	// A -> B의 벡터반환(크기 1)
 	static float4 GetDirection(float4 _PosA, float4 _PosB)
 	{
-		return Normalized(_PosB - _PosA);
+		return Normalized(GetVector(_PosA, _PosB));
 	}
 
 	// 현재 벡터의 1크기 방향 리턴

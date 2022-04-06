@@ -86,6 +86,9 @@
     <ClCompile Include="ShadeRed.cpp">
       <Filter>2.Play\Enemies</Filter>
     </ClCompile>
+    <ClCompile Include="WeaponSystem.cpp">
+      <Filter>2.Play\Player</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="VampireSurvivorsGame.h" />
@@ -169,6 +172,9 @@
     </ClInclude>
     <ClInclude Include="ShadeRed.h">
       <Filter>2.Play\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="WeaponSystem.h">
+      <Filter>2.Play\Player</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

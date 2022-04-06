@@ -31,4 +31,5 @@ void EnemyController::Update()
 
 void EnemyController::Render()
 {
+
 }
