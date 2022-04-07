@@ -86,8 +86,8 @@
     <ClCompile Include="ShadeRed.cpp">
       <Filter>2.Play\Enemies</Filter>
     </ClCompile>
-    <ClCompile Include="WeaponSystem.cpp">
-      <Filter>2.Play\Player</Filter>
+    <ClCompile Include="ProjectileShooter.cpp">
+      <Filter>2.Play\Projectile</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -173,8 +173,11 @@
     <ClInclude Include="ShadeRed.h">
       <Filter>2.Play\Enemies</Filter>
     </ClInclude>
-    <ClInclude Include="WeaponSystem.h">
-      <Filter>2.Play\Player</Filter>
+    <ClInclude Include="ProjectileShooter.h">
+      <Filter>2.Play\Projectile</Filter>
+    </ClInclude>
+    <ClInclude Include="ObjectOrder.h">
+      <Filter>Global</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

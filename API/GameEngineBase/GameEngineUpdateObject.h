@@ -71,6 +71,7 @@ public:
 		return Order_;
 	}
 
+	// 렌더러 만들 때 순서 초기화
 	virtual inline void SetOrder(int _Order)
 	{
 		Order_ = _Order;

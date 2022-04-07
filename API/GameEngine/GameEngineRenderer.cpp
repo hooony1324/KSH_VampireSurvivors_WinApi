@@ -223,7 +223,7 @@ void GameEngineRenderer::FrameAnimation::Update()
 	}
 }
 
-
+// 실행중 렌더링 순서 변경
 void GameEngineRenderer::SetOrder(int _Order)
 {
 	if (nullptr == GetActor())

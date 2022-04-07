@@ -19,7 +19,3 @@
 #include <GameEngine/GameEngineRenderer.h>
 #include <cmath>
 
-void Player::PlayerStat()
-{
-
-}

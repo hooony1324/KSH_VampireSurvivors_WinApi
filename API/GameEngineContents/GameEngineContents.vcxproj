@@ -203,6 +203,7 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="ObjectOrder.h" />
     <ClInclude Include="Player.h">
       <SubType>
       </SubType>
@@ -216,6 +217,10 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="Projectile.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
+    <ClInclude Include="ProjectileShooter.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -264,10 +269,6 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="WeaponSlots.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
-    <ClInclude Include="WeaponSystem.h">
       <SubType>
       </SubType>
     </ClInclude>
@@ -338,6 +339,10 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="ProjectileShooter.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="ResultBackGround.cpp">
       <SubType>
       </SubType>
@@ -383,10 +388,6 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="WeaponSlots.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="WeaponSystem.cpp">
       <SubType>
       </SubType>
     </ClCompile>

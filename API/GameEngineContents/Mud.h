@@ -27,6 +27,7 @@ private:
 
 
 	// ÇÇ°Ý
+	void Hit();
 	GameEngineRenderer* Mud_;
 	GameEngineCollision* MudCol_;
 	GameEngineCollision* AttackCheck_;
@@ -40,5 +41,8 @@ private:
 	GameEngineCollision* OtherBlockRight_;
 	std::vector<GameEngineCollision*> Others_;
 
+
+	GameEngineRenderer* Hp_BarRed_;
+	float4 Hp_BarSize_;
 };
 

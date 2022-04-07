@@ -3,6 +3,7 @@
 #include <cmath>
 
 // Ό³Έν :
+class GameEngineActor;
 class Vector2D
 {
 public:
@@ -26,6 +27,8 @@ public:
 		float4 Result = _Vector * Ratio;
 		return Result;
 	}
+
+	static void DebugVectorRender(GameEngineActor* _Actor);
 
 protected:
 

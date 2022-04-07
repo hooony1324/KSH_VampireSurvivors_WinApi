@@ -8,9 +8,10 @@ class Enemy;
 class EnemyController;
 class Library;
 class Projectile;
-class WeaponSystem;
+class ProjectileShooter;
 
 // 설명 :
+class GameEngineCollision;
 class PlayLevel : public GameEngineLevel
 {
 public:
@@ -24,6 +25,8 @@ public:
 	PlayLevel& operator=(const PlayLevel& _Other) = delete;
 	PlayLevel& operator=(PlayLevel&& _Other) noexcept = delete;
 
+	
+
 protected:
 	void Loading() override;
 	void LevelChangeStart() override;
@@ -32,7 +35,6 @@ protected:
 
 	// UI
 private:
-	std::vector<GameEngineActor*> VecUI_;
 	GameEngineActor* ExpUI_;
 	GameEngineActor* WeaponUI_;
 	GameEngineActor* TimerUI_;
@@ -41,29 +43,31 @@ private:
 	GameEngineActor* KillCountUI_;
 
 	
-	// Map관련
 private:
+	// Map
 	void CreateInfiniteMap();
-
+	void InfiniteMap();
 	float				MapLeftX_;
 	float				MapRightX_;
 
+	// Enemy
+	EnemyController*	EnemyController_;
+	Enemy*				Enemy_;
+	std::vector<Enemy*>	AllEnemy_;
+
+	// Player
 	Library*			Map_;
 	Player*				Player_;
 	float4				PlayerPos_;
-	WeaponSystem*		WeaponSystem_;
+	std::vector<Projectile*> AllBullet_;
 
-	EnemyController*	EnemyController_;
+	// Attack
+	GameEngineCollision*				PlayerAttackRange_;
+	std::vector<GameEngineCollision*>	AttackableEnemy_;
+	float4 UpdateAttackableEnemey();
 
-	// 큐 로 하면 좋을듯
-	Enemy*				Enemy_;
-	std::vector<Enemy*>	Enemies_;
+	bool				ShootAble_ = false;
+	ProjectileShooter*	Shooter1_;
 
-	std::vector<Projectile*> Bullets_;
-
-
-	void InfiniteMap();
-
-	
 };
 

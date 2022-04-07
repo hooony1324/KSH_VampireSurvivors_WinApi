@@ -13,6 +13,7 @@
 #include "Character.h"
 #include "PlayerInfo.h"
 #include "Vector2D.h"
+#include "Projectile.h"
 
 
 Player::Player() 
@@ -47,48 +48,25 @@ void Player::Start()
 	PlayerRenderer_->CreateAnimation(PlayerStat_->WalkLeftAnim_, "Walk_Left", 0, 3, 0.12f, true);
 	PlayerRenderer_->ChangeAnimation("Idle_Right"); 
 
-	// -체력바
+	// 체력바
 	CreateRenderer("hpbar_back.bmp", static_cast<int>(EngineMax::RENDERORDERMAX), RenderPivot::CENTER, {0, 40});
 	Hp_BarRed_ = CreateRenderer("hpbar.bmp", static_cast<int>(EngineMax::RENDERORDERMAX), RenderPivot::CENTER, { 0, 40 });
 	Hp_BarSize_ = Hp_BarRed_->GetScale();
 
-	
 
 	// 충돌
 	PlayerCol_ = CreateCollision("Player", { 36, 46 });
-	
-
 }
 
 void Player::Update()
 {
-	PlayerStat_ = PlayerInfo::GetInst()->GetCharacter();
-	PlayerInfo::GetInst()->GetCharacter()->SetPos(GetPosition());
+	SetPlayerInfo();
+	
 
+	//MonsterAttPlayer();
 	PlayerMove();
 
 	GetLevel()->SetCameraPos(PlayerPos_ - GameEngineWindow::GetScale().Half());
-
-
-	// 충돌 테스트
-	bool BumpMonster = false;
-	if (nullptr != PlayerCol_)
-	{
-		BumpMonster = PlayerCol_->CollisionCheck("Monster", CollisionType::Rect, CollisionType::Rect);
-	}
-	if (true == BumpMonster)
-	{
-		Attacked(10);
-	}
-	{
-		if (false == Hitable_)
-		InvincibleTime_ -= GameEngineTime::GetDeltaTime();
-		if (0 >= InvincibleTime_)
-		{
-			Hitable_ = true;
-			InvincibleTime_ = HitTime_;
-		}
-	}
 
 }
 
@@ -96,19 +74,19 @@ void Player::Render()
 {
 	HpBarRender();
 
-	TCHAR Buffer[100] = "";
-	sprintf_s(Buffer, "Player { %d, %d }", GetPosition().ix(), GetPosition().iy());
-	TextOutA(GameEngine::GetInst().BackBufferDC(), GetCameraEffectPosition().ix(), GetCameraEffectPosition().iy() - 50, Buffer, strlen(Buffer));
+	Vector2D::DebugVectorRender(this);
+}
 
+void Player::SetPlayerInfo()
+{
+	PlayerStat_ = PlayerInfo::GetInst()->GetCharacter();
+	PlayerInfo::GetInst()->GetCharacter()->SetPos(GetPosition());
 }
 
 void Player::PlayerMove()
 {
-
 	PlayerPos_ = GetPosition();
-
 	Speed_ = PlayerStat_->Speed_;
-
 	MoveDir_ = float4::ZERO;
 
 	bool MoveLeft = GameEngineInput::GetInst()->IsPress("MoveLeft");
@@ -206,12 +184,13 @@ void Player::PlayerMove()
 void Player::HpBarRender()
 {
 	// 체력 바
-	float newSize = Hp_BarSize_.x * (PlayerStat_->Hp_ / 100);
-	Hp_BarPivot_ = float4{ 0 - ((Hp_BarSize_.x - newSize) / 2), Hp_BarRed_->GetPivot().y };
-	Hp_BarRed_->SetScale(float4{ newSize, Hp_BarSize_.y });
-	Hp_BarRed_->SetPivot(Hp_BarPivot_);
+	float Ratio = PlayerStat_->Hp_ / 100;
+	float NewSizeX = Hp_BarSize_.x * Ratio;
+	float4 Hp_BarPivot = float4{ 0 - ((Hp_BarSize_.x - NewSizeX) / 2), Hp_BarRed_->GetPivot().y };
+	Hp_BarRed_->SetScale(float4{ NewSizeX, Hp_BarSize_.y });
+	Hp_BarRed_->SetPivot(Hp_BarPivot);
+	
 }
-
 
 void Player::Attacked(int _Damage)
 {
@@ -231,5 +210,27 @@ void Player::Attacked(int _Damage)
 	}
 }
 
+void Player::MonsterAttPlayer()
+{
+	bool BumpMonster = false;
+	if (nullptr != PlayerCol_)
+	{
+		BumpMonster = PlayerCol_->CollisionCheck("Monster", CollisionType::Rect, CollisionType::Rect);
+	}
+
+	if (true == BumpMonster)
+	{
+		Attacked(10);
+	}
+
+
+	if (false == Hitable_)
+		InvincibleTime_ -= GameEngineTime::GetDeltaTime();
+	if (0 >= InvincibleTime_)
+	{
+		Hitable_ = true;
+		InvincibleTime_ = HitTime_;
+	}
+}
 
 

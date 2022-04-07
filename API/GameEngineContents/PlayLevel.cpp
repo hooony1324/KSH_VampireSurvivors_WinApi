@@ -4,8 +4,11 @@
 #include <GameEngineBase/GameEngineInput.h>
 #include <GameEngineBase/GameEngineTime.h>
 #include <GameEngine/GameEngineActor.h>
+#include <GameEngine/GameEngineCollision.h>
 
 #include "PlayerInfo.h"
+#include "ObjectOrder.h"
+
 #include "ExpBar.h"
 #include "WeaponSlots.h"
 #include "TimerUI.h"
@@ -19,20 +22,11 @@
 #include "Mud.h"
 #include "ShadeRed.h"
 #include "EnemyController.h"
-#include "Projectile.h"
-#include "WeaponSystem.h"
+#include "ProjectileShooter.h"
+
 
 float MapLeftX = 640;
 float MapRightX = 4230;
-
-
-enum class RENDER_ORDER
-{
-	BACKGROUND,
-	MONSTER,
-	PLAYER,
-	UI,
-};
 
 PlayLevel::PlayLevel()
 	: Player_(nullptr)
@@ -56,25 +50,27 @@ void PlayLevel::LevelChangeStart()
 {	
 	CreateInfiniteMap();	
 
+	AllEnemy_.reserve(7); // 1화면에 최대100마리정도(예상)
 	for (int i = 0; i < 5; i++)
 	{
 		Enemy_ = CreateActor<Mud>((int)RENDER_ORDER::MONSTER, "Enemy");
 		Enemy_->SetPosition(float4{1500, i*40 + 600.0f});
-		Enemies_.push_back(Enemy_);
+		AllEnemy_.push_back(Enemy_);
 	}
 
 	for (int i = 0; i < 2; i++)
 	{
 		Enemy_ = CreateActor<ShadeRed>((int)RENDER_ORDER::MONSTER, "Enemy");
 		Enemy_->SetPosition(float4{ 1100, i * 40 + 600.0f });
-		Enemies_.push_back(Enemy_);
+		AllEnemy_.push_back(Enemy_);
 	}
 
 	Player_ = CreateActor<Player>((int)RENDER_ORDER::PLAYER, "Player");
-	WeaponSystem_ = CreateActor<WeaponSystem>((int)RENDER_ORDER::PLAYER, "PlayerWeapon");
+	PlayerAttackRange_ = Player_->CreateCollision("PlayerAttackRange", { 400, 400 });
 
-	EnemyController_ = CreateActor<EnemyController>((int)RENDER_ORDER::MONSTER, "EController");
+	EnemyController_ = CreateActor<EnemyController>((int)RENDER_ORDER::MONSTER, "EnemyController");
 
+	// UI
 	ExpUI_ = CreateActor<ExpBar>((int)RENDER_ORDER::UI, "UI");
 	WeaponUI_ = CreateActor<WeaponSlots>((int)RENDER_ORDER::UI, "UI");
 	TimerUI_ = CreateActor<TimerUI>((int)RENDER_ORDER::UI, "UI");
@@ -82,31 +78,37 @@ void PlayLevel::LevelChangeStart()
 	LevelUI_ = CreateActor<LevelUI>((int)RENDER_ORDER::UI, "UI");
 	KillCountUI_ = CreateActor<KillCountUI>((int)RENDER_ORDER::UI, "UI");
 
+
+	// 슈터
+	AllBullet_.reserve(50);
+	Shooter1_ = CreateActor<ProjectileShooter>((int)RENDER_ORDER::PLAYER, "Shooter");
+	Shooter1_->InitShooter(BulletType::FLAME_BLUE, 5, 0.2f, 2);
+
 }
 
 void PlayLevel::Update()
 {
-
-	// 테스트용
 	if (true == GameEngineInput::GetInst()->IsDown("ChangeLevelNext"))
 	{
-		// LevelChangeEnd에서 콜라이더를 쓰는 액터는 콜라이더->액터 순으로 Death해주어야 함
 		GameEngine::GetInst().ChangeLevel("Result");
 	}
 
-
 	if (true == GameEngineInput::GetInst()->IsDown("SpaceBar"))
 	{
- 		Projectile* Bullet = CreateActor<Projectile>((int)RENDER_ORDER::PLAYER, "Bullet");
-		Bullet->SetPosition(Player_->GetPosition());
-		Bullet->Death(5);
-		Bullets_.push_back(Bullet);
+		ShootAble_ = true;
 	}
 
-	InfiniteMap();
 
 	EnemyController_->SetPosition(Player_->GetPosition());
-	WeaponSystem_->SetPosition(Player_->GetPosition());
+	InfiniteMap();
+
+
+	float4 MonsterPos = UpdateAttackableEnemey();
+	if (true == ShootAble_)
+	{
+		Projectile* Bullet =  Shooter1_->Shooting(GameEngineTime::GetDeltaTime(), Player_->GetPosition(), MonsterPos);
+		AllBullet_.push_back(Bullet);
+	}
 
 }
 
@@ -120,20 +122,26 @@ void PlayLevel::LevelChangeEnd()
 	KillCountUI_->Death();
 
 	Player_->Death();
-	Enemy_->Death();
-
 	Map_->Death();
-
 	EnemyController_->Death();
+
+	for (Enemy* Enemy : AllEnemy_)
+	{
+		Enemy->Death();
+	}
+
+	AllEnemy_.clear();
+	AllBullet_.clear();
+	AttackableEnemy_.clear();
+
+	PlayerAttackRange_->Death();
+	Shooter1_->Death();
 }
 
 void PlayLevel::CreateInfiniteMap()
 {
 	Map_ = CreateActor<Library>((int)RENDER_ORDER::MONSTER, "Library");
 	Map_->SetPosition(float4::ZERO);
-	Map_->SetScale({ 100, 100 });
-	
-	
 }
 
 void PlayLevel::InfiniteMap()
@@ -152,15 +160,24 @@ void PlayLevel::InfiniteMap()
 	{
 		Player_->SetPosition(PlayerPos_ + TeleportValue);
 
-		for (Enemy* Ptr : Enemies_)
+		
+		for (Enemy* Ptr : AllEnemy_)
 		{
+			if (nullptr == Ptr)
+			{
+				continue;
+			}
 			TargetPos = Ptr->GetPosition() + TeleportValue;
 			//Ptr->SetPosition({ NewPlayerPos.x + EnemyPos.x, EnemyPos.y });
 			Ptr->SetPosition(TargetPos);
 		}
 
-		for (Projectile* Ptr : Bullets_)
+		for (Projectile* Ptr : AllBullet_)
 		{
+			if (nullptr == Ptr)
+			{
+				continue;
+			}
 			TargetPos = Ptr->GetPosition() + TeleportValue;
 			Ptr->SetPosition(TargetPos);
 		}
@@ -170,19 +187,41 @@ void PlayLevel::InfiniteMap()
 	{
 		Player_->SetPosition(PlayerPos_ - TeleportValue);
 
-		for (Enemy* Ptr : Enemies_)
+		for (Enemy* Ptr : AllEnemy_)
 		{
+			if (nullptr == Ptr)
+			{
+				continue;
+			}
 			TargetPos = Ptr->GetPosition() - TeleportValue;
 			//Ptr->SetPosition({ NewPlayerPos.x + EnemyPos.x, EnemyPos.y });
 			Ptr->SetPosition(TargetPos);
 		}
 
-		for (Projectile* Ptr : Bullets_)
+		for (Projectile* Ptr : AllBullet_)
 		{
+			if (nullptr == Ptr)
+			{
+				continue;
+			}
 			TargetPos = Ptr->GetPosition() - TeleportValue;
 			Ptr->SetPosition(TargetPos);
 		}
 	}
+
+}
+
+float4 PlayLevel::UpdateAttackableEnemey()
+{
+	if (true == PlayerAttackRange_->CollisionResult("Monster", AttackableEnemy_, CollisionType::Rect, CollisionType::Rect))
+	{
+		float4 MonsterPos = AttackableEnemy_[0]->GetCollisionPos();
+		AttackableEnemy_.clear();
+
+		return MonsterPos;
+	}
+
+	return Player_->GetPosition() + float4::RIGHT;
 
 }
 

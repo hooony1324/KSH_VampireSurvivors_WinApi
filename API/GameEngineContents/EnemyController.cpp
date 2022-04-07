@@ -21,8 +21,10 @@ void EnemyController::Start()
 	EnemyCollectorL_ = CreateCollision("EnemyCollector", { 30, 700 }, { -500, 0 });
 	EnemyCollectorR_ = CreateCollision("EnemyCollector", { 30, 700 }, { 500, 0 });
 
-	EnemySpawnerL_ = EnemyCollectorL_ = CreateCollision("EnemyCollector", { 30, 650 }, { -400, 0 });
-	EnemySpawnerR_ = EnemyCollectorL_ = CreateCollision("EnemyCollector", { 30, 650 }, { 400, 0 });
+	// 충돌체 아닌데 그냥 표시용으로
+	EnemySpawnerL_ = CreateCollision("EnemySpawner", { 30, 650 }, { -400, 0 });
+	EnemySpawnerR_ = CreateCollision("EnemySpawner", { 30, 650 }, { 400, 0 });
+
 }
 
 void EnemyController::Update()

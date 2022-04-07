@@ -1,9 +1,12 @@
 #pragma once
 #include <GameEngine/GameEngineActor.h>
+#include <vector>
 
 // 설명 : 
 class Character;
 class GameEngineImage;
+class Projectile;
+class GameEngineCollision;
 class Player : public GameEngineActor
 {
 public:
@@ -27,6 +30,8 @@ private:
 	void Render() override;
 
 private:
+
+	void SetPlayerInfo();
 	Character*				PlayerStat_;
 	float4					PlayerPos_;
 	float4					MoveDir_;
@@ -40,20 +45,17 @@ private:
 	GameEngineRenderer*		PlayerRenderer_;
 	GameEngineRenderer*		Hp_BarRed_;
 	float4					Hp_BarSize_;
-	float4					Hp_BarPivot_;
 
 	void PlayerMove();
 	void HpBarRender();
 
 
-	// 플레이어 공격/피격
+	// 플레이어 피격
+	void MonsterAttPlayer();
 	void Attacked(int _Damage);
-	void Shoot(float4 _ShootDir);
 
-
-// FSM
-// Player_Stat
-	void PlayerStat();
+	GameEngineCollision* PlayerAttRange_;
+	std::vector<GameEngineCollision*> NearMonsters_;
 	
 };
 
