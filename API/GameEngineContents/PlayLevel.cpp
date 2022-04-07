@@ -48,7 +48,8 @@ void PlayLevel::Loading()
 // 맵, 캐릭터, .. 가 선택 되면 해당하는 맵으로 액터를 생성해야 함
 void PlayLevel::LevelChangeStart()
 {	
-	CreateInfiniteMap();	
+	// 맵
+	CreateMap();	
 
 	AllEnemy_.reserve(7); // 1화면에 최대100마리정도(예상)
 	for (int i = 0; i < 5; i++)
@@ -86,32 +87,6 @@ void PlayLevel::LevelChangeStart()
 
 }
 
-void PlayLevel::Update()
-{
-	if (true == GameEngineInput::GetInst()->IsDown("ChangeLevelNext"))
-	{
-		GameEngine::GetInst().ChangeLevel("Result");
-	}
-
-	if (true == GameEngineInput::GetInst()->IsDown("SpaceBar"))
-	{
-		ShootAble_ = true;
-	}
-
-
-	EnemyController_->SetPosition(Player_->GetPosition());
-	InfiniteMap();
-
-
-	float4 MonsterPos = UpdateAttackableEnemey();
-	if (true == ShootAble_)
-	{
-		Projectile* Bullet =  Shooter1_->Shooting(GameEngineTime::GetDeltaTime(), Player_->GetPosition(), MonsterPos);
-		AllBullet_.push_back(Bullet);
-	}
-
-}
-
 void PlayLevel::LevelChangeEnd()
 {
 	ExpUI_->Death();
@@ -138,7 +113,37 @@ void PlayLevel::LevelChangeEnd()
 	Shooter1_->Death();
 }
 
-void PlayLevel::CreateInfiniteMap()
+void PlayLevel::Update()
+{
+	if (true == GameEngineInput::GetInst()->IsDown("ChangeLevelNext"))
+	{
+		GameEngine::GetInst().ChangeLevel("Result");
+	}
+
+	if (true == GameEngineInput::GetInst()->IsDown("SpaceBar"))
+	{
+		ShootAble_ = true;
+	}
+
+
+	EnemyController_->SetPosition(Player_->GetPosition());
+
+
+	float4 MonsterPos = UpdateAttackableEnemey();
+	if (true == ShootAble_)
+	{
+		Projectile* Bullet =  Shooter1_->Shooting(GameEngineTime::GetDeltaTime(), Player_->GetPosition(), MonsterPos);
+		
+		if (nullptr != Bullet)
+		{
+			AllBullet_.push_back(Bullet);
+		}
+	}
+
+	InfiniteMap();
+}
+
+void PlayLevel::CreateMap()
 {
 	Map_ = CreateActor<Library>((int)RENDER_ORDER::MONSTER, "Library");
 	Map_->SetPosition(float4::ZERO);
@@ -159,7 +164,6 @@ void PlayLevel::InfiniteMap()
 	if (PlayerPos_.x <= MapLeftX)
 	{
 		Player_->SetPosition(PlayerPos_ + TeleportValue);
-
 		
 		for (Enemy* Ptr : AllEnemy_)
 		{
@@ -168,19 +172,22 @@ void PlayLevel::InfiniteMap()
 				continue;
 			}
 			TargetPos = Ptr->GetPosition() + TeleportValue;
-			//Ptr->SetPosition({ NewPlayerPos.x + EnemyPos.x, EnemyPos.y });
 			Ptr->SetPosition(TargetPos);
 		}
-
+		 
 		for (Projectile* Ptr : AllBullet_)
 		{
 			if (nullptr == Ptr)
 			{
 				continue;
 			}
+			
 			TargetPos = Ptr->GetPosition() + TeleportValue;
 			Ptr->SetPosition(TargetPos);
 		}
+
+		AllBullet_.clear();
+		return;
 	}
 
 	if (PlayerPos_.x >= MapRightX)
@@ -194,7 +201,6 @@ void PlayLevel::InfiniteMap()
 				continue;
 			}
 			TargetPos = Ptr->GetPosition() - TeleportValue;
-			//Ptr->SetPosition({ NewPlayerPos.x + EnemyPos.x, EnemyPos.y });
 			Ptr->SetPosition(TargetPos);
 		}
 
@@ -207,6 +213,9 @@ void PlayLevel::InfiniteMap()
 			TargetPos = Ptr->GetPosition() - TeleportValue;
 			Ptr->SetPosition(TargetPos);
 		}
+
+		AllBullet_.clear();
+		return;
 	}
 
 }

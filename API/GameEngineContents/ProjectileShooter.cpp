@@ -41,7 +41,7 @@ void ProjectileShooter::InitShooter(BulletType _BT, int _Count, float _Interval,
 Projectile* ProjectileShooter::Shooting(float _DeltaTime, float4 _PlayerPos, float4 _MonsterPos)
 {
 	// 플레이어와 동일한 위치에 고정
-	SetPosition(_PlayerPos);
+	//SetPosition(_PlayerPos);
 
 	// 쿨타임 아니면
 	if (0 < CoolTimeCount_)
