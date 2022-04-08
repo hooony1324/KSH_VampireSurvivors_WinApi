@@ -74,9 +74,6 @@
     <ClCompile Include="Player_Stat.cpp">
       <Filter>2.Play\Player</Filter>
     </ClCompile>
-    <ClCompile Include="Timer.cpp">
-      <Filter>2.Play\Timer</Filter>
-    </ClCompile>
     <ClCompile Include="EnemyController.cpp">
       <Filter>2.Play\Map</Filter>
     </ClCompile>
@@ -88,6 +85,9 @@
     </ClCompile>
     <ClCompile Include="ProjectileShooter.cpp">
       <Filter>2.Play\Projectile</Filter>
+    </ClCompile>
+    <ClCompile Include="Timer.cpp">
+      <Filter>2.Play\Timer</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -161,9 +161,6 @@
     <ClInclude Include="KillCountUI.h">
       <Filter>2.Play\UI</Filter>
     </ClInclude>
-    <ClInclude Include="Timer.h">
-      <Filter>2.Play\Timer</Filter>
-    </ClInclude>
     <ClInclude Include="EnemyController.h">
       <Filter>2.Play\Map</Filter>
     </ClInclude>
@@ -178,6 +175,9 @@
     </ClInclude>
     <ClInclude Include="ObjectOrder.h">
       <Filter>Global</Filter>
+    </ClInclude>
+    <ClInclude Include="Timer.h">
+      <Filter>2.Play\Timer</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -215,7 +215,7 @@
       <UniqueIdentifier>{a1bae2c5-4a5a-4ab0-b76a-7c421ff0dd19}</UniqueIdentifier>
     </Filter>
     <Filter Include="2.Play\Timer">
-      <UniqueIdentifier>{5887eef7-1dd6-4a53-863e-4ceb746fb890}</UniqueIdentifier>
+      <UniqueIdentifier>{3af3fe68-9b87-40ba-be00-8cc596b308c6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
