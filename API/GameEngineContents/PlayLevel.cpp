@@ -85,6 +85,8 @@ void PlayLevel::LevelChangeStart()
 	Shooter1_ = CreateActor<ProjectileShooter>((int)RENDER_ORDER::PLAYER, "Shooter");
 	Shooter1_->InitShooter(BulletType::FLAME_BLUE, 5, 0.2f, 2);
 
+
+	BgmPlayer = GameEngineSound::SoundPlayControl("bgm_elrond_library.MP3");
 }
 
 void PlayLevel::LevelChangeEnd()

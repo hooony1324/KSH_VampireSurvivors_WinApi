@@ -8,6 +8,7 @@
 #include <GameEngineBase/GameEngineInput.h>
 #include <GameEngine/GameEngineImageManager.h>
 #include <GameEngine/GameEngineFolderImage.h>
+#include <GameEngineBase/GameEngineSound.h>
 
 #include "PlayerInfo.h"
 
@@ -105,6 +106,20 @@ void VampireSurvivorsGame::ResourceLoad()
 	GameEngineImageManager::GetInst()->Find("ShadeRed_IdleRight.bmp")->Cut({ 70, 70 });
 	GameEngineImageManager::GetInst()->Find("ShadeRed_Dead.bmp")->Cut({ 140, 140 });
 
+	// 사운드
+	{
+		GameEngineDirectory ResourcesDir;
+		ResourcesDir.MoveParent("API");
+		ResourcesDir.Move("Resources");
+		ResourcesDir.Move("sfx");
+		
+		// 폴더안에 모든 이미지 파일을 찾는다.
+		std::vector<GameEngineFile> AllImageFileList = ResourcesDir.GetAllFile();
 
+		for (size_t i = 0; i < AllImageFileList.size(); i++)
+		{
+			GameEngineSound::LoadRes(AllImageFileList[i].GetFullPath());
+		}
 
+	}
 }

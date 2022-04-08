@@ -2,6 +2,7 @@
 #include "GameEngine/GameEngineLevel.h"
 #include <list>
 #include <vector>
+#include <GameEngineBase/GameEngineSound.h>
 
 class Player;
 class Enemy;
@@ -34,8 +35,13 @@ protected:
 	void Update() override;
 	void LevelChangeEnd() override;
 
-	// UI
 private:
+	// Sound
+	GameEngineSoundPlayer BgmPlayer;
+
+
+private:
+	// UI
 	GameEngineActor* ExpUI_;
 	GameEngineActor* WeaponUI_;
 	TimerUI* TimerUI_;

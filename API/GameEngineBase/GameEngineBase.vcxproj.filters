@@ -69,12 +69,6 @@
     <ClInclude Include="GameEngineRandom.h">
       <Filter>Math</Filter>
     </ClInclude>
-    <ClInclude Include="ThirdParty\inc\fmod.h">
-      <Filter>ThirdParty\inc</Filter>
-    </ClInclude>
-    <ClInclude Include="ThirdParty\inc\fmod.hpp">
-      <Filter>ThirdParty\inc</Filter>
-    </ClInclude>
     <ClInclude Include="GameEngineSound.h">
       <Filter>Resources</Filter>
     </ClInclude>
@@ -133,5 +127,13 @@
     <CopyFileToFolders Include="ThirdParty\bin\fmodL_vc.lib">
       <Filter>ThirdParty\bin</Filter>
     </CopyFileToFolders>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="ThirdParty\inc\fmod.hpp">
+      <Filter>ThirdParty\inc</Filter>
+    </None>
+    <None Include="ThirdParty\inc\fmod.h">
+      <Filter>ThirdParty\inc</Filter>
+    </None>
   </ItemGroup>
 </Project>
