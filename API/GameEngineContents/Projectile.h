@@ -48,6 +48,8 @@ protected:
 private:
 
 	GameEngineRenderer* ProjImage_;
+	GameEngineCollision* ProjCol_;
+
 	float4 ShootDir_;
 	float4 ProjVec_;
 	int Damage_;

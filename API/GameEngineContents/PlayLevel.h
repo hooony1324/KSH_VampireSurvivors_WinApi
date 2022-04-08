@@ -9,6 +9,7 @@ class EnemyController;
 class Library;
 class Projectile;
 class ProjectileShooter;
+class TimerUI;
 
 // Ό³Έν :
 class GameEngineCollision;
@@ -37,7 +38,7 @@ protected:
 private:
 	GameEngineActor* ExpUI_;
 	GameEngineActor* WeaponUI_;
-	GameEngineActor* TimerUI_;
+	TimerUI* TimerUI_;
 	GameEngineActor* CoinUI_;
 	GameEngineActor* LevelUI_;
 	GameEngineActor* KillCountUI_;

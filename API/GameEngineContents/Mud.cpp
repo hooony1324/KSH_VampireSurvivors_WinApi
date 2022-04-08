@@ -48,6 +48,7 @@ void Mud::Update()
 	float4 PlayerPos = PlayerInfo::GetInst()->GetCharacter()->Position_;
 	float4 EnemyPos = GetPosition();
 	float4 DestDir = Vector2D::GetDirection(EnemyPos, PlayerPos);
+	
 
 	Hit();
 

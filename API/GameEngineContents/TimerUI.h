@@ -1,11 +1,10 @@
 #pragma once
 #include <GameEngine/GameEngineActor.h>
-#include <GameEngine/GameEngineRenderer.h>
 #include <vector>
 #include "Timer.h"
 
 // Ό³Έν :
-
+class GameEngineRenderer;
 class TimerUI : public GameEngineActor
 {
 public:
@@ -35,6 +34,11 @@ protected:
 
 private:
 	float4 TimerUIPos_;
+
+	Timer* Digit4_;
+	Timer* Digit3_;
+	GameEngineRenderer* Colone_;
+	Timer* Digit2_;
 	Timer* Digit1_;
 
 };

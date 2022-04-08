@@ -16,27 +16,33 @@ TimerUI::TimerUI()
 
 TimerUI::~TimerUI() 
 {
+	Digit1_->Death();
+	Digit2_->Death();
+	Digit3_->Death();
+	Digit4_->Death();
+	Colone_->Death();
+	
 }
 
 void TimerUI::InitNumbers()
 {
 	//	 0      0    :   0      0
 	// Digit4 Digit3 : Digit2 Digit1
-	Timer* Digit4_ = GetLevel()->CreateActor<Timer>(static_cast<int>(ACTOR_ORDER::UI), "Timer");
+	Digit4_ = GetLevel()->CreateActor<Timer>(static_cast<int>(ACTOR_ORDER::UI), "Timer");
 	Digit4_->SetTimer(3600, 9);
 	Digit4_->SetScale({ 30, 30 });
 	Digit4_->SetPosition(TimerUIPos_ + float4{-45, 0});
 
-	Timer* Digit3_ = GetLevel()->CreateActor<Timer>(static_cast<int>(ACTOR_ORDER::UI), "Timer");
+	Digit3_ = GetLevel()->CreateActor<Timer>(static_cast<int>(ACTOR_ORDER::UI), "Timer");
 	Digit3_->SetTimer(60, 9);
 	Digit3_->SetScale({ 30, 30 });
 	Digit3_->SetPosition(TimerUIPos_ + float4{ -20, 0 });
 
-	GameEngineRenderer* Colone = CreateRenderer("Colone.bmp", static_cast<int>(RENDER_ORDER::UI));
-	Colone->SetScale({ 30, 30 });
-	Colone->CameraEffectOff();
+	Colone_ = CreateRenderer("Colone.bmp", static_cast<int>(RENDER_ORDER::UI));
+	Colone_->SetScale({ 30, 30 });
+	Colone_->CameraEffectOff();
 
-	Timer* Digit2_ = GetLevel()->CreateActor<Timer>(static_cast<int>(ACTOR_ORDER::UI), "Timer");
+	Digit2_ = GetLevel()->CreateActor<Timer>(static_cast<int>(ACTOR_ORDER::UI), "Timer");
 	Digit2_->SetTimer(10, 5);
 	Digit2_->SetScale({ 30, 30 });
 	Digit2_->SetPosition(TimerUIPos_ + float4{ 25, 0 });

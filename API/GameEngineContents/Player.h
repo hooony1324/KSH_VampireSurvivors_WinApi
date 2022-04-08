@@ -35,7 +35,7 @@ private:
 	Character*				PlayerStat_;
 	float4					PlayerPos_;
 	float4					MoveDir_;
-	float4					HeadDir_;
+	int						HeadDir_;
 	bool					Hitable_; // 플레이어 무적여부
 	float					InvincibleTime_;
 	float					HitTime_;	// 피격시 무적시간

@@ -22,12 +22,14 @@ Projectile::Projectile()
 
 Projectile::~Projectile() 
 {
+	ProjImage_->Death();
+	ProjCol_->Death();
 }
 
 void Projectile::SetType(BulletType _BT)
 {
 	ProjImage_ = CreateRenderer(ProjectileList[static_cast<int>(_BT)]);
-	CreateCollision("Bullet", ProjImage_->GetScale());
+	ProjCol_ = CreateCollision("Bullet", ProjImage_->GetScale());
 }
 
 

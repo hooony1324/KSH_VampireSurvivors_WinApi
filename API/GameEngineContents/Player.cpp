@@ -21,7 +21,7 @@ Player::Player()
 	, PlayerRenderer_(nullptr)
 	, Gravity_(100.0f)
 	, MoveDir_(float4::ZERO)
-	, HeadDir_(float4::RIGHT)
+	, HeadDir_(-1)
 	, Hitable_(true)
 	, HitTime_(1.0f)
 {
@@ -102,13 +102,13 @@ void Player::PlayerMove()
 	if (MoveLeft)
 	{
 		MoveDir_ = float4::LEFT;
-		HeadDir_ = float4::LEFT;
+		HeadDir_ = -1;
 	}
 
 	if (MoveRight)
 	{
 		MoveDir_ = float4::RIGHT;
-		HeadDir_ = float4::RIGHT;
+		HeadDir_ = 1;
 	}
 
 	if (MoveUp)
@@ -142,11 +142,11 @@ void Player::PlayerMove()
 	}
 
 	// 머리 방향에 따른 Idle애니메이션
-	if (HeadDir_ == float4::LEFT && MoveDir_ != float4::ZERO)
+	if (HeadDir_ == -1 && MoveDir_.x != 0)
 	{
 		PlayerRenderer_->ChangeAnimation("Walk_Left");
 	}
-	else if (MoveDir_ != float4::ZERO)
+	else if (MoveDir_.x != 0)
 	{
 		PlayerRenderer_->ChangeAnimation("Walk_Right");
 	}
@@ -156,7 +156,7 @@ void Player::PlayerMove()
 	// 움직이고 난 후에 Idle애니메이션
 	if (StopLeft || StopRight || StopUp || StopDown)
 	{
-		if (HeadDir_ == float4::RIGHT)
+		if (HeadDir_ == 1)
 		{
 			PlayerRenderer_->ChangeAnimation("Idle_Right");
 		}
