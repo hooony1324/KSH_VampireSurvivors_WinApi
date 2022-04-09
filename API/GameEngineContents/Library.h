@@ -17,8 +17,9 @@ public:
 	Library& operator=(const Library& _Other) = delete;
 	Library& operator=(Library&& _Other) noexcept = delete;
 
-	void Test()
-	{}
+	float4 GetRendererScale();
+	void CheckPlayerOnEnd();
+
 
 protected:
 

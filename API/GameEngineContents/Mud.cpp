@@ -6,6 +6,7 @@
 #include <GameEngine/GameEngineRenderer.h>
 #include <GameEngine/GameEngineCollision.h>
 
+#include "ObjectOrder.h"
 #include "PlayerInfo.h"
 #include "Vector2D.h"
 
@@ -38,8 +39,8 @@ void Mud::Start()
 	OtherBlockRight_ = CreateCollision("OtherGuard", { 4, 36}, {20, 0});
 
 	// 디버그용
-	CreateRenderer("hpbar_back.bmp", static_cast<int>(EngineMax::RENDERORDERMAX), RenderPivot::CENTER, { 0, 40 });
-	Hp_BarRed_ = CreateRenderer("hpbar.bmp", static_cast<int>(EngineMax::RENDERORDERMAX), RenderPivot::CENTER, { 0, 40 });
+	CreateRenderer("hpbar_back.bmp", static_cast<int>(RENDER_ORDER::MONSTER), RenderPivot::CENTER, { 0, 40 });
+	Hp_BarRed_ = CreateRenderer("hpbar.bmp", static_cast<int>(RENDER_ORDER::MONSTER), RenderPivot::CENTER, { 0, 40 });
 	Hp_BarSize_ = Hp_BarRed_->GetScale();
 }
 

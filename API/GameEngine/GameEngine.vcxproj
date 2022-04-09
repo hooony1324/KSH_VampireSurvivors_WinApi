@@ -200,10 +200,6 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="GameEngineSound.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEngine.cpp">
@@ -243,10 +239,6 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="GameEngineRendererTileMap.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="GameEngineSound.cpp">
       <SubType>
       </SubType>
     </ClCompile>

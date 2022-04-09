@@ -10,10 +10,12 @@
 #include <GameEngine/GameEngineCollision.h>
 #include <GameEngine/GameEngineLevel.h>
 
+#include "ObjectOrder.h"
 #include "Character.h"
 #include "PlayerInfo.h"
 #include "Vector2D.h"
 #include "Projectile.h"
+
 
 
 Player::Player() 
@@ -49,13 +51,13 @@ void Player::Start()
 	PlayerRenderer_->ChangeAnimation("Idle_Right"); 
 
 	// 체력바
-	CreateRenderer("hpbar_back.bmp", static_cast<int>(EngineMax::RENDERORDERMAX), RenderPivot::CENTER, {0, 40});
-	Hp_BarRed_ = CreateRenderer("hpbar.bmp", static_cast<int>(EngineMax::RENDERORDERMAX), RenderPivot::CENTER, { 0, 40 });
+	CreateRenderer("hpbar_back.bmp", static_cast<int>(RENDER_ORDER::PLAYER), RenderPivot::CENTER, {0, 40});
+	Hp_BarRed_ = CreateRenderer("hpbar.bmp", static_cast<int>(RENDER_ORDER::PLAYER), RenderPivot::CENTER, { 0, 40 });
 	Hp_BarSize_ = Hp_BarRed_->GetScale();
 
 
 	// 충돌
-	PlayerCol_ = CreateCollision("Player", { 36, 46 });
+	PlayerCol_ = CreateCollision("Player", { 40, 40 });
 }
 
 void Player::Update()
@@ -142,11 +144,11 @@ void Player::PlayerMove()
 	}
 
 	// 머리 방향에 따른 Idle애니메이션
-	if (HeadDir_ == -1 && MoveDir_.x != 0)
+	if (HeadDir_ == -1 && ( MoveDir_.x != 0 || MoveDir_.y != 0))
 	{
 		PlayerRenderer_->ChangeAnimation("Walk_Left");
 	}
-	else if (MoveDir_.x != 0)
+	else if (HeadDir_ == 1 && ( MoveDir_.x != 0 || MoveDir_.y != 0 ))
 	{
 		PlayerRenderer_->ChangeAnimation("Walk_Right");
 	}
@@ -160,7 +162,7 @@ void Player::PlayerMove()
 		{
 			PlayerRenderer_->ChangeAnimation("Idle_Right");
 		}
-		else
+		else if (HeadDir_ == -1)
 		{
 			PlayerRenderer_->ChangeAnimation("Idle_Left");
 		}

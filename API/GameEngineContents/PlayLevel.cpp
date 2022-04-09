@@ -25,8 +25,8 @@
 #include "ProjectileShooter.h"
 
 
-float MapLeftX = 640;
-float MapRightX = 4230;
+float MapLeftX = 700;
+float MapRightX = 2940;
 
 PlayLevel::PlayLevel()
 	: Player_(nullptr)
@@ -86,7 +86,7 @@ void PlayLevel::LevelChangeStart()
 	Shooter1_->InitShooter(BulletType::FLAME_BLUE, 5, 0.2f, 2);
 
 
-	BgmPlayer = GameEngineSound::SoundPlayControl("bgm_elrond_library.MP3");
+	//BgmPlayer = GameEngineSound::SoundPlayControl("bgm_elrond_library.MP3");
 }
 
 void PlayLevel::LevelChangeEnd()
@@ -142,13 +142,16 @@ void PlayLevel::Update()
 		}
 	}
 
-	InfiniteMap();
+	InfiniteMap2();
 }
 
 void PlayLevel::CreateMap()
 {
 	Map_ = CreateActor<Library>((int)RENDER_ORDER::MONSTER, "Library");
+	// 액터의 위치, 크기 설정
 	Map_->SetPosition(float4::ZERO);
+	Map_->SetScale(Map_->GetRendererScale());
+
 }
 
 void PlayLevel::InfiniteMap()
@@ -220,6 +223,11 @@ void PlayLevel::InfiniteMap()
 		return;
 	}
 
+}
+
+void PlayLevel::InfiniteMap2()
+{
+	Map_->CheckPlayerOnEnd();
 }
 
 float4 PlayLevel::UpdateAttackableEnemey()

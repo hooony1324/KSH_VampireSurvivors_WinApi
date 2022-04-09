@@ -54,6 +54,8 @@ private:
 	// Map
 	void CreateMap();
 	void InfiniteMap();
+	void InfiniteMap2();
+
 	float				MapLeftX_;
 	float				MapRightX_;
 

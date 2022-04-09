@@ -28,5 +28,4 @@ void WeaponSlots::Update()
 
 void WeaponSlots::Render()
 {
-	//DebugRectRender();
 }
