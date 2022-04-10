@@ -2,21 +2,23 @@
 #include <string>
 #include <GameEngineBase/GameEngineMath.h>
 
+enum class CharacterType
+{
+	Old = 0,
+	Cavallo,
+	Imelda,
+	MAX
+};
+
 // 설명 : 
 class Character
 {
 public:
-	enum class Type
-	{
-		Old = 0,
-		Cavallo,
-		Imelda,
-		MAX
-	};
 
 public:
 	// constrcuter destructer
-	Character();		// 디폴트 캐릭터는 "old.bmp" 입니다
+	Character();
+	Character(CharacterType _CharacterType);
 	~Character();
 
 	// delete Function
@@ -25,13 +27,11 @@ public:
 	Character& operator=(const Character& _Other) = delete;
 	Character& operator=(Character&& _Other) noexcept = delete;
 
-	void SetCharacter(Type _CharacterType);
-	void SetPos(float4 _PlayerPos);
+	void SetCharacter(CharacterType _CharacterType);
 
+
+	//캐릭터 생성시 정보
 public:
-	float4 Position_;
-
-	// 캐릭터 생성 정보
 	std::string ImageName_;
 	std::string Name_;
 	std::string WalkRightAnim_;

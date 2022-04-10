@@ -1,9 +1,10 @@
 #pragma once
 #include "Enemy.h"
 #include <vector>
+#include "Counter.h"
+
 // Ό³Έν :
 class GameEngineCollision;
-class Counter;
 class Mud : public Enemy
 {
 public:
@@ -48,6 +49,6 @@ private:
 	GameEngineRenderer* Hp_BarRed_;
 	float4 Hp_BarSize_;
 
-	Counter* Counter1_;
+	Counter Counter1_;
 };
 

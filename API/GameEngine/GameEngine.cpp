@@ -90,6 +90,7 @@ void GameEngine::EngineLoop()
         MsgBoxAssert("Level is nullptr, GameEngine Loop Error!");
     }
 
+    GameEngineSound::Update();
     GameEngineInput::GetInst()->Update(GameEngineTime::GetDeltaTime());
 
     CurrentLevel_->Update();
@@ -117,6 +118,7 @@ void GameEngine::EngineEnd()
         delete StartIter->second;
     }
 
+    GameEngineSound::AllResourcesDestroy();
     GameEngineImageManager::Destroy();
     GameEngineInput::Destroy();
     GameEngineTime::Destroy();

@@ -14,8 +14,7 @@
 #include "Projectile.h"
 
 #include "Character.h"
-#include "PlayerInfo.h"
 
 #include <GameEngine/GameEngineRenderer.h>
-#include <cmath>
+
 

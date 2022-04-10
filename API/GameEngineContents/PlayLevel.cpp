@@ -6,7 +6,6 @@
 #include <GameEngine/GameEngineActor.h>
 #include <GameEngine/GameEngineCollision.h>
 
-#include "PlayerInfo.h"
 #include "ObjectOrder.h"
 
 #include "ExpBar.h"
@@ -89,13 +88,14 @@ void PlayLevel::LevelChangeStart()
 	//BgmPlayer = GameEngineSound::SoundPlayControl("bgm_elrond_library.MP3");
 
 	// ExpObb
-	CreateActor<ExpObb>(static_cast<int>(ACTOR_ORDER::ITEM), "ITEM");
+	//CreateActor<ExpObb>(static_cast<int>(ACTOR_ORDER::ITEM), "ITEM");
 }
 
 void PlayLevel::LevelChangeEnd()
 {
 	ExpUI_->Death();
 	WeaponUI_->Death();
+	TimerUI_->KillDigits();
 	TimerUI_->Death();
 	CoinUI_->Death();
 	LevelUI_->Death();
@@ -110,7 +110,9 @@ void PlayLevel::LevelChangeEnd()
 		Enemy->Death();
 	}
 
+
 	AttackableEnemy_.clear();
+	AllEnemy_.clear();
 
 	PlayerAttackRange_->Death();
 	Shooter1_->Death();

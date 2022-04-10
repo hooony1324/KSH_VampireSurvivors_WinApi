@@ -24,6 +24,8 @@ public:
 		return Digit1_->GetTimeCount();
 	}
 
+	void KillDigits();
+
 protected:
 	void InitNumbers();
 

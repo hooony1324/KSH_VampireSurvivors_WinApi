@@ -15,19 +15,26 @@ Character::Character()
 	, Greed_(0)
 	, Magnet_(0)
 	, Revival_(0)
-	, ImageName_("Cavallo.bmp")
+	, ImageName_()
 {
+}
+
+Character::Character(CharacterType _CharacterType)
+{
+	SetCharacter(_CharacterType);
 }
 
 Character::~Character() 
 {
+
 }
 
-void Character::SetCharacter(Type _CharacterType)
+
+void Character::SetCharacter(CharacterType _CharacterType)
 {
 	switch (_CharacterType)
 	{
-	case Type::Cavallo:
+	case CharacterType::Cavallo:
 	{
 		ImageName_ = "Cavallo.bmp";
 		Name_ = "Cavallo";
@@ -51,7 +58,7 @@ void Character::SetCharacter(Type _CharacterType)
 	}
 		break;
 
-	case Type::Imelda:
+	case CharacterType::Imelda:
 	{
 		ImageName_ = "Imelda.bmp";
 		Name_ = "Imelda";
@@ -75,7 +82,7 @@ void Character::SetCharacter(Type _CharacterType)
 	}
 		break;
 
-	case Type::Old:
+	case CharacterType::Old:
 	{
 		ImageName_ = "Old.bmp";
 		Name_ = "Old";
@@ -123,11 +130,6 @@ void Character::SetCharacter(Type _CharacterType)
 	}
 		break;
 	}
-}
-
-void Character::SetPos(float4 _PlayerPos)
-{
-	Position_ = _PlayerPos;
 }
 
 

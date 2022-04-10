@@ -1,9 +1,10 @@
 #pragma once
 #include "Enemy.h"
 #include <vector>
+#include "Counter.h"
 
 // Ό³Έν :
-class Counter;
+class GameEngineCollision;
 class ShadeRed : public Enemy
 {
 public:
@@ -45,7 +46,7 @@ private:
 	GameEngineCollision* OtherBlockRight_;
 	std::vector<GameEngineCollision*> Others_;
 
-	Counter* Counter1_;
+	Counter Counter1_;
 
 };
 

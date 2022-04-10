@@ -3,7 +3,6 @@
 #include <GameEngineBase/GameEngineWindow.h>
 #include <GameEngine/GameEngineImageManager.h>
 //#include <GameEngineBase/GameEngineDebug.h>
-#include "PlayerInfo.h"
 
 EnemyController::EnemyController() 
 	: EnemyCollectorL_(nullptr)

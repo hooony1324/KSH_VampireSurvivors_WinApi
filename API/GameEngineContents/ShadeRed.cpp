@@ -3,7 +3,7 @@
 #include <GameEngine/GameEngineCollision.h>
 
 #include "ObjectOrder.h"
-#include "PlayerInfo.h"
+#include "GameInfo.h"
 #include "Vector2D.h"
 #include "Counter.h"
 
@@ -39,7 +39,7 @@ void ShadeRed::Start()
 	Hp_BarRed_ = CreateRenderer("hpbar.bmp", static_cast<int>(RENDER_ORDER::MONSTER), RenderPivot::CENTER, { 0, 40 });
 	Hp_BarSize_ = Hp_BarRed_->GetScale();
 
-	Counter1_ = new Counter(5);
+	Counter1_.SetCount(5);
 }
 
 void ShadeRed::Update()
@@ -48,7 +48,7 @@ void ShadeRed::Update()
 	{
 		ShadeRed_->ChangeAnimation("ShadeRed_Dead");
 
-		if (true == Counter1_->Start(GameEngineTime::GetDeltaTime()))
+		if (true == Counter1_.Start(GameEngineTime::GetDeltaTime()))
 		{
 			Death();
 		}
@@ -57,7 +57,7 @@ void ShadeRed::Update()
 
 	Hit();
 
-	float4 PlayerPos = PlayerInfo::GetInst()->GetCharacter()->Position_;
+	float4 PlayerPos = GameInfo::GetPlayerPos();
 	float4 EnemyPos = GetPosition();
 
 	float4 DestDir = Vector2D::GetDirection(EnemyPos, PlayerPos);

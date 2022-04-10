@@ -6,7 +6,6 @@
 #include <GameEngine/GameEngineCollision.h>
 #include <GameEngine/GameEngineRenderer.h>
 
-#include "PlayerInfo.h"
 #include "Vector2D.h"
 
 #include <string>

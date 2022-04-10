@@ -10,7 +10,8 @@
 #include <GameEngine/GameEngineFolderImage.h>
 #include <GameEngineBase/GameEngineSound.h>
 
-#include "PlayerInfo.h"
+#include "GameInfo.h"
+
 
 VampireSurvivorsGame::VampireSurvivorsGame() 
 {
@@ -69,7 +70,7 @@ void VampireSurvivorsGame::GameLoop()
 
 void VampireSurvivorsGame::GameEnd()
 {
-	PlayerInfo::GetInst()->Destroy();
+	GameInfo::Destroy();
 }
 
 void VampireSurvivorsGame::ResourceLoad()

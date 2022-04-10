@@ -11,6 +11,7 @@ Counter::Counter(float _CountingTime)
 
 Counter::~Counter() 
 {
+
 }
 
 

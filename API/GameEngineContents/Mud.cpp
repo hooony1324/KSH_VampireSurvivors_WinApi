@@ -7,7 +7,7 @@
 #include <GameEngine/GameEngineCollision.h>
 
 #include "ObjectOrder.h"
-#include "PlayerInfo.h"
+#include "GameInfo.h"
 #include "Vector2D.h"
 
 #include "Counter.h"
@@ -46,7 +46,7 @@ void Mud::Start()
 	Hp_BarRed_ = CreateRenderer("hpbar.bmp", static_cast<int>(RENDER_ORDER::MONSTER), RenderPivot::CENTER, { 0, 40 });
 	Hp_BarSize_ = Hp_BarRed_->GetScale();
 
-	Counter1_ = new Counter(5);
+	Counter1_.SetCount(2);
 }
 
 void Mud::Update()
@@ -55,14 +55,14 @@ void Mud::Update()
 	{
 		Mud_->ChangeAnimation("Mud_Dead");
 
-		if (true == Counter1_->Start(GameEngineTime::GetDeltaTime()))
+		if (true == Counter1_.Start(GameEngineTime::GetDeltaTime()))
 		{
 			Death();
 		}
 		return;
 	}
 
-	PlayerPos_ = PlayerInfo::GetInst()->GetCharacter()->Position_;
+	PlayerPos_ = GameInfo::GetPlayerPos();
 	float4 EnemyPos = GetPosition();
 	float4 DestDir = Vector2D::GetDirection(EnemyPos, PlayerPos_);
 
@@ -85,8 +85,9 @@ void Mud::Update()
 
 void Mud::Render()
 {
+
 	// 디버그용
-	float Ratio = Hp_ / 100;
+	float Ratio = Hp_ / 100.0f ;
 	float NewSizeX = Hp_BarSize_.x * Ratio;
 	float4 Hp_BarPivot = float4{ 0 - ((Hp_BarSize_.x - NewSizeX) / 2), Hp_BarRed_->GetPivot().y };
 	Hp_BarRed_->SetScale(float4{ NewSizeX, Hp_BarSize_.y });
@@ -98,7 +99,7 @@ void Mud::Hit()
 {
 	// 무기 정보(공격력에 따라 데미지) 
 	// 맞은 총알은 없애기 (해야지 데미지 10만 들어옴)
-	if (KnockBackDir_.Len2D() > 0.005f)
+	if (KnockBackDir_.Len2D() >= 0)
 	{
 		KnockBackDir_ -= KnockBackDir_ * 0.1f;
 	}

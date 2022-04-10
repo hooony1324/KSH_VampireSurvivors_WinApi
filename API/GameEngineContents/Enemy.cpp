@@ -5,7 +5,6 @@
 //#include <GameEngineBase/GameEngineDebug.h>
 #include <GameEngine/GameEngineCollision.h>
 
-#include "PlayerInfo.h"
 
 Enemy::Enemy() 
 {

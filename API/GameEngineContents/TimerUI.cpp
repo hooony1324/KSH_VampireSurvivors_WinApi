@@ -6,7 +6,6 @@
 #include <GameEngine/GameEngineRenderer.h>
 
 #include <string>
-#include "PlayerInfo.h"
 #include "Timer.h"
 #include "ObjectOrder.h"
 
@@ -16,12 +15,17 @@ TimerUI::TimerUI()
 
 TimerUI::~TimerUI() 
 {
+
+	
+}
+
+void TimerUI::KillDigits()
+{
 	Digit1_->Death();
 	Digit2_->Death();
 	Digit3_->Death();
 	Digit4_->Death();
 	Colone_->Death();
-	
 }
 
 void TimerUI::InitNumbers()

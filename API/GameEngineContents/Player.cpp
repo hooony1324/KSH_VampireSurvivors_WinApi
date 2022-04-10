@@ -12,7 +12,9 @@
 
 #include "ObjectOrder.h"
 #include "Character.h"
-#include "PlayerInfo.h"
+
+#include "GameInfo.h"
+
 #include "Vector2D.h"
 #include "Projectile.h"
 
@@ -27,6 +29,7 @@ Player::Player()
 	, Hitable_(true)
 	, HitTime_(1.0f)
 {
+	// 공격 맞으면 일정시간동안 무적
 	InvincibleTime_ = HitTime_;
 }
 
@@ -40,8 +43,11 @@ void Player::Start()
 	SetScale({ 100, 100 });
 
 	// 플레이어 이미지, 애니메이션 관련 설정
-	PlayerInfo::GetInst()->ChangeCharacter(Character::Type::Cavallo);
-	PlayerStat_ = PlayerInfo::GetInst()->GetCharacter();
+	//PlayerInfo::GetInst()->ChangeCharacter(CharacterType::Cavallo);
+	//PlayerStat_ = PlayerInfo::GetInst()->GetCharacter();
+
+	GameInfo::SetCharacter(CharacterType::Cavallo);// 플레이 레벨에서 시작하기 때문에 설정
+	PlayerStat_ = GameInfo::GetCharacter();
 
 	PlayerRenderer_ = CreateRenderer();
 	PlayerRenderer_->CreateAnimation(PlayerStat_->WalkRightAnim_, "Idle_Right", 0, 0, 0.1f, false);
@@ -62,7 +68,7 @@ void Player::Start()
 
 void Player::Update()
 {
-	SetPlayerInfo();
+	SetGameInfo();
 	
 
 	//MonsterAttPlayer();
@@ -81,10 +87,12 @@ void Player::Render()
 	Vector2D::DebugVectorRender(this);
 }
 
-void Player::SetPlayerInfo()
+void Player::SetGameInfo()
 {
-	PlayerStat_ = PlayerInfo::GetInst()->GetCharacter();
-	PlayerInfo::GetInst()->GetCharacter()->SetPos(GetPosition());
+	//PlayerStat_ = PlayerInfo::GetInst()->GetCharacter();
+	//PlayerInfo::GetInst()->GetCharacter()->SetPos(GetPosition());
+	GameInfo::SetPlayerPos(GetPosition());
+
 }
 
 void Player::PlayerMove()

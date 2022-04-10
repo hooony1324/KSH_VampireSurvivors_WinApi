@@ -31,7 +31,7 @@ private:
 
 private:
 
-	void SetPlayerInfo();
+	void SetGameInfo();
 	Character*				PlayerStat_;
 	float4					PlayerPos_;
 	float4					MoveDir_;
@@ -59,6 +59,15 @@ private:
 
 	// 모든 충돌 체크
 	void AllCollisionCheck();
+
+
+	// Player클래스에 맡겨도 될듯
+	float MaxExp_;
+	float CurrentExp_;
+	int PlayerLevel_;
+	int SurvivalTime_;
+	int EearnedGold_;
+	int KillCount_;
 	
 };
 

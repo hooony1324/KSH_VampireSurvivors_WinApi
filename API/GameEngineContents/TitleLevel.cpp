@@ -4,15 +4,10 @@
 #include "GameEngine/GameEngine.h"
 #include "GameEngineBase/GameEngineInput.h"
 
+#include "ObjectOrder.h"
 #include "Character.h"
-#include "PlayerInfo.h"
+#include "GameInfo.h"
 
-
-enum class RENDER_ORDER
-{
-	BACKGROUND,
-	UI,
-};
 
 TitleLevel::TitleLevel() 
 {
@@ -29,8 +24,8 @@ void TitleLevel::Loading()
 
 void TitleLevel::LevelChangeStart()
 {
-	BG_ = CreateActor<TitleBackGround>((int)RENDER_ORDER::BACKGROUND);
-	Logo_ = CreateActor<TitleLogo>((int)RENDER_ORDER::UI);
+	BG_ = CreateActor<TitleBackGround>(static_cast<int>(RENDER_ORDER::BACKGROUND));
+	Logo_ = CreateActor<TitleLogo>(static_cast<int>(RENDER_ORDER::UI));
 }
 
 void TitleLevel::Update()
@@ -46,5 +41,6 @@ void TitleLevel::LevelChangeEnd()
 {
 	BG_->Death();
 	Logo_->Death();
-	PlayerInfo::GetInst()->ChangeCharacter(Character::Type::Cavallo);
+	//PlayerInfo::GetInst()->ChangeCharacter(CharacterType::Cavallo);
+	GameInfo::SetCharacter(CharacterType::Cavallo);
 }
