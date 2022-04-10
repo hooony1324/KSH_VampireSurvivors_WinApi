@@ -56,6 +56,9 @@ private:
 
 	GameEngineCollision* PlayerAttRange_;
 	std::vector<GameEngineCollision*> NearMonsters_;
+
+	// 모든 충돌 체크
+	void AllCollisionCheck();
 	
 };
 

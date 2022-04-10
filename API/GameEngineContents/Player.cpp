@@ -66,6 +66,8 @@ void Player::Update()
 	
 
 	//MonsterAttPlayer();
+	AllCollisionCheck();
+
 	PlayerMove();
 
 	GetLevel()->SetCameraPos(PlayerPos_ - GameEngineWindow::GetScale().Half());
@@ -235,4 +237,11 @@ void Player::MonsterAttPlayer()
 	}
 }
 
+void Player::AllCollisionCheck()
+{
+	if (true == PlayerCol_->CollisionCheck("ExpObbGreen", CollisionType::Rect, CollisionType::Rect))
+	{
+		// exp Αυ°‘
+	}
 
+}

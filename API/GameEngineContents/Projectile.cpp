@@ -17,6 +17,7 @@ Projectile::Projectile()
 	: ProjImage_(nullptr)
 	, ShootDir_(float4::ZERO)
 	, ProjVec_(float4::ZERO)
+	, Damage_(10)
 {
 }
 

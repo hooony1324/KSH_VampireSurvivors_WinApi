@@ -39,6 +39,17 @@ public:
 		return ProjImage_;
 	}
 
+
+	int GetDamage()
+	{
+		return Damage_;
+	}
+
+	void SetDamage(int _Damage)
+	{
+		Damage_ = _Damage;
+	}
+
 protected:
 
 	void Start() override;

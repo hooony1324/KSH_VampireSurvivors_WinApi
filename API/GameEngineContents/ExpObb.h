@@ -2,6 +2,7 @@
 #include <GameEngine/GameEngineActor.h>
 
 // Ό³Έν :
+class GameEngineCollision;
 class ExpObb : public GameEngineActor
 {
 public:
@@ -19,9 +20,9 @@ protected:
 
 	void Start() override;
 	void Update() override;
-	void Render() override;
+
 
 private:
-
+	GameEngineCollision* Col_;
 };
 

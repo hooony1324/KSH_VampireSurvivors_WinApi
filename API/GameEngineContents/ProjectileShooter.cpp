@@ -38,7 +38,7 @@ void ProjectileShooter::InitShooter(BulletType _BT, int _Count, float _Interval,
 	IntervalCount_ = InitInterval_;
 }
 
-Projectile* ProjectileShooter::Shooting(float _DeltaTime, float4 _PlayerPos, float4 _MonsterPos)
+void ProjectileShooter::Shooting(float _DeltaTime, float4 _PlayerPos, float4 _MonsterPos)
 {
 	// 플레이어와 동일한 위치에 고정
 	//SetPosition(_PlayerPos);
@@ -47,7 +47,7 @@ Projectile* ProjectileShooter::Shooting(float _DeltaTime, float4 _PlayerPos, flo
 	if (0 < CoolTimeCount_)
 	{
 		CoolTimeCount_ -= _DeltaTime;
-		return nullptr;
+		return;
 	}
 
 	// 쏜 상태(인터벌 타임에 진입하면 isShoot는 false상태)
@@ -55,7 +55,7 @@ Projectile* ProjectileShooter::Shooting(float _DeltaTime, float4 _PlayerPos, flo
 	{
 		IntervalCount_ -= _DeltaTime;
 		isShoot_ = false;
-		return nullptr;
+		return;
 	}
 
 	// 쏜 상태 아니면, 인터벌이 끝났으면
@@ -67,7 +67,6 @@ Projectile* ProjectileShooter::Shooting(float _DeltaTime, float4 _PlayerPos, flo
 		CoolTimeCount_ = InitCoolTime_;
 		isShoot_ = false;
 		IntervalCount_ = 0;
-		return nullptr;
 	}
 
 	// 총알 쏘고 isShoot = true
@@ -75,10 +74,10 @@ Projectile* ProjectileShooter::Shooting(float _DeltaTime, float4 _PlayerPos, flo
 	Bullet->SetType(BT_);
 	Bullet->SetPosition(_PlayerPos);
 	Bullet->SetDir(Vector2D::GetDirection(_PlayerPos, _MonsterPos));
-	Bullet->Death(3);				// 능력치에 따라 달라져야함
+	Bullet->SetDamage(10);
+	Bullet->Death(5);				// 능력치에 따라 달라져야함
 	BulletCount_ -= 1;
 	isShoot_ = true;
 	IntervalCount_ = InitInterval_;
-
-	return Bullet;
+	return;
 }

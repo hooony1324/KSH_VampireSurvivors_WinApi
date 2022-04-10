@@ -54,7 +54,6 @@ private:
 	// Map
 	void CreateMap();
 	void InfiniteMap();
-	void InfiniteMap2();
 
 	float				MapLeftX_;
 	float				MapRightX_;
@@ -68,7 +67,6 @@ private:
 	Library*			Map_;
 	Player*				Player_;
 	float4				PlayerPos_;
-	std::vector<Projectile*> AllBullet_;
 
 	// Attack
 	GameEngineCollision*				PlayerAttackRange_;

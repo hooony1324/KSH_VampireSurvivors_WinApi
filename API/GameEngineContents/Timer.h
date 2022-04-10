@@ -46,7 +46,7 @@ private:
 	float DeltaTimeCount_;
 	int TimeCount_;
 
-	float		CycleTime_;
+	float	CycleTime_;
 	float	CycleTimeCounter_;
 
 };

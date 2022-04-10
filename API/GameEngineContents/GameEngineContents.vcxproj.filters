@@ -89,6 +89,9 @@
     <ClCompile Include="Timer.cpp">
       <Filter>2.Play\Timer</Filter>
     </ClCompile>
+    <ClCompile Include="Counter.cpp">
+      <Filter>2.Play\Timer</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="VampireSurvivorsGame.h" />
@@ -177,6 +180,9 @@
       <Filter>Global</Filter>
     </ClInclude>
     <ClInclude Include="Timer.h">
+      <Filter>2.Play\Timer</Filter>
+    </ClInclude>
+    <ClInclude Include="Counter.h">
       <Filter>2.Play\Timer</Filter>
     </ClInclude>
   </ItemGroup>

@@ -10,6 +10,9 @@
 #include "PlayerInfo.h"
 #include "Vector2D.h"
 
+#include "Counter.h"
+#include "Projectile.h"
+
 Mud::Mud() 
 	: Speed_(80.0f)
 	, Hp_(100)
@@ -42,18 +45,30 @@ void Mud::Start()
 	CreateRenderer("hpbar_back.bmp", static_cast<int>(RENDER_ORDER::MONSTER), RenderPivot::CENTER, { 0, 40 });
 	Hp_BarRed_ = CreateRenderer("hpbar.bmp", static_cast<int>(RENDER_ORDER::MONSTER), RenderPivot::CENTER, { 0, 40 });
 	Hp_BarSize_ = Hp_BarRed_->GetScale();
+
+	Counter1_ = new Counter(5);
 }
 
 void Mud::Update()
 {
-	float4 PlayerPos = PlayerInfo::GetInst()->GetCharacter()->Position_;
+	if (Hp_ <= 0)
+	{
+		Mud_->ChangeAnimation("Mud_Dead");
+
+		if (true == Counter1_->Start(GameEngineTime::GetDeltaTime()))
+		{
+			Death();
+		}
+		return;
+	}
+
+	PlayerPos_ = PlayerInfo::GetInst()->GetCharacter()->Position_;
 	float4 EnemyPos = GetPosition();
-	float4 DestDir = Vector2D::GetDirection(EnemyPos, PlayerPos);
-	
+	float4 DestDir = Vector2D::GetDirection(EnemyPos, PlayerPos_);
 
 	Hit();
 
-	SetMove(DestDir * GameEngineTime::GetDeltaTime() * Speed_);
+	SetMove((DestDir + KnockBackDir_) * GameEngineTime::GetDeltaTime() * Speed_);
 
 	if (0 >= DestDir.x)
 	{
@@ -82,16 +97,28 @@ void Mud::Render()
 void Mud::Hit()
 {
 	// 무기 정보(공격력에 따라 데미지) 
-	// 맞은 총알은 없애기
-	if (false == MudCol_->CollisionCheck("Bullet", CollisionType::Rect, CollisionType::Rect))
+	// 맞은 총알은 없애기 (해야지 데미지 10만 들어옴)
+	if (KnockBackDir_.Len2D() > 0.005f)
+	{
+		KnockBackDir_ -= KnockBackDir_ * 0.1f;
+	}
+
+	std::vector<GameEngineCollision*> HitBullet;
+	if (false == MudCol_->CollisionResult("Bullet", HitBullet, CollisionType::Rect, CollisionType::Rect))
 	{
 		return;
 	}
 
-	Hp_ -= 10;
+	int Damage = dynamic_cast<Projectile*>(HitBullet[0]->GetActor())->GetDamage();
+	HitBullet[0]->GetActor()->Death();
+	HitBullet.clear();
 
-	// 넉백
-	Mud_->GetActor()->SetMove(float4::RIGHT);
+	Hp_ -= Damage;
+
+	// 플레이어 방향과 반대로
+	KnockBackDir_ = Vector2D::GetDirection(PlayerPos_ , GetPosition()) * 25;
+
+
 }
 
 void Mud::BlockOther()

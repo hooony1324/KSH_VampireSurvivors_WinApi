@@ -2,8 +2,10 @@
 #include <GameEngine/GameEngineRenderer.h>
 #include <GameEngine/GameEngineCollision.h>
 
+#include "ObjectOrder.h"
 #include "PlayerInfo.h"
 #include "Vector2D.h"
+#include "Counter.h"
 
 ShadeRed::ShadeRed() 
 	: Speed_(120.0f)
@@ -31,10 +33,30 @@ void ShadeRed::Start()
 	OtherBlockDown_ = CreateCollision("OtherGuard", { 36, 4 }, { 0, 20 });
 	OtherBlockLeft_ = CreateCollision("OtherGuard", { 4, 36 }, { -20, 0 });
 	OtherBlockRight_ = CreateCollision("OtherGuard", { 4, 36 }, { 20, 0 });
+
+	// 디버그용
+	CreateRenderer("hpbar_back.bmp", static_cast<int>(RENDER_ORDER::MONSTER), RenderPivot::CENTER, { 0, 40 });
+	Hp_BarRed_ = CreateRenderer("hpbar.bmp", static_cast<int>(RENDER_ORDER::MONSTER), RenderPivot::CENTER, { 0, 40 });
+	Hp_BarSize_ = Hp_BarRed_->GetScale();
+
+	Counter1_ = new Counter(5);
 }
 
 void ShadeRed::Update()
 {
+	if (Hp_ <= 0)
+	{
+		ShadeRed_->ChangeAnimation("ShadeRed_Dead");
+
+		if (true == Counter1_->Start(GameEngineTime::GetDeltaTime()))
+		{
+			Death();
+		}
+		return;
+	}
+
+	Hit();
+
 	float4 PlayerPos = PlayerInfo::GetInst()->GetCharacter()->Position_;
 	float4 EnemyPos = GetPosition();
 
@@ -57,6 +79,29 @@ void ShadeRed::Update()
 
 void ShadeRed::Render()
 {
+	float Ratio = Hp_ / 100;
+	float NewSizeX = Hp_BarSize_.x * Ratio;
+	float4 Hp_BarPivot = float4{ 0 - ((Hp_BarSize_.x - NewSizeX) / 2), Hp_BarRed_->GetPivot().y };
+	Hp_BarRed_->SetScale(float4{ NewSizeX, Hp_BarSize_.y });
+	Hp_BarRed_->SetPivot(Hp_BarPivot);
+}
+
+
+void ShadeRed::Hit()
+{
+	// 무기 정보(공격력에 따라 데미지) 
+	// 맞은 총알은 없애기
+	if (false == ShadeRedCol_->CollisionCheck("Bullet", CollisionType::Rect, CollisionType::Rect))
+	{
+		return;
+	}
+
+	Hp_ -= 10;
+
+	// 넉백
+	ShadeRed_->GetActor()->SetMove(float4::RIGHT);
+
+
 }
 
 void ShadeRed::BlockOther()
