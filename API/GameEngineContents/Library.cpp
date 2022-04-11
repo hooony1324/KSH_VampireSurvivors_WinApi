@@ -3,7 +3,7 @@
 #include <GameEngine/GameEngineRenderer.h>
 #include <GameEngine/GameEngineCollision.h>
 
-int TelePortX = 3584;
+float TelePortX = 3584.0f;
 
 Library::Library() 
 {

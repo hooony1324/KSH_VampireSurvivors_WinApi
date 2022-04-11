@@ -37,7 +37,7 @@ public:
 	float w;
 
 public:
-	bool IsZero2D()
+	bool IsZero2D() const
 	{
 		return x == 0.0f && y == 0.0f;
 	}
@@ -101,7 +101,7 @@ public:
 		y /= Len;
 
 		// sqrtf 제곱근 구해줍니다.
-
+		return;
 	}
 
 	void Range2D(float _Max)
@@ -110,8 +110,11 @@ public:
 
 		x *= _Max;
 		y *= _Max;
-
+		return;
 	}
+
+
+	
 
 	float4 operator-(const float4& _Other) const
 	{
@@ -132,8 +135,6 @@ public:
 	{
 		return { x * _Value, y * _Value, z * _Value, 1.0f };
 	}
-
-
 
 	float4& operator+=(const float4& _Other)
 	{
@@ -162,6 +163,7 @@ public:
 		return *this;
 	}
 
+
 	float4& operator*=(const float4& _Other)
 	{
 		x *= _Other.x;
@@ -171,30 +173,42 @@ public:
 		return *this;
 	}
 
+	bool CompareInt2D(const float4& _Value) 
+	{
+		return ix() == _Value.ix() && iy() == _Value.iy();
+	}
+
+	bool CompareInt3D(const float4& _Value)
+	{
+		return ix() == _Value.ix() && 
+			iy() == _Value.iy() && 
+			iz() == _Value.iz();
+	}
+
+
 public:
 	float4()
 		: x(0.0f), y(0.0f), z(0.0f), w(1.0f)
 	{
 
 	}
-
 	float4(float _x, float _y)
 		: x(_x), y(_y), z(0.0f), w(1.0f)
 	{
 
 	}
-
 	float4(float _x, float _y, float _z)
 		: x(_x), y(_y), z(_z), w(1.0f)
 	{
 
 	}
-
 	float4(float _x, float _y, float _z, float _w)
 		: x(_x), y(_y), z(_z), w(_w)
 	{
 
 	}
+
+
 };
 
 struct GameEngineRect
@@ -257,4 +271,3 @@ public:
 
 	}
 };
-

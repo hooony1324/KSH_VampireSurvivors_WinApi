@@ -33,6 +33,11 @@ public:
 		RenderPivot_ = _Pos;
 	}
 
+	inline float4 GetPivot()
+	{
+		return RenderPivot_;
+	}
+
 	inline void SetPivotType(const RenderPivot& _Type)
 	{
 		PivotType_ = _Type;
@@ -50,6 +55,11 @@ public:
 	{
 		ScaleMode_ = RenderScaleMode::User;
 		RenderScale_ = _Scale;
+	}
+
+	inline float4 GetScale()
+	{
+		return RenderScale_;
 	}
 
 	inline GameEngineImage* GetImage()
@@ -80,7 +90,7 @@ protected:
 private:
 	friend class FrameAnimation;
 
-	GameEngineImage* Image_;
+	GameEngineImage* Image_;	
 	RenderPivot PivotType_;		// 센터 bot 등, 이미지 어느곳을 중심으로 출력할것인가
 	RenderScaleMode ScaleMode_;	// ENUM(Image, User), 엔진이 정의해준 기본값으로 쓸것인가, 프로그래머가 정의한 USER값으로 쓸것인가.
 
@@ -107,6 +117,7 @@ private:
 		GameEngineImage* Image_;
 		GameEngineFolderImage* FolderImage_;
 
+		int TimeKey;
 		int CurrentFrame_;
 		int StartFrame_;
 		int EndFrame_;
@@ -117,13 +128,14 @@ private:
 
 	public:
 		FrameAnimation()
-			: Image_(nullptr),
+			:	Image_(nullptr),
 			CurrentFrame_(-1),
 			StartFrame_(-1),
 			EndFrame_(-1),
 			CurrentInterTime_(0.1f),
 			InterTime_(0.1f),
-			Loop_(true)
+			Loop_(true),
+			TimeKey(0)
 		{
 		}
 
@@ -147,6 +159,8 @@ public:
 
 	void CreateFolderAnimation(const std::string& _Image, const std::string& _Name, int _StartIndex, int _EndIndex, float _InterTime, bool _Loop = true);
 
+	void CreateFolderAnimationTimeKey(const std::string& _Image, const std::string& _Name, int _TimeScaleKey, int _StartIndex, int _EndIndex, float _InterTime, bool _Loop = true);
+
 	// 애니메이션을 재생한다.
 	void ChangeAnimation(const std::string& _Name);
 
@@ -158,16 +172,5 @@ private:
 	std::map<std::string, FrameAnimation> Animations_;
 	FrameAnimation* CurrentAnimation_;
 
-
-// 따로 추가함
-public:
-	float4 GetPivot()
-	{
-		return RenderPivot_;
-	}
-
-	float4 GetScale()
-	{
-		return RenderScale_;
-	}
 };
+

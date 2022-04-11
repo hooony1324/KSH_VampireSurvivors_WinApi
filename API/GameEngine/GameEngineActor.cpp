@@ -62,7 +62,7 @@ void GameEngineActor::DebugRectRender()
 
 GameEngineRenderer* GameEngineActor::CreateRenderer(
 	int _Order, /*= static_cast<int>(EngineMax::RENDERORDERMAX)*/
-	RenderPivot _PivotType /*= RenderPivot::CENTER*/,
+	RenderPivot _PivotType /*= RenderPivot::CENTER*/, 
 	const float4& _PivotPos /*= { 0,0 }*/)
 {
 	GameEngineRenderer* NewRenderer = new GameEngineRenderer();
@@ -126,8 +126,7 @@ GameEngineRenderer* GameEngineActor::CreateRendererToScale(
 	if (_Order != static_cast<int>(EngineMax::RENDERORDERMAX))
 	{
 		NewRenderer->GameEngineUpdateObject::SetOrder(_Order);
-	}
-	else
+	} else
 	{
 		NewRenderer->GameEngineUpdateObject::SetOrder(GetOrder());
 	}
@@ -154,7 +153,7 @@ GameEngineCollision* GameEngineActor::CreateCollision(const std::string& _GroupN
 	return NewCollision;
 }
 
-void GameEngineActor::Release()
+void GameEngineActor::Release() 
 {
 	{
 		std::list<GameEngineRenderer*>::iterator StartIter = RenderList_.begin();
@@ -192,4 +191,20 @@ void GameEngineActor::Release()
 		}
 	}
 
+
+}
+
+void GameEngineActor::SetOrder(int _Order)
+{
+	if (nullptr == GetLevel())
+	{
+		MsgBoxAssert("레벨이 세팅되지 않았습니다.");
+	}
+
+	if (_Order == GetOrder())
+	{
+		return;
+	}
+
+	GetLevel()->ChangeUpdateOrder(this, _Order);
 }

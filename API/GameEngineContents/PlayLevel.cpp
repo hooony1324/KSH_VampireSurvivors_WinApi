@@ -69,6 +69,7 @@ void PlayLevel::LevelChangeStart()
 
 	Player_ = CreateActor<Player>(static_cast<int>(RENDER_ORDER::PLAYER), "Player");
 	PlayerAttackRange_ = Player_->CreateCollision("PlayerAttackRange", { 600, 600 });
+	PlayerAttackRange_->Off(); // 디버그시 안보이게
 
 	EnemyController_ = CreateActor<EnemyController>(static_cast<int>(RENDER_ORDER::MONSTER), "EnemyController");
 
