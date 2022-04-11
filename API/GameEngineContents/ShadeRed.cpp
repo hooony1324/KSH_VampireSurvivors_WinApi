@@ -57,7 +57,7 @@ void ShadeRed::Update()
 
 	Hit();
 
-	float4 PlayerPos = GameInfo::GetPlayerPos();
+	float4 PlayerPos = GameInfo::GetPlayerInfo()->PlayerPos_;
 	float4 EnemyPos = GetPosition();
 
 	float4 DestDir = Vector2D::GetDirection(EnemyPos, PlayerPos);
@@ -79,7 +79,7 @@ void ShadeRed::Update()
 
 void ShadeRed::Render()
 {
-	float Ratio = Hp_ / 100;
+	float Ratio = Hp_ / 100.0f;
 	float NewSizeX = Hp_BarSize_.x * Ratio;
 	float4 Hp_BarPivot = float4{ 0 - ((Hp_BarSize_.x - NewSizeX) / 2), Hp_BarRed_->GetPivot().y };
 	Hp_BarRed_->SetScale(float4{ NewSizeX, Hp_BarSize_.y });

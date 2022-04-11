@@ -24,6 +24,7 @@
 #include "EnemyController.h"
 #include "ProjectileShooter.h"
 
+#include "GameInfo.h"
 
 float MapLeftX = 700;
 float MapRightX = 2940;
@@ -82,7 +83,7 @@ void PlayLevel::LevelChangeStart()
 
 	// 슈터
 	Shooter1_ = CreateActor<ProjectileShooter>(static_cast<int>(RENDER_ORDER::PLAYER), "Shooter");
-	Shooter1_->InitShooter(BulletType::FLAME_RED, 5, 0.2f, 2);
+	Shooter1_->InitShooter(BulletType::FLAME_BLUE, 5, 0.2f, 2);
 
 
 	//BgmPlayer = GameEngineSound::SoundPlayControl("bgm_elrond_library.MP3");
@@ -118,6 +119,8 @@ void PlayLevel::LevelChangeEnd()
 
 	PlayerAttackRange_->Death();
 	Shooter1_->Death();
+
+
 }
 
 void PlayLevel::Update()
@@ -133,21 +136,16 @@ void PlayLevel::Update()
 	}
 
 
+	ShooterUpdate();
+
+
 	EnemyController_->SetPosition(Player_->GetPosition());
-
-
-	float4 MonsterPos = UpdateAttackableEnemey();
-	if (true == ShootAble_)
-	{
-		Shooter1_->Shooting(GameEngineTime::GetDeltaTime(), Player_->GetPosition(), MonsterPos);
-	}
-
 	InfiniteMap();
 }
 
 void PlayLevel::CreateMap()
 {
-	Map_ = CreateActor<Library>((int)RENDER_ORDER::MONSTER, "Library");
+	Map_ = CreateActor<Library>(static_cast<int>(RENDER_ORDER::MONSTER), "Library");
 	// 액터의 위치, 크기 설정
 	Map_->SetPosition(float4::ZERO);
 	Map_->SetScale(Map_->GetRendererScale());
@@ -159,7 +157,7 @@ void PlayLevel::InfiniteMap()
 	Map_->CheckPlayerOnEnd();
 }
 
-float4 PlayLevel::UpdateAttackableEnemey()
+float4 PlayLevel::GetAttackableEnemey()
 {
 	if (true == PlayerAttackRange_->CollisionResult("Monster", AttackableEnemy_, CollisionType::Rect, CollisionType::Rect))
 	{
@@ -173,6 +171,13 @@ float4 PlayLevel::UpdateAttackableEnemey()
 
 }
 
-
+void PlayLevel::ShooterUpdate()
+{
+	float4 MonsterPos = GetAttackableEnemey();
+	if (true == ShootAble_)
+	{
+		Shooter1_->Shooting(GameEngineTime::GetDeltaTime(), Player_->GetPosition(), MonsterPos);
+	}
+}
 
 

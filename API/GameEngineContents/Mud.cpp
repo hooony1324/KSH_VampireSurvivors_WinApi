@@ -67,7 +67,7 @@ void Mud::Update()
 		return;
 	}
 
-	PlayerPos_ = GameInfo::GetPlayerPos();
+	PlayerPos_ = GameInfo::GetPlayerInfo()->PlayerPos_;
 	float4 EnemyPos = GetPosition();
 	float4 DestDir = Vector2D::GetDirection(EnemyPos, PlayerPos_);
 

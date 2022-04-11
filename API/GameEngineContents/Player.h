@@ -21,18 +21,17 @@ public:
 	Player& operator=(Player&& _Other) noexcept = delete;
 
 private:
-	float Gravity_;
+	/*float Gravity_;
 	float AccGravity_;
-	GameEngineImage* MapColImage_;
+	GameEngineImage* MapColImage_;*/
 
 	void Start() override;
 	void Update() override;
 	void Render() override;
-
 private:
 
 	void SetGameInfo();
-	Character*				PlayerStat_;
+	Character*				CharacterStat_;
 	float4					PlayerPos_;
 	float4					MoveDir_;
 	int						HeadDir_;
@@ -54,20 +53,13 @@ private:
 	void MonsterAttPlayer();
 	void Attacked(int _Damage);
 
+	// 공격
 	GameEngineCollision* PlayerAttRange_;
-	std::vector<GameEngineCollision*> NearMonsters_;
 
 	// 모든 충돌 체크
 	void AllCollisionCheck();
 
 
-	// Player클래스에 맡겨도 될듯
-	float MaxExp_;
-	float CurrentExp_;
-	int PlayerLevel_;
-	int SurvivalTime_;
-	int EearnedGold_;
-	int KillCount_;
 	
 };
 

@@ -1,11 +1,63 @@
 #pragma once
 #include <GameEngineBase/GameEngineMath.h>
 #include "Character.h"
+#include <vector>
+
+
+
 
 // 설명 :
 class GameInfo
 {
 public:
+	class PlayerInfo
+	{
+	public:
+		float4 PlayerPos_;
+
+		float MaxExp_;
+		float CurrentExp_;
+		int PlayerLevel_;
+
+		int SurvivalTime_;
+		int EearnedGold_;
+		int KillCount_;
+
+		// 패시브 기본 능력치 (체력, 스피드, 공격력, ...)
+		float Speed_;			// 이동속도
+		float CurrentHp_;		// 체력
+		float MaxHp_;
+		float Recovery_;		// 체력 재생
+		float Guard_;			// 방어력
+		float Power_;			// 추가 데미지, 괴력
+		float MeleeRange_;		// 근접 공격 범위(성서, 마늘, 성수, 번개 등 범위 공격만 해당)
+		float ShootSpeedRatio_;	// 전체 투사체 속도 증가비율
+		float AddShootNum_;		// 투사체 수
+		float Duration_;		// 스킬 지속시간
+
+		// 패시브 서브 능력치
+		float Luck_;			// 아이템 확률 3개 -> 4개
+		float Growth_;			// 경험치 획득시 추가 경험치
+		float Greed_;			// 돈 획득시 추가 돈
+		float Magnet_;			// 아이템 획득 범위
+		int	Revival_;			// 부활 횟수
+	};
+
+public:
+	static void Destroy()
+	{
+		if (nullptr != Character_)
+		{
+			delete Character_;
+			Character_ = nullptr;
+		}
+
+		if (nullptr != PlayerInfo_)
+		{
+			delete PlayerInfo_;
+			PlayerInfo_ = nullptr;
+		}
+	}
 
 	static void SetCharacter(CharacterType _CharacterType)
 	{
@@ -21,46 +73,18 @@ public:
 		return Character_;
 	}
 
-	static void SetPlayerPos(float4 _PlayerPos)
+	static PlayerInfo* GetPlayerInfo()
 	{
-		PlayerPos_ = _PlayerPos;
+		return PlayerInfo_;
 	}
 
-	static float4 GetPlayerPos()
-	{
-		return PlayerPos_;
-	}
-
-
-	static void Destroy()
-	{
-		if (nullptr != Character_)
-		{
-			delete Character_;
-			Character_ = nullptr;
-		}
-	}
+	static void SetPlayerInfo();
 
 private:
-	static Character* Character_;
+	// 계속 업데이트 되야 되는 정보, UI에 표시할 정보
+	static Character* Character_;	// 캐릭터 선택 정보
+	static PlayerInfo* PlayerInfo_;	// 인게임 플레이어 정보
 
-	// 계속 업데이트 되야 되는 정보
-	static float4 PlayerPos_;
-
-	// Player클래스가 최후에 넘겨줘야되는 정보
-	float MaxExp_;
-	float CurrentExp_;
-	int PlayerLevel_;
-	int SurvivalTime_;
-	int EearnedGold_;
-	int KillCount_;
-
-	// + 무기정보, ...
-	
-
-
-
-protected:
 
 private:
 	// constrcuter destructer
@@ -72,6 +96,6 @@ private:
 	GameInfo(GameInfo&& _Other) noexcept = delete;
 	GameInfo& operator=(const GameInfo& _Other) = delete;
 	GameInfo& operator=(GameInfo&& _Other) noexcept = delete;
-
 };
+
 

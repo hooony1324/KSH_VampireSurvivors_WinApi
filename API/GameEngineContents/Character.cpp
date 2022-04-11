@@ -2,13 +2,14 @@
 
 Character::Character() 
 	: Speed_(0)
-	, Hp_(0)
+	, CurrentHp_(0)
+	, MaxHp_(0)
 	, Recovery_(0)
 	, Guard_(0)
 	, Power_(0)
-	, Range_(0)
-	, ShootSpeed_(0)
-	, ShootNum_(0)
+	, MeleeRange_(0)
+	, ShootSpeedRatio_(0)
+	, AddShootNum_(0)
 	, Duration_(0)
 	, Luck_(0)
 	, Growth_(0)
@@ -42,13 +43,14 @@ void Character::SetCharacter(CharacterType _CharacterType)
 		WalkLeftAnim_ = "Cavallo_WalkLeft.bmp";
 
 		Speed_ = 200.0f;
-		Hp_ = 100;
+		MaxHp_ = 100;
+		CurrentHp_ = MaxHp_;
 		Recovery_ = 0;
 		Guard_ = 0;
 		Power_ = 0;
-		Range_ = 1;
-		ShootSpeed_ = 1;
-		ShootNum_ = 1;
+		MeleeRange_ = 1;
+		ShootSpeedRatio_ = 1;
+		AddShootNum_ = 1;
 		Duration_ = 3;
 		Luck_ = 0;
 		Growth_ = 1;
@@ -66,13 +68,14 @@ void Character::SetCharacter(CharacterType _CharacterType)
 		WalkLeftAnim_ = "Imelda_WalkLeft.bmp";
 
 		Speed_ = 200.0f;
-		Hp_ = 100;
+		MaxHp_ = 100;
+		CurrentHp_ = MaxHp_;
 		Recovery_ = 0;
 		Guard_ = 0;
 		Power_ = 0;
-		Range_ = 1;
-		ShootSpeed_ = 1;
-		ShootNum_ = 1;
+		MeleeRange_ = 1;
+		ShootSpeedRatio_ = 1;
+		AddShootNum_ = 1;
 		Duration_ = 3;
 		Luck_ = 0;
 		Growth_ = 1;
@@ -90,13 +93,14 @@ void Character::SetCharacter(CharacterType _CharacterType)
 		WalkLeftAnim_ = "Old_WalkLeft.bmp";
 
 		Speed_ = 150.0f;
-		Hp_ = 100;
+		MaxHp_ = 100;
+		CurrentHp_ = MaxHp_;
 		Recovery_ = 0;
 		Guard_ = 0;
 		Power_ = 0;
-		Range_ = 1;
-		ShootSpeed_ = 1;
-		ShootNum_ = 1;
+		MeleeRange_ = 1;
+		ShootSpeedRatio_ = 1;
+		AddShootNum_ = 1;
 		Duration_ = 3;
 		Luck_ = 0;
 		Growth_ = 1;
@@ -114,13 +118,14 @@ void Character::SetCharacter(CharacterType _CharacterType)
 		WalkLeftAnim_ = "Cavallo_WalkLeft.bmp";
 
 		Speed_ = 200.0f;
-		Hp_ = 100;
+		MaxHp_ = 100;
+		CurrentHp_ = MaxHp_;
 		Recovery_ = 0;
 		Guard_ = 0;
 		Power_ = 0;
-		Range_ = 1;
-		ShootSpeed_ = 1;
-		ShootNum_ = 1;
+		MeleeRange_ = 1;
+		ShootSpeedRatio_ = 1;
+		AddShootNum_ = 1;
 		Duration_ = 3;
 		Luck_ = 0;
 		Growth_ = 1;

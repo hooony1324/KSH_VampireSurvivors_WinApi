@@ -2,6 +2,7 @@
 #include <GameEngine/GameEngineActor.h>
 
 // Ό³Έν :
+class GameEngineRenderer;
 class ExpBar : public GameEngineActor
 {
 public:
@@ -22,6 +23,9 @@ protected:
 	void Render() override;
 
 private:
+	GameEngineRenderer* BlackBar_;
+	GameEngineRenderer* BlueBar_;
 
+	void ExpBarUpdate();
 };
 

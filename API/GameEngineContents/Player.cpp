@@ -24,12 +24,10 @@
 Player::Player() 
 	: Hp_BarRed_(nullptr)
 	, PlayerRenderer_(nullptr)
-	, Gravity_(100.0f)
 	, MoveDir_(float4::ZERO)
 	, HeadDir_(-1)
 	, Hitable_(true)
 	, HitTime_(1.0f)
-	, CurrentExp_(0)
 {
 	// 공격 맞으면 일정시간동안 무적
 	InvincibleTime_ = HitTime_;
@@ -45,17 +43,20 @@ void Player::Start()
 	SetScale({ 100, 100 });
 
 	// 플레이어 이미지, 애니메이션 관련 설정
-	//PlayerInfo::GetInst()->ChangeCharacter(CharacterType::Cavallo);
-	//PlayerStat_ = PlayerInfo::GetInst()->GetCharacter();
-	GameInfo::SetCharacter(CharacterType::Cavallo);// 플레이 레벨에서 시작하기 때문에 설정
-	PlayerStat_ = GameInfo::GetCharacter();
+	GameInfo::SetCharacter(CharacterType::Cavallo);	// 디버그용도 : 플레이 레벨에서 시작하기 때문에 설정
+	GameInfo::SetPlayerInfo();
+	CharacterStat_ = GameInfo::GetCharacter();
 
 	PlayerRenderer_ = CreateRenderer();
-	PlayerRenderer_->CreateAnimation(PlayerStat_->WalkRightAnim_, "Idle_Right", 0, 0, 0.1f, false);
-	PlayerRenderer_->CreateAnimation(PlayerStat_->WalkRightAnim_, "Walk_Right", 0, 3, 0.12f, true);
-	PlayerRenderer_->CreateAnimation(PlayerStat_->WalkLeftAnim_, "Idle_Left", 0, 0, 0.1f, false);
-	PlayerRenderer_->CreateAnimation(PlayerStat_->WalkLeftAnim_, "Walk_Left", 0, 3, 0.12f, true);
+	PlayerRenderer_->CreateAnimation(CharacterStat_->WalkRightAnim_, "Idle_Right", 0, 0, 0.1f, false);
+	PlayerRenderer_->CreateAnimation(CharacterStat_->WalkRightAnim_, "Walk_Right", 0, 3, 0.12f, true);
+	PlayerRenderer_->CreateAnimation(CharacterStat_->WalkLeftAnim_, "Idle_Left", 0, 0, 0.1f, false);
+	PlayerRenderer_->CreateAnimation(CharacterStat_->WalkLeftAnim_, "Walk_Left", 0, 3, 0.12f, true);
 	PlayerRenderer_->ChangeAnimation("Idle_Right"); 
+
+	// 처음에는 Character의 스탯을 따름
+	// 이동속도, 체력
+	Speed_ = CharacterStat_->Speed_;
 
 	// 체력바
 	CreateRenderer("hpbar_back.bmp", static_cast<int>(RENDER_ORDER::PLAYER), RenderPivot::CENTER, {0, 40});
@@ -72,13 +73,12 @@ void Player::Update()
 	SetGameInfo();
 	
 
-	//MonsterAttPlayer();
+	MonsterAttPlayer();
 	AllCollisionCheck();
 
 	PlayerMove();
 
 	GetLevel()->SetCameraPos(PlayerPos_ - GameEngineWindow::GetScale().Half());
-
 }
 
 void Player::Render()
@@ -90,16 +90,13 @@ void Player::Render()
 
 void Player::SetGameInfo()
 {
-	//PlayerStat_ = PlayerInfo::GetInst()->GetCharacter();
-	//PlayerInfo::GetInst()->GetCharacter()->SetPos(GetPosition());
-	GameInfo::SetPlayerPos(GetPosition());
-
+	GameInfo::GetPlayerInfo()->PlayerPos_ = GetPosition();
 }
 
 void Player::PlayerMove()
 {
 	PlayerPos_ = GetPosition();
-	Speed_ = PlayerStat_->Speed_;
+
 	MoveDir_ = float4::ZERO;
 
 	bool MoveLeft = GameEngineInput::GetInst()->IsPress("MoveLeft");
@@ -179,7 +176,9 @@ void Player::PlayerMove()
 void Player::HpBarRender()
 {
 	// 체력 바
-	float Ratio = PlayerStat_->Hp_ / 100;
+	float CurrentHp = GameInfo::GetPlayerInfo()->CurrentHp_;
+	float MaxHp = GameInfo::GetPlayerInfo()->MaxHp_;
+	float Ratio = CurrentHp / MaxHp;
 	float NewSizeX = Hp_BarSize_.x * Ratio;
 	float4 Hp_BarPivot = float4{ 0 - ((Hp_BarSize_.x - NewSizeX) / 2), Hp_BarRed_->GetPivot().y };
 	Hp_BarRed_->SetScale(float4{ NewSizeX, Hp_BarSize_.y });
@@ -194,10 +193,10 @@ void Player::Attacked(int _Damage)
 		return;
 	}
 
-	PlayerStat_->Hp_ -= _Damage;
+	float CurrentHp = GameInfo::GetPlayerInfo()->CurrentHp_ -= _Damage;
 	Hitable_ = false;
 
-	if (PlayerStat_->Hp_ <= 0)
+	if (CurrentHp <= 0)
 	{
 		// 예시
 		// PlayerRenderer_->ChangeAnimation("CavalloDead");
@@ -237,11 +236,10 @@ void Player::AllCollisionCheck()
 		ExpGem* GemPtr = dynamic_cast<ExpGem*>(Result[0]->GetActor());
 		float Exp = GemPtr->GetExp();
 
-		CurrentExp_ += Exp;
+		GameInfo::GetPlayerInfo()->CurrentExp_ += Exp; // 플레이어 레벨 높아지면 획득률 낮아지도록
 
 		GemPtr->Death();
 	}
 
-	//
-
 }
+

@@ -75,6 +75,8 @@ void VampireSurvivorsGame::GameEnd()
 
 void VampireSurvivorsGame::ResourceLoad()
 {
+
+	// 이미지 리소스
 	GameEngineDirectory ResourcesDir;
 	ResourcesDir.MoveParent("API");
 	ResourcesDir.Move("Resources");
@@ -107,7 +109,7 @@ void VampireSurvivorsGame::ResourceLoad()
 	GameEngineImageManager::GetInst()->Find("ShadeRed_IdleRight.bmp")->Cut({ 70, 70 });
 	GameEngineImageManager::GetInst()->Find("ShadeRed_Dead.bmp")->Cut({ 140, 140 });
 
-	// 사운드
+	// 사운드 리소스
 	{
 		GameEngineDirectory ResourcesDir;
 		ResourcesDir.MoveParent("API");

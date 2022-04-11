@@ -28,7 +28,7 @@ private:
 
 	// 기본 정보
 	float Speed_;
-	int Hp_;
+	float Hp_;
 	GameEngineRenderer* Hp_BarRed_;
 	float4 Hp_BarSize_;
 
