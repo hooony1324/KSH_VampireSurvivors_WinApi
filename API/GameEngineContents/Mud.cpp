@@ -13,6 +13,8 @@
 #include "Counter.h"
 #include "Projectile.h"
 
+#include "ExpGem.h"
+
 Mud::Mud() 
 	: Speed_(80.0f)
 	, Hp_(100)
@@ -30,7 +32,7 @@ void Mud::Start()
 	Mud_ = CreateRenderer();
 	Mud_->CreateAnimation("Mud_IdleLeft.bmp", "Mud_IdleLeft", 0, 3, 0.2f, true);
 	Mud_->CreateAnimation("Mud_IdleRight.bmp", "Mud_IdleRight", 0, 3, 0.2f, true);
-	Mud_->CreateAnimation("Mud_Dead.bmp", "Mud_Dead", 0, 27, 0.1f, false);
+	Mud_->CreateAnimation("Mud_Dead.bmp", "Mud_Dead", 0, 27, 0.05f, false);
 	Mud_->ChangeAnimation("Mud_IdleRight");
 	SetScale({ 100, 100 });
 
@@ -46,7 +48,7 @@ void Mud::Start()
 	Hp_BarRed_ = CreateRenderer("hpbar.bmp", static_cast<int>(RENDER_ORDER::MONSTER), RenderPivot::CENTER, { 0, 40 });
 	Hp_BarSize_ = Hp_BarRed_->GetScale();
 
-	Counter1_.SetCount(2);
+	Counter1_.SetCount(1.0f);
 }
 
 void Mud::Update()
@@ -57,6 +59,9 @@ void Mud::Update()
 
 		if (true == Counter1_.Start(GameEngineTime::GetDeltaTime()))
 		{
+			ExpGem* Gem = GetLevel()->CreateActor<ExpGem>(static_cast<int>(ACTOR_ORDER::ITEM), "ExpGem");
+			Gem->SetType(GemType::BLUE);
+			Gem->SetPosition(GetPosition());
 			Death();
 		}
 		return;

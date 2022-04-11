@@ -17,6 +17,7 @@
 
 #include "Vector2D.h"
 #include "Projectile.h"
+#include "ExpGem.h"
 
 
 
@@ -28,6 +29,7 @@ Player::Player()
 	, HeadDir_(-1)
 	, Hitable_(true)
 	, HitTime_(1.0f)
+	, CurrentExp_(0)
 {
 	// 공격 맞으면 일정시간동안 무적
 	InvincibleTime_ = HitTime_;
@@ -45,7 +47,6 @@ void Player::Start()
 	// 플레이어 이미지, 애니메이션 관련 설정
 	//PlayerInfo::GetInst()->ChangeCharacter(CharacterType::Cavallo);
 	//PlayerStat_ = PlayerInfo::GetInst()->GetCharacter();
-
 	GameInfo::SetCharacter(CharacterType::Cavallo);// 플레이 레벨에서 시작하기 때문에 설정
 	PlayerStat_ = GameInfo::GetCharacter();
 
@@ -113,45 +114,27 @@ void Player::PlayerMove()
 
 	if (MoveLeft)
 	{
-		MoveDir_ = float4::LEFT;
+		MoveDir_ += float4::LEFT;
 		HeadDir_ = -1;
 	}
 
 	if (MoveRight)
 	{
-		MoveDir_ = float4::RIGHT;
+		MoveDir_ += float4::RIGHT;
 		HeadDir_ = 1;
 	}
 
 	if (MoveUp)
 	{
-		MoveDir_ = float4::UP;
+		MoveDir_ += float4::UP;
 	}
 
 	if (MoveDown)
 	{
-		MoveDir_ = float4::DOWN;
+		MoveDir_ += float4::DOWN;
 	}
 
-	if (MoveLeft && MoveUp)
-	{
-		MoveDir_ = Vector2D::Normalized((float4::LEFT + float4::UP));
-	}
-
-	if (MoveUp && MoveRight)
-	{
-		MoveDir_ = Vector2D::Normalized((float4::UP + float4::RIGHT));
-	}
-
-	if (MoveRight && MoveDown)
-	{
-		MoveDir_ = Vector2D::Normalized((float4::RIGHT + float4::DOWN));
-	}
-
-	if (MoveDown && MoveLeft)
-	{
-		MoveDir_ = Vector2D::Normalized((float4::DOWN + float4::LEFT));
-	}
+	MoveDir_.Normal2D();
 
 	// 머리 방향에 따른 Idle애니메이션
 	if (HeadDir_ == -1 && ( MoveDir_.x != 0 || MoveDir_.y != 0))
@@ -247,9 +230,18 @@ void Player::MonsterAttPlayer()
 
 void Player::AllCollisionCheck()
 {
-	if (true == PlayerCol_->CollisionCheck("ExpObbGreen", CollisionType::Rect, CollisionType::Rect))
+	// exp 증가
+	std::vector<GameEngineCollision*> Result;
+	if (true == PlayerCol_->CollisionResult("ExpGem", Result, CollisionType::Rect, CollisionType::Rect))
 	{
-		// exp 증가
+		ExpGem* GemPtr = dynamic_cast<ExpGem*>(Result[0]->GetActor());
+		float Exp = GemPtr->GetExp();
+
+		CurrentExp_ += Exp;
+
+		GemPtr->Death();
 	}
+
+	//
 
 }

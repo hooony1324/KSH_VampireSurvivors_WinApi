@@ -74,7 +74,7 @@ void ProjectileShooter::Shooting(float _DeltaTime, float4 _PlayerPos, float4 _Mo
 	Bullet->SetType(BT_);
 	Bullet->SetPosition(_PlayerPos);
 	Bullet->SetDir(Vector2D::GetDirection(_PlayerPos, _MonsterPos));
-	Bullet->SetDamage(10);
+	Bullet->SetDamage(100);
 	Bullet->Death(5);				// 능력치에 따라 달라져야함
 	BulletCount_ -= 1;
 	isShoot_ = true;

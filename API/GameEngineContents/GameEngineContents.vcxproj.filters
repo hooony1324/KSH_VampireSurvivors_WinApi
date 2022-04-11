@@ -47,9 +47,6 @@
     <ClCompile Include="ExpBar.cpp">
       <Filter>2.Play\UI</Filter>
     </ClCompile>
-    <ClCompile Include="ExpObb.cpp">
-      <Filter>2.Play\Item</Filter>
-    </ClCompile>
     <ClCompile Include="Coin.cpp">
       <Filter>2.Play\Item</Filter>
     </ClCompile>
@@ -91,6 +88,9 @@
     </ClCompile>
     <ClCompile Include="GameInfo.cpp">
       <Filter>Global</Filter>
+    </ClCompile>
+    <ClCompile Include="ExpGem.cpp">
+      <Filter>2.Play\Item</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -140,9 +140,6 @@
     <ClInclude Include="ExpBar.h">
       <Filter>2.Play\UI</Filter>
     </ClInclude>
-    <ClInclude Include="ExpObb.h">
-      <Filter>2.Play\Item</Filter>
-    </ClInclude>
     <ClInclude Include="Coin.h">
       <Filter>2.Play\Item</Filter>
     </ClInclude>
@@ -184,6 +181,9 @@
     </ClInclude>
     <ClInclude Include="GameInfo.h">
       <Filter>Global</Filter>
+    </ClInclude>
+    <ClInclude Include="ExpGem.h">
+      <Filter>2.Play\Item</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

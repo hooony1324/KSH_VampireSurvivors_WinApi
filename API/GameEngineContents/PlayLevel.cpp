@@ -17,7 +17,7 @@
 
 #include "Player.h"
 #include "Library.h"
-#include "ExpObb.h"
+#include "ExpGem.h"
 #include "Enemy.h"
 #include "Mud.h"
 #include "ShadeRed.h"
@@ -87,8 +87,10 @@ void PlayLevel::LevelChangeStart()
 
 	//BgmPlayer = GameEngineSound::SoundPlayControl("bgm_elrond_library.MP3");
 
-	// ExpObb
-	//CreateActor<ExpObb>(static_cast<int>(ACTOR_ORDER::ITEM), "ITEM");
+	// ExpGem
+	ExpGem* FirstGem = CreateActor<ExpGem>(static_cast<int>(ACTOR_ORDER::ITEM), "ITEM");
+	FirstGem->SetPosition({ 500, 500 });
+	FirstGem->SetType(GemType::GREEN);
 }
 
 void PlayLevel::LevelChangeEnd()
