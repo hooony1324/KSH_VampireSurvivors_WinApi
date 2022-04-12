@@ -5,7 +5,7 @@
 //#include <GameEngineBase/GameEngineDebug.h>
 
 #include <GameEngine/GameEngineRenderer.h>
-#include "ObjectOrder.h"
+#include "ObjectEnum.h"
 
 Timer::Timer() 
 	: NumberIndex_(0)

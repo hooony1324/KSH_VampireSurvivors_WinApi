@@ -7,7 +7,7 @@
 
 #include <string>
 #include "Timer.h"
-#include "ObjectOrder.h"
+#include "ObjectEnum.h"
 
 TimerUI::TimerUI() 
 {

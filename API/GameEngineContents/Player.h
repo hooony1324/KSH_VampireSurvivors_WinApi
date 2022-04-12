@@ -2,10 +2,11 @@
 #include <GameEngine/GameEngineActor.h>
 #include <vector>
 
+
 // 설명 : 
 class Character;
 class GameEngineImage;
-class Projectile;
+class ProjectileShooter;
 class GameEngineCollision;
 class Player : public GameEngineActor
 {
@@ -28,12 +29,14 @@ private:
 	void Start() override;
 	void Update() override;
 	void Render() override;
-private:
 
+private:
 	void SetGameInfo();
+
 	Character*				CharacterStat_;
 	float4					PlayerPos_;
 	float4					MoveDir_;
+	float4					Hp_BarSize_;
 	int						HeadDir_;
 	bool					Hitable_; // 플레이어 무적여부
 	float					InvincibleTime_;
@@ -41,24 +44,26 @@ private:
 	float					Speed_;
 
 	GameEngineCollision*	PlayerCol_;
+	GameEngineCollision*	PlayerShootRange_;
+	std::vector<GameEngineCollision*>	ShootableEnemy_;
+
+	// 렌더
 	GameEngineRenderer*		PlayerRenderer_;
 	GameEngineRenderer*		Hp_BarRed_;
-	float4					Hp_BarSize_;
 
 	void PlayerMove();
 	void HpBarRender();
-
-
-	// 플레이어 피격
-	void MonsterAttPlayer();
 	void Attacked(int _Damage);
-
-	// 공격
-	GameEngineCollision* PlayerAttRange_;
 
 	// 모든 충돌 체크
 	void AllCollisionCheck();
+	void MonsterAttackCheck();
+	void ExpGemCheck();
+	float4 ShootableEnemeyCheck();
 
+	// 슈팅
+	void Shooting();
+	ProjectileShooter* Shooter1_;
 
 	
 };

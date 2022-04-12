@@ -65,7 +65,7 @@
     <ClCompile Include="KillCountUI.cpp">
       <Filter>2.Play\UI</Filter>
     </ClCompile>
-    <ClCompile Include="Player_Stat.cpp">
+    <ClCompile Include="Player_State.cpp">
       <Filter>2.Play\Player</Filter>
     </ClCompile>
     <ClCompile Include="EnemyController.cpp">
@@ -91,6 +91,12 @@
     </ClCompile>
     <ClCompile Include="ExpGem.cpp">
       <Filter>2.Play\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="PauseUI.cpp">
+      <Filter>2.Play\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="LevelUpUI.cpp">
+      <Filter>2.Play\UI</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -170,7 +176,7 @@
     <ClInclude Include="ProjectileShooter.h">
       <Filter>2.Play\Projectile</Filter>
     </ClInclude>
-    <ClInclude Include="ObjectOrder.h">
+    <ClInclude Include="ObjectEnum.h">
       <Filter>Global</Filter>
     </ClInclude>
     <ClInclude Include="Timer.h">
@@ -184,6 +190,12 @@
     </ClInclude>
     <ClInclude Include="ExpGem.h">
       <Filter>2.Play\Item</Filter>
+    </ClInclude>
+    <ClInclude Include="PauseUI.h">
+      <Filter>2.Play\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="LevelUpUI.h">
+      <Filter>2.Play\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

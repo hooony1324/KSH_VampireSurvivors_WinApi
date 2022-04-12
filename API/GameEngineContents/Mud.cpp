@@ -6,7 +6,7 @@
 #include <GameEngine/GameEngineRenderer.h>
 #include <GameEngine/GameEngineCollision.h>
 
-#include "ObjectOrder.h"
+#include "ObjectEnum.h"
 #include "GameInfo.h"
 #include "Vector2D.h"
 
@@ -30,10 +30,16 @@ void Mud::Start()
 {
 	//Mud_ = CreateRenderer("Mud_0.bmp");
 	Mud_ = CreateRenderer();
-	Mud_->CreateAnimation("Mud_IdleLeft.bmp", "Mud_IdleLeft", 0, 3, 0.2f, true);
-	Mud_->CreateAnimation("Mud_IdleRight.bmp", "Mud_IdleRight", 0, 3, 0.2f, true);
-	Mud_->CreateAnimation("Mud_Dead.bmp", "Mud_Dead", 0, 27, 0.05f, false);
+	//Mud_->CreateAnimation("Mud_IdleLeft.bmp", "Mud_IdleLeft", 0, 3, 0.2f, true);
+	//Mud_->CreateAnimation("Mud_IdleRight.bmp", "Mud_IdleRight", 0, 3, 0.2f, true);
+	//Mud_->CreateAnimation("Mud_Dead.bmp", "Mud_Dead", 0, 27, 0.05f, false);
+	//Mud_->ChangeAnimation("Mud_IdleRight");
+
+	Mud_->CreateFolderAnimationTimeKey("Mud_IdleLeft.bmp", "Mud_IdleLeft", static_cast<int>(TIME_GROUP::MONSTER), 0, 3, 0.2f, true);
+	Mud_->CreateFolderAnimationTimeKey("Mud_IdleRight.bmp", "Mud_IdleRight", static_cast<int>(TIME_GROUP::MONSTER), 0, 3, 0.2f, true);
+	Mud_->CreateFolderAnimationTimeKey("Mud_Dead.bmp", "Mud_Dead", static_cast<int>(TIME_GROUP::MONSTER), 0, 27, 0.05f, true);
 	Mud_->ChangeAnimation("Mud_IdleRight");
+
 	SetScale({ 100, 100 });
 
 	MudCol_ = CreateCollision("Monster", { 30, 30 });
@@ -49,15 +55,21 @@ void Mud::Start()
 	Hp_BarSize_ = Hp_BarRed_->GetScale();
 
 	Counter1_.SetCount(1.0f);
+
+
 }
 
 void Mud::Update()
 {
+	Hit();
+	BlockOther();
+
+	float DeltaTime = GameEngineTime::GetDeltaTime(static_cast<int>(TIME_GROUP::MONSTER));
 	if (Hp_ <= 0)
 	{
 		Mud_->ChangeAnimation("Mud_Dead");
 
-		if (true == Counter1_.Start(GameEngineTime::GetDeltaTime()))
+		if (true == Counter1_.Start(DeltaTime))
 		{
 			ExpGem* Gem = GetLevel()->CreateActor<ExpGem>(static_cast<int>(ACTOR_ORDER::ITEM), "ExpGem");
 			Gem->SetType(GemType::BLUE);
@@ -71,9 +83,8 @@ void Mud::Update()
 	float4 EnemyPos = GetPosition();
 	float4 DestDir = Vector2D::GetDirection(EnemyPos, PlayerPos_);
 
-	Hit();
 
-	SetMove((DestDir + KnockBackDir_) * GameEngineTime::GetDeltaTime() * Speed_);
+	SetMove((DestDir + KnockBackDir_) * GameEngineTime::GetDeltaTime(static_cast<int>(TIME_GROUP::MONSTER)) * Speed_);
 
 	if (0 >= DestDir.x)
 	{
@@ -84,7 +95,6 @@ void Mud::Update()
 		Mud_->ChangeAnimation("Mud_IdleRight");
 	}
 
-	BlockOther();
 
 }
 

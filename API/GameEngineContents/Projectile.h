@@ -1,6 +1,7 @@
 #pragma once
 #include <GameEngine/GameEngineActor.h>
 #include <vector>
+#include <GameEngineBase/GameEngineSound.h>
 
 enum class BulletType
 {
@@ -64,5 +65,9 @@ private:
 	float4 ShootDir_;
 	float4 ProjVec_;
 	int Damage_;
+
+	// 총알 지속시간
+	float Duration_;
+
 };
 

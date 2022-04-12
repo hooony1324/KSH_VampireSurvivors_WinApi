@@ -207,6 +207,10 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="LevelUpUI.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="Library.h">
       <SubType>
       </SubType>
@@ -215,7 +219,11 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="ObjectOrder.h" />
+    <ClInclude Include="ObjectEnum.h" />
+    <ClInclude Include="PauseUI.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="Player.h">
       <SubType>
       </SubType>
@@ -330,6 +338,10 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="LevelUpUI.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="Library.cpp">
       <SubType>
       </SubType>
@@ -338,11 +350,15 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="PauseUI.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="Player.cpp">
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="Player_Stat.cpp" />
+    <ClCompile Include="Player_State.cpp" />
     <ClCompile Include="PlayLevel.cpp">
       <SubType>
       </SubType>

@@ -17,3 +17,11 @@ enum class RENDER_ORDER
 	MONSTER,
 	UI
 };
+
+enum class TIME_GROUP
+{
+	PLAYER,
+	MONSTER,
+	WEAPON,
+	UI,
+};

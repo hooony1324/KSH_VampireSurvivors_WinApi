@@ -9,7 +9,7 @@
 #include <GameEngine/GameEngineRenderer.h>
 #include <GameEngine/GameEngineCollision.h>
 
-// ÃÑ¾Ë
+
 #include <GameEngine/GameEngineLevel.h>
 #include "Projectile.h"
 

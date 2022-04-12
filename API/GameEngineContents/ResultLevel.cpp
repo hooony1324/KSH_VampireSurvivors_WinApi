@@ -4,7 +4,7 @@
 #include <GameEngine/GameEngine.h>
 #include <GameEngineBase/GameEngineInput.h>
 
-#include "ObjectOrder.h"
+#include "ObjectEnum.h"
 
 ResultLevel::ResultLevel() 
 {

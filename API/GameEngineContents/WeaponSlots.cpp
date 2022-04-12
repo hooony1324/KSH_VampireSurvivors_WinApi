@@ -16,9 +16,11 @@ WeaponSlots::~WeaponSlots()
 void WeaponSlots::Start()
 {
 	GameEngineRenderer* Slot = CreateRenderer("WeaponSlots.bmp");
-	SetPosition(Slot->GetScale().Half() + float4{ 0, 31 });
+	SetPosition(Slot->GetScale().Half() + float4{ 0, 35 });
 	SetScale(Slot->GetScale());
 	Slot->CameraEffectOff();
+	Slot->SetTransColor(RGB(0, 0, 0));
+	Slot->SetAlpha(100);
 }
 
 void WeaponSlots::Update()

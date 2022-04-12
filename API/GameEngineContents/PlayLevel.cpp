@@ -6,7 +6,7 @@
 #include <GameEngine/GameEngineActor.h>
 #include <GameEngine/GameEngineCollision.h>
 
-#include "ObjectOrder.h"
+#include "ObjectEnum.h"
 
 #include "ExpBar.h"
 #include "WeaponSlots.h"
@@ -49,9 +49,15 @@ void PlayLevel::Loading()
 // 맵, 캐릭터, .. 가 선택 되면 해당하는 맵으로 액터를 생성해야 함
 void PlayLevel::LevelChangeStart()
 {	
+	// 시간 설정
+	GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::MONSTER), 1.0f);
+	GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::PLAYER), 1.0f);
+	GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::WEAPON), 1.0f);
+
 	// 맵
 	CreateMap();	
 
+	// 몬스터
 	AllEnemy_.reserve(7); // 1화면에 최대100마리정도(예상)
 	for (int i = 0; i < 5; i++)
 	{
@@ -66,12 +72,14 @@ void PlayLevel::LevelChangeStart()
 		Enemy_->SetPosition(float4{ 1100, i * 40 + 600.0f });
 		AllEnemy_.push_back(Enemy_);
 	}
-
-	Player_ = CreateActor<Player>(static_cast<int>(RENDER_ORDER::PLAYER), "Player");
-	PlayerAttackRange_ = Player_->CreateCollision("PlayerAttackRange", { 600, 600 });
-	PlayerAttackRange_->Off(); // 디버그시 안보이게
-
+	
 	EnemyController_ = CreateActor<EnemyController>(static_cast<int>(RENDER_ORDER::MONSTER), "EnemyController");
+
+	// 플레이어
+	Player_ = CreateActor<Player>(static_cast<int>(RENDER_ORDER::PLAYER), "Player");
+	/*PlayerAttackRange_ = Player_->CreateCollision("PlayerAttackRange", { 600, 600 });
+	PlayerAttackRange_->Off(); */
+
 
 	// UI
 	ExpUI_ = CreateActor<ExpBar>(static_cast<int>(RENDER_ORDER::UI), "UI");
@@ -80,7 +88,6 @@ void PlayLevel::LevelChangeStart()
 	CoinUI_ = CreateActor<CoinUI>(static_cast<int>(RENDER_ORDER::UI), "UI");
 	LevelUI_ = CreateActor<LevelUI>(static_cast<int>(RENDER_ORDER::UI), "UI");
 	KillCountUI_ = CreateActor<KillCountUI>(static_cast<int>(RENDER_ORDER::UI), "UI");
-
 
 	// 슈터
 	ShootAble_ = false;
@@ -127,6 +134,7 @@ void PlayLevel::LevelChangeEnd()
 
 void PlayLevel::Update()
 {
+	// Key Check
 	if (true == GameEngineInput::GetInst()->IsDown("ChangeLevelNext"))
 	{
 		GameEngine::GetInst().ChangeLevel("Result");
@@ -137,12 +145,43 @@ void PlayLevel::Update()
 		ShootAble_ = true;
 	}
 
+	if (true == GameEngineInput::GetInst()->IsDown("Esc"))
+	{
+		if (false == GamePause_)
+		{
+			GamePause_ = true;
+		}
+		else
+		{
+			GamePause_ = false;
+		}
+	}
 
-	ShooterUpdate();
+
+	GamePause();
+
+
+	//ShooterUpdate();
 
 
 	EnemyController_->SetPosition(Player_->GetPosition());
 	InfiniteMap();
+}
+
+void PlayLevel::GamePause()
+{
+	if (true == GamePause_)
+	{
+		GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::MONSTER), 0.0f);
+		GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::PLAYER), 0.0f);
+		GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::WEAPON), 0.0f);
+	}
+	else
+	{
+		GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::MONSTER), 1.0f);
+		GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::PLAYER), 1.0f);
+		GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::WEAPON), 1.0f);
+	}
 }
 
 void PlayLevel::CreateMap()

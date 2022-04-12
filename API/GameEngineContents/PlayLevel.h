@@ -48,9 +48,16 @@ private:
 	GameEngineActor* CoinUI_;
 	GameEngineActor* LevelUI_;
 	GameEngineActor* KillCountUI_;
+	GameEngineActor* PauseUI_;
+	GameEngineActor* LevelUpUI_;
 
-	
+	bool GamePause_ = false;
+
 private:
+
+	// Game
+	void GamePause();
+
 	// Map
 	void CreateMap();
 	void InfiniteMap();

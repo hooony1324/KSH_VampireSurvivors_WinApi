@@ -10,13 +10,13 @@
 #include <GameEngine/GameEngineCollision.h>
 #include <GameEngine/GameEngineLevel.h>
 
-#include "ObjectOrder.h"
+#include "ObjectEnum.h"
 #include "Character.h"
 
 #include "GameInfo.h"
 
 #include "Vector2D.h"
-#include "Projectile.h"
+#include "ProjectileShooter.h"
 #include "ExpGem.h"
 
 
@@ -37,6 +37,7 @@ Player::~Player()
 {
 }
 
+
 void Player::Start()
 {
 	SetPosition({ 1000, 700 });
@@ -54,7 +55,7 @@ void Player::Start()
 	PlayerRenderer_->CreateAnimation(CharacterStat_->WalkLeftAnim_, "Walk_Left", 0, 3, 0.12f, true);
 	PlayerRenderer_->ChangeAnimation("Idle_Right"); 
 
-	// 처음에는 Character의 스탯을 따름
+	// 처음에는 선택된 Character의 스탯을 따름
 	// 이동속도, 체력
 	Speed_ = CharacterStat_->Speed_;
 
@@ -66,18 +67,33 @@ void Player::Start()
 
 	// 충돌
 	PlayerCol_ = CreateCollision("Player", { 40, 40 });
+	PlayerShootRange_ = CreateCollision("PlayerShootRange", { 600, 600 });
+	PlayerShootRange_->Off(); // 디버그시 안보이게
+
+	// 슈팅
+	Shooter1_ = GetLevel()->CreateActor<ProjectileShooter>(static_cast<int>(RENDER_ORDER::PLAYER), "Shooter");
+	Shooter1_->InitShooter(BulletType::FLAME_BLUE, 5, 0.2f, 2);
 }
 
 void Player::Update()
 {
-	SetGameInfo();
-	
+	// 일시정지
+	if (0.5f > GameEngineTime::GetInst()->GetTimeScale(static_cast<int>(TIME_GROUP::PLAYER)))
+	{
+		return;
+	}
 
-	MonsterAttPlayer();
+	// 게임정보 업데이트
+	SetGameInfo();
+
+	// 충돌체크
 	AllCollisionCheck();
 
+	// 플레이어
 	PlayerMove();
+	Shooting();
 
+	// 카메라
 	GetLevel()->SetCameraPos(PlayerPos_ - GameEngineWindow::GetScale().Half());
 }
 
@@ -90,13 +106,13 @@ void Player::Render()
 
 void Player::SetGameInfo()
 {
-	GameInfo::GetPlayerInfo()->PlayerPos_ = GetPosition();
+	PlayerPos_ = GetPosition();
+	GameInfo::GetPlayerInfo()->PlayerPos_ = PlayerPos_;
+
 }
 
 void Player::PlayerMove()
 {
-	PlayerPos_ = GetPosition();
-
 	MoveDir_ = float4::ZERO;
 
 	bool MoveLeft = GameEngineInput::GetInst()->IsPress("MoveLeft");
@@ -204,7 +220,17 @@ void Player::Attacked(int _Damage)
 	}
 }
 
-void Player::MonsterAttPlayer()
+
+void Player::AllCollisionCheck()
+{
+	MonsterAttackCheck();
+	ExpGemCheck();
+
+
+
+}
+
+void Player::MonsterAttackCheck()
 {
 	bool BumpMonster = false;
 	if (nullptr != PlayerCol_)
@@ -217,9 +243,9 @@ void Player::MonsterAttPlayer()
 		Attacked(10);
 	}
 
-
 	if (false == Hitable_)
 		InvincibleTime_ -= GameEngineTime::GetDeltaTime();
+
 	if (0 >= InvincibleTime_)
 	{
 		Hitable_ = true;
@@ -227,9 +253,8 @@ void Player::MonsterAttPlayer()
 	}
 }
 
-void Player::AllCollisionCheck()
+void Player::ExpGemCheck()
 {
-	// exp 증가
 	std::vector<GameEngineCollision*> Result;
 	if (true == PlayerCol_->CollisionResult("ExpGem", Result, CollisionType::Rect, CollisionType::Rect))
 	{
@@ -240,6 +265,27 @@ void Player::AllCollisionCheck()
 
 		GemPtr->Death();
 	}
+}
+
+float4 Player::ShootableEnemeyCheck()
+{
+	if (true == PlayerShootRange_->CollisionResult("Monster", ShootableEnemy_, CollisionType::Rect, CollisionType::Rect))
+	{
+		float4 MonsterPos = ShootableEnemy_[0]->GetCollisionPos();
+		ShootableEnemy_.clear();
+
+		return MonsterPos;
+	}
+
+	// 몬스터가 없다면 랜덤 방향
+	return GetPosition() + float4::RIGHT;
+}
+
+void Player::Shooting()
+{
+	float4 MonsterPos = ShootableEnemeyCheck();
+	Shooter1_->Shooting(GameEngineTime::GetDeltaTime(static_cast<int>(TIME_GROUP::WEAPON)), PlayerPos_, MonsterPos);
 
 }
+
 
