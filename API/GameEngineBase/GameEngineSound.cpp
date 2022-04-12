@@ -74,7 +74,7 @@ GameEngineSoundPlayer GameEngineSound::SoundPlayControl(const std::string& _Name
 	return GameEngineSoundPlayer(FindSound, PlayControl);
 }
 
-void GameEngineSound::SoundPlayOneShot(const std::string& _Name)
+void GameEngineSound::SoundPlayOneShot(const std::string& _Name, int LoopCount /*= 1*/)
 {
 	std::string UpperName = GameEngineString::ToUpperReturn(_Name);
 
@@ -86,7 +86,14 @@ void GameEngineSound::SoundPlayOneShot(const std::string& _Name)
 		return;
 	}
 
-	SoundSystem_->playSound(FindSound->Sound, nullptr, false, nullptr);
+	FMOD::Channel* PlayControl = nullptr;
+
+	SoundSystem_->playSound(FindSound->Sound, nullptr, false, &PlayControl);
+
+	PlayControl->setLoopCount(LoopCount);
+
+
+
 }
 
 void GameEngineSound::Update()

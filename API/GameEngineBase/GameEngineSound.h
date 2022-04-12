@@ -30,7 +30,7 @@ public:
 	// 그냥 사운드 재생1회 절대로 멈추거나 이런건 못합니다.
 	static GameEngineSoundPlayer SoundPlayControl(const std::string& _Name);
 
-	static void SoundPlayOneShot(const std::string& _Name);
+	static void SoundPlayOneShot(const std::string& _Name, int LoopCount = 0);
 	static void Update();
 
 	/// <summary>

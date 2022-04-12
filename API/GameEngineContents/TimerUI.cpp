@@ -34,26 +34,26 @@ void TimerUI::InitNumbers()
 	// Digit4 Digit3 : Digit2 Digit1
 	Digit4_ = GetLevel()->CreateActor<Timer>(static_cast<int>(ACTOR_ORDER::UI), "Timer");
 	Digit4_->SetTimer(3600, 9);
-	Digit4_->SetScale({ 30, 30 });
+	Digit4_->SetScale({ 20, 30 });
 	Digit4_->SetPosition(TimerUIPos_ + float4{-45, 0});
 
 	Digit3_ = GetLevel()->CreateActor<Timer>(static_cast<int>(ACTOR_ORDER::UI), "Timer");
 	Digit3_->SetTimer(60, 9);
-	Digit3_->SetScale({ 30, 30 });
+	Digit3_->SetScale({ 20, 30 });
 	Digit3_->SetPosition(TimerUIPos_ + float4{ -20, 0 });
 
 	Colone_ = CreateRenderer("Colone.bmp", static_cast<int>(RENDER_ORDER::UI));
-	Colone_->SetScale({ 30, 30 });
+	Colone_->SetScale({ 20, 30 });
 	Colone_->CameraEffectOff();
 
 	Digit2_ = GetLevel()->CreateActor<Timer>(static_cast<int>(ACTOR_ORDER::UI), "Timer");
 	Digit2_->SetTimer(10, 5);
-	Digit2_->SetScale({ 30, 30 });
+	Digit2_->SetScale({ 20, 30 });
 	Digit2_->SetPosition(TimerUIPos_ + float4{ 25, 0 });
 
 	Digit1_ = GetLevel()->CreateActor<Timer>(static_cast<int>(ACTOR_ORDER::UI), "Timer");
 	Digit1_->SetTimer(1, 9);
-	Digit1_->SetScale({ 30, 30 });
+	Digit1_->SetScale({ 20, 30 });
 	Digit1_->SetPosition(TimerUIPos_ + float4{ 50, 0 });
 
 }

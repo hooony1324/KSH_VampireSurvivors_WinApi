@@ -83,6 +83,7 @@ void PlayLevel::LevelChangeStart()
 
 
 	// Ω¥≈Õ
+	ShootAble_ = false;
 	Shooter1_ = CreateActor<ProjectileShooter>(static_cast<int>(RENDER_ORDER::PLAYER), "Shooter");
 	Shooter1_->InitShooter(BulletType::FLAME_BLUE, 5, 0.2f, 2);
 

@@ -49,7 +49,6 @@ public:
 	}
 
 	// 렌더러 스케일과 이미지 스케일을 같이 맞춰줌, SetImage()에서 호출하여 사용한다.
-	void SetImageScale();
 
 	inline void SetScale(const float4& _Scale)
 	{
@@ -62,14 +61,30 @@ public:
 		return RenderScale_;
 	}
 
+	inline float4 GetImagePivot()
+	{
+		return RenderImagePivot_;
+	}
+
+	inline float4 GetImageScale()
+	{
+		return RenderImageScale_;
+	}
+
 	inline GameEngineImage* GetImage()
 	{
 		return Image_;
 	}
 
-	void SetImage(const std::string& _Name);
+	inline void SetAlpha(unsigned int _Alpha)
+	{
+		Alpha_ = _Alpha;
 
-	void SetIndex(size_t _Index, float4 _Scale = { -1.0f, -1.0f });
+		if (Alpha_ >= 255)
+		{
+			Alpha_ = 255;
+		}
+	}
 
 	void CameraEffectOff()
 	{
@@ -81,6 +96,12 @@ public:
 		IsCameraEffect_ = true;
 	}
 
+	void SetImageScale();
+
+	void SetImage(const std::string& _Name);
+
+	void SetIndex(size_t _Index, float4 _Scale = { -1.0f, -1.0f });
+
 	void SetOrder(int _Order) override;
 
 protected:
@@ -90,7 +111,7 @@ protected:
 private:
 	friend class FrameAnimation;
 
-	GameEngineImage* Image_;	
+	GameEngineImage* Image_;
 	RenderPivot PivotType_;		// 센터 bot 등, 이미지 어느곳을 중심으로 출력할것인가
 	RenderScaleMode ScaleMode_;	// ENUM(Image, User), 엔진이 정의해준 기본값으로 쓸것인가, 프로그래머가 정의한 USER값으로 쓸것인가.
 
@@ -103,6 +124,8 @@ private:
 	float4 RenderImageScale_;	// 복사받으려는 이미지 한칸의 크기
 
 	unsigned int TransColor_;	// TransParents 에서 쓸 제외할 RGB 값
+	unsigned int Alpha_;
+
 
 	bool IsCameraEffect_;		// 해당 렌더러가 카메라의 영향을 받는가 안받는가, EX) UI 는 카메라의 영향을 안받는다.
 
@@ -128,7 +151,7 @@ private:
 
 	public:
 		FrameAnimation()
-			:	Image_(nullptr),
+			: Image_(nullptr),
 			CurrentFrame_(-1),
 			StartFrame_(-1),
 			EndFrame_(-1),

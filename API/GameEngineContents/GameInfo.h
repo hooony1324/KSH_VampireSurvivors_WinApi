@@ -17,7 +17,7 @@ public:
 
 		float MaxExp_;
 		float CurrentExp_;
-		int PlayerLevel_;
+		int	Level_;
 
 		int SurvivalTime_;
 		int EearnedGold_;
@@ -41,6 +41,9 @@ public:
 		float Greed_;			// µ· È¹µæ½Ã Ãß°¡ µ·
 		float Magnet_;			// ¾ÆÀÌÅÛ È¹µæ ¹üÀ§
 		int	Revival_;			// ºÎÈ° È½¼ö
+
+		// ¹«±â Á¤º¸
+
 	};
 
 public:

@@ -1,7 +1,9 @@
 #pragma once
 #include <GameEngine/GameEngineActor.h>
+#include <vector>
 
 // Ό³Έν :
+class GameEngineRenderer;
 class LevelUI : public GameEngineActor
 {
 public:
@@ -22,6 +24,11 @@ protected:
 	void Render() override;
 
 private:
+	std::vector<GameEngineRenderer*> Numbers_;
+	GameEngineRenderer* Number1_;
+	GameEngineRenderer* Number2_;
+	GameEngineRenderer* Number3_;
+
 
 };
 

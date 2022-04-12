@@ -4,13 +4,13 @@
 #include <Windows.h>
 #include <vector>
 
-// 설명 :
+// 설명 : 
 class GameEngineImage : public GameEngineNameObject
 {
 public:
 	// constrcuter destructer
 	GameEngineImage();
-	virtual ~GameEngineImage();
+	~GameEngineImage();
 
 	// delete Function
 	GameEngineImage(const GameEngineImage& _Other) = delete;
@@ -20,8 +20,11 @@ public:
 
 	bool Create(float4 _Scale);
 	bool Create(HDC _DC);
+
 	bool Load(const std::string& _Path);
-	
+
+
+	// Bitmap Scale
 	inline float4 GetScale()
 	{
 		return float4(static_cast<float>(Info_.bmWidth), static_cast<float>(Info_.bmHeight));
@@ -32,18 +35,25 @@ public:
 		return ImageDC_;
 	}
 
-	// BitBlt
+	// 가장 근본
+	void BitCopy(GameEngineImage* _Other, const float4& _CopyPos,
+		const float4& _CopyScale,
+		const float4& _OtherPivot);
 	void BitCopy(GameEngineImage* _Other);
 	void BitCopy(GameEngineImage* _Other, const float4& _CopyPos);
 	void BitCopyCenter(GameEngineImage* _Other, const float4& _CopyPos);
 	void BitCopyCenterPivot(GameEngineImage* _Other, const float4& _CopyPos, const float4& _CopyPivot);
 	void BitCopyBot(GameEngineImage* _Other, const float4& _CopyPos);
 	void BitCopyBotPivot(GameEngineImage* _Other, const float4& _CopyPos, const float4& _CopyPivot);
-	void BitCopy(GameEngineImage* _Other, const float4& _CopyPos, 
-		const float4& _OtherPivot, const float4& _OtherPivotScale);
 
-	// Trans
+
+
+	// Trans 이걸로 통일
 	void TransCopy(GameEngineImage* _Other, const float4& _CopyPos,
+		const float4& _CopyScale,
+		const float4& _OtherPivot, const float4& _OtherScale, unsigned int _TransColor);
+
+	void AlphaCopy(GameEngineImage* _Other, const float4& _CopyPos,
 		const float4& _CopyScale,
 		const float4& _OtherPivot, const float4& _OtherScale, unsigned int _TransColor);
 
@@ -66,7 +76,7 @@ public:
 		return CutPivot_[_Index];
 	}
 
-	float4 GetCutScale(size_t _Index)
+	inline float4 GetCutScale(size_t _Index)
 	{
 		return CutScale_[_Index];
 	}
@@ -86,14 +96,16 @@ public:
 
 protected:
 
+
 private:
 	HDC ImageDC_;
-	HBITMAP BitMap_;	
+	HBITMAP BitMap_;
 	HBITMAP OldBitMap_;
-	BITMAP Info_;			// 현재 비트맵의 사이즈
+	BITMAP Info_;
 
 	std::vector<float4> CutPivot_;
 	std::vector<float4> CutScale_;
+
 
 	void ImageScaleCheck();
 };
