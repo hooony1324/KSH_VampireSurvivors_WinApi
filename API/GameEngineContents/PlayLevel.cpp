@@ -15,6 +15,7 @@
 #include "LevelUI.h"
 #include "KillCountUI.h"
 #include "PauseUI.h"
+#include "StatUI.h"
 
 #include "Player.h"
 #include "Library.h"
@@ -91,6 +92,7 @@ void PlayLevel::LevelChangeStart()
 	KillCountUI_ = CreateActor<KillCountUI>(static_cast<int>(RENDER_ORDER::UI), "UI");
 
 	PauseUI_ = CreateActor<PauseUI>(static_cast<int>(RENDER_ORDER::UI), "UI");
+	StatUI_ = CreateActor<StatUI>(static_cast<int>(RENDER_ORDER::UI), "UI");
 
 	//BgmPlayer = GameEngineSound::SoundPlayControl("bgm_elrond_library.MP3");
 
@@ -159,6 +161,7 @@ void PlayLevel::GamePause()
 		GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::WEAPON), 0.0f);
 		GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::TIMER), 0.0f);
 		PauseUI_->On();
+		StatUI_->On();
 	}
 	else
 	{
@@ -167,6 +170,7 @@ void PlayLevel::GamePause()
 		GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::WEAPON), 1.0f);
 		GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::TIMER), 1.0f);
 		PauseUI_->Off();
+		StatUI_->Off();
 	}
 }
 

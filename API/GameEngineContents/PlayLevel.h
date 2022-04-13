@@ -50,7 +50,7 @@ private:
 	GameEngineActor* KillCountUI_;
 	GameEngineActor* PauseUI_;
 	GameEngineActor* LevelUpUI_;
-
+	GameEngineActor* StatUI_;
 	bool GamePause_ = false;
 
 private:
