@@ -96,6 +96,26 @@ public:
 		IsCameraEffect_ = true;
 	}
 
+	void SetPause(bool _Value)
+	{
+		Pause_ = _Value;
+	}
+
+	void PauseOn()
+	{
+		Pause_ = true;
+	}
+
+	void PauseOff()
+	{
+		Pause_ = false;
+	}
+
+	void PauseSwitch()
+	{
+		Pause_ = !Pause_;
+	}
+
 	void SetImageScale();
 
 	void SetImage(const std::string& _Name);
@@ -103,6 +123,7 @@ public:
 	void SetIndex(size_t _Index, float4 _Scale = { -1.0f, -1.0f });
 
 	void SetOrder(int _Order) override;
+
 
 protected:
 	// EngineImage의 TransCopy 로 이미지를 백버퍼에 그린다.
@@ -128,6 +149,8 @@ private:
 
 
 	bool IsCameraEffect_;		// 해당 렌더러가 카메라의 영향을 받는가 안받는가, EX) UI 는 카메라의 영향을 안받는다.
+	bool Pause_;
+
 
 	//////////////////////////////////////////////////
 	//// Animation
@@ -135,7 +158,11 @@ private:
 private:
 	class FrameAnimation : public GameEngineNameObject
 	{
-	public:
+	private:
+		friend GameEngineRenderer;
+		//friend std::map<std::string, FrameAnimation>;
+		//friend std::pair<std::string, FrameAnimation>;
+
 		GameEngineRenderer* Renderer_;
 		GameEngineImage* Image_;
 		GameEngineFolderImage* FolderImage_;
@@ -150,15 +177,40 @@ private:
 		bool IsEnd;
 
 	public:
+		inline int WorldCurrentFrame() const
+		{
+			return CurrentFrame_;
+		}
+
+		inline int WorldStartFrame() const
+		{
+			return StartFrame_;
+		}
+
+		inline int WorldEndFrame() const
+		{
+			return EndFrame_;
+		}
+
+		inline int LocalCurrentFrame() const
+		{
+			return StartFrame_ - CurrentFrame_;
+		}
+
+
+	public:
 		FrameAnimation()
 			: Image_(nullptr),
+			Renderer_(nullptr),
+			FolderImage_(nullptr),
+			TimeKey(0),
 			CurrentFrame_(-1),
 			StartFrame_(-1),
 			EndFrame_(-1),
 			CurrentInterTime_(0.1f),
 			InterTime_(0.1f),
 			Loop_(true),
-			TimeKey(0)
+			IsEnd(false)
 		{
 		}
 
@@ -190,6 +242,14 @@ public:
 	bool IsEndAnimation();
 
 	bool IsAnimationName(const std::string& _Name);
+
+	const FrameAnimation* FindAnimation(const std::string& _Name);
+
+	inline const FrameAnimation* CurrentAnimation()
+	{
+		return CurrentAnimation_;
+	}
+
 
 private:
 	std::map<std::string, FrameAnimation> Animations_;

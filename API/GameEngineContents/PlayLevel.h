@@ -75,18 +75,6 @@ private:
 	Player*				Player_;
 	float4				PlayerPos_;
 
-	// Attack
-	GameEngineCollision*				PlayerAttackRange_;
-	std::vector<GameEngineCollision*>	AttackableEnemy_;
-	float4 GetAttackableEnemey();
-
-
-	// Player Shooter(Knife, Flame, Runetracer, ...)
-	void ShooterUpdate();
-	bool				ShootAble_ = false;
-	ProjectileShooter*	Shooter1_;
-
-	// Player MeleeAttack(Whip, Bible, Garlic, ...)
 
 };
 

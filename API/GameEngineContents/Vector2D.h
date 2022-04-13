@@ -17,14 +17,8 @@ public:
 	// A -> B의 벡터반환(크기 1)
 	static float4 GetDirection(float4 _PosA, float4 _PosB)
 	{
-		return Normalized(GetVector(_PosA, _PosB));
-	}
-
-	// 현재 벡터의 1크기 방향 리턴
-	static float4 Normalized(float4 _Vector)
-	{
-		float Ratio = 1 / static_cast<float>(sqrt((pow(_Vector.x, 2) + pow(_Vector.y, 2))));
-		float4 Result = _Vector * Ratio;
+		float4 Result = GetVector(_PosA, _PosB);
+		Result.Normal2D();
 		return Result;
 	}
 

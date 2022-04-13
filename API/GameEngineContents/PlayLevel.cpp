@@ -14,6 +14,7 @@
 #include "CoinUI.h"
 #include "LevelUI.h"
 #include "KillCountUI.h"
+#include "PauseUI.h"
 
 #include "Player.h"
 #include "Library.h"
@@ -89,11 +90,7 @@ void PlayLevel::LevelChangeStart()
 	LevelUI_ = CreateActor<LevelUI>(static_cast<int>(RENDER_ORDER::UI), "UI");
 	KillCountUI_ = CreateActor<KillCountUI>(static_cast<int>(RENDER_ORDER::UI), "UI");
 
-	// Ω¥≈Õ
-	ShootAble_ = false;
-	Shooter1_ = CreateActor<ProjectileShooter>(static_cast<int>(RENDER_ORDER::PLAYER), "Shooter");
-	Shooter1_->InitShooter(BulletType::FLAME_BLUE, 5, 0.2f, 2);
-
+	PauseUI_ = CreateActor<PauseUI>(static_cast<int>(RENDER_ORDER::UI), "UI");
 
 	//BgmPlayer = GameEngineSound::SoundPlayControl("bgm_elrond_library.MP3");
 
@@ -121,15 +118,9 @@ void PlayLevel::LevelChangeEnd()
 	{
 		Enemy->Death();
 	}
-
-
-	AttackableEnemy_.clear();
 	AllEnemy_.clear();
 
-	PlayerAttackRange_->Death();
-	Shooter1_->Death();
-
-
+	PauseUI_->Death();
 }
 
 void PlayLevel::Update()
@@ -140,10 +131,6 @@ void PlayLevel::Update()
 		GameEngine::GetInst().ChangeLevel("Result");
 	}
 
-	if (true == GameEngineInput::GetInst()->IsDown("SpaceBar"))
-	{
-		ShootAble_ = true;
-	}
 
 	if (true == GameEngineInput::GetInst()->IsDown("Esc"))
 	{
@@ -157,12 +144,7 @@ void PlayLevel::Update()
 		}
 	}
 
-
 	GamePause();
-
-
-	//ShooterUpdate();
-
 
 	EnemyController_->SetPosition(Player_->GetPosition());
 	InfiniteMap();
@@ -175,12 +157,14 @@ void PlayLevel::GamePause()
 		GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::MONSTER), 0.0f);
 		GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::PLAYER), 0.0f);
 		GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::WEAPON), 0.0f);
+		PauseUI_->On();
 	}
 	else
 	{
 		GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::MONSTER), 1.0f);
 		GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::PLAYER), 1.0f);
 		GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::WEAPON), 1.0f);
+		PauseUI_->Off();
 	}
 }
 
@@ -198,27 +182,5 @@ void PlayLevel::InfiniteMap()
 	Map_->CheckPlayerOnEnd();
 }
 
-float4 PlayLevel::GetAttackableEnemey()
-{
-	if (true == PlayerAttackRange_->CollisionResult("Monster", AttackableEnemy_, CollisionType::Rect, CollisionType::Rect))
-	{
-		float4 MonsterPos = AttackableEnemy_[0]->GetCollisionPos();
-		AttackableEnemy_.clear();
-
-		return MonsterPos;
-	}
-
-	return Player_->GetPosition() + float4::RIGHT;
-
-}
-
-void PlayLevel::ShooterUpdate()
-{
-	float4 MonsterPos = GetAttackableEnemey();
-	if (true == ShootAble_)
-	{
-		Shooter1_->Shooting(GameEngineTime::GetDeltaTime(), Player_->GetPosition(), MonsterPos);
-	}
-}
 
 

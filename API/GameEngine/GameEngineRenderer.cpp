@@ -252,26 +252,30 @@ void GameEngineRenderer::ChangeAnimation(const std::string& _Name)
 void GameEngineRenderer::FrameAnimation::Update()
 {
 	IsEnd = false;
-	CurrentInterTime_ -= GameEngineTime::GetInst()->GetDeltaTime(TimeKey);
-	if (0 >= CurrentInterTime_)
+	if (false == Renderer_->Pause_)
 	{
-		CurrentInterTime_ = InterTime_;
-		++CurrentFrame_;
-
-		if (EndFrame_ < CurrentFrame_)
+		CurrentInterTime_ -= GameEngineTime::GetInst()->GetDeltaTime(TimeKey);
+		if (0 >= CurrentInterTime_)
 		{
-			if (true == Loop_)
+			CurrentInterTime_ = InterTime_;
+			++CurrentFrame_;
+
+			if (EndFrame_ < CurrentFrame_)
 			{
-				IsEnd = true;
-				CurrentFrame_ = StartFrame_;	// Loop가 True라면 이미지를 반복시킨다.
-			}
-			else
-			{
-				IsEnd = true;
-				CurrentFrame_ = EndFrame_;		// Loop가 false라면 애니메이션 진행후 EndFrame으로 고정시킨다.
+				if (true == Loop_)
+				{
+					IsEnd = true;
+					CurrentFrame_ = StartFrame_;	// Loop가 True라면 이미지를 반복시킨다.
+				}
+				else
+				{
+					IsEnd = true;
+					CurrentFrame_ = EndFrame_;		// Loop가 false라면 애니메이션 진행후 EndFrame으로 고정시킨다.
+				}
 			}
 		}
 	}
+
 
 	if (nullptr != Image_)
 	{
@@ -314,4 +318,16 @@ bool GameEngineRenderer::IsEndAnimation()
 bool GameEngineRenderer::IsAnimationName(const std::string& _Name)
 {
 	return CurrentAnimation_->GetNameConstRef() == _Name;
+}
+
+const GameEngineRenderer::FrameAnimation* GameEngineRenderer::FindAnimation(const std::string& _Name)
+{
+	std::map<std::string, FrameAnimation>::iterator FindIter = Animations_.find(_Name);
+
+	if (Animations_.end() == FindIter)
+	{
+		return nullptr;
+	}
+
+	return &FindIter->second;
 }

@@ -17,24 +17,14 @@ Projectile::Projectile()
 	, ShootDir_(float4::ZERO)
 	, ProjVec_(float4::ZERO)
 	, Damage_(10)
-	, Duration_(5)
+	, Duration_(5)	// 지속시간
 {
 }
 
 Projectile::~Projectile() 
 {
-	ProjImage_->Death();
-	ProjCol_->Death();
+
 }
-
-void Projectile::SetType(BulletType _BT)
-{
-	ProjImage_ = CreateRenderer(ProjectileList[static_cast<int>(_BT)]);
-	ProjCol_ = CreateCollision("Bullet", ProjImage_->GetScale());
-	
-}
-
-
 
 void Projectile::Start()
 {
@@ -50,6 +40,9 @@ void Projectile::Update()
 	SetMove(ShootDir_ * DeltaTime * 300.0f);
 	Duration_ -= DeltaTime;
 
+	// 레벨 변경시 죽음
+
+
 	if (0.05f > Duration_)
 	{
 		Death();
@@ -59,4 +52,25 @@ void Projectile::Update()
 void Projectile::Render()
 {
 	Vector2D::DebugVectorRender(this);
+}
+
+
+void Projectile::SetType(BulletType _BT)
+{
+	ProjImage_ = CreateRenderer(ProjectileList[static_cast<int>(_BT)]);
+	ProjCol_ = CreateCollision("Bullet", ProjImage_->GetScale());
+
+	switch (_BT)
+	{
+	case BulletType::SWORD:
+		break;
+
+	case BulletType::FLAME_BLUE:
+		break;
+
+	case BulletType::FLAME_RED:
+		break;
+
+	}
+
 }
