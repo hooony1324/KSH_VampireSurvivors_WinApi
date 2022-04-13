@@ -18,6 +18,7 @@ void LevelUpUI::Start()
 
 void LevelUpUI::Update()
 {
+
 }
 
 void LevelUpUI::Render()

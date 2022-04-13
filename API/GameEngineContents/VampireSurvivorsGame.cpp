@@ -54,8 +54,15 @@ void VampireSurvivorsGame::GameInit()
 		GameEngineInput::GetInst()->CreateKey("VolumeDown", VK_DOWN);
 
 		// »èÁ¦ÇØµµ µÊ
-		GameEngineInput::GetInst()->CreateKey("KillPlayer", 'K');
+		GameEngineInput::GetInst()->CreateKey("KillPlayer", 'V');
 		GameEngineInput::GetInst()->CreateKey("PlayerDamaged", 'P');
+
+		GameEngineInput::GetInst()->CreateKey("LevelUp", 'L');
+		GameEngineInput::GetInst()->CreateKey("Num1", '1');
+		GameEngineInput::GetInst()->CreateKey("Num2", '2');
+		GameEngineInput::GetInst()->CreateKey("Num3", '3');
+		GameEngineInput::GetInst()->CreateKey("Num4", '4');
+
 
 	}
 

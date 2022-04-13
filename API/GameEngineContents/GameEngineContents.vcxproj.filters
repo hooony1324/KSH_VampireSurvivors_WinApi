@@ -98,6 +98,9 @@
     <ClCompile Include="LevelUpUI.cpp">
       <Filter>2.Play\UI</Filter>
     </ClCompile>
+    <ClCompile Include="StatUI.cpp">
+      <Filter>2.Play\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="VampireSurvivorsGame.h" />
@@ -195,6 +198,9 @@
       <Filter>2.Play\UI</Filter>
     </ClInclude>
     <ClInclude Include="LevelUpUI.h">
+      <Filter>2.Play\UI</Filter>
+    </ClInclude>
+    <ClInclude Include="StatUI.h">
       <Filter>2.Play\UI</Filter>
     </ClInclude>
   </ItemGroup>
