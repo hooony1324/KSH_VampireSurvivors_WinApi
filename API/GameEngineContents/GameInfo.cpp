@@ -30,7 +30,7 @@ void GameInfo::SetPlayerInfo()
 	PlayerInfo_->SurvivalTime_ = 0;
 
 	// È¹µæ °ñµå
-	PlayerInfo_->EearnedGold_ = 0;
+	PlayerInfo_->EearnedCoin_ = 0;
 
 	// Àû Ã³¸® ¼ö
 	PlayerInfo_->KillCount_ = 0;

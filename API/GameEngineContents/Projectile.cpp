@@ -31,7 +31,9 @@ void Projectile::Start()
 	SetScale({ 20, 20 });
 	ShootDir_ = float4::RIGHT;
 	Damage_ = 10;
-	GameEngineSound::SoundPlayOneShot("ProjectileMagic.MP3", 0);
+
+	// 발사 효과음
+	//GameEngineSound::SoundPlayOneShot("ProjectileMagic.MP3", 0);
 }
 
 void Projectile::Update()

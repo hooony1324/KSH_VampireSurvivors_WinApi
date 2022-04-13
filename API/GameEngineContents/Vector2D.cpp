@@ -7,7 +7,6 @@
 
 void Vector2D::DebugVectorRender(GameEngineActor* _Actor)
 {
-
 	HDC hdc = GameEngine::GetInst().BackBufferDC();
 	TCHAR Buffer[30] = "";
 	sprintf_s(Buffer, "Pos { %d, %d } ", _Actor->GetPosition().ix(), _Actor->GetPosition().iy());

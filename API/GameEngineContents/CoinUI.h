@@ -1,7 +1,9 @@
 #pragma once
+#include <Windows.h>
 #include <GameEngine/GameEngineActor.h>
 
 // Ό³Έν :
+class GameEngineRenderer;
 class CoinUI : public GameEngineActor
 {
 public:
@@ -22,6 +24,9 @@ protected:
 	void Render() override;
 
 private:
+	HDC BackBufferDC_;
+	int Coin_;
 
+	GameEngineRenderer* CoinRenderer_;
 };
 

@@ -1,8 +1,10 @@
 #pragma once
+#include <Windows.h>
 #include <GameEngine/GameEngineActor.h>
 #include <vector>
 
 // Ό³Έν :
+
 class GameEngineRenderer;
 class LevelUI : public GameEngineActor
 {
@@ -28,6 +30,9 @@ private:
 	GameEngineRenderer* Number1_;
 	GameEngineRenderer* Number2_;
 	GameEngineRenderer* Number3_;
+
+	int PlayerLevel_;
+	HDC BackBufferDC_;
 
 
 };

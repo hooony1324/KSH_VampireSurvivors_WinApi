@@ -20,7 +20,7 @@ public:
 		int	Level_;
 
 		int SurvivalTime_;
-		int EearnedGold_;
+		int EearnedCoin_;
 		int KillCount_;
 
 		// 패시브 기본 능력치 (체력, 스피드, 공격력, ...)
