@@ -17,6 +17,7 @@ public:
 
 		float MaxExp_;
 		float CurrentExp_;
+		int MaxLevel_;
 		int	Level_;
 
 		int SurvivalTime_;

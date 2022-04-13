@@ -25,7 +25,7 @@ Player::Player()
 	: Hp_BarRed_(nullptr)
 	, PlayerRenderer_(nullptr)
 	, MoveDir_(float4::ZERO)
-	, HeadDir_(-1)
+	, HeadDir_(HeadDir::LEFT)
 	, Hitable_(true)
 	, HitTime_(1.0f)
 {
@@ -113,28 +113,42 @@ void Player::SetGameInfo()
 
 void Player::PlayerMove()
 {
-	MoveDir_ = float4::ZERO;
+	bool StopLeft = GameEngineInput::GetInst()->IsFree("MoveLeft");
+	bool StopRight = GameEngineInput::GetInst()->IsFree("MoveRight");
+	bool StopUp = GameEngineInput::GetInst()->IsFree("MoveUp");
+	bool StopDown = GameEngineInput::GetInst()->IsFree("MoveDown");
 
+	// 움직이고 난 후에 Idle애니메이션
+	if (StopLeft && StopRight && StopUp && StopDown)
+	{
+		if (HeadDir_ == HeadDir::RIGHT)
+		{
+			PlayerRenderer_->ChangeAnimation("Idle_Right");
+		}
+		else if (HeadDir_ == HeadDir::LEFT)
+		{
+			PlayerRenderer_->ChangeAnimation("Idle_Left");
+		}
+
+		return;
+	}
+
+	MoveDir_ = float4::ZERO;
 	bool MoveLeft = GameEngineInput::GetInst()->IsPress("MoveLeft");
 	bool MoveRight = GameEngineInput::GetInst()->IsPress("MoveRight");
 	bool MoveUp = GameEngineInput::GetInst()->IsPress("MoveUp");
 	bool MoveDown = GameEngineInput::GetInst()->IsPress("MoveDown");
 
-	bool StopLeft = GameEngineInput::GetInst()->IsUp("MoveLeft");
-	bool StopRight = GameEngineInput::GetInst()->IsUp("MoveRight");
-	bool StopUp = GameEngineInput::GetInst()->IsUp("MoveUp");
-	bool StopDown = GameEngineInput::GetInst()->IsUp("MoveDown");
-
 	if (MoveLeft)
 	{
 		MoveDir_ += float4::LEFT;
-		HeadDir_ = -1;
+		HeadDir_ = HeadDir::LEFT;
 	}
 
 	if (MoveRight)
 	{
 		MoveDir_ += float4::RIGHT;
-		HeadDir_ = 1;
+		HeadDir_ = HeadDir::RIGHT;
 	}
 
 	if (MoveUp)
@@ -150,29 +164,28 @@ void Player::PlayerMove()
 	MoveDir_.Normal2D();
 
 	// 머리 방향에 따른 Idle애니메이션
-	if (HeadDir_ == -1 && ( MoveDir_.x != 0 || MoveDir_.y != 0))
+	if (HeadDir::LEFT == HeadDir_)
 	{
 		PlayerRenderer_->ChangeAnimation("Walk_Left");
 	}
-	else if (HeadDir_ == 1 && ( MoveDir_.x != 0 || MoveDir_.y != 0 ))
+	else
 	{
 		PlayerRenderer_->ChangeAnimation("Walk_Right");
 	}
 
+
+	//if (HeadDir_ == -1 && (false == MoveDir_.CompareInt2D(float4::ZERO)) )
+	//{
+	//	PlayerRenderer_->ChangeAnimation("Walk_Left");
+	//}
+	//else if (HeadDir_ == 1 && ( MoveDir_.x != 0 || MoveDir_.y != 0 ))
+	//{
+	//	PlayerRenderer_->ChangeAnimation("Walk_Right");
+	//}
+
 	SetMove(MoveDir_ * GameEngineTime::GetDeltaTime() * Speed_);
 
-	// 움직이고 난 후에 Idle애니메이션
-	if (StopLeft || StopRight || StopUp || StopDown)
-	{
-		if (HeadDir_ == 1)
-		{
-			PlayerRenderer_->ChangeAnimation("Idle_Right");
-		}
-		else if (HeadDir_ == -1)
-		{
-			PlayerRenderer_->ChangeAnimation("Idle_Left");
-		}
-	}
+
 
 	// 중력 적용
 	/*AccGravity_ += GameEngineTime::GetDeltaTime() * Gravity_;
@@ -261,10 +274,23 @@ void Player::ExpGemCheck()
 		ExpGem* GemPtr = dynamic_cast<ExpGem*>(Result[0]->GetActor());
 		float Exp = GemPtr->GetExp();
 
-		GameInfo::GetPlayerInfo()->CurrentExp_ += Exp; // 플레이어 레벨 높아지면 획득률 낮아지도록
+		// 플레이어 레벨 높아지면 획득률 낮아지도록
+		float Ratio = 1 - (GameInfo::GetPlayerInfo()->Level_ / GameInfo::GetPlayerInfo()->MaxLevel_) ;
+		Exp *= Ratio;
+
+		GameInfo::GetPlayerInfo()->CurrentExp_ += Exp; 
 
 		GemPtr->Death();
+
+		if (GameInfo::GetPlayerInfo()->CurrentExp_ >= GameInfo::GetPlayerInfo()->MaxExp_)
+		{
+			GameInfo::GetPlayerInfo()->Level_ += 1;
+
+			float RestExp = GameInfo::GetPlayerInfo()->CurrentExp_ - GameInfo::GetPlayerInfo()->MaxExp_;
+			GameInfo::GetPlayerInfo()->CurrentExp_ = RestExp;
+		}
 	}
+
 }
 
 float4 Player::ShootableEnemeyCheck()

@@ -24,6 +24,7 @@ void GameInfo::SetPlayerInfo()
 	// 경험치
 	PlayerInfo_->MaxExp_ = 100;
 	PlayerInfo_->CurrentExp_ = 0;
+	PlayerInfo_->MaxLevel_ = 200;
 	PlayerInfo_->Level_ = 1;
 
 	// 생존시간

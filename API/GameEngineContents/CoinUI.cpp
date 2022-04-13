@@ -22,7 +22,7 @@ void CoinUI::Start()
 
 	BackBufferDC_ = GameEngine::GetInst().BackBufferDC();
 
-	CoinRenderer_ = CreateRenderer("CoinGold.bmp");
+	CoinRenderer_ = CreateRenderer("CoinUI.bmp");
 	CoinRenderer_->CameraEffectOff();
 	CoinRenderer_->SetTransColor(RGB(0, 0, 0));
 	CoinRenderer_->SetPivot({25, 16});

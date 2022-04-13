@@ -6,8 +6,7 @@
 #include <GameEngine/GameEngineRenderer.h>
 #include <GameEngine/GameEngineCollision.h>
 
-float ExpGem::GreenExp_ = 100.0f;
-float ExpGem::BlueExp_ = 20.0f;
+
 float ExpGem::RedExp_ = 100.0f; // ·£´ý°æÇèÄ¡
 
 ExpGem::ExpGem()
@@ -25,7 +24,7 @@ void ExpGem::SetType(GemType _Type)
 		case GemType::GREEN:
 		{
 			Renderer_->SetImage("GemGreen.bmp");
-			Exp_ = 100.0f;
+			Exp_ = 130.0f;
 			break;
 		}
 
@@ -39,7 +38,7 @@ void ExpGem::SetType(GemType _Type)
 		case GemType::RED:
 		{
 			Renderer_->SetImage("GemBlue.bmp");
-			Exp_ = 100.0f;
+			Exp_ = RedExp_;
 			break;
 		}
 	}

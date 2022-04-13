@@ -46,7 +46,7 @@ void Timer::Render()
 
 void Timer::UpdateTimeCount()
 {
-	DeltaTimeCount_ += GameEngineTime::GetDeltaTime();
+	DeltaTimeCount_ += GameEngineTime::GetDeltaTime(static_cast<int>(TIME_GROUP::TIMER));
 	if (1.0f > DeltaTimeCount_)
 	{
 		TimeCount_ += 1;
@@ -80,7 +80,7 @@ void Timer::SetTimer(float _CycleTime, int _EndNumberIndex)
 void Timer::NumberRender()
 {
 	// 1초가 지났을 때 실행되야됨
-	CycleTimeCounter_ -= GameEngineTime::GetDeltaTime();
+	CycleTimeCounter_ -= GameEngineTime::GetDeltaTime(static_cast<int>(TIME_GROUP::TIMER));
 
 	if (CycleTimeCounter_ > 0)
 	{

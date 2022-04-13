@@ -23,5 +23,5 @@ enum class TIME_GROUP
 	PLAYER,
 	MONSTER,
 	WEAPON,
-	UI,
+	TIMER,
 };

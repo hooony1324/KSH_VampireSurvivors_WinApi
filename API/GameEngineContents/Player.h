@@ -31,13 +31,19 @@ private:
 	void Render() override;
 
 private:
+	enum class HeadDir
+	{
+		LEFT,
+		RIGHT
+	};
+
 	void SetGameInfo();
 
 	Character*				CharacterStat_;
 	float4					PlayerPos_;
 	float4					MoveDir_;
 	float4					Hp_BarSize_;
-	int						HeadDir_;
+	HeadDir					HeadDir_;
 	bool					Hitable_; // 플레이어 무적여부
 	float					InvincibleTime_;
 	float					HitTime_;	// 피격시 무적시간
