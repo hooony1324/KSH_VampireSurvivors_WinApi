@@ -2,6 +2,7 @@
 #include "GameEngineActor.h"
 #include "GameEngineCollision.h"
 #include "GameEngineRenderer.h"
+#include <GameEngineBase/GameEngineDebug.h>
 
 
 GameEngineLevel::GameEngineLevel()
@@ -76,6 +77,93 @@ void GameEngineLevel::ActorUpdate()
 	ChangeOrderList.clear();
 }
 
+void GameEngineLevel::ActorLevelChangeStart() {
+
+	{
+		std::map<int, std::list<GameEngineActor*>>::iterator GroupStart;
+		std::map<int, std::list<GameEngineActor*>>::iterator GroupEnd;
+
+		std::list<GameEngineActor*>::iterator StartActor;
+		std::list<GameEngineActor*>::iterator EndActor;
+
+		GroupStart = AllActor_.begin();
+		GroupEnd = AllActor_.end();
+
+		for (; GroupStart != GroupEnd; ++GroupStart)
+		{
+			std::list<GameEngineActor*>& Group = GroupStart->second;
+
+			StartActor = Group.begin();
+			EndActor = Group.end();
+
+
+			for (; StartActor != EndActor; ++StartActor)
+			{
+				if (false == (*StartActor)->IsUpdate())
+				{
+					continue;
+				}
+
+				(*StartActor)->LevelChangeStart();
+			}
+		}
+	}
+}
+
+GameEngineActor* GameEngineLevel::FindActor(const std::string& _Name)
+{
+	std::map<std::string, GameEngineActor*>::iterator FindIter = RegistActor_.find(_Name);
+
+	if (RegistActor_.end() == FindIter)
+	{
+		return nullptr;
+	}
+
+	return FindIter->second;
+}
+
+void GameEngineLevel::RegistActor(const std::string& _Name, GameEngineActor* _Actor)
+{
+	if (RegistActor_.end() != RegistActor_.find(_Name))
+	{
+		MsgBoxAssert("이미 존재하는 이름으로 또 등록하려고 했습니다.");
+	}
+
+	RegistActor_.insert(std::map<std::string, GameEngineActor*>::value_type(_Name, _Actor));
+}
+
+void GameEngineLevel::ActorLevelChangeEnd() {
+	{
+		std::map<int, std::list<GameEngineActor*>>::iterator GroupStart;
+		std::map<int, std::list<GameEngineActor*>>::iterator GroupEnd;
+
+		std::list<GameEngineActor*>::iterator StartActor;
+		std::list<GameEngineActor*>::iterator EndActor;
+
+		GroupStart = AllActor_.begin();
+		GroupEnd = AllActor_.end();
+
+		for (; GroupStart != GroupEnd; ++GroupStart)
+		{
+			std::list<GameEngineActor*>& Group = GroupStart->second;
+
+			StartActor = Group.begin();
+			EndActor = Group.end();
+
+
+			for (; StartActor != EndActor; ++StartActor)
+			{
+				if (false == (*StartActor)->IsUpdate())
+				{
+					continue;
+				}
+
+				(*StartActor)->LevelChangeEnd();
+			}
+		}
+	}
+}
+
 
 void GameEngineLevel::ActorRender()
 {
@@ -135,7 +223,7 @@ void GameEngineLevel::ActorRender()
 	}
 }
 
-void GameEngineLevel::CollisionDebugRender() 
+void GameEngineLevel::CollisionDebugRender()
 {
 	std::map<std::string, std::list<GameEngineCollision*>>::iterator GroupStart = AllCollision_.begin();
 	std::map<std::string, std::list<GameEngineCollision*>>::iterator GroupEnd = AllCollision_.end();
@@ -263,7 +351,7 @@ void GameEngineLevel::AddRenderer(GameEngineRenderer* _Renderer)
 	AllRenderer_[_Renderer->GetOrder()].push_back(_Renderer);
 }
 
-void GameEngineLevel::ChangeUpdateOrder(GameEngineActor* _Actor, int _NewOreder) 
+void GameEngineLevel::ChangeUpdateOrder(GameEngineActor* _Actor, int _NewOreder)
 {
 	if (_Actor->GetOrder() == _NewOreder)
 	{
@@ -287,7 +375,7 @@ void GameEngineLevel::ChangeRenderOrder(GameEngineRenderer* _Renderer, int _NewO
 }
 
 void GameEngineLevel::AddCollision(const std::string& _GroupName
-	, GameEngineCollision* _Collision) 
+	, GameEngineCollision* _Collision)
 {
 	// 찾아서 없으면 만드는 것까지.
 	AllCollision_[_GroupName].push_back(_Collision);
