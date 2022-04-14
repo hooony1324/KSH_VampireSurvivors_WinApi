@@ -9,6 +9,7 @@
 #include "GameInfo.h"
 
 Coin::Coin() 
+	: Col_(nullptr)
 {
 }
 

@@ -10,6 +10,7 @@
 #include "LevelUpUI.h"
 
 LevelUpBox::LevelUpBox() 
+	: Col_(nullptr)
 {
 }
 

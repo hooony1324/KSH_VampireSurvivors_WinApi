@@ -8,6 +8,8 @@
 EnemyController::EnemyController() 
 	: EnemyCollectorL_(nullptr)
 	, EnemyCollectorR_(nullptr)
+	, EnemySpawnerL_(nullptr)
+	, EnemySpawnerR_(nullptr)
 {
 }
 

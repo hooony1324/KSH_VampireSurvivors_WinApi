@@ -8,6 +8,11 @@
 #include "Vector2D.h"
 
 ProjectileShooter::ProjectileShooter()
+	: BT_(BulletType::FLAME_BLUE)
+	, Projectile_(nullptr)
+	, ShootAble_(false)
+	, isShoot_(false)
+
 {
 }
 
@@ -70,6 +75,7 @@ void ProjectileShooter::Shooting(float _DeltaTime, float4 _PlayerPos, float4 _Mo
 		CoolTimeCount_ = InitCoolTime_;
 		isShoot_ = false;
 		IntervalCount_ = 0;
+		return;
 	}
 
 	// ÃÑ¾Ë ½î°í isShoot = true

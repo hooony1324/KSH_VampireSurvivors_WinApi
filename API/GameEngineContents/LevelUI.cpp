@@ -14,6 +14,8 @@
 
 
 LevelUI::LevelUI()
+	: BackBufferDC_(nullptr)
+	, PlayerLevel_(0)
 {
 }
 

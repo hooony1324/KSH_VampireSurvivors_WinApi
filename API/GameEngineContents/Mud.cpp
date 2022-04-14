@@ -5,6 +5,7 @@
 //#include <GameEngineBase/GameEngineDebug.h>
 #include <GameEngine/GameEngineRenderer.h>
 #include <GameEngine/GameEngineCollision.h>
+#include <GameEngineBase/GameEngineSound.h>
 
 #include "ObjectEnum.h"
 #include "GameInfo.h"
@@ -18,6 +19,15 @@
 Mud::Mud() 
 	: Speed_(80.0f)
 	, Hp_(100)
+	, AttackCheck_(nullptr)
+	, Mud_(nullptr)
+	, Hp_BarSize_(float4::ZERO)
+	, Hp_BarRed_(nullptr)
+	, MudCol_(nullptr)
+	, OtherBlockUp_(nullptr)
+	, OtherBlockDown_(nullptr)
+	, OtherBlockLeft_(nullptr)
+	, OtherBlockRight_(nullptr)
 {
 }
 
@@ -28,13 +38,7 @@ Mud::~Mud()
 
 void Mud::Start()
 {
-	//Mud_ = CreateRenderer("Mud_0.bmp");
 	Mud_ = CreateRenderer();
-	//Mud_->CreateAnimation("Mud_IdleLeft.bmp", "Mud_IdleLeft", 0, 3, 0.2f, true);
-	//Mud_->CreateAnimation("Mud_IdleRight.bmp", "Mud_IdleRight", 0, 3, 0.2f, true);
-	//Mud_->CreateAnimation("Mud_Dead.bmp", "Mud_Dead", 0, 27, 0.05f, false);
-	//Mud_->ChangeAnimation("Mud_IdleRight");
-
 	Mud_->CreateFolderAnimationTimeKey("Mud_IdleLeft.bmp", "Mud_IdleLeft", static_cast<int>(TIME_GROUP::MONSTER), 0, 3, 0.2f, true);
 	Mud_->CreateFolderAnimationTimeKey("Mud_IdleRight.bmp", "Mud_IdleRight", static_cast<int>(TIME_GROUP::MONSTER), 0, 3, 0.2f, true);
 	Mud_->CreateFolderAnimationTimeKey("Mud_Dead.bmp", "Mud_Dead", static_cast<int>(TIME_GROUP::MONSTER), 0, 27, 0.05f, true);
@@ -61,12 +65,11 @@ void Mud::Start()
 
 void Mud::Update()
 {
-	Hit();
-	BlockOther();
 
 	float DeltaTime = GameEngineTime::GetDeltaTime(static_cast<int>(TIME_GROUP::MONSTER));
 	if (Hp_ <= 0)
 	{
+		MudCol_->Death();
 		Mud_->ChangeAnimation("Mud_Dead");
 
 		if (true == Counter1_.Start(DeltaTime))
@@ -83,6 +86,8 @@ void Mud::Update()
 	float4 EnemyPos = GetPosition();
 	float4 DestDir = Vector2D::GetDirection(EnemyPos, PlayerPos_);
 
+	BlockOther();
+	Hit();
 
 	SetMove((DestDir + KnockBackDir_) * DeltaTime * Speed_);
 
@@ -112,8 +117,11 @@ void Mud::Render()
 
 void Mud::Hit()
 {
-	// 무기 정보(공격력에 따라 데미지) 
-	// 맞은 총알은 없애기 (해야지 데미지 10만 들어옴)
+	if (nullptr == MudCol_)
+	{
+		return;
+	}
+
 	if (KnockBackDir_.Len2D() >= 0)
 	{
 		KnockBackDir_ -= KnockBackDir_ * 0.1f;
@@ -125,6 +133,9 @@ void Mud::Hit()
 		return;
 	}
 
+	// 맞았음
+	GameEngineSound::SoundPlayOneShot("EnemyHit.mp3", 0);
+
 	int Damage = dynamic_cast<Projectile*>(HitBullet[0]->GetActor())->GetDamage();
 	HitBullet[0]->GetActor()->Death();
 	HitBullet.clear();
@@ -133,7 +144,6 @@ void Mud::Hit()
 
 	// 플레이어 방향과 반대로
 	KnockBackDir_ = Vector2D::GetDirection(PlayerPos_ , GetPosition()) * 25;
-
 
 }
 

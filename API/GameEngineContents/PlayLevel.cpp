@@ -17,6 +17,16 @@ PlayLevel::PlayLevel()
 	: Player_(nullptr)
 	, Map_(nullptr)
 	, PlayLevelPause_(false)
+	, EnemyController_(nullptr)
+	, Enemy_(nullptr)
+	, ExpUI_(nullptr)
+	, WeaponUI_(nullptr)
+	, TimerUI_(nullptr)
+	, CoinUI_(nullptr)
+	, LevelUI_(nullptr)
+	, KillCountUI_(nullptr)
+	, PauseUI_(nullptr)
+	, StatUI_(nullptr)
 {
 }
 
@@ -82,7 +92,7 @@ void PlayLevel::LevelChangeStart()
 
 	//BgmPlayer = GameEngineSound::SoundPlayControl("bgm_elrond_library.MP3");
 
-	// 아이템
+	// 아이템 
 	ExpGem* FirstGem = CreateActor<ExpGem>(static_cast<int>(ACTOR_ORDER::ITEM), "ITEM");
 	FirstGem->SetPosition({ 1000, 500 });
 	FirstGem->SetType(GemType::GREEN);
@@ -92,6 +102,7 @@ void PlayLevel::LevelChangeStart()
 
 	LevelUpBox* FirstBox = CreateActor<LevelUpBox>(static_cast<int>(ACTOR_ORDER::ITEM), "ITEM");
 	FirstBox->SetPosition({ 1100, 1000 });
+ 
 
 }
 

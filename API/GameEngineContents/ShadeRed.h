@@ -35,7 +35,6 @@ private:
 	// 피격
 	GameEngineRenderer* ShadeRed_;
 	GameEngineCollision* ShadeRedCol_;
-	GameEngineCollision* AttackCheck_;
 
 
 	// 서로 밀어내기

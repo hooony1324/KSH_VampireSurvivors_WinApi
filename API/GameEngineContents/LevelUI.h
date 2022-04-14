@@ -27,12 +27,6 @@ protected:
 
 private:
 
-
-	std::vector<GameEngineRenderer*> Numbers_;
-	GameEngineRenderer* Number1_;
-	GameEngineRenderer* Number2_;
-	GameEngineRenderer* Number3_;
-
 	int PlayerLevel_;
 	HDC BackBufferDC_;
 

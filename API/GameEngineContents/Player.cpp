@@ -28,6 +28,10 @@ Player::Player()
 	, HeadDir_(HeadDir::LEFT)
 	, Hitable_(true)
 	, HitTime_(1.0f)
+	, CharacterStat_(nullptr)
+	, PlayerCol_(nullptr)
+	, Speed_(0)
+	, PlayerShootRange_(nullptr)
 {
 	// 공격 맞으면 일정시간동안 무적
 	InvincibleTime_ = HitTime_;

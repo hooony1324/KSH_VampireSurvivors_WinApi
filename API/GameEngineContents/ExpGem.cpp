@@ -15,6 +15,10 @@
 float ExpGem::RedExp_ = 100.0f; // 랜덤경험치
 
 ExpGem::ExpGem()
+	: Col_(nullptr)
+	, Type_(GemType::BLUE)
+	, Exp_(0)
+	, Renderer_(nullptr)
 {
 }
 
@@ -82,19 +86,17 @@ void ExpGem::PlayerCheck()
 		}
 		else
 		{
+			
 			float Total = CurrentExp + EarnedExp;
 			int LevelUp = static_cast<int>(Total / MaxExp);
 			float RestExp = Total - (MaxExp * LevelUp);
-
 			
 			GameInfo::GetPlayerInfo()->CurrentExp_ = RestExp;
 			GameInfo::GetPlayerInfo()->Level_ += LevelUp;
+			
+			// 레벨 업 한만큼 UI호출
 			LevelUpUI::CreateCount_ += LevelUp;
 		}
-
-
-		// LevelUpUI LevelUp 만큼 호출, 플레이어 레벨 업
-
 
 	}
 }

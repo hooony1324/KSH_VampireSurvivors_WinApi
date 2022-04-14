@@ -10,6 +10,13 @@
 ShadeRed::ShadeRed() 
 	: Speed_(120.0f)
 	, Hp_(100)
+	, Hp_BarRed_(nullptr)
+	, ShadeRed_(nullptr)
+	, OtherBlockUp_(nullptr)
+	, OtherBlockDown_(nullptr)
+	, OtherBlockRight_(nullptr)
+	, OtherBlockLeft_(nullptr)
+
 {
 }
 
@@ -48,6 +55,7 @@ void ShadeRed::Update()
 
 	if (Hp_ <= 0)
 	{
+		ShadeRedCol_->Death();
 		ShadeRed_->ChangeAnimation("ShadeRed_Dead");
 
 		if (true == Counter1_.Start(DeltaTime))
