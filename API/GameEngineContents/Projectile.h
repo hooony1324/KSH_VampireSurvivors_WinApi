@@ -5,7 +5,7 @@
 
 enum class BulletType
 {
-	SWORD,
+	KNIFE,
 	FLAME_BLUE,
 	FLAME_RED
 };

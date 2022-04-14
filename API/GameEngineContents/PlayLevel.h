@@ -44,19 +44,21 @@ private:
 	// UI
 	GameEngineActor* ExpUI_;
 	GameEngineActor* WeaponUI_;
-	TimerUI* TimerUI_;
+	GameEngineActor* TimerUI_;
 	GameEngineActor* CoinUI_;
 	GameEngineActor* LevelUI_;
 	GameEngineActor* KillCountUI_;
 	GameEngineActor* PauseUI_;
-	GameEngineActor* LevelUpUI_;
 	GameEngineActor* StatUI_;
-	bool GamePause_;
+
 
 private:
-
 	// Game
 	void GamePause();
+	void ShowPauseMenu();
+	void LevelUpUICheck();
+
+	bool PlayLevelPause_;
 
 	// Map
 	void CreateMap();

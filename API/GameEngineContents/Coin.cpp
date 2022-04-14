@@ -4,6 +4,7 @@
 #include <GameEngine/GameEngineImageManager.h>
 #include <GameEngine/GameEngineRenderer.h>
 #include <GameEngine/GameEngineCollision.h>
+#include <GameEngineBase/GameEngineSound.h>
 
 #include "GameInfo.h"
 
@@ -27,6 +28,7 @@ void Coin::Update()
 {
 	if (true == Col_->CollisionCheck("Player", CollisionType::Rect, CollisionType::Rect))
 	{
+		GameEngineSound::SoundPlayOneShot("GetCoin.mp3", 0);
 		GameInfo::GetPlayerInfo()->EearnedCoin_ += 100;
 		Death();
 	}

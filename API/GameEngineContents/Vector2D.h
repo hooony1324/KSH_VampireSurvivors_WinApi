@@ -13,8 +13,6 @@ public:
 		return _PosB - _PosA;
 	}
 
-	// 두 개의 위치가 있을 때
-	// A -> B의 벡터반환(크기 1)
 	static float4 GetDirection(float4 _PosA, float4 _PosB)
 	{
 		float4 Result = GetVector(_PosA, _PosB);

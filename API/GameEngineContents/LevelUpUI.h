@@ -15,6 +15,19 @@ public:
 	LevelUpUI& operator=(const LevelUpUI& _Other) = delete;
 	LevelUpUI& operator=(LevelUpUI&& _Other) noexcept = delete;
 
+
+	static bool IsActivated()
+	{
+		return IsActivated_;
+	}
+
+	static void SetActivate(bool _Value)
+	{
+		IsActivated_ = _Value;
+	}
+
+	static int CreateCount_;
+
 protected:
 
 	void Start() override;
@@ -22,6 +35,6 @@ protected:
 	void Render() override;
 
 private:
-
+	static bool IsActivated_;
 };
 

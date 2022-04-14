@@ -24,14 +24,13 @@ void ProjectileShooter::Update()
 
 }
 
-void ProjectileShooter::InitShooter(BulletType _BT, int _Count, float _Interval, float _CoolTime, float _WaitTime)
+void ProjectileShooter::InitShooter(BulletType _BT, int _BulletCount, float _Interval, float _CoolTime, float _WaitTime)
 {
-	InitBulletCount_ = _Count;
+	InitBulletCount_ = _BulletCount;
 	InitInterval_ = _Interval;
 	InitCoolTime_ = _CoolTime;
 	BT_ = _BT;
 	isShoot_ = false;
-
 	
 	CoolTimeCount_ = _WaitTime;
 	BulletCount_ = InitBulletCount_;
@@ -78,7 +77,6 @@ void ProjectileShooter::Shooting(float _DeltaTime, float4 _PlayerPos, float4 _Mo
 	Bullet->SetType(BT_);
 	Bullet->SetPosition(_PlayerPos);
 	Bullet->SetDir(Vector2D::GetDirection(_PlayerPos, _MonsterPos));
-	Bullet->SetDamage(100);
 	BulletCount_ -= 1;
 	isShoot_ = true;
 	IntervalCount_ = InitInterval_;

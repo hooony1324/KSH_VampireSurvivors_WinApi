@@ -2,7 +2,12 @@
 #include <GameEngine/GameEngine.h>
 #include <GameEngineBase/GameEngineWindow.h>
 #include <GameEngine/GameEngineImageManager.h>
-//#include <GameEngineBase/GameEngineDebug.h>
+#include <GameEngine/GameEngineRenderer.h>
+#include <GameEngine/GameEngineCollision.h>
+
+#include "ObjectEnum.h"
+#include "GameInfo.h"
+#include "LevelUpUI.h"
 
 LevelUpBox::LevelUpBox() 
 {
@@ -14,11 +19,23 @@ LevelUpBox::~LevelUpBox()
 
 void LevelUpBox::Start()
 {
+	GameEngineRenderer* Renderer_ = CreateRenderer("BoxOpen.bmp");
+	SetScale(Renderer_->GetScale());
 
+	Col_ = CreateCollision("LevelUpBox", Renderer_->GetScale());
 }
 
 void LevelUpBox::Update()
 {
+	if (false == Col_->CollisionCheck("Player", CollisionType::Rect, CollisionType::Rect))
+	{
+		return;
+	}
+
+	LevelUpUI::CreateCount_ += 1;
+	
+	Death();
+
 }
 
 void LevelUpBox::Render()

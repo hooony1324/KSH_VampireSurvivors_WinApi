@@ -7,6 +7,7 @@
 #include "KillCountUI.h"
 #include "PauseUI.h"
 #include "StatUI.h"
+#include "LevelUpUI.h"
 
 #include "Player.h"
 #include "Library.h"
@@ -17,3 +18,4 @@
 #include "ProjectileShooter.h"
 #include "ExpGem.h"
 #include "Coin.h"
+#include "LevelUpBox.h"

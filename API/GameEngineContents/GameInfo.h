@@ -3,7 +3,36 @@
 #include "Character.h"
 #include <vector>
 
+enum class ActiveType
+{
+	// 슈팅
+	KNIFE,
+	MAGICWAND,
+	FIREWAND,
+	RUNETRACER,
+	AXE,
+	CLOCKLANCET,
 
+	// 나머지
+	KINGBIBLE,
+	WHIP,
+	GARLIC,
+	LAUREL,
+
+};
+
+enum class PassiveType
+{
+	BRACER,			// + SWORD = THOUSANDEDGE
+	EMPTYTOME,		// + MAGICWAND = HOLYWAND
+	SPINACH,		// + FIREWAND = HELLFIRE
+	SPELLBINDER,	// + KINGBIBLE = UNHOLYVESPERS
+	HOLLOWHEART,	// + WHIP = BLOODYTEAR
+	CLOVER,			// + CROSS = HEAVENSWORD
+	PUMMAROLA,		// + GARLIC = SOULEATER
+	WING,
+
+};
 
 
 // 설명 :
@@ -44,7 +73,8 @@ public:
 		int	Revival_;			// 부활 횟수
 
 		// 무기 정보
-
+		ActiveType Active_[6];
+		PassiveType Passive_[6];
 	};
 
 public:
@@ -84,11 +114,21 @@ public:
 
 	static void SetPlayerInfo();
 
+	static bool IsPause()
+	{
+		return Pause_;
+	}
+
+	static void SetPause(bool _Value)
+	{
+		Pause_ = _Value;
+	}
+
 private:
 	// 계속 업데이트 되야 되는 정보, UI에 표시할 정보
 	static Character* Character_;	// 캐릭터 선택 정보
 	static PlayerInfo* PlayerInfo_;	// 인게임 플레이어 정보
-
+	static bool Pause_;
 
 private:
 	// constrcuter destructer

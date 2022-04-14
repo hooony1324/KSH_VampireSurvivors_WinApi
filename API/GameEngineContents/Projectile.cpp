@@ -32,8 +32,7 @@ void Projectile::Start()
 	ShootDir_ = float4::RIGHT;
 	Damage_ = 10;
 
-	// 발사 효과음
-	//GameEngineSound::SoundPlayOneShot("ProjectileMagic.MP3", 0);
+	
 }
 
 void Projectile::Update()
@@ -41,8 +40,6 @@ void Projectile::Update()
 	float DeltaTime = GameEngineTime::GetDeltaTime(static_cast<int>(TIME_GROUP::WEAPON));
 	SetMove(ShootDir_ * DeltaTime * 300.0f);
 	Duration_ -= DeltaTime;
-
-	// 레벨 변경시 죽음
 
 
 	if (0.05f > Duration_)
@@ -53,23 +50,27 @@ void Projectile::Update()
 
 void Projectile::Render()
 {
-	Vector2D::DebugVectorRender(this);
 }
 
 
 void Projectile::SetType(BulletType _BT)
 {
 	ProjImage_ = CreateRenderer(ProjectileList[static_cast<int>(_BT)]);
-	ProjCol_ = CreateCollision("Bullet", ProjImage_->GetScale());
+	ProjCol_ = CreateCollision("PlayerAttack", ProjImage_->GetScale());
 
+	// 세부 설정
 	switch (_BT)
 	{
-	case BulletType::SWORD:
+	case BulletType::KNIFE:
 		break;
 
 	case BulletType::FLAME_BLUE:
+	{
+		// 발사 효과음
+		GameEngineSound::SoundPlayOneShot("ProjectileMagic.MP3", 0);
+		SetDamage(50);
 		break;
-
+	}
 	case BulletType::FLAME_RED:
 		break;
 

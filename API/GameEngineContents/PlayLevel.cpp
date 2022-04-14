@@ -16,7 +16,7 @@ float MapRightX = 2940;
 PlayLevel::PlayLevel()
 	: Player_(nullptr)
 	, Map_(nullptr)
-	, GamePause_(false)
+	, PlayLevelPause_(false)
 {
 }
 
@@ -42,7 +42,7 @@ void PlayLevel::LevelChangeStart()
 	// 맵
 	CreateMap();	
 
-	// 몬스터
+	// 몬스터 테스트
 	AllEnemy_.reserve(7); // 1화면에 최대100마리정도(예상)
 	for (int i = 0; i < 5; i++)
 	{
@@ -58,13 +58,11 @@ void PlayLevel::LevelChangeStart()
 		AllEnemy_.push_back(Enemy_);
 	}
 	
+	// 시야 벗어난거 수거용
 	EnemyController_ = CreateActor<EnemyController>(static_cast<int>(RENDER_ORDER::MONSTER), "EnemyController");
 
 	// 플레이어
 	Player_ = CreateActor<Player>(static_cast<int>(RENDER_ORDER::PLAYER), "Player");
-	/*PlayerAttackRange_ = Player_->CreateCollision("PlayerAttackRange", { 600, 600 });
-	PlayerAttackRange_->Off(); */
-
 
 	// UI
 	ExpUI_ = CreateActor<ExpBar>(static_cast<int>(RENDER_ORDER::UI), "UI");
@@ -76,24 +74,36 @@ void PlayLevel::LevelChangeStart()
 
 	PauseUI_ = CreateActor<PauseUI>(static_cast<int>(RENDER_ORDER::UI), "UI");
 	StatUI_ = CreateActor<StatUI>(static_cast<int>(RENDER_ORDER::UI), "UI");
+	
+	PauseUI_->Off();
+	StatUI_->Off();
+
+
 
 	//BgmPlayer = GameEngineSound::SoundPlayControl("bgm_elrond_library.MP3");
 
 	// 아이템
 	ExpGem* FirstGem = CreateActor<ExpGem>(static_cast<int>(ACTOR_ORDER::ITEM), "ITEM");
-	FirstGem->SetPosition({ 500, 500 });
+	FirstGem->SetPosition({ 1000, 500 });
 	FirstGem->SetType(GemType::GREEN);
 
 	Coin* FirstCoin = CreateActor<Coin>(static_cast<int>(ACTOR_ORDER::ITEM), "ITEM");
 	FirstCoin->SetPosition({ 1000, 1000 });
+
+	LevelUpBox* FirstBox = CreateActor<LevelUpBox>(static_cast<int>(ACTOR_ORDER::ITEM), "ITEM");
+	FirstBox->SetPosition({ 1100, 1000 });
+
 }
 
 void PlayLevel::LevelChangeEnd()
 {
 	ExpUI_->Death();
 	WeaponUI_->Death();
-	TimerUI_->KillDigits();
+
+	TimerUI* Ptr = dynamic_cast<TimerUI*>(TimerUI_);
+	Ptr->KillDigits();
 	TimerUI_->Death();
+
 	CoinUI_->Death();
 	LevelUI_->Death();
 	KillCountUI_->Death();
@@ -113,34 +123,33 @@ void PlayLevel::LevelChangeEnd()
 
 void PlayLevel::Update()
 {
+	LevelUpUICheck();
+
 	// Key Check
 	if (true == GameEngineInput::GetInst()->IsDown("ChangeLevelNext"))
 	{
 		GameEngine::GetInst().ChangeLevel("Result");
 	}
 
-
-	if (true == GameEngineInput::GetInst()->IsDown("Esc"))
-	{
-		GamePause_ = !GamePause_;
-	}
-
+	// 일시정지 기능
 	GamePause();
 
-	EnemyController_->SetPosition(Player_->GetPosition());
+	ShowPauseMenu();
+
 	InfiniteMap();
+
+
+
 }
 
 void PlayLevel::GamePause()
 {
-	if (true == GamePause_)
+	if (true == GameInfo::IsPause())
 	{
 		GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::MONSTER), 0.0f);
 		GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::PLAYER), 0.0f);
 		GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::WEAPON), 0.0f);
 		GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::TIMER), 0.0f);
-		PauseUI_->On();
-		StatUI_->On();
 	}
 	else
 	{
@@ -148,8 +157,45 @@ void PlayLevel::GamePause()
 		GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::PLAYER), 1.0f);
 		GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::WEAPON), 1.0f);
 		GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::TIMER), 1.0f);
-		PauseUI_->Off();
-		StatUI_->Off();
+	}
+}
+
+void PlayLevel::ShowPauseMenu()
+{
+	if ( true == LevelUpUI::IsActivated())
+	{
+		return;
+	}
+
+	if (true == GameEngineInput::GetInst()->IsDown("Esc"))
+	{
+		PlayLevelPause_ = !PlayLevelPause_;
+		GameInfo::SetPause(PlayLevelPause_);
+
+		if (false == GameInfo::IsPause())
+		{
+			PauseUI_->Off();
+			StatUI_->Off();
+		}
+		else
+		{
+			PauseUI_->On();
+			StatUI_->On();
+		}
+	}
+
+}
+
+void PlayLevel::LevelUpUICheck()
+{
+	if (LevelUpUI::CreateCount_ <= 0)
+	{
+		return;
+	}
+
+	if (false == LevelUpUI::IsActivated())
+	{
+		CreateActor<LevelUpUI>(static_cast<int>(ACTOR_ORDER::UI), "UI");
 	}
 }
 

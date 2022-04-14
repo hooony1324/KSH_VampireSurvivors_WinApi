@@ -72,7 +72,7 @@ void Player::Start()
 
 	// 슈팅
 	Shooter1_ = GetLevel()->CreateActor<ProjectileShooter>(static_cast<int>(RENDER_ORDER::PLAYER), "Shooter");
-	Shooter1_->InitShooter(BulletType::FLAME_BLUE, 5, 0.2f, 2);
+	Shooter1_->InitShooter(BulletType::FLAME_BLUE, 2, 0.12f, 2.0f, 1.0f);
 }
 
 void Player::Update()
@@ -101,7 +101,7 @@ void Player::Render()
 {
 	HpBarRender();
 
-	Vector2D::DebugVectorRender(this);
+	//Vector2D::DebugVectorRender(this);
 }
 
 void Player::SetGameInfo()
@@ -173,19 +173,7 @@ void Player::PlayerMove()
 		PlayerRenderer_->ChangeAnimation("Walk_Right");
 	}
 
-
-	//if (HeadDir_ == -1 && (false == MoveDir_.CompareInt2D(float4::ZERO)) )
-	//{
-	//	PlayerRenderer_->ChangeAnimation("Walk_Left");
-	//}
-	//else if (HeadDir_ == 1 && ( MoveDir_.x != 0 || MoveDir_.y != 0 ))
-	//{
-	//	PlayerRenderer_->ChangeAnimation("Walk_Right");
-	//}
-
-	SetMove(MoveDir_ * GameEngineTime::GetDeltaTime() * Speed_);
-
-
+	SetMove(MoveDir_ * GameEngineTime::GetDeltaTime(static_cast<int>(TIME_GROUP::PLAYER)) * Speed_);
 
 	// 중력 적용
 	/*AccGravity_ += GameEngineTime::GetDeltaTime() * Gravity_;
@@ -222,13 +210,14 @@ void Player::Attacked(int _Damage)
 		return;
 	}
 
+	GameEngineSound::SoundPlayOneShot("PlayerAttacked.MP3", 0);
 	float CurrentHp = GameInfo::GetPlayerInfo()->CurrentHp_ -= _Damage;
 	Hitable_ = false;
 
 	if (CurrentHp <= 0)
 	{
 		// 예시
-		// PlayerRenderer_->ChangeAnimation("CavalloDead");
+		//PlayerRenderer_->ChangeAnimation("CavalloDead");
 		GameEngine::GetInst().ChangeLevel("Result");
 	}
 }
@@ -246,7 +235,7 @@ void Player::MonsterAttackCheck()
 	bool BumpMonster = false;
 	if (nullptr != PlayerCol_)
 	{
-		BumpMonster = PlayerCol_->CollisionCheck("Monster", CollisionType::Rect, CollisionType::Rect);
+		BumpMonster = PlayerCol_->CollisionCheck("Enemy", CollisionType::Rect, CollisionType::Rect);
 	}
 
 	if (true == BumpMonster)
@@ -271,7 +260,7 @@ void Player::ClearBullets()
 
 float4 Player::ShootableEnemeyCheck()
 {
-	if (true == PlayerShootRange_->CollisionResult("Monster", ShootableEnemy_, CollisionType::Rect, CollisionType::Rect))
+	if (true == PlayerShootRange_->CollisionResult("Enemy", ShootableEnemy_, CollisionType::Rect, CollisionType::Rect))
 	{
 		float4 MonsterPos = ShootableEnemy_[0]->GetCollisionPos();
 		ShootableEnemy_.clear();

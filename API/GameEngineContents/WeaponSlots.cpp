@@ -25,7 +25,7 @@ void WeaponSlots::Start()
 
 void WeaponSlots::Update()
 {
-
+	
 }
 
 void WeaponSlots::Render()

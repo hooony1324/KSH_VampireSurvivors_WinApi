@@ -26,6 +26,8 @@ protected:
 	void Render() override;
 
 private:
+
+
 	std::vector<GameEngineRenderer*> Numbers_;
 	GameEngineRenderer* Number1_;
 	GameEngineRenderer* Number2_;
@@ -33,7 +35,6 @@ private:
 
 	int PlayerLevel_;
 	HDC BackBufferDC_;
-
 
 };
 

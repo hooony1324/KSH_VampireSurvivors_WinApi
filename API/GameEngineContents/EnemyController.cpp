@@ -2,7 +2,8 @@
 #include <GameEngine/GameEngine.h>
 #include <GameEngineBase/GameEngineWindow.h>
 #include <GameEngine/GameEngineImageManager.h>
-//#include <GameEngineBase/GameEngineDebug.h>
+
+#include "GameInfo.h"
 
 EnemyController::EnemyController() 
 	: EnemyCollectorL_(nullptr)
@@ -28,6 +29,7 @@ void EnemyController::Start()
 
 void EnemyController::Update()
 {
+	SetPosition(GameInfo::GetPlayerInfo()->PlayerPos_);
 }
 
 void EnemyController::Render()

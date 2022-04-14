@@ -13,7 +13,7 @@
 #include "Vector2D.h"
 
 
-LevelUI::LevelUI() 
+LevelUI::LevelUI()
 {
 }
 
@@ -27,6 +27,7 @@ void LevelUI::Start()
 	SetScale({ 100, 30 });
 	BackBufferDC_ = GameEngine::GetInst().BackBufferDC();
 
+	// 폰트 설정
 	LPCSTR FontSrc = "../Resources/UI/KO.ttf";
 	AddFontResourceA(FontSrc);
 

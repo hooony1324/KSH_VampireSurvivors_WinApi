@@ -3,7 +3,7 @@
 
 Character* GameInfo::Character_ = nullptr;
 GameInfo::PlayerInfo* GameInfo::PlayerInfo_ = new PlayerInfo();
-
+bool GameInfo::Pause_ = false;
 
 GameInfo::GameInfo()
 {

@@ -5,8 +5,11 @@
 //#include <GameEngineBase/GameEngineDebug.h>
 #include <GameEngine/GameEngineRenderer.h>
 #include <GameEngine/GameEngineCollision.h>
+#include <GameEngineBase/GameEngineSound.h>
 
+#include "ObjectEnum.h"
 #include "GameInfo.h"
+#include "LevelUpUI.h"
 
 
 float ExpGem::RedExp_ = 100.0f; // 랜덤경험치
@@ -62,21 +65,36 @@ void ExpGem::PlayerCheck()
 {
 	if (true == Col_->CollisionCheck("Player", CollisionType::Rect, CollisionType::Rect))
 	{
+		GameEngineSound::SoundPlayOneShot("GetGem.mp3", 0);
+		Death();
 
 		// 플레이어 레벨 높아지면 획득률 낮아지도록
 		float Ratio = 1 - (GameInfo::GetPlayerInfo()->Level_ / GameInfo::GetPlayerInfo()->MaxLevel_);
-		Exp_ *= Ratio;
+		float EarnedExp = Exp_ * Ratio;
 
-		GameInfo::GetPlayerInfo()->CurrentExp_ += Exp_;
+		float MaxExp = GameInfo::GetPlayerInfo()->MaxExp_;
+		float CurrentExp = GameInfo::GetPlayerInfo()->CurrentExp_;
+		float DemandExp = MaxExp - CurrentExp;
 
-		Death();
-
-		if (GameInfo::GetPlayerInfo()->CurrentExp_ >= GameInfo::GetPlayerInfo()->MaxExp_)
+		if (EarnedExp < DemandExp)
 		{
-			GameInfo::GetPlayerInfo()->Level_ += 1;
-
-			float RestExp = GameInfo::GetPlayerInfo()->CurrentExp_ - GameInfo::GetPlayerInfo()->MaxExp_;
-			GameInfo::GetPlayerInfo()->CurrentExp_ = RestExp;
+			GameInfo::GetPlayerInfo()->CurrentExp_ += EarnedExp;
 		}
+		else
+		{
+			float Total = CurrentExp + EarnedExp;
+			int LevelUp = static_cast<int>(Total / MaxExp);
+			float RestExp = Total - (MaxExp * LevelUp);
+
+			
+			GameInfo::GetPlayerInfo()->CurrentExp_ = RestExp;
+			GameInfo::GetPlayerInfo()->Level_ += LevelUp;
+			LevelUpUI::CreateCount_ += LevelUp;
+		}
+
+
+		// LevelUpUI LevelUp 만큼 호출, 플레이어 레벨 업
+
+
 	}
 }

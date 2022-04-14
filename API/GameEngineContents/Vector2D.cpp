@@ -11,8 +11,6 @@ void Vector2D::DebugVectorRender(GameEngineActor* _Actor)
 	TCHAR Buffer[30] = "";
 	sprintf_s(Buffer, "Pos { %d, %d } ", _Actor->GetPosition().ix(), _Actor->GetPosition().iy());
 
-	SetTextColor(hdc, RGB(255, 255, 255));
-	SetBkMode(hdc, TRANSPARENT);
 	TextOutA(hdc, _Actor->GetCameraEffectPosition().ix(), _Actor->GetCameraEffectPosition().iy() - 50, Buffer, strlen(Buffer));
 }
 

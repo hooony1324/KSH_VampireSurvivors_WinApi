@@ -27,7 +27,7 @@ void ShadeRed::Start()
 	ShadeRed_->ChangeAnimation("ShadeRed_IdleRight");
 	SetScale({ 100, 100 });
 
-	ShadeRedCol_ = CreateCollision("Monster", { 30, 30 });
+	ShadeRedCol_ = CreateCollision("Enemy", { 30, 30 });
 
 	OtherBlockUp_ = CreateCollision("OtherGuard", { 36, 4 }, { 0, -20 });
 	OtherBlockDown_ = CreateCollision("OtherGuard", { 36, 4 }, { 0, 20 });
@@ -44,11 +44,13 @@ void ShadeRed::Start()
 
 void ShadeRed::Update()
 {
+	float DeltaTime = GameEngineTime::GetDeltaTime(static_cast<int>(TIME_GROUP::MONSTER));
+
 	if (Hp_ <= 0)
 	{
 		ShadeRed_->ChangeAnimation("ShadeRed_Dead");
 
-		if (true == Counter1_.Start(GameEngineTime::GetDeltaTime()))
+		if (true == Counter1_.Start(DeltaTime))
 		{
 			Death();
 		}
@@ -62,7 +64,7 @@ void ShadeRed::Update()
 
 	float4 DestDir = Vector2D::GetDirection(EnemyPos, PlayerPos);
 
-	SetMove(DestDir * GameEngineTime::GetDeltaTime() * Speed_);
+	SetMove(DestDir * DeltaTime * Speed_);
 
 	if (0 >= DestDir.x)
 	{
@@ -91,7 +93,7 @@ void ShadeRed::Hit()
 {
 	// 무기 정보(공격력에 따라 데미지) 
 	// 맞은 총알은 없애기
-	if (false == ShadeRedCol_->CollisionCheck("Bullet", CollisionType::Rect, CollisionType::Rect))
+	if (false == ShadeRedCol_->CollisionCheck("PlayerAttack", CollisionType::Rect, CollisionType::Rect))
 	{
 		return;
 	}
@@ -107,26 +109,26 @@ void ShadeRed::Hit()
 void ShadeRed::BlockOther()
 {
 	// 위에 부딪힌 녀석 위로
-	if (true == OtherBlockUp_->CollisionResult("Monster", Others_, CollisionType::Rect, CollisionType::Rect))
+	if (true == OtherBlockUp_->CollisionResult("Enemy", Others_, CollisionType::Rect, CollisionType::Rect))
 	{
 		Others_[0]->GetActor()->SetPosition(Others_[0]->GetActor()->GetPosition() + float4::UP * 2);
 		Others_.clear();
 	}
 
-	if (true == OtherBlockDown_->CollisionResult("Monster", Others_, CollisionType::Rect, CollisionType::Rect))
+	if (true == OtherBlockDown_->CollisionResult("Enemy", Others_, CollisionType::Rect, CollisionType::Rect))
 	{
 		Others_[0]->GetActor()->SetPosition(Others_[0]->GetActor()->GetPosition() + float4::DOWN * 2);
 		Others_.clear();
 	}
 
-	if (true == OtherBlockLeft_->CollisionResult("Monster", Others_, CollisionType::Rect, CollisionType::Rect))
+	if (true == OtherBlockLeft_->CollisionResult("Enemy", Others_, CollisionType::Rect, CollisionType::Rect))
 	{
 		Others_[0]->GetActor()->SetPosition(Others_[0]->GetActor()->GetPosition() + float4::LEFT * 2);
 		Others_.clear();
 
 	}
 
-	if (true == OtherBlockRight_->CollisionResult("Monster", Others_, CollisionType::Rect, CollisionType::Rect))
+	if (true == OtherBlockRight_->CollisionResult("Enemy", Others_, CollisionType::Rect, CollisionType::Rect))
 	{
 		Others_[0]->GetActor()->SetPosition(Others_[0]->GetActor()->GetPosition() + float4::RIGHT * 2);
 		Others_.clear();
