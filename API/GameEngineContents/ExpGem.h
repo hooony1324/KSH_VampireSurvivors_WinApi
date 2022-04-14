@@ -37,8 +37,8 @@ protected:
 
 
 private:
-	static float GreenExp_;
-	static float BlueExp_;
+	void PlayerCheck();
+
 	static float RedExp_;
 
 	GameEngineRenderer* Renderer_;

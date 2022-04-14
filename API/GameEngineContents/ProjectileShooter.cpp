@@ -41,13 +41,11 @@ void ProjectileShooter::InitShooter(BulletType _BT, int _Count, float _Interval,
 void ProjectileShooter::Shooting(float _DeltaTime, float4 _PlayerPos, float4 _MonsterPos)
 {
 	// 일시정지
-	if (0.5f > GameEngineTime::GetInst()->GetTimeScale(static_cast<int>(TIME_GROUP::WEAPON)))
+	if (0.1f > GameEngineTime::GetInst()->GetTimeScale(static_cast<int>(TIME_GROUP::WEAPON)))
 	{
 		return;
 	}
 
-	// 플레이어와 동일한 위치에 고정
-	//SetPosition(_PlayerPos);
 
 	// 쿨타임 아니면
 	if (0 < CoolTimeCount_)
@@ -84,5 +82,6 @@ void ProjectileShooter::Shooting(float _DeltaTime, float4 _PlayerPos, float4 _Mo
 	BulletCount_ -= 1;
 	isShoot_ = true;
 	IntervalCount_ = InitInterval_;
+
 	return;
 }

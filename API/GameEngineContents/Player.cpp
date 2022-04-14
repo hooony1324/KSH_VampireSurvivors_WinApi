@@ -237,8 +237,6 @@ void Player::Attacked(int _Damage)
 void Player::AllCollisionCheck()
 {
 	MonsterAttackCheck();
-	ExpGemCheck();
-
 
 
 }
@@ -266,31 +264,9 @@ void Player::MonsterAttackCheck()
 	}
 }
 
-void Player::ExpGemCheck()
+
+void Player::ClearBullets()
 {
-	std::vector<GameEngineCollision*> Result;
-	if (true == PlayerCol_->CollisionResult("ExpGem", Result, CollisionType::Rect, CollisionType::Rect))
-	{
-		ExpGem* GemPtr = dynamic_cast<ExpGem*>(Result[0]->GetActor());
-		float Exp = GemPtr->GetExp();
-
-		// ÇÃ·¹ÀÌ¾î ·¹º§ ³ô¾ÆÁö¸é È¹µæ·ü ³·¾ÆÁöµµ·Ï
-		float Ratio = 1 - (GameInfo::GetPlayerInfo()->Level_ / GameInfo::GetPlayerInfo()->MaxLevel_) ;
-		Exp *= Ratio;
-
-		GameInfo::GetPlayerInfo()->CurrentExp_ += Exp; 
-
-		GemPtr->Death();
-
-		if (GameInfo::GetPlayerInfo()->CurrentExp_ >= GameInfo::GetPlayerInfo()->MaxExp_)
-		{
-			GameInfo::GetPlayerInfo()->Level_ += 1;
-
-			float RestExp = GameInfo::GetPlayerInfo()->CurrentExp_ - GameInfo::GetPlayerInfo()->MaxExp_;
-			GameInfo::GetPlayerInfo()->CurrentExp_ = RestExp;
-		}
-	}
-
 }
 
 float4 Player::ShootableEnemeyCheck()

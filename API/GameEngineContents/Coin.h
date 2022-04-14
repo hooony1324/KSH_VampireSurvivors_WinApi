@@ -2,6 +2,7 @@
 #include <GameEngine/GameEngineActor.h>
 
 // Ό³Έν :
+class GameEngineCollision;
 class Coin : public GameEngineActor
 {
 public:
@@ -22,6 +23,6 @@ protected:
 	void Render() override;
 
 private:
-
+	GameEngineCollision* Col_;
 };
 

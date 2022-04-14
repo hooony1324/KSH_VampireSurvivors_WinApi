@@ -7,25 +7,7 @@
 #include <GameEngine/GameEngineCollision.h>
 
 #include "ObjectEnum.h"
-
-#include "ExpBar.h"
-#include "WeaponSlots.h"
-#include "TimerUI.h"
-#include "CoinUI.h"
-#include "LevelUI.h"
-#include "KillCountUI.h"
-#include "PauseUI.h"
-#include "StatUI.h"
-
-#include "Player.h"
-#include "Library.h"
-#include "ExpGem.h"
-#include "Enemy.h"
-#include "Mud.h"
-#include "ShadeRed.h"
-#include "EnemyController.h"
-#include "ProjectileShooter.h"
-
+#include "PlayLevelContents.h"
 #include "GameInfo.h"
 
 float MapLeftX = 700;
@@ -34,6 +16,7 @@ float MapRightX = 2940;
 PlayLevel::PlayLevel()
 	: Player_(nullptr)
 	, Map_(nullptr)
+	, GamePause_(false)
 {
 }
 
@@ -96,10 +79,13 @@ void PlayLevel::LevelChangeStart()
 
 	//BgmPlayer = GameEngineSound::SoundPlayControl("bgm_elrond_library.MP3");
 
-	// ExpGem
+	// æ∆¿Ã≈€
 	ExpGem* FirstGem = CreateActor<ExpGem>(static_cast<int>(ACTOR_ORDER::ITEM), "ITEM");
 	FirstGem->SetPosition({ 500, 500 });
 	FirstGem->SetType(GemType::GREEN);
+
+	Coin* FirstCoin = CreateActor<Coin>(static_cast<int>(ACTOR_ORDER::ITEM), "ITEM");
+	FirstCoin->SetPosition({ 1000, 1000 });
 }
 
 void PlayLevel::LevelChangeEnd()
@@ -111,6 +97,7 @@ void PlayLevel::LevelChangeEnd()
 	CoinUI_->Death();
 	LevelUI_->Death();
 	KillCountUI_->Death();
+	PauseUI_->Death();
 
 	Player_->Death();
 	Map_->Death();
@@ -122,7 +109,6 @@ void PlayLevel::LevelChangeEnd()
 	}
 	AllEnemy_.clear();
 
-	PauseUI_->Death();
 }
 
 void PlayLevel::Update()
@@ -136,14 +122,7 @@ void PlayLevel::Update()
 
 	if (true == GameEngineInput::GetInst()->IsDown("Esc"))
 	{
-		if (false == GamePause_)
-		{
-			GamePause_ = true;
-		}
-		else
-		{
-			GamePause_ = false;
-		}
+		GamePause_ = !GamePause_;
 	}
 
 	GamePause();
