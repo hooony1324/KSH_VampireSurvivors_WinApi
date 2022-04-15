@@ -442,6 +442,9 @@
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\GameEngineBase\GameEngineBase.vcxproj">
+      <Project>{076c39c5-3dd2-40ef-9ae9-0cd116d6409a}</Project>
+    </ProjectReference>
     <ProjectReference Include="..\GameEngine\GameEngine.vcxproj">
       <Project>{3f1ddf02-157d-4347-8381-e733ca8be7d2}</Project>
     </ProjectReference>

@@ -46,7 +46,7 @@ void Mud::Start()
 
 	SetScale({ 100, 100 });
 
-	MudCol_ = CreateCollision("Enemy", { 30, 30 });
+	MudCol_ = CreateCollision("Enemy", { 35, 35 });
 	
 	OtherBlockUp_ = CreateCollision("OtherGuard", { 36, 4}, {0, -20});
 	OtherBlockDown_ = CreateCollision("OtherGuard", { 36, 4}, {0, 20});
