@@ -90,7 +90,7 @@ void PlayLevel::LevelChangeStart()
 
 
 
-	//BgmPlayer = GameEngineSound::SoundPlayControl("bgm_elrond_library.MP3");
+	//BgmPlayer = GameEngineSound::SoundPlayControl("bgm_elrond_library_quiet.MP3");
 
 	// 아이템 
 	ExpGem* FirstGem = CreateActor<ExpGem>(static_cast<int>(ACTOR_ORDER::ITEM), "ITEM");
@@ -102,7 +102,8 @@ void PlayLevel::LevelChangeStart()
 
 	LevelUpBox* FirstBox = CreateActor<LevelUpBox>(static_cast<int>(ACTOR_ORDER::ITEM), "ITEM");
 	FirstBox->SetPosition({ 1100, 1000 });
- 
+	
+	// 레벨 변경 시, Death안된 Actor들은 따로 Death해주도록 추가해야함-> Item, Bullet, Monster...
 
 }
 
@@ -130,6 +131,7 @@ void PlayLevel::LevelChangeEnd()
 	}
 	AllEnemy_.clear();
 
+	BgmPlayer.Stop();
 }
 
 void PlayLevel::Update()
