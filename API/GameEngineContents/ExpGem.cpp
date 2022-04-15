@@ -73,7 +73,7 @@ void ExpGem::PlayerCheck()
 		Death();
 
 		// ÇÃ·¹ÀÌ¾î ·¹º§ ³ô¾ÆÁö¸é È¹µæ·ü ³·¾ÆÁöµµ·Ï
-		float Ratio = 1 - (GameInfo::GetPlayerInfo()->Level_ / GameInfo::GetPlayerInfo()->MaxLevel_);
+		float Ratio = 1 - static_cast<float>((GameInfo::GetPlayerInfo()->Level_ / GameInfo::GetPlayerInfo()->MaxLevel_));
 		float EarnedExp = Exp_ * Ratio;
 
 		float MaxExp = GameInfo::GetPlayerInfo()->MaxExp_;

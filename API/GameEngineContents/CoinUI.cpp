@@ -8,6 +8,9 @@
 #include "GameInfo.h"
 
 CoinUI::CoinUI() 
+	: EarnedCoin_(0)
+	, CoinRenderer_(nullptr)
+	, BackBufferDC_(nullptr)
 {
 }
 
@@ -31,17 +34,17 @@ void CoinUI::Start()
 
 void CoinUI::Update()
 {
-	Coin_ = GameInfo::GetPlayerInfo()->EearnedCoin_;
+	EarnedCoin_ = GameInfo::GetPlayerInfo()->EearnedCoin_;
 }
 
 void CoinUI::Render()
 {
 	TCHAR Buffer[30] = "";
-	sprintf_s(Buffer, "%d", Coin_);
+	sprintf_s(Buffer, "%d", EarnedCoin_);
 
 	// 들여쓰기
-	int StrLength = strlen(Buffer) - 1; 
+	int StrLength = static_cast<int>(strlen(Buffer)) - 1; 
 	int Space = 12 * StrLength;
 
-	TextOutA(BackBufferDC_, GetPosition().x - Space, GetPosition().y, Buffer, strlen(Buffer));
+	TextOutA(BackBufferDC_, GetPosition().ix() - Space, GetPosition().iy(), Buffer, static_cast<int>(strlen(Buffer)));
 }

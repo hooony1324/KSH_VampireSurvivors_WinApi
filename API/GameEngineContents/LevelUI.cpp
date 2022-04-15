@@ -53,9 +53,9 @@ void LevelUI::Render()
 	TCHAR Buffer[30] = "";
 	sprintf_s(Buffer, "LV %d", PlayerLevel_);
 
-	int StrLength = strlen(Buffer) - 4; 
+	int StrLength = static_cast<int>(strlen(Buffer)) - 4;
 	int Space = 10 * StrLength;
 
-	TextOutA(BackBufferDC_, GetPosition().x - Space, GetPosition().y, Buffer, strlen(Buffer));
+	TextOutA(BackBufferDC_, GetPosition().ix() - Space, GetPosition().iy(), Buffer, static_cast<int>(strlen(Buffer)));
 
 }

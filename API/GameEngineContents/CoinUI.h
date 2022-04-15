@@ -25,7 +25,7 @@ protected:
 
 private:
 	HDC BackBufferDC_;
-	int Coin_;
+	int EarnedCoin_;
 
 	GameEngineRenderer* CoinRenderer_;
 };
