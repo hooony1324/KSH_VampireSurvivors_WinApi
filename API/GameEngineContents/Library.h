@@ -20,7 +20,6 @@ public:
 	float4 GetRendererScale();
 	void CheckPlayerOnEnd();
 
-
 protected:
 
 private:
@@ -29,18 +28,9 @@ private:
 	virtual void Render();
 
 	GameEngineRenderer* Map_;
-	float				MapLeftX_;
-	float				MapRightX_;
-	
-	GameEngineCollision* MapWallTop_;
-	GameEngineCollision* MapWallBot_;
-	std::vector<GameEngineCollision*> BumpedPlayer_; // 맵의 위 아래 충돌
 
 	GameEngineCollision* MapEndLeft_;
 	GameEngineCollision* MapEndRight_;
 
-
-	// 플레이어 맵 위, 아래에서 막음
-	void PlayerBlock();
 };
 

@@ -70,6 +70,8 @@ void Player::Start()
 
 
 	// 충돌
+	MapColImage_ = GameEngineImageManager::GetInst()->Find("LibraryColMap.bmp");
+
 	PlayerCol_ = CreateCollision("Player", { 40, 40 });
 	PlayerShootRange_ = CreateCollision("PlayerShootRange", { 600, 600 });
 	PlayerShootRange_->Off(); // 디버그시 안보이게
@@ -77,6 +79,8 @@ void Player::Start()
 	// 슈팅
 	Shooter1_ = GetLevel()->CreateActor<ProjectileShooter>(static_cast<int>(RENDER_ORDER::PLAYER), "Shooter");
 	Shooter1_->InitShooter(BulletType::FLAME_BLUE, 2, 0.12f, 2.0f, 1.0f);
+
+
 }
 
 void Player::Update()
@@ -105,7 +109,7 @@ void Player::Render()
 {
 	HpBarRender();
 
-	//Vector2D::DebugVectorRender(this);
+	Vector2D::DebugVectorRender(this);
 }
 
 void Player::SetGameInfo()
@@ -177,7 +181,8 @@ void Player::PlayerMove()
 		PlayerRenderer_->ChangeAnimation("Walk_Right");
 	}
 
-	SetMove(MoveDir_ * GameEngineTime::GetDeltaTime(static_cast<int>(TIME_GROUP::PLAYER)) * Speed_);
+	float Speed = MapColCheck(Speed_);
+	SetMove(MoveDir_ * GameEngineTime::GetDeltaTime(static_cast<int>(TIME_GROUP::PLAYER)) * Speed);
 
 	// 중력 적용
 	/*AccGravity_ += GameEngineTime::GetDeltaTime() * Gravity_;
@@ -234,6 +239,51 @@ void Player::AllCollisionCheck()
 
 }
 
+float Player::MapColCheck(float _PlayerSpeed)
+{
+	if (MoveDir_.x == 0.0f && MoveDir_.y == 0.0f)
+	{
+		return _PlayerSpeed;
+	}
+
+	// ex map.x == 14000
+	// 1) {17000, 840} -> 3000 840 	2) {-3000, 840} -> 11000 840	3) {-33000, 840} ->  
+	int PlayerPosX = GetPosition().ix() % MapColImage_->GetScale().ix();
+	if (PlayerPosX < 0)
+	{
+		PlayerPosX = PlayerPosX + MapColImage_->GetScale().ix();
+	}
+
+	float4 PlayerColPos = { static_cast<float>(PlayerPosX), GetPosition().y };
+	
+	int ColorTop = MapColImage_->GetImagePixel(PlayerColPos + float4{ 0, -20});
+	int ColorBot = MapColImage_->GetImagePixel(PlayerColPos + float4{ 0, 20});
+	int ColorLeft = MapColImage_->GetImagePixel(PlayerColPos + float4{ -20, 0});
+	int ColorRight = MapColImage_->GetImagePixel(PlayerColPos + float4{ 20, 0});
+
+	if (RGB(0, 0, 0) == ColorTop && MoveDir_.y < 0.0f)
+	{
+		return 0.0f;
+	}
+
+	if (RGB(0, 0, 0) == ColorBot && MoveDir_.y > 0.0f)
+	{
+		return 0.0f;
+	}
+
+	if (RGB(0, 0, 0) == ColorLeft && MoveDir_.x < 0.0f)
+	{
+		return 0.0f;
+	}
+
+	if (RGB(0, 0, 0) == ColorRight && MoveDir_.x > 0.0f)
+	{
+		return 0.0f;
+	}
+
+	return _PlayerSpeed;
+}
+
 void Player::MonsterAttackCheck()
 {
 	bool BumpMonster = false;
@@ -258,9 +308,6 @@ void Player::MonsterAttackCheck()
 }
 
 
-void Player::ClearBullets()
-{
-}
 
 float4 Player::ShootableEnemeyCheck()
 {

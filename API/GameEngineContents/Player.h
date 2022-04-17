@@ -21,7 +21,6 @@ public:
 	Player& operator=(const Player& _Other) = delete;
 	Player& operator=(Player&& _Other) noexcept = delete;
 
-	void ClearBullets(); // 레벨 넘어갈 때 DeathTime 남아있는 Bullets 제거
 
 private:
 	/*float Gravity_;
@@ -65,8 +64,11 @@ private:
 
 	// 충돌 체크
 	void AllCollisionCheck();
+	float MapColCheck(float _PlayerSpeed);
 	void MonsterAttackCheck();
 	float4 ShootableEnemeyCheck();
+
+	GameEngineImage* MapColImage_;
 
 	// 슈팅
 	void Shooting();
