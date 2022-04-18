@@ -17,10 +17,17 @@ StatUI::~StatUI()
 void StatUI::Start()
 {
 	SetPosition(float4{8, 40});
-	GameEngineRenderer* Renderer_ = CreateRenderer("StatUI.bmp");
-	SetScale(Renderer_->GetScale());
-	Renderer_->CameraEffectOff();
-	Renderer_->SetPivot(Renderer_->GetScale().Half());
+	GameEngineRenderer* RendererBack = CreateRenderer("StatUI.bmp");
+	GameEngineRenderer* RendererText = CreateRenderer("StatUIText.bmp");
+
+
+	SetScale(RendererBack->GetScale());
+	RendererBack->SetAlpha(100);
+	RendererBack->CameraEffectOff();
+	RendererBack->SetPivot(RendererBack->GetScale().Half());
+
+	RendererText->CameraEffectOff();
+	RendererText->SetPivot(RendererText->GetScale().Half());
 
 
 

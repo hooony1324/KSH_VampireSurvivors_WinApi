@@ -131,7 +131,7 @@ void PlayLevel::LevelChangeEnd()
 	}
 	AllEnemy_.clear();
 
-	BgmPlayer.Stop();
+	//BgmPlayer.Stop();
 }
 
 void PlayLevel::Update()

@@ -72,7 +72,10 @@ private:
 
 	// ½´ÆÃ
 	void Shooting();
-	ProjectileShooter* Shooter1_;
+	ProjectileShooter* MagicShooter_;
+	ProjectileShooter* KnifeShooter_;
+	ProjectileShooter* FireShooter_;
+	ProjectileShooter* RuneShooter_;
 
 	
 };

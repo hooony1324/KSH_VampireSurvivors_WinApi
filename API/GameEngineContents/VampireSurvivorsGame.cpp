@@ -50,12 +50,8 @@ void VampireSurvivorsGame::GameInit()
 		GameEngineInput::GetInst()->CreateKey("ChangeLevelPrev", VK_LEFT);
 
 		// Volume
-		GameEngineInput::GetInst()->CreateKey("VolumeUp", VK_UP);
-		GameEngineInput::GetInst()->CreateKey("VolumeDown", VK_DOWN);
-
-		// »èÁ¦ÇØµµ µÊ
-		GameEngineInput::GetInst()->CreateKey("KillPlayer", 'V');
-		GameEngineInput::GetInst()->CreateKey("PlayerDamaged", 'P');
+		/*GameEngineInput::GetInst()->CreateKey("VolumeUp", VK_UP);
+		GameEngineInput::GetInst()->CreateKey("VolumeDown", VK_DOWN);*/
 
 		GameEngineInput::GetInst()->CreateKey("LevelUp", 'L');
 		GameEngineInput::GetInst()->CreateKey("Num1", '1');

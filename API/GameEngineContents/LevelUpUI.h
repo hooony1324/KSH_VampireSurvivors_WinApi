@@ -1,7 +1,9 @@
 #pragma once
 #include <GameEngine/GameEngineActor.h>
+#include <vector>
 
 // Ό³Έν :
+class GameEngineRenderer;
 class LevelUpUI : public GameEngineActor
 {
 public:
@@ -36,5 +38,12 @@ protected:
 
 private:
 	static bool IsActivated_;
+
+	std::vector<int> RandomSkills_;
+
+	GameEngineRenderer* Renderer1_;
+	GameEngineRenderer* Renderer2_;
+	GameEngineRenderer* Renderer3_;
+	GameEngineRenderer* Renderer4_;
 };
 

@@ -77,8 +77,8 @@ void Player::Start()
 	PlayerShootRange_->Off(); // 디버그시 안보이게
 
 	// 슈팅
-	Shooter1_ = GetLevel()->CreateActor<ProjectileShooter>(static_cast<int>(RENDER_ORDER::PLAYER), "Shooter");
-	Shooter1_->InitShooter(BulletType::FLAME_BLUE, 2, 0.12f, 2.0f, 1.0f);
+	MagicShooter_ = GetLevel()->CreateActor<ProjectileShooter>(static_cast<int>(RENDER_ORDER::PLAYER), "Shooter");
+	MagicShooter_->InitShooter(BulletType::FLAME_BLUE, 2, 0.12f, 2.0f, 1.0f);
 
 
 }
@@ -241,6 +241,7 @@ void Player::AllCollisionCheck()
 
 float Player::MapColCheck(float _PlayerSpeed)
 {
+	// 움직임이 없으면 체크할 필요 없음
 	if (MoveDir_.x == 0.0f && MoveDir_.y == 0.0f)
 	{
 		return _PlayerSpeed;
@@ -326,7 +327,7 @@ float4 Player::ShootableEnemeyCheck()
 void Player::Shooting()
 {
 	float4 MonsterPos = ShootableEnemeyCheck();
-	Shooter1_->Shooting(GameEngineTime::GetDeltaTime(static_cast<int>(TIME_GROUP::WEAPON)), PlayerPos_, MonsterPos);
+	MagicShooter_->Shooting(GameEngineTime::GetDeltaTime(static_cast<int>(TIME_GROUP::WEAPON)), PlayerPos_, MonsterPos);
 
 }
 

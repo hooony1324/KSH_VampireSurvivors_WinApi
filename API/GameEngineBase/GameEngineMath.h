@@ -4,6 +4,12 @@
 // Ό³Έν :
 class GameEngineMath
 {
+public:
+	static const float PIE;
+	static const float DEG;
+	static const float DegreeToRadian;
+
+
 private:
 	// constrcuter destructer
 	GameEngineMath();
@@ -14,15 +20,22 @@ private:
 	GameEngineMath(GameEngineMath&& _Other) noexcept = delete;
 	GameEngineMath& operator=(const GameEngineMath& _Other) = delete;
 	GameEngineMath& operator=(GameEngineMath&& _Other) noexcept = delete;
-
-protected:
-
-private:
-
 };
 
 class float4
 {
+public:
+	static float4 DegreeToDirectionFloat4(float _Degree)
+	{
+		return RadianToDirectionFloat4(_Degree * GameEngineMath::DegreeToRadian);
+	}
+
+	static float4 RadianToDirectionFloat4(float _Radian)
+	{
+		return { cosf(_Radian), sinf(_Radian) };
+	}
+
+
 public:
 	static float4 LEFT;
 	static float4 RIGHT;
@@ -89,7 +102,7 @@ public:
 		return sqrtf((x * x) + (y * y));
 	}
 
-	void Normal2D() 
+	void Normal2D()
 	{
 		float Len = Len2D();
 		if (0 == Len)
@@ -114,7 +127,7 @@ public:
 	}
 
 
-	
+
 
 	float4 operator-(const float4& _Other) const
 	{
@@ -173,15 +186,15 @@ public:
 		return *this;
 	}
 
-	bool CompareInt2D(const float4& _Value) 
+	bool CompareInt2D(const float4& _Value)
 	{
 		return ix() == _Value.ix() && iy() == _Value.iy();
 	}
 
 	bool CompareInt3D(const float4& _Value)
 	{
-		return ix() == _Value.ix() && 
-			iy() == _Value.iy() && 
+		return ix() == _Value.ix() &&
+			iy() == _Value.iy() &&
 			iz() == _Value.iz();
 	}
 

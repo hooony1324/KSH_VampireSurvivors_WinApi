@@ -44,7 +44,6 @@ float4 Library::GetRendererScale()
 	return Map_->GetScale();
 }
 
-// 왼쪽으로 움직여야되면 -1, 오른쪽이면 1 반환
 void Library::CheckPlayerOnEnd()
 {
 

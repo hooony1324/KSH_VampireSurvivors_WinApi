@@ -2,10 +2,7 @@
 #include <string>
 #include "GameEngineTime.h"
 
-// 설명 :
-// 레벨은 항상 업데이트가 되어야함
-// 반면에 플레이어, 몬스터는 화면에 잠깐 안보이게 한다거나
-// 아예 죽었다는 처리를 할 수 있어야 한다
+
 class GameEngineUpdateObject
 {
 public:
@@ -18,6 +15,7 @@ public:
 	GameEngineUpdateObject(GameEngineUpdateObject&& _Other) noexcept = delete;
 	GameEngineUpdateObject& operator=(const GameEngineUpdateObject& _Other) = delete;
 	GameEngineUpdateObject& operator=(GameEngineUpdateObject&& _Other) noexcept = delete;
+
 
 	inline void On()
 	{
@@ -39,12 +37,28 @@ public:
 		return IsDeath_;
 	}
 
-	inline void Death()
+	void AddAccTime(float _DeltaTime)
+	{
+		AccTime_ += _DeltaTime;
+	}
+
+	float GetAccTime()
+	{
+		return AccTime_;
+	}
+
+
+	void ReSetAccTime()
+	{
+		AccTime_ = 0.0f;
+	}
+
+
+	inline 	void Death()
 	{
 		IsDeath_ = true;
 	}
 
-	// DeathTime설정되면 ReleaseUpdate를 Actor Update주기에 추가
 	void ReleaseUpdate()
 	{
 		if (false == IsReleaseUpdate_)
@@ -71,19 +85,19 @@ public:
 		return Order_;
 	}
 
-	// 렌더러 만들 때 순서 초기화
 	virtual inline void SetOrder(int _Order)
 	{
 		Order_ = _Order;
 	}
 
-
 private:
 	int Order_;
 	bool IsReleaseUpdate_;
 	float DeathTime_;
+	float AccTime_;
 
 	bool IsUpdate_;
 	bool IsDeath_;
+
 };
 

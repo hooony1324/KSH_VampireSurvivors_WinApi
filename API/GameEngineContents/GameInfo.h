@@ -12,6 +12,7 @@ enum class ActiveType
 	RUNETRACER,
 	AXE,
 	CLOCKLANCET,
+	CROSS,
 
 	// ³ª¸ÓÁö
 	KINGBIBLE,
@@ -19,6 +20,10 @@ enum class ActiveType
 	GARLIC,
 	LAUREL,
 
+	LIGHTENINGRING,
+	HOLYWATER,
+	FIVESTAR,
+	MAX
 };
 
 enum class PassiveType
@@ -31,7 +36,7 @@ enum class PassiveType
 	CLOVER,			// + CROSS = HEAVENSWORD
 	PUMMAROLA,		// + GARLIC = SOULEATER
 	WING,
-
+	MAX
 };
 
 

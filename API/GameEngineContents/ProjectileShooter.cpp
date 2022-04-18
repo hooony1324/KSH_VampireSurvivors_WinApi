@@ -3,6 +3,7 @@
 #include <GameEngineBase/GameEngineWindow.h>
 #include <GameEngine/GameEngineImageManager.h>
 #include <GameEngine/GameEngineRenderer.h>
+#include <GameEngineBase/GameEngineRandom.h>
 
 #include "ObjectEnum.h"
 #include "Vector2D.h"
@@ -78,6 +79,7 @@ void ProjectileShooter::Shooting(float _DeltaTime, float4 _PlayerPos, float4 _Mo
 		return;
 	}
 
+	// MagicWand
 	// ÃÑ¾Ë ½î°í isShoot = true
 	Projectile* Bullet = GetLevel()->CreateActor<Projectile>(static_cast<int>(ACTOR_ORDER::PLAYER), "Bullet");
 	Bullet->SetType(BT_);
