@@ -11,6 +11,8 @@
 #include "ObjectEnum.h"
 #include "GameInfo.h"
 
+#include "StatUI.h"
+
 int LevelUpUI::CreateCount_ = 0;
 bool LevelUpUI::IsActivated_ = false;
 
@@ -40,6 +42,17 @@ void LevelUpUI::Start()
 	SetScale(Renderer->GetScale());
 	Renderer->CameraEffectOff();
 	Renderer->SetPivot(GameEngineWindow::GetScale().Half() + float4{0, 10});
+
+	if (nullptr == StatUI_)
+	{
+		StatUI_ = GetLevel()->CreateActor<StatUI>(static_cast<int>(ACTOR_ORDER::UI), "UI");
+	}
+	else
+	{
+		StatUI_->On();
+	}
+	
+
 
 	// 사운드
 	GameEngineSound::SoundPlayOneShot("LevelUp.MP3", 0);
@@ -100,9 +113,9 @@ void LevelUpUI::Start()
 		SelectNum_ = Spare;
 	}
 
-	while (TrueCount <= SelectNum_)
+	while (TrueCount < SelectNum_)
 	{
-		int Index = Random.RandomInt(0, static_cast<int>(SkillType::MAX));
+		int Index = Random.RandomInt(0, static_cast<int>(SkillType::MAX) - 1);
 		
 		if (false == SelectedSkills[Index] && GameInfo::GetPlayerInfo()->SkillLevelInfo_[Index] < SKILL_LEVELMAX)
 		{
@@ -114,10 +127,7 @@ void LevelUpUI::Start()
 		}
 	}
 
-
-
 	ShowRandomSkills();
-
 
 }
 
@@ -136,6 +146,7 @@ void LevelUpUI::Update()
 		
 
 		// GameInfo::GetPlayerInfo()->ActivatedSkillsCount_ ++;
+		// GameInfo::GetPlayerInfo()->SkillLevelInfo_[SkillType:: ] += 1; 하여튼 레벨업
 		RandomSkills_.clear();
 
 		// 종료
@@ -143,6 +154,7 @@ void LevelUpUI::Update()
 		CreateCount_--;
 		GameInfo::SetPause(false);
 		IsActivated_ = false;
+		StatUI_->Off();
 		return;
 	}
 
@@ -153,6 +165,7 @@ void LevelUpUI::Update()
 
 
 		// GameInfo::GetPlayerInfo()->ActivatedSkillsCount_ ++;
+		// GameInfo::GetPlayerInfo()->SkillLevelInfo_[SkillType:: ] += 1; 하여튼 레벨업
 		RandomSkills_.clear();
 
 		// 종료
@@ -160,6 +173,7 @@ void LevelUpUI::Update()
 		CreateCount_--;
 		GameInfo::SetPause(false);
 		IsActivated_ = false;
+		StatUI_->Off();
 		return;
 	}
 
@@ -170,6 +184,7 @@ void LevelUpUI::Update()
 
 
 		// GameInfo::GetPlayerInfo()->ActivatedSkillsCount_ ++;
+		// GameInfo::GetPlayerInfo()->SkillLevelInfo_[SkillType:: ] += 1; 하여튼 레벨업
 		RandomSkills_.clear();
 
 		// 종료
@@ -177,6 +192,7 @@ void LevelUpUI::Update()
 		CreateCount_--;
 		GameInfo::SetPause(false);
 		IsActivated_ = false;
+		StatUI_->Off();
 		return;
 	}
 
@@ -194,6 +210,7 @@ void LevelUpUI::Update()
 		CreateCount_--;
 		GameInfo::SetPause(false);
 		IsActivated_ = false;
+		StatUI_->Off();
 		return;
 	}
 
@@ -208,6 +225,7 @@ void LevelUpUI::ShowRandomSkills()
 {
 	if (0 >= SelectNum_)
 	{
+		// 돈 또는 체력 선택
 		return;
 	}
 

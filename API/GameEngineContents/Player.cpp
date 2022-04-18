@@ -110,7 +110,7 @@ void Player::Render()
 {
 	HpBarRender();
 
-	Vector2D::DebugVectorRender(this);
+	//Vector2D::DebugVectorRender(this);
 }
 
 void Player::SetGameInfo()

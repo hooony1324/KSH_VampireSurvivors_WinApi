@@ -57,4 +57,5 @@ void GameInfo::SetPlayerInfo()
 	// ½ºÅ³
 	PlayerInfo_->ActivatedSkillsCount_ = 0;
 
+
 }

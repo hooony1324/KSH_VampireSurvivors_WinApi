@@ -44,6 +44,8 @@ void PlayLevel::Loading()
 // 맵, 캐릭터, .. 가 선택 되면 해당하는 맵으로 액터를 생성해야 함
 void PlayLevel::LevelChangeStart()
 {	
+	DebugModeOff();
+
 	// 시간 설정
 	GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::MONSTER), 1.0f);
 	GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::PLAYER), 1.0f);
@@ -146,7 +148,7 @@ void PlayLevel::Update()
 
 	if (true == GameEngineInput::GetInst()->IsDown("ColDebugger"))
 	{
-		IsDebugModeSwitch();
+		DebugModeSwitch();
 	}
 
 	// 일시정지 기능

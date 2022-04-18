@@ -39,6 +39,8 @@ protected:
 private:
 	static bool IsActivated_;
 
+	GameEngineActor* StatUI_;
+
 	// Render1_ ~ Render4_ 액티브/패시브
 	int SelectNum_;
 	std::vector<int> RandomSkills_;
