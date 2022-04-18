@@ -6,6 +6,7 @@
 #include <GameEngineBase/GameEngineInput.h>
 #include <GameEngineBase/GameEngineSound.h>
 #include <GameEngineBase/GameEngineRandom.h>
+#include <string>
 
 #include "ObjectEnum.h"
 #include "GameInfo.h"
@@ -13,8 +14,19 @@
 int LevelUpUI::CreateCount_ = 0;
 bool LevelUpUI::IsActivated_ = false;
 
+std::string SkillBoxUI[] = 
+{
+	"LevelupKnife.bmp", "LevelupMagicwand.bmp", "LevelupFirewand.bmp", "LevelupRunetracer.bmp",
+	"LevelupAxe.bmp", "LevelupClocklancet.bmp", "LevelupCross.bmp", "LevelupBible.bmp",
+	"LevelupWhip.bmp", "LevelupGarlic.bmp", "LevelupLaurel.bmp", "LevelupLightening.bmp",
+	"LevelupHolywater.bmp", "LevelupFiveStar.bmp", "LevelupBracer.bmp", "LevelupEmptytome.bmp",
+	"LevelupSpinach.bmp", "LevelupSpellbinder.bmp", "LevelupHollowheart.bmp", "LevelupClover.bmp",
+	"LevelupPummarola.bmp", "LevelupCandle.bmp", "LevelupWing.bmp"
+};
+
 LevelUpUI::LevelUpUI() 
 {
+	RandomSkills_.reserve(4);
 }
 
 LevelUpUI::~LevelUpUI() 
@@ -34,22 +46,26 @@ void LevelUpUI::Start()
 	GameInfo::SetPause(true);
 	IsActivated_ = true;
 
-	int SelectNum = 3;
+
+	// 무기 선택 박스 1~4에 띄울 스킬(액티브/패시브) 선택
+
+	SelectNum_ = 3;
 	// 무기 선택 박스 1
 	Renderer1_ = CreateRenderer();
-	Renderer1_->SetImage("LevelUpMagicwand.bmp");
+	Renderer1_->SetImage("LevelupBlank.bmp");
 	Renderer1_->CameraEffectOff();
 	Renderer1_->SetPivot(GameEngineWindow::GetScale().Half() + float4{2, -Renderer1_->GetImageScale().y});
+	
 
 	// 무기 선택 박스 2
 	Renderer2_ = CreateRenderer();
-	Renderer2_->SetImage("LevelUpMagicwand.bmp");
+	Renderer2_->SetImage("LevelupBlank.bmp");
 	Renderer2_->CameraEffectOff();
 	Renderer2_->SetPivot(GameEngineWindow::GetScale().Half() + float4{ 2, 0 });
 
 	// 무기 선택 박스 3
 	Renderer3_ = CreateRenderer();
-	Renderer3_->SetImage("LevelUpMagicwand.bmp");
+	Renderer3_->SetImage("LevelupBlank.bmp");
 	Renderer3_->CameraEffectOff();
 	Renderer3_->SetPivot(GameEngineWindow::GetScale().Half() + float4{ 2, Renderer1_->GetImageScale().y });
 
@@ -64,28 +80,43 @@ void LevelUpUI::Start()
 	{
 		// 무기 선택 박스 4
 		Renderer4_ = CreateRenderer();
-		Renderer4_->SetImage("LevelUpMagicwand.bmp");
+		Renderer4_->SetImage("LevelupBlank.bmp");
 		Renderer4_->CameraEffectOff();
 		Renderer4_->SetPivot(GameEngineWindow::GetScale().Half() + float4{ 2, Renderer1_->GetImageScale().y * 2 });
 
-		SelectNum = 4;
+		SelectNum_ = 4;
 	}
 
 	// 중요 : 처음엔 0 ~ 10 이지만 나중에는 뽑은 스킬의 상태에 따라 뽑을 수 있는 스킬배열이 달라져야 함 ex. SelectableSkills[]
 	// 0 ~ 10 연속으로 SelectNum개의 겹치지 않는 랜덤수 뽑기
-	bool SelectedSkills[static_cast<int>(ActiveType::MAX)] = { false, };
+	bool SelectedSkills[static_cast<int>(SkillType::MAX)] = { false, };
 	int TrueCount = 0;
-	while (TrueCount <= SelectNum)
+
+	// 스킬 여유공간 체크
+	int Count = GameInfo::GetPlayerInfo()->ActivatedSkillsCount_;
+	int Spare = SKILL_LEVELMAX - Count;
+	if (Spare < SelectNum_)
 	{
-		int Index = Random.RandomInt(0, static_cast<int>(ActiveType::MAX));
+		SelectNum_ = Spare;
+	}
+
+	while (TrueCount <= SelectNum_)
+	{
+		int Index = Random.RandomInt(0, static_cast<int>(SkillType::MAX));
 		
-		if (false == SelectedSkills[Index])
+		if (false == SelectedSkills[Index] && GameInfo::GetPlayerInfo()->SkillLevelInfo_[Index] < SKILL_LEVELMAX)
 		{
 			TrueCount++;
 			SelectedSkills[Index] = true;
+
+			// 3~4개의 박스 UI에 올릴 무기 선택
+			RandomSkills_.push_back(Index);
 		}
 	}
 
+
+
+	ShowRandomSkills();
 
 
 }
@@ -99,17 +130,71 @@ void LevelUpUI::Update()
 
 
 	// 아이템 선택
-	if (true == GameEngineInput::GetInst()->IsDown("Num1"))
+	if (true == GameEngineInput::GetInst()->IsDown("Num1") && SelectNum_ >= 1)
 	{
-		// 플레이어에게 무기 장착
+		// 플레이어에게 무기 정보 갱신
 		
 
+		// GameInfo::GetPlayerInfo()->ActivatedSkillsCount_ ++;
+		RandomSkills_.clear();
 
 		// 종료
 		Death();
 		CreateCount_--;
 		GameInfo::SetPause(false);
 		IsActivated_ = false;
+		return;
+	}
+
+	// 아이템 선택
+	if (true == GameEngineInput::GetInst()->IsDown("Num2") && SelectNum_ >= 2)
+	{
+		// 플레이어에게 무기 정보 갱신
+
+
+		// GameInfo::GetPlayerInfo()->ActivatedSkillsCount_ ++;
+		RandomSkills_.clear();
+
+		// 종료
+		Death();
+		CreateCount_--;
+		GameInfo::SetPause(false);
+		IsActivated_ = false;
+		return;
+	}
+
+	// 아이템 선택
+	if (true == GameEngineInput::GetInst()->IsDown("Num3") && SelectNum_ >= 3)
+	{
+		// 플레이어에게 무기 정보 갱신
+
+
+		// GameInfo::GetPlayerInfo()->ActivatedSkillsCount_ ++;
+		RandomSkills_.clear();
+
+		// 종료
+		Death();
+		CreateCount_--;
+		GameInfo::SetPause(false);
+		IsActivated_ = false;
+		return;
+	}
+
+	// 아이템 선택
+	if (true == GameEngineInput::GetInst()->IsDown("Num4") && SelectNum_ >= 4)
+	{
+		// 플레이어에게 무기 정보 갱신
+
+
+		// GameInfo::GetPlayerInfo()->ActivatedSkillsCount_ ++;
+		RandomSkills_.clear();
+
+		// 종료
+		Death();
+		CreateCount_--;
+		GameInfo::SetPause(false);
+		IsActivated_ = false;
+		return;
 	}
 
 
@@ -117,4 +202,41 @@ void LevelUpUI::Update()
 
 void LevelUpUI::Render()
 {
+}
+
+void LevelUpUI::ShowRandomSkills()
+{
+	if (0 >= SelectNum_)
+	{
+		return;
+	}
+
+	if (1 <= SelectNum_)
+	{
+		int SelectSkill = RandomSkills_[0];
+		Renderer1_->SetImage(SkillBoxUI[SelectSkill]);
+	}
+
+
+	if (2 <= SelectNum_)
+	{
+		int SelectSkill = RandomSkills_[1];
+		Renderer2_->SetImage(SkillBoxUI[SelectSkill]);
+	}
+
+
+	if (3 <= SelectNum_)
+	{
+		int SelectSkill = RandomSkills_[2];
+		Renderer3_->SetImage(SkillBoxUI[SelectSkill]);
+	}
+
+
+	if (4 <= SelectNum_)
+	{
+		int SelectSkill = RandomSkills_[3];
+		Renderer4_->SetImage(SkillBoxUI[SelectSkill]);
+	}
+
+	
 }

@@ -28,10 +28,10 @@ void ShadeRed::Start()
 {
 	//ShadeRed_ = CreateRenderer("ShadeRed_0.bmp");
 	ShadeRed_ = CreateRenderer();
-	ShadeRed_->CreateAnimation("ShadeRed_IdleLeft.bmp", "ShadeRed_IdleLeft", 0, 2, 0.2f, true);
-	ShadeRed_->CreateAnimation("ShadeRed_IdleRight.bmp", "ShadeRed_IdleRight", 0, 2, 0.2f, true);
+	ShadeRed_->CreateAnimation("ShadeRed_WalkLeft.bmp", "ShadeRed_WalkLeft", 0, 2, 0.2f, true);
+	ShadeRed_->CreateAnimation("ShadeRed_WalkRight.bmp", "ShadeRed_WalkRight", 0, 2, 0.2f, true);
 	ShadeRed_->CreateAnimation("ShadeRed_Dead.bmp", "ShadeRed_Dead", 0, 29, 0.1f, false);
-	ShadeRed_->ChangeAnimation("ShadeRed_IdleRight");
+	ShadeRed_->ChangeAnimation("ShadeRed_WalkRight");
 	SetScale({ 100, 100 });
 
 	ShadeRedCol_ = CreateCollision("Enemy", { 30, 30 });
@@ -76,11 +76,11 @@ void ShadeRed::Update()
 
 	if (0 >= DestDir.x)
 	{
-		ShadeRed_->ChangeAnimation("ShadeRed_IdleLeft");
+		ShadeRed_->ChangeAnimation("ShadeRed_WalkLeft");
 	}
 	else
 	{
-		ShadeRed_->ChangeAnimation("ShadeRed_IdleRight");
+		ShadeRed_->ChangeAnimation("ShadeRed_WalkRight");
 	}
 
 	BlockOther();

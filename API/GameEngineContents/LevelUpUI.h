@@ -39,11 +39,16 @@ protected:
 private:
 	static bool IsActivated_;
 
+	// Render1_ ~ Render4_ 액티브/패시브
+	int SelectNum_;
 	std::vector<int> RandomSkills_;
+	void ShowRandomSkills();
 
 	GameEngineRenderer* Renderer1_;
 	GameEngineRenderer* Renderer2_;
 	GameEngineRenderer* Renderer3_;
 	GameEngineRenderer* Renderer4_;
+
+	GameEngineRenderer* Renderers_[4];
 };
 

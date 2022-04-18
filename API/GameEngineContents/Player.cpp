@@ -49,7 +49,7 @@ void Player::Start()
 
 	// 플레이어 이미지, 애니메이션 관련 설정
 	GameInfo::SetCharacter(CharacterType::Cavallo);	// 디버그용도 : 플레이 레벨에서 시작하기 때문에 설정
-	GameInfo::SetPlayerInfo();
+	GameInfo::SetPlayerInfo();	// 선택한 캐릭터정보를 플레이어정보로 세팅
 	CharacterStat_ = GameInfo::GetCharacter();
 
 	PlayerRenderer_ = CreateRenderer();
@@ -78,9 +78,10 @@ void Player::Start()
 
 	// 슈팅
 	MagicShooter_ = GetLevel()->CreateActor<ProjectileShooter>(static_cast<int>(RENDER_ORDER::PLAYER), "Shooter");
-	MagicShooter_->InitShooter(BulletType::FLAME_BLUE, 2, 0.12f, 2.0f, 1.0f);
+	MagicShooter_->InitShooter(BulletType::FLAME_BLUE, 2, 0.1f, 2.0f, 1.0f);
 
-
+	KnifeShooter_ = GetLevel()->CreateActor<ProjectileShooter>(static_cast<int>(RENDER_ORDER::PLAYER), "Shooter");
+	KnifeShooter_->InitShooter(BulletType::KNIFE, 2, 0.1f, 2.0f, 1.0f);
 }
 
 void Player::Update()
@@ -327,8 +328,8 @@ float4 Player::ShootableEnemeyCheck()
 void Player::Shooting()
 {
 	float4 MonsterPos = ShootableEnemeyCheck();
-	MagicShooter_->Shooting(GameEngineTime::GetDeltaTime(static_cast<int>(TIME_GROUP::WEAPON)), PlayerPos_, MonsterPos);
-
+	//MagicShooter_->Shooting(GameEngineTime::GetDeltaTime(static_cast<int>(TIME_GROUP::WEAPON)), PlayerPos_, MonsterPos);
+	KnifeShooter_->Shooting(GameEngineTime::GetDeltaTime(static_cast<int>(TIME_GROUP::WEAPON)), PlayerPos_, MonsterPos, MoveDir_);
 }
 
 

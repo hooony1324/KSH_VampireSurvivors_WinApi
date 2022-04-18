@@ -15,8 +15,8 @@ std::vector<std::string> ProjectileList = { "Sword.bmp", "ProjectileHoly1.bmp", 
 Projectile::Projectile()
 	: ProjImage_(nullptr)
 	, ShootDir_(float4::ZERO)
-	, ProjVec_(float4::ZERO)
 	, Damage_(10)
+	, Speed_(200)
 	, Duration_(5)	// 지속시간
 {
 }
@@ -38,7 +38,7 @@ void Projectile::Start()
 void Projectile::Update()
 {
 	float DeltaTime = GameEngineTime::GetDeltaTime(static_cast<int>(TIME_GROUP::WEAPON));
-	SetMove(ShootDir_ * DeltaTime * 300.0f);
+	SetMove(ShootDir_ * DeltaTime * Speed_);
 	Duration_ -= DeltaTime;
 
 
@@ -56,22 +56,28 @@ void Projectile::Render()
 void Projectile::SetType(BulletType _BT)
 {
 	ProjImage_ = CreateRenderer(ProjectileList[static_cast<int>(_BT)]);
-	ProjCol_ = CreateCollision("PlayerAttack", ProjImage_->GetScale());
+	ProjCol_ = CreateCollision("PlayerAttack", float4{9, 9});
 
 	// 세부 설정
 	switch (_BT)
 	{
 	case BulletType::KNIFE:
+	{
+		GameEngineSound::SoundPlayOneShot("ProjectileKnife.mp3", 0);
+		auto val = ShootDir_;
+		ProjCol_->SetPivot(ShootDir_ * 18);
+		Speed_ = 500.0f;
 		break;
-
+	}
 	case BulletType::FLAME_BLUE:
 	{
 		// 발사 효과음
-		GameEngineSound::SoundPlayOneShot("ProjectileMagic.MP3", 0);
-		SetDamage(50);
+		GameEngineSound::SoundPlayOneShot("ProjectileMagic.mp3", 0);
+		Speed_ = 400.0f;
 		break;
 	}
 	case BulletType::FLAME_RED:
+		Speed_ = 300.0f;
 		break;
 
 	}

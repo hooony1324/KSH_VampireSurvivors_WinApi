@@ -58,6 +58,9 @@ void VampireSurvivorsGame::GameInit()
 		GameEngineInput::GetInst()->CreateKey("Num2", '2');
 		GameEngineInput::GetInst()->CreateKey("Num3", '3');
 		GameEngineInput::GetInst()->CreateKey("Num4", '4');
+		
+		
+		GameEngineInput::GetInst()->CreateKey("ColDebugger", 'C');
 
 
 	}
@@ -104,12 +107,12 @@ void VampireSurvivorsGame::ResourceLoad()
 	GameEngineImageManager::GetInst()->Find("Cavallo_WalkLeft.bmp")->Cut({ 56, 56 });
 
 
-	GameEngineImageManager::GetInst()->Find("Mud_IdleLeft.bmp")->Cut({ 70, 70 });
-	GameEngineImageManager::GetInst()->Find("Mud_IdleRight.bmp")->Cut({ 70, 70 });
+	GameEngineImageManager::GetInst()->Find("Mud_WalkLeft.bmp")->Cut({ 70, 70 });
+	GameEngineImageManager::GetInst()->Find("Mud_WalkRight.bmp")->Cut({ 70, 70 });
 	GameEngineImageManager::GetInst()->Find("Mud_Dead.bmp")->Cut({ 70, 70 });
 
-	GameEngineImageManager::GetInst()->Find("ShadeRed_IdleLeft.bmp")->Cut({ 70, 70 });
-	GameEngineImageManager::GetInst()->Find("ShadeRed_IdleRight.bmp")->Cut({ 70, 70 });
+	GameEngineImageManager::GetInst()->Find("ShadeRed_WalkLeft.bmp")->Cut({ 70, 70 });
+	GameEngineImageManager::GetInst()->Find("ShadeRed_WalkRight.bmp")->Cut({ 70, 70 });
 	GameEngineImageManager::GetInst()->Find("ShadeRed_Dead.bmp")->Cut({ 140, 140 });
 
 	// 사운드 리소스

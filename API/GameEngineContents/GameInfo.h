@@ -2,9 +2,13 @@
 #include <GameEngineBase/GameEngineMath.h>
 #include "Character.h"
 #include <vector>
+#include <map>
 
-enum class ActiveType
+const int SKILL_LEVELMAX = 8;
+enum class SkillType
 {
+	// @@@ Attribute : Active @@@
+	
 	// 슈팅
 	KNIFE,
 	MAGICWAND,
@@ -23,11 +27,9 @@ enum class ActiveType
 	LIGHTENINGRING,
 	HOLYWATER,
 	FIVESTAR,
-	MAX
-};
 
-enum class PassiveType
-{
+	// @@@ AttriBute : Passive @@@
+
 	BRACER,			// + SWORD = THOUSANDEDGE
 	EMPTYTOME,		// + MAGICWAND = HOLYWAND
 	SPINACH,		// + FIREWAND = HELLFIRE
@@ -35,10 +37,27 @@ enum class PassiveType
 	HOLLOWHEART,	// + WHIP = BLOODYTEAR
 	CLOVER,			// + CROSS = HEAVENSWORD
 	PUMMAROLA,		// + GARLIC = SOULEATER
+	CANDLELABRADOR,	// + AXE = DEATHSPIRAL
 	WING,
-	MAX
+	MAX,
+
+	// etc
+	NONE,
+	THOUSANDEDGE,
+	HOLYWAND,
+	HELLFIRE,
+	UNHOLYVESPERS,
+	BLOODYTEAR,
+	HEAVENSWORD,
+	SOULEATER,
 };
 
+class Skill
+{
+public:
+	SkillType Type_ = SkillType::NONE;
+	int Level_ = 0;
+};
 
 // 설명 :
 class GameInfo
@@ -77,9 +96,10 @@ public:
 		float Magnet_;			// 아이템 획득 범위
 		int	Revival_;			// 부활 횟수
 
-		// 무기 정보
-		ActiveType Active_[6];
-		PassiveType Passive_[6];
+		// 무기 정보, 12개만 장착 가능
+		Skill Skills_[12];
+		int SkillLevelInfo_[static_cast<int>(SkillType::MAX)];
+		int ActivatedSkillsCount_;
 	};
 
 public:

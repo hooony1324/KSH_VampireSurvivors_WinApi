@@ -39,10 +39,10 @@ Mud::~Mud()
 void Mud::Start()
 {
 	Mud_ = CreateRenderer();
-	Mud_->CreateFolderAnimationTimeKey("Mud_IdleLeft.bmp", "Mud_IdleLeft", static_cast<int>(TIME_GROUP::MONSTER), 0, 3, 0.2f, true);
-	Mud_->CreateFolderAnimationTimeKey("Mud_IdleRight.bmp", "Mud_IdleRight", static_cast<int>(TIME_GROUP::MONSTER), 0, 3, 0.2f, true);
+	Mud_->CreateFolderAnimationTimeKey("Mud_WalkLeft.bmp", "Mud_WalkLeft", static_cast<int>(TIME_GROUP::MONSTER), 0, 3, 0.2f, true);
+	Mud_->CreateFolderAnimationTimeKey("Mud_WalkRight.bmp", "Mud_WalkRight", static_cast<int>(TIME_GROUP::MONSTER), 0, 3, 0.2f, true);
 	Mud_->CreateFolderAnimationTimeKey("Mud_Dead.bmp", "Mud_Dead", static_cast<int>(TIME_GROUP::MONSTER), 0, 27, 0.05f, true);
-	Mud_->ChangeAnimation("Mud_IdleRight");
+	Mud_->ChangeAnimation("Mud_WalkRight");
 
 	SetScale({ 100, 100 });
 
@@ -93,11 +93,11 @@ void Mud::Update()
 
 	if (0 >= DestDir.x)
 	{
-		Mud_->ChangeAnimation("Mud_IdleLeft");
+		Mud_->ChangeAnimation("Mud_WalkLeft");
 	}
 	else
 	{
-		Mud_->ChangeAnimation("Mud_IdleRight");
+		Mud_->ChangeAnimation("Mud_WalkRight");
 	}
 
 

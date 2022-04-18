@@ -8,6 +8,8 @@
 #include "ObjectEnum.h"
 #include "Vector2D.h"
 
+GameEngineRandom Random;
+
 ProjectileShooter::ProjectileShooter()
 	: BT_(BulletType::FLAME_BLUE)
 	, Projectile_(nullptr)
@@ -43,8 +45,13 @@ void ProjectileShooter::InitShooter(BulletType _BT, int _BulletCount, float _Int
 	IntervalCount_ = InitInterval_;
 }
 
-void ProjectileShooter::Shooting(float _DeltaTime, float4 _PlayerPos, float4 _MonsterPos)
+void ProjectileShooter::Shooting(float _DeltaTime, float4 _PlayerPos, float4 _MonsterPos, float4 _PlayerMoveDir)
 {
+	if (_PlayerMoveDir.x != 0 || _PlayerMoveDir.y != 0)
+	{
+		PlayerMoveDir_ = _PlayerMoveDir;
+	}
+
 	// ÀÏ½ÃÁ¤Áö
 	if (0.1f > GameEngineTime::GetInst()->GetTimeScale(static_cast<int>(TIME_GROUP::WEAPON)))
 	{
@@ -81,13 +88,27 @@ void ProjectileShooter::Shooting(float _DeltaTime, float4 _PlayerPos, float4 _Mo
 
 	// MagicWand
 	// ÃÑ¾Ë ½î°í isShoot = true
-	Projectile* Bullet = GetLevel()->CreateActor<Projectile>(static_cast<int>(ACTOR_ORDER::PLAYER), "Bullet");
-	Bullet->SetType(BT_);
-	Bullet->SetPosition(_PlayerPos);
-	Bullet->SetDir(Vector2D::GetDirection(_PlayerPos, _MonsterPos));
+	//Projectile* Bullet = GetLevel()->CreateActor<Projectile>(static_cast<int>(ACTOR_ORDER::PLAYER), "Bullet");
+	//Bullet->SetDir(Vector2D::GetDirection(_PlayerPos, _MonsterPos));
+	//Bullet->SetType(BT_);
+	//Bullet->SetPosition(_PlayerPos);
+	
+	//BulletCount_ -= 1;
+	//isShoot_ = true;
+	//IntervalCount_ = InitInterval_;
+
+	// Knife
+	Projectile* Knife = GetLevel()->CreateActor<Projectile>(static_cast<int>(ACTOR_ORDER::PLAYER), "Bullet");
+	Knife->SetDir(PlayerMoveDir_);
+	Knife->SetType(BT_);
+
+	float4 RandomPos = float4{ Random.RandomFloat(_PlayerPos.x - 20, _PlayerPos.x + 20), Random.RandomFloat(_PlayerPos.y - 20, _PlayerPos.y + 20) };
+	Knife->SetPosition(RandomPos);
+
 	BulletCount_ -= 1;
 	isShoot_ = true;
 	IntervalCount_ = InitInterval_;
+
 
 	return;
 }

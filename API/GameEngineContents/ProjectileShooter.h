@@ -31,7 +31,8 @@ public:
 
 
 	void InitShooter(BulletType _BT, int _BulletCount, float _Interval, float _CoolTime, float _WaitTime = 0);	// 발사체, 발사 횟수, 인터벌, 쿨타임
-	void Shooting(float _DeltaTime, float4 _PlayerPos, float4 _MonsterPos);								// 총알하나 발사하면 Level에 총알포인터 넘겨줘야됨 
+	void UpgradeShooter();
+	void Shooting(float _DeltaTime, float4 _PlayerPos, float4 _MonsterPos, float4 _PlayerMoveDir = float4::ZERO);								// 총알하나 발사하면 Level에 총알포인터 넘겨줘야됨 
 
 	inline void StopShooting()
 	{
@@ -62,6 +63,8 @@ private:
 	float IntervalCount_;
 	float CoolTimeCount_;
 	bool isShoot_;
+
+	float4 PlayerMoveDir_;
 
 };
 

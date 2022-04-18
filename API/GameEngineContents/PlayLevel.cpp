@@ -144,6 +144,11 @@ void PlayLevel::Update()
 		GameEngine::GetInst().ChangeLevel("Result");
 	}
 
+	if (true == GameEngineInput::GetInst()->IsDown("ColDebugger"))
+	{
+		IsDebugModeSwitch();
+	}
+
 	// 일시정지 기능
 	GamePause();
 
