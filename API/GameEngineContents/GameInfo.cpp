@@ -54,8 +54,5 @@ void GameInfo::SetPlayerInfo()
 	PlayerInfo_->Magnet_			= Character_->Magnet_;
 	PlayerInfo_->Revival_			= Character_->Revival_;
 
-	// ½ºÅ³
-	PlayerInfo_->ActivatedSkillsCount_ = 0;
-
 
 }

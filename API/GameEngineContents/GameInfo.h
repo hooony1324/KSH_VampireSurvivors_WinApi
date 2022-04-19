@@ -13,6 +13,7 @@ enum class SkillType
 	KNIFE,
 	MAGICWAND,
 	FIREWAND,
+	ACTIVE_MAX,
 	//RUNETRACER,
 	//AXE,
 	//CLOCKLANCET,
@@ -39,7 +40,7 @@ enum class SkillType
 	//PUMMAROLA,			// + GARLIC = SOULEATER
 	//CANDLELABRADOR,		// + AXE = DEATHSPIRAL
 	//WING,
-	MAX,
+	PASSIVE_MAX,
 
 	// etc
 	NONE,
@@ -97,9 +98,9 @@ public:
 		int	Revival_;			// 부활 횟수
 
 		// 무기 정보, 12개만 장착 가능
-		Skill Skills_[12];
-		int SkillLevelInfo_[static_cast<int>(SkillType::MAX)];
-		int ActivatedSkillsCount_;
+		std::vector<SkillType> ActiveSkillSlot_;
+		std::vector<SkillType> PassiveSkillSlot_;
+		int SkillLevelInfo_[static_cast<int>(SkillType::PASSIVE_MAX)];
 	};
 
 public:

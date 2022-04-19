@@ -23,8 +23,6 @@ Enemy::Enemy()
 	, Hp_BarSize_(float4::ZERO)
 	, Hp_BarRed_(nullptr)
 	, Col_(nullptr)
-	, OtherBlockUp_(nullptr)
-	, OtherBlockDown_(nullptr)
 	, OtherBlockLeft_(nullptr)
 	, OtherBlockRight_(nullptr)
 {
@@ -45,12 +43,10 @@ void Enemy::Start()
 
 	SetScale({ 100, 100 });
 
-	Col_ = CreateCollision("Enemy", { 30, 30 });
+	Col_ = CreateCollision("Enemy", { 30, 45 });
 
-	//OtherBlockUp_ = CreateCollision("OtherGuard", { 28, 4 }, { 0, -16 });
-	//OtherBlockDown_ = CreateCollision("OtherGuard", { 28, 4 }, { 0, 16 });
-	OtherBlockLeft_ = CreateCollision("OtherGuard", { 4, 35 }, { -16, 0 });
-	OtherBlockRight_ = CreateCollision("OtherGuard", { 4, 35 }, { 16, 0 });
+	OtherBlockLeft_ = CreateCollision("OtherGuard", { 4, 45 }, { -16, 0 });
+	OtherBlockRight_ = CreateCollision("OtherGuard", { 4, 45 }, { 16, 0 });
 
 
 
@@ -64,8 +60,10 @@ void Enemy::Start()
 
 void Enemy::Update()
 {
-
 	float DeltaTime = GameEngineTime::GetDeltaTime(static_cast<int>(TIME_GROUP::MONSTER));
+	Pos_ = GetPosition();
+	PlayerPos_ = GameInfo::GetPlayerInfo()->PlayerPos_;
+
 	if (Hp_ <= 0)
 	{
 		Col_->Death();
@@ -81,9 +79,8 @@ void Enemy::Update()
 		return;
 	}
 
-	PlayerPos_ = GameInfo::GetPlayerInfo()->PlayerPos_;
-	float4 EnemyPos = GetPosition();
-	float4 DestDir = Vector2D::GetDirection(EnemyPos, PlayerPos_);
+
+	float4 DestDir = Vector2D::GetDirection(Pos_, PlayerPos_);
 
 	BlockOther();
 	Hit();
@@ -153,7 +150,7 @@ void Enemy::BlockOther()
 	if (true == Col_->CollisionResult("OtherGuard", Others_, CollisionType::Rect, CollisionType::Rect))
 	{
 		float4 OtherPos = Others_[0]->GetActor()->GetPosition();
-		Others_[0]->GetActor()->SetMove(Vector2D::GetDirection(GetPosition(), OtherPos));
+		Others_[0]->GetActor()->SetMove(Vector2D::GetDirection(Pos_, OtherPos));
 		Others_.clear();
 	}
 

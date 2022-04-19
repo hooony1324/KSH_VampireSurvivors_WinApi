@@ -113,6 +113,7 @@ void PlayLevel::LevelChangeEnd(GameEngineLevel* _NextLevel)
 
 
 	//BgmPlayer.Stop();
+
 }
 
 void PlayLevel::Update()
@@ -212,6 +213,3 @@ void PlayLevel::InfiniteMap()
 {
 	Map_->CheckPlayerOnEnd();
 }
-
-
-

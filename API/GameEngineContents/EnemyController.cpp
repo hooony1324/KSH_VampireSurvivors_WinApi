@@ -39,6 +39,7 @@ void EnemyController::Start()
 		GameEngineActor* Ptr = GetLevel()->CreateActor<Enemy>(static_cast<int>(ACTOR_ORDER::MONSTER), "Enemy");
 		Ptr->SetPosition(float4{ static_cast<float>(i) * 50, 40 });
 		Ptr->On();
+		Ptr->NextLevelOff();
 		Enemies_.push_back(Ptr);
 	}
 }

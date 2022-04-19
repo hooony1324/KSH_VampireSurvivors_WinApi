@@ -29,6 +29,7 @@ std::string SkillBoxUI[] =
 LevelUpUI::LevelUpUI() 
 {
 	RandomSkills_.reserve(4);
+
 }
 
 LevelUpUI::~LevelUpUI() 
@@ -37,6 +38,8 @@ LevelUpUI::~LevelUpUI()
 
 void LevelUpUI::Start()
 {
+
+
 	// 배경 
 	GameEngineRenderer* Renderer = CreateRenderer("LevelUpUI.bmp");
 	SetScale(Renderer->GetScale());
@@ -102,11 +105,12 @@ void LevelUpUI::Start()
 
 	// 중요 : 처음엔 0 ~ 10 이지만 나중에는 뽑은 스킬의 상태에 따라 뽑을 수 있는 스킬배열이 달라져야 함 ex. SelectableSkills[]
 	// 0 ~ 10 연속으로 SelectNum개의 겹치지 않는 랜덤수 뽑기
-	bool SelectedSkills[static_cast<int>(SkillType::MAX)] = { false, };
+	bool SelectedSkills[static_cast<int>(SkillType::PASSIVE_MAX)] = { false, };
 	int TrueCount = 0;
 
 	// 스킬 여유공간 체크
-	int Count = GameInfo::GetPlayerInfo()->ActivatedSkillsCount_;
+	int Count = static_cast<int>(SkillType::PASSIVE_MAX)
+		- (static_cast<int>(GameInfo::GetPlayerInfo()->ActiveSkillSlot_.size()) + static_cast<int>(GameInfo::GetPlayerInfo()->PassiveSkillSlot_.size()));
 	int Spare = SKILL_LEVELMAX - Count;
 	if (Spare < SelectNum_)
 	{
@@ -115,8 +119,13 @@ void LevelUpUI::Start()
 
 	while (TrueCount < SelectNum_)
 	{
-		int Index = Random.RandomInt(0, static_cast<int>(SkillType::MAX) - 1);
-		
+		int Index = Random.RandomInt(0, static_cast<int>(SkillType::PASSIVE_MAX) - 1);
+		if (Index == static_cast<int>(SkillType::PASSIVE_MAX) || Index == static_cast<int>(SkillType::ACTIVE_MAX))
+		{
+			continue;
+		}
+
+		// 8레벨 미만 스킬들만 고름
 		if (false == SelectedSkills[Index] && GameInfo::GetPlayerInfo()->SkillLevelInfo_[Index] < SKILL_LEVELMAX)
 		{
 			TrueCount++;
@@ -138,81 +147,13 @@ void LevelUpUI::Update()
 		return;
 	}
 
-
-	// 아이템 선택
-	if (true == GameEngineInput::GetInst()->IsDown("Num1") && SelectNum_ >= 1)
+	if (0 < SelectNum_)
 	{
-		// 플레이어에게 무기 정보 갱신
-		
-
-		// GameInfo::GetPlayerInfo()->ActivatedSkillsCount_ ++;
-		// GameInfo::GetPlayerInfo()->SkillLevelInfo_[SkillType:: ] += 1; 하여튼 레벨업
-		RandomSkills_.clear();
-
-		// 종료
-		Death();
-		CreateCount_--;
-		GameInfo::SetPause(false);
-		IsActivated_ = false;
-		StatUI_->Off();
+		SelectSkillBox();
 		return;
 	}
 
-	// 아이템 선택
-	if (true == GameEngineInput::GetInst()->IsDown("Num2") && SelectNum_ >= 2)
-	{
-		// 플레이어에게 무기 정보 갱신
-
-
-		// GameInfo::GetPlayerInfo()->ActivatedSkillsCount_ ++;
-		// GameInfo::GetPlayerInfo()->SkillLevelInfo_[SkillType:: ] += 1; 하여튼 레벨업
-		RandomSkills_.clear();
-
-		// 종료
-		Death();
-		CreateCount_--;
-		GameInfo::SetPause(false);
-		IsActivated_ = false;
-		StatUI_->Off();
-		return;
-	}
-
-	// 아이템 선택
-	if (true == GameEngineInput::GetInst()->IsDown("Num3") && SelectNum_ >= 3)
-	{
-		// 플레이어에게 무기 정보 갱신
-
-
-		// GameInfo::GetPlayerInfo()->ActivatedSkillsCount_ ++;
-		// GameInfo::GetPlayerInfo()->SkillLevelInfo_[SkillType:: ] += 1; 하여튼 레벨업
-		RandomSkills_.clear();
-
-		// 종료
-		Death();
-		CreateCount_--;
-		GameInfo::SetPause(false);
-		IsActivated_ = false;
-		StatUI_->Off();
-		return;
-	}
-
-	// 아이템 선택
-	if (true == GameEngineInput::GetInst()->IsDown("Num4") && SelectNum_ >= 4)
-	{
-		// 플레이어에게 무기 정보 갱신
-
-
-		// GameInfo::GetPlayerInfo()->ActivatedSkillsCount_ ++;
-		RandomSkills_.clear();
-
-		// 종료
-		Death();
-		CreateCount_--;
-		GameInfo::SetPause(false);
-		IsActivated_ = false;
-		StatUI_->Off();
-		return;
-	}
+	SelectHpMoneyBox();
 
 
 }
@@ -257,4 +198,114 @@ void LevelUpUI::ShowRandomSkills()
 	}
 
 	
+}
+
+void LevelUpUI::SelectSkillBox()
+{
+	// 아이템 선택
+	if (true == GameEngineInput::GetInst()->IsDown("Num1") && SelectNum_ >= 1)
+	{
+		// 플레이어에게 무기 정보 갱신
+		SelectSkill(RandomSkills_[0]);
+
+		RandomSkills_.clear();
+
+
+		// 종료
+		Death();
+		CreateCount_--;
+		GameInfo::SetPause(false);
+		IsActivated_ = false;
+		StatUI_->Off();
+		return;
+	}
+
+	// 아이템 선택
+	if (true == GameEngineInput::GetInst()->IsDown("Num2") && SelectNum_ >= 2)
+	{
+		// 플레이어에게 무기 정보 갱신
+		SelectSkill(RandomSkills_[1]);
+
+		RandomSkills_.clear();
+
+		// 종료
+		Death();
+		CreateCount_--;
+		GameInfo::SetPause(false);
+		IsActivated_ = false;
+		StatUI_->Off();
+		return;
+	}
+
+	// 아이템 선택
+	if (true == GameEngineInput::GetInst()->IsDown("Num3") && SelectNum_ >= 3)
+	{
+		// 플레이어에게 무기 정보 갱신
+		SelectSkill(RandomSkills_[2]);
+
+		RandomSkills_.clear();
+
+		// 종료
+		Death();
+		CreateCount_--;
+		GameInfo::SetPause(false);
+		IsActivated_ = false;
+		StatUI_->Off();
+		return;
+	}
+
+	// 아이템 선택
+	if (true == GameEngineInput::GetInst()->IsDown("Num4") && SelectNum_ >= 4)
+	{
+		// 플레이어에게 무기 정보 갱신
+		SelectSkill(RandomSkills_[3]);
+
+		RandomSkills_.clear();
+
+		// 종료
+		Death();
+		CreateCount_--;
+		GameInfo::SetPause(false);
+		IsActivated_ = false;
+		StatUI_->Off();
+		return;
+	}
+}
+
+void LevelUpUI::SelectSkill(int _SkillNumber)
+{
+	// SkillSlot에 있는지 확인
+	// 없으면 추가
+	// 있으면 스킬레벨업
+	std::vector<SkillType>& ActiveSlot_ = GameInfo::GetPlayerInfo()->ActiveSkillSlot_;
+	std::vector<SkillType>& PassiveSlot_ = GameInfo::GetPlayerInfo()->PassiveSkillSlot_;
+
+	int SkillLevel = GameInfo::GetPlayerInfo()->SkillLevelInfo_[_SkillNumber];
+
+	if (0 == SkillLevel)
+	{
+		SkillType Type = static_cast<SkillType>(_SkillNumber);
+
+		if (_SkillNumber < static_cast<int>(SkillType::ACTIVE_MAX))
+		{
+			ActiveSlot_.push_back(Type);
+		}
+		else if (_SkillNumber > static_cast<int>(SkillType::ACTIVE_MAX) && _SkillNumber < static_cast<int>(SkillType::PASSIVE_MAX))
+		{
+			PassiveSlot_.push_back(Type);
+		}
+
+		GameInfo::GetPlayerInfo()->SkillLevelInfo_[_SkillNumber] += 1;
+	}
+	else
+	{
+		GameInfo::GetPlayerInfo()->SkillLevelInfo_[_SkillNumber] += 1;
+	}
+
+	
+}
+
+void LevelUpUI::SelectHpMoneyBox()
+{
+
 }

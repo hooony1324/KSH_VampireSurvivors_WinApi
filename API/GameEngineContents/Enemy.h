@@ -26,6 +26,7 @@ private:
 
 	// 기본 정보
 	float4 PlayerPos_;
+	float4 Pos_;
 	float Speed_;
 	int Hp_;
 
@@ -41,8 +42,6 @@ private:
 	// 서로 밀어내기
 	void BlockOther();
 
-	GameEngineCollision* OtherBlockUp_;
-	GameEngineCollision* OtherBlockDown_;
 	GameEngineCollision* OtherBlockLeft_;
 	GameEngineCollision* OtherBlockRight_;
 	std::vector<GameEngineCollision*> Others_;

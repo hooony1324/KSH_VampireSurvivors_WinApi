@@ -69,6 +69,11 @@ public:
 		NextLevelOn_ = true;
 	}
 
+	inline void NextLevelOff()
+	{
+		NextLevelOn_ = false;
+	}
+
 	void SetOrder(int _Order) override;
 
 protected:
@@ -94,12 +99,6 @@ private:
 	float4 Scale_;
 
 	bool NextLevelOn_;
-
-	inline void NextLevelOff()
-	{
-		NextLevelOn_ = false;
-	}
-
 
 	// 나를 만들어준 레벨이야.
 	inline void SetLevel(GameEngineLevel* _Level)

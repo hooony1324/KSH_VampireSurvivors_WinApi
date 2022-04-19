@@ -2,8 +2,9 @@
 #include <GameEngine/GameEngine.h>
 #include <GameEngineBase/GameEngineWindow.h>
 #include <GameEngine/GameEngineImageManager.h>
-//#include <GameEngineBase/GameEngineDebug.h>
 #include <GameEngine/GameEngineRenderer.h>
+
+#include "GameInfo.h"
 
 WeaponSlots::WeaponSlots() 
 {

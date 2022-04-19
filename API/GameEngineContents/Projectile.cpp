@@ -31,7 +31,7 @@ void Projectile::Start()
 	SetScale({ 20, 20 });
 	ShootDir_ = float4::RIGHT;
 	Damage_ = 10;
-
+	NextLevelOff();
 	
 }
 

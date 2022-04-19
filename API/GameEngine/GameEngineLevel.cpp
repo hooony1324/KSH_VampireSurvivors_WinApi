@@ -486,7 +486,7 @@ void GameEngineLevel::ObjectLevelMoveCheck(GameEngineLevel* _NextLevel)
 					StartActor = Group.erase(StartActor);
 					continue;
 				}
-
+				(*StartActor)->Death();
 				++StartActor;
 			}
 		}

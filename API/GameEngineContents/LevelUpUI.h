@@ -45,6 +45,9 @@ private:
 	int SelectNum_;
 	std::vector<int> RandomSkills_;
 	void ShowRandomSkills();
+	void SelectSkillBox();
+	void SelectHpMoneyBox();
+	void SelectSkill(int _SkillNumber);
 
 	GameEngineRenderer* Renderer1_;
 	GameEngineRenderer* Renderer2_;
@@ -52,5 +55,6 @@ private:
 	GameEngineRenderer* Renderer4_;
 
 	GameEngineRenderer* Renderers_[4];
+
 };
 
