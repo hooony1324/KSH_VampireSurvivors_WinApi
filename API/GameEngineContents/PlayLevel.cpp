@@ -18,7 +18,6 @@ PlayLevel::PlayLevel()
 	, Map_(nullptr)
 	, PlayLevelPause_(false)
 	, EnemyController_(nullptr)
-	, Enemy_(nullptr)
 	, ExpUI_(nullptr)
 	, WeaponUI_(nullptr)
 	, TimerUI_(nullptr)
@@ -54,24 +53,9 @@ void PlayLevel::LevelChangeStart(GameEngineLevel* _PrevLevel)
 	// 맵
 	CreateMap();	
 
-	// 몬스터 테스트
-	AllEnemy_.reserve(7); // 1화면에 최대100마리정도(예상)
-	for (int i = 0; i < 5; i++)
-	{
-		Enemy_ = CreateActor<Mud>(static_cast<int>(RENDER_ORDER::MONSTER), "Enemy");
-		Enemy_->SetPosition(float4{1500, i*40 + 600.0f});
-		AllEnemy_.push_back(Enemy_);
-	}
-
-	for (int i = 0; i < 2; i++)
-	{
-		Enemy_ = CreateActor<ShadeRed>(static_cast<int>(RENDER_ORDER::MONSTER), "Enemy");
-		Enemy_->SetPosition(float4{ 1100, i * 40 + 600.0f });
-		AllEnemy_.push_back(Enemy_);
-	}
-	
-	// 시야 벗어난거 수거용
+	// 몬스터 생성기 
 	EnemyController_ = CreateActor<EnemyController>(static_cast<int>(RENDER_ORDER::MONSTER), "EnemyController");
+
 
 	// 플레이어
 	Player_ = CreateActor<Player>(static_cast<int>(RENDER_ORDER::PLAYER), "Player");
@@ -127,11 +111,6 @@ void PlayLevel::LevelChangeEnd(GameEngineLevel* _NextLevel)
 	Map_->Death();
 	EnemyController_->Death();
 
-	for (Enemy* Enemy : AllEnemy_)
-	{
-		Enemy->Death();
-	}
-	AllEnemy_.clear();
 
 	//BgmPlayer.Stop();
 }
@@ -158,6 +137,7 @@ void PlayLevel::Update()
 
 	InfiniteMap();
 
+	//EnemyController_->();
 
 
 }

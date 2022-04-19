@@ -69,8 +69,6 @@ private:
 
 	// Enemy
 	EnemyController*	EnemyController_;
-	Enemy*				Enemy_;
-	std::vector<Enemy*>	AllEnemy_;
 
 	// Player
 	Library*			Map_;

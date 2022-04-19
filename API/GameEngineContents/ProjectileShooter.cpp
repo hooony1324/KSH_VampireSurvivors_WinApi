@@ -25,6 +25,7 @@ ProjectileShooter::~ProjectileShooter()
 
 void ProjectileShooter::Start()
 {
+
 }
 
 void ProjectileShooter::Update()
@@ -43,6 +44,7 @@ void ProjectileShooter::InitShooter(BulletType _BT, int _BulletCount, float _Int
 	CoolTimeCount_ = _WaitTime;
 	BulletCount_ = InitBulletCount_;
 	IntervalCount_ = InitInterval_;
+	PlayerMoveDir_ = float4::RIGHT;
 }
 
 void ProjectileShooter::Shooting(float _DeltaTime, float4 _PlayerPos, float4 _MonsterPos, float4 _PlayerMoveDir)

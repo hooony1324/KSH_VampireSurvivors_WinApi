@@ -48,10 +48,10 @@ void Mud::Start()
 
 	MudCol_ = CreateCollision("Enemy", { 35, 35 });
 	
-	OtherBlockUp_ = CreateCollision("OtherGuard", { 36, 4}, {0, -20});
-	OtherBlockDown_ = CreateCollision("OtherGuard", { 36, 4}, {0, 20});
-	OtherBlockLeft_ = CreateCollision("OtherGuard", { 4, 36 }, { -20, 0 });
-	OtherBlockRight_ = CreateCollision("OtherGuard", { 4, 36}, {20, 0});
+	OtherBlockUp_ = CreateCollision("OtherGuard", { 30, 4}, {0, -16});
+	OtherBlockDown_ = CreateCollision("OtherGuard", { 30, 4}, {0, 16});
+	OtherBlockLeft_ = CreateCollision("OtherGuard", { 4, 30 }, { -16, 0 });
+	OtherBlockRight_ = CreateCollision("OtherGuard", { 4, 30}, {16, 0});
 
 	// 디버그용
 	CreateRenderer("hpbar_back.bmp", static_cast<int>(RENDER_ORDER::MONSTER), RenderPivot::CENTER, { 0, 40 });
