@@ -84,7 +84,5 @@ private:
 	static void EngineInit();
 	static void EngineLoop();
 	static void EngineEnd();
-
-
 };
 

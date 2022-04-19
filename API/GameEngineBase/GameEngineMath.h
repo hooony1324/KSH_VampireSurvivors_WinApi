@@ -35,6 +35,24 @@ public:
 		return { cosf(_Radian), sinf(_Radian) };
 	}
 
+	static float4 VectorRotationToDegreeZ(const float4& _Value, float _Degree)
+	{
+		return VectorRotationToRadianZ(_Value, _Degree * GameEngineMath::DegreeToRadian);
+	}
+
+	static float4 VectorRotationToRadianZ(const float4& _Value, float _Radian)
+	{
+		float4 Rot;
+		Rot.x = _Value.x * cosf(_Radian) - _Value.y * sinf(_Radian);
+		Rot.y = _Value.x * sinf(_Radian) + _Value.y * cosf(_Radian);
+		return Rot;
+	}
+
+
+	//X = P1X * cosf(40) - P1Y * sinf(40)
+	//Y = P1X * sinf(40) + P1Y * cosf(40)
+
+
 
 public:
 	static float4 LEFT;
@@ -102,7 +120,7 @@ public:
 		return sqrtf((x * x) + (y * y));
 	}
 
-	void Normal2D()
+	void Normal2D() 
 	{
 		float Len = Len2D();
 		if (0 == Len)
@@ -127,7 +145,7 @@ public:
 	}
 
 
-
+	
 
 	float4 operator-(const float4& _Other) const
 	{
@@ -186,15 +204,15 @@ public:
 		return *this;
 	}
 
-	bool CompareInt2D(const float4& _Value)
+	bool CompareInt2D(const float4& _Value) 
 	{
 		return ix() == _Value.ix() && iy() == _Value.iy();
 	}
 
 	bool CompareInt3D(const float4& _Value)
 	{
-		return ix() == _Value.ix() &&
-			iy() == _Value.iy() &&
+		return ix() == _Value.ix() && 
+			iy() == _Value.iy() && 
 			iz() == _Value.iz();
 	}
 

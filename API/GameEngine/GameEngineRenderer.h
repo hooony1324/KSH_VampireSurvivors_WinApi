@@ -101,7 +101,7 @@ public:
 		Pause_ = _Value;
 	}
 
-	void PauseOn()
+	void PauseOn() 
 	{
 		Pause_ = true;
 	}
@@ -132,7 +132,7 @@ protected:
 private:
 	friend class FrameAnimation;
 
-	GameEngineImage* Image_;
+	GameEngineImage* Image_;	
 	RenderPivot PivotType_;		// 센터 bot 등, 이미지 어느곳을 중심으로 출력할것인가
 	RenderScaleMode ScaleMode_;	// ENUM(Image, User), 엔진이 정의해준 기본값으로 쓸것인가, 프로그래머가 정의한 USER값으로 쓸것인가.
 
@@ -146,11 +146,26 @@ private:
 
 	unsigned int TransColor_;	// TransParents 에서 쓸 제외할 RGB 값
 	unsigned int Alpha_;
+	
 
 
 	bool IsCameraEffect_;		// 해당 렌더러가 카메라의 영향을 받는가 안받는가, EX) UI 는 카메라의 영향을 안받는다.
 	bool Pause_;
 
+
+	/// <summary>
+	/// ////////////////////////////////////////////// 회전용 트랜스 이미지
+	/// </summary>
+
+	float RotZ_;
+	GameEngineImage* RotationCuttingImage_;
+
+public:
+	void SetRotationZ(float _RotZ)
+	{
+		RotZ_ = _RotZ;
+		Alpha_ = 255;
+	}
 
 	//////////////////////////////////////////////////
 	//// Animation
@@ -200,7 +215,7 @@ private:
 
 	public:
 		FrameAnimation()
-			: Image_(nullptr),
+			:	Image_(nullptr),
 			Renderer_(nullptr),
 			FolderImage_(nullptr),
 			TimeKey(0),

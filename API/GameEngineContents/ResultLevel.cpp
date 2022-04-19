@@ -19,7 +19,7 @@ void ResultLevel::Loading()
 
 }
 
-void ResultLevel::LevelChangeStart()
+void ResultLevel::LevelChangeStart(GameEngineLevel* _PrevLevel)
 {
 	BG_ = CreateActor<ResultBackGround>();
 	Board_ = CreateActor<ResultBoard>(1);
@@ -35,7 +35,7 @@ void ResultLevel::Update()
 	}
 }
 
-void ResultLevel::LevelChangeEnd()
+void ResultLevel::LevelChangeEnd(GameEngineLevel* _NextLevel)
 {
 	BG_->Death();
 	Board_->Death();

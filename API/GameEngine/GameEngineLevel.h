@@ -36,7 +36,7 @@ public:
 	GameEngineLevel& operator=(const GameEngineLevel& _Other) = delete;
 	GameEngineLevel& operator=(GameEngineLevel&& _Other) noexcept = delete;
 
-	void DebugModeOn()
+	void DebugModeOn() 
 	{
 		IsDebug = true;
 	}
@@ -82,7 +82,7 @@ public:
 		return NewActor;
 	}
 
-	inline float4 GetCameraPos()
+	inline float4 GetCameraPos() 
 	{
 		return CameraPos_;
 	}
@@ -92,9 +92,9 @@ public:
 		CameraPos_ += _Value;
 	}
 
-	inline void SetCameraPos(const float4& _Value)
+	inline void SetCameraPos(const float4& _Value )
 	{
-		CameraPos_ = _Value;
+		CameraPos_  = _Value;
 	}
 
 	template<typename ConvertType>
@@ -114,11 +114,13 @@ protected:
 	// 이 레벨이 현재 레벨일때 해야할일을 실행한다.
 	virtual void Update() = 0;
 	// Current레벨 => Next레벨로 이전할때 현재레벨이 실행하는 함수.
-	void ActorLevelChangeStart();
-	virtual void LevelChangeStart() {}
+	void ActorLevelChangeStart(GameEngineLevel* _PrevLevel);
+	virtual void LevelChangeStart(GameEngineLevel* _PrevLevel) {}
 	// Current레벨 => Next레벨로 이전할때 이전레벨이 실행하는 함수.
-	void ActorLevelChangeEnd();
-	virtual void LevelChangeEnd() {}
+	void ActorLevelChangeEnd(GameEngineLevel* _NextLevel);
+	virtual void LevelChangeEnd(GameEngineLevel* _NextLevel) {}
+
+	void ObjectLevelMoveCheck(GameEngineLevel* _NextLevel);
 
 private:
 	static bool IsDebug;

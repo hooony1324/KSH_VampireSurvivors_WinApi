@@ -18,6 +18,7 @@ GameEngineRenderer::GameEngineRenderer()
 	, RenderImagePivot_({ 0,0 })
 	, IsCameraEffect_(true)
 	, Alpha_(255)
+	, RotZ_(0.0f)
 {
 }
 
@@ -68,7 +69,7 @@ void GameEngineRenderer::Render()
 
 
 	float4 RenderPos = GetActor()->GetPosition() + RenderPivot_;
-
+	
 	if (true == IsCameraEffect_)	// 
 	{
 		RenderPos -= GetActor()->GetLevel()->GetCameraPos();
@@ -78,13 +79,18 @@ void GameEngineRenderer::Render()
 	switch (PivotType_)
 	{
 	case RenderPivot::CENTER:
-		if (Alpha_ == 255)
+		if (Alpha_ != 255)
 		{
-			GameEngine::BackBufferImage()->TransCopy(Image_, RenderPos - RenderScale_.Half(), RenderScale_, RenderImagePivot_, RenderImageScale_, TransColor_);
-		}
-		else {
 			GameEngine::BackBufferImage()->AlphaCopy(Image_, RenderPos - RenderScale_.Half(), RenderScale_, RenderImagePivot_, RenderImageScale_, Alpha_);
 		}
+		else if (RotZ_ != 0.0f)
+		{
+			// GameEngine::BackBufferImage()->PlgCopy(Image_, RenderPos - RenderScale_.Half(), RenderScale_, RenderImagePivot_, RenderImageScale_, Alpha_);
+		}
+		else 
+		{
+			GameEngine::BackBufferImage()->TransCopy(Image_, RenderPos - RenderScale_.Half(), RenderScale_, RenderImagePivot_, RenderImageScale_, TransColor_);
+		} 
 		break;
 	case RenderPivot::BOT:
 	{
@@ -93,13 +99,18 @@ void GameEngineRenderer::Render()
 
 		if (Alpha_ == 255)
 		{
+			GameEngine::BackBufferImage()->AlphaCopy(Image_, RenderPos - Scale, RenderScale_, RenderImagePivot_, RenderImageScale_, Alpha_);
+		} 
+		else if (RotZ_ != 0.0f)
+		{
+
+		}
+		else 
+		{
 			GameEngine::BackBufferImage()->TransCopy(Image_, RenderPos - Scale, RenderScale_, RenderImagePivot_, RenderImageScale_, TransColor_);
 		}
-		else {
-			GameEngine::BackBufferImage()->AlphaCopy(Image_, RenderPos - Scale, RenderScale_, RenderImagePivot_, RenderImageScale_, Alpha_);
-		}
 
-
+		
 		break;
 	}
 	default:
@@ -128,7 +139,7 @@ void GameEngineRenderer::SetIndex(size_t _Index, float4 _Scale)
 	RenderImageScale_ = Image_->GetCutScale(_Index);			// 
 }
 
-// Animation
+	// Animation
 void GameEngineRenderer::CreateAnimation(
 	const std::string& _Image,
 	const std::string& _Name,
@@ -288,7 +299,7 @@ void GameEngineRenderer::FrameAnimation::Update()
 			Renderer_->SetIndex(CurrentFrame_);	// 렌더러에게 인덱스도 세팅해준다. 즉, 해당 애니메이션 이미지의 몇번째 칸(Index) 세팅해주면 렌더러는 알아서 출력한다.
 		}
 	}
-	else if (nullptr != FolderImage_)
+	else if(nullptr != FolderImage_)
 	{
 		Renderer_->Image_ = FolderImage_->GetImage(CurrentFrame_);		// 렌더러에게 이 애니메이션 만들때 세팅했떤 이미지를 세팅해준다.
 		Renderer_->SetImageScale();	// 렌더러에게 인덱스도 세팅해준다. 즉, 해당 애니메이션 이미지의 몇번째 칸(Index) 세팅해주면 렌더러는 알아서 출력한다.
@@ -316,7 +327,7 @@ void GameEngineRenderer::SetOrder(int _Order)
 	GetActor()->GetLevel()->ChangeRenderOrder(this, _Order);
 }
 
-bool GameEngineRenderer::IsEndAnimation()
+bool GameEngineRenderer::IsEndAnimation() 
 {
 	return CurrentAnimation_->IsEnd;
 }

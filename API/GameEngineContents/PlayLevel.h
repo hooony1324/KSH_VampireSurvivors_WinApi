@@ -31,9 +31,9 @@ public:
 
 protected:
 	void Loading() override;
-	void LevelChangeStart() override;
+	void LevelChangeStart(GameEngineLevel* _PrevLevel) override;
 	void Update() override;
-	void LevelChangeEnd() override;
+	void LevelChangeEnd(GameEngineLevel* _NextLevel) override;
 
 private:
 	// Sound

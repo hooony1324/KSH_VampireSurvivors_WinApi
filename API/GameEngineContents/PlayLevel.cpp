@@ -42,9 +42,9 @@ void PlayLevel::Loading()
 
 // 레벨 변경시 진입 (Title -> Play -> Result)
 // 맵, 캐릭터, .. 가 선택 되면 해당하는 맵으로 액터를 생성해야 함
-void PlayLevel::LevelChangeStart()
+void PlayLevel::LevelChangeStart(GameEngineLevel* _PrevLevel)
 {	
-	DebugModeOff();
+	//DebugModeOff();
 
 	// 시간 설정
 	GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::MONSTER), 1.0f);
@@ -109,7 +109,7 @@ void PlayLevel::LevelChangeStart()
 
 }
 
-void PlayLevel::LevelChangeEnd()
+void PlayLevel::LevelChangeEnd(GameEngineLevel* _NextLevel)
 {
 	ExpUI_->Death();
 	WeaponUI_->Death();
