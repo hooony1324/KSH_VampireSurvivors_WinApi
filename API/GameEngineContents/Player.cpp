@@ -85,7 +85,7 @@ void Player::Start()
 	KnifeShooter_->SetShooter(BulletType::KNIFE, 2, 0.1f, 2.0f, 1.0f);
 
 	FireShooter_ = GetLevel()->CreateActor<ProjectileShooter>(static_cast<int>(RENDER_ORDER::PLAYER), "Shooter");
-	FireShooter_->SetShooter(BulletType::FLAME_RED, 1, 2.0f, 2.0f, 1.0f);
+	FireShooter_->SetShooter(BulletType::FLAME_RED, 1, 0.0f, 4.0f, 1.0f);
 }
 
 void Player::Update()
@@ -320,7 +320,7 @@ float4 Player::ShootableEnemeyCheck()
 	if (true == PlayerShootRange_->CollisionResult("Enemy", ShootableEnemy_, CollisionType::Rect, CollisionType::Rect))
 	{
 		GameEngineRandom Random;
-		int Index = Random.RandomInt(0, ShootableEnemy_.size() - 1);
+		int Index = Random.RandomInt(0, static_cast<int>(ShootableEnemy_.size()) - 1);
 		float4 MonsterPos = ShootableEnemy_[Index]->GetCollisionPos();
 		ShootableEnemy_.clear();
 
@@ -334,6 +334,9 @@ float4 Player::ShootableEnemeyCheck()
 void Player::Shooting()
 {
 	float4 MonsterPos = ShootableEnemeyCheck();
+
+
+
 	MagicShooter_->Shooting(GameEngineTime::GetDeltaTime(static_cast<int>(TIME_GROUP::WEAPON)), PlayerPos_, MonsterPos);
 	KnifeShooter_->Shooting(GameEngineTime::GetDeltaTime(static_cast<int>(TIME_GROUP::WEAPON)), PlayerPos_, MonsterPos, MoveDir_);
 	FireShooter_->Shooting(GameEngineTime::GetDeltaTime(static_cast<int>(TIME_GROUP::WEAPON)), PlayerPos_, MonsterPos);

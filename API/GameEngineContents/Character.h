@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <GameEngineBase/GameEngineMath.h>
+#include "GameEnum.h"
 
 enum class CharacterType
 {
@@ -57,6 +58,6 @@ public:
 	float Magnet_;			// ¾ÆÀÌÅÛ È¹µæ ¹üÀ§
 	int Revival_;			// ºÎÈ° È½¼ö
 
-
+	SkillType BaseSkill_;
 };
 

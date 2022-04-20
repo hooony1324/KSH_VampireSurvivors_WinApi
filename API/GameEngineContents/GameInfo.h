@@ -6,11 +6,12 @@
 #include <map>
 
 
-
 // Ό³Έν :
 class GameInfo
 {
 public:
+
+
 	class PlayerInfo
 	{
 	public:
@@ -48,6 +49,7 @@ public:
 		std::vector<SkillType> ActiveSkillSlot_;
 		std::vector<SkillType> PassiveSkillSlot_;
 		int SkillLevelInfo_[static_cast<int>(SkillType::PASSIVE_MAX)];
+
 	};
 
 public:
@@ -115,4 +117,12 @@ private:
 	GameInfo& operator=(GameInfo&& _Other) noexcept = delete;
 };
 
-
+static std::string SkillOrder[] =
+{
+	"Knife", "MagicWand", "FireWand", "Runetracer",
+	"Axe", "Clocklancet", "Cross", "Bible",
+	"Whip", "Garlic", "Laurel", "Lightening",
+	"Holywater", "FiveStar", "Bracer", "Emptytome",
+	"Spinach", "Spellbinder", "Hollowheart", "Clover",
+	"Pummarola", "Candle", "Wing"
+};

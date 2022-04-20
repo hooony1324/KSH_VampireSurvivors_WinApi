@@ -61,6 +61,7 @@ private:
 	float4 PlayerMoveDir_;
 	float4 PlayerPos_;
 	float4 MonsterPos_;
+	float4 FireShootDir_;
 
 };
 

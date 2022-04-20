@@ -57,6 +57,8 @@ void Character::SetCharacter(CharacterType _CharacterType)
 		Greed_ = 1;
 		Magnet_ = 1;
 		Revival_ = 0;
+
+		BaseSkill_ = SkillType::KNIFE;
 	}
 		break;
 
@@ -82,6 +84,8 @@ void Character::SetCharacter(CharacterType _CharacterType)
 		Greed_ = 1;
 		Magnet_ = 1;
 		Revival_ = 0;
+
+		BaseSkill_ = SkillType::MAGICWAND;
 	}
 		break;
 
@@ -107,6 +111,8 @@ void Character::SetCharacter(CharacterType _CharacterType)
 		Greed_ = 1;
 		Magnet_ = 1;
 		Revival_ = 0;
+
+		BaseSkill_ = SkillType::FIREWAND;
 	}
 		break;
 
@@ -132,6 +138,8 @@ void Character::SetCharacter(CharacterType _CharacterType)
 		Greed_ = 1;
 		Magnet_ = 1;
 		Revival_ = 0;
+
+		BaseSkill_ = SkillType::KNIFE;
 	}
 		break;
 	}

@@ -52,9 +52,9 @@ void Enemy::Start()
 
 
 	// 디버그용
-	CreateRenderer("hpbar_back.bmp", static_cast<int>(RENDER_ORDER::MONSTER), RenderPivot::CENTER, { 0, 40 });
-	Hp_BarRed_ = CreateRenderer("hpbar.bmp", static_cast<int>(RENDER_ORDER::MONSTER), RenderPivot::CENTER, { 0, 40 });
-	Hp_BarSize_ = Hp_BarRed_->GetScale();
+	//CreateRenderer("hpbar_back.bmp", static_cast<int>(RENDER_ORDER::MONSTER), RenderPivot::CENTER, { 0, 40 });
+	//Hp_BarRed_ = CreateRenderer("hpbar.bmp", static_cast<int>(RENDER_ORDER::MONSTER), RenderPivot::CENTER, { 0, 40 });
+	//Hp_BarSize_ = Hp_BarRed_->GetScale();
 
 	DeathCounter_.SetCount(1.0f);
 }
@@ -104,11 +104,11 @@ void Enemy::Render()
 {
 
 	// 체력 디버그용
-	float Ratio = Hp_ / 100.0f;
-	float NewSizeX = Hp_BarSize_.x * Ratio;
-	float4 Hp_BarPivot = float4{ 0 - ((Hp_BarSize_.x - NewSizeX) / 2), Hp_BarRed_->GetPivot().y };
-	Hp_BarRed_->SetScale(float4{ NewSizeX, Hp_BarSize_.y });
-	Hp_BarRed_->SetPivot(Hp_BarPivot);
+	//float Ratio = Hp_ / 100.0f;
+	//float NewSizeX = Hp_BarSize_.x * Ratio;
+	//float4 Hp_BarPivot = float4{ 0 - ((Hp_BarSize_.x - NewSizeX) / 2), Hp_BarRed_->GetPivot().y };
+	//Hp_BarRed_->SetScale(float4{ NewSizeX, Hp_BarSize_.y });
+	//Hp_BarRed_->SetPivot(Hp_BarPivot);
 
 }
 

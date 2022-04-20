@@ -1,7 +1,10 @@
 #pragma once
 #include <GameEngine/GameEngineActor.h>
+#include <vector>
+#include "GameEnum.h"
 
 // Ό³Έν :
+class GameEngineRenderer;
 class StatUI : public GameEngineActor
 {
 public:
@@ -23,5 +26,18 @@ protected:
 
 private:
 
+	void SetSlotBase();
+
+
+	std::vector<GameEngineRenderer*> ActiveSlots_;
+	std::vector<GameEngineRenderer*> ActiveSkills_;
+	std::vector<GameEngineRenderer*> ActiveLevels_;
+
+	std::vector<GameEngineRenderer*> PassiveSlots_;
+	std::vector<GameEngineRenderer*> PassiveSkills_;
+	std::vector<GameEngineRenderer*> PassiveLevels_;
+
+	int ActiveSlotIndex_;
+	SkillType ActivatedSkill_;
 };
 

@@ -11,6 +11,7 @@ enum class ACTOR_ORDER
 
 enum class RENDER_ORDER
 {
+	HIDE,
 	BACKGROUND,
 	PLAYER,
 	ITEM,

@@ -16,16 +16,6 @@
 int LevelUpUI::CreateCount_ = 0;
 bool LevelUpUI::IsActivated_ = false;
 
-std::string SkillBoxUI[] = 
-{
-	"LevelupKnife.bmp", "LevelupMagicwand.bmp", "LevelupFirewand.bmp", "LevelupRunetracer.bmp",
-	"LevelupAxe.bmp", "LevelupClocklancet.bmp", "LevelupCross.bmp", "LevelupBible.bmp",
-	"LevelupWhip.bmp", "LevelupGarlic.bmp", "LevelupLaurel.bmp", "LevelupLightening.bmp",
-	"LevelupHolywater.bmp", "LevelupFiveStar.bmp", "LevelupBracer.bmp", "LevelupEmptytome.bmp",
-	"LevelupSpinach.bmp", "LevelupSpellbinder.bmp", "LevelupHollowheart.bmp", "LevelupClover.bmp",
-	"LevelupPummarola.bmp", "LevelupCandle.bmp", "LevelupWing.bmp"
-};
-
 LevelUpUI::LevelUpUI() 
 {
 	RandomSkills_.reserve(4);
@@ -173,28 +163,28 @@ void LevelUpUI::ShowRandomSkills()
 	if (1 <= SelectNum_)
 	{
 		int SelectSkill = RandomSkills_[0];
-		Renderer1_->SetImage(SkillBoxUI[SelectSkill]);
+		Renderer1_->SetImage("LevelUp" + SkillOrder[SelectSkill] + ".bmp");
 	}
 
 
 	if (2 <= SelectNum_)
 	{
 		int SelectSkill = RandomSkills_[1];
-		Renderer2_->SetImage(SkillBoxUI[SelectSkill]);
+		Renderer2_->SetImage("LevelUp" + SkillOrder[SelectSkill] + ".bmp");
 	}
 
 
 	if (3 <= SelectNum_)
 	{
 		int SelectSkill = RandomSkills_[2];
-		Renderer3_->SetImage(SkillBoxUI[SelectSkill]);
+		Renderer3_->SetImage("LevelUp" + SkillOrder[SelectSkill] + ".bmp");
 	}
 
 
 	if (4 <= SelectNum_)
 	{
 		int SelectSkill = RandomSkills_[3];
-		Renderer4_->SetImage(SkillBoxUI[SelectSkill]);
+		Renderer4_->SetImage("LevelUp" + SkillOrder[SelectSkill] + ".bmp");
 	}
 
 	
@@ -277,8 +267,8 @@ void LevelUpUI::SelectSkill(int _SkillNumber)
 	// SkillSlot에 있는지 확인
 	// 없으면 추가
 	// 있으면 스킬레벨업
-	std::vector<SkillType>& ActiveSlot_ = GameInfo::GetPlayerInfo()->ActiveSkillSlot_;
-	std::vector<SkillType>& PassiveSlot_ = GameInfo::GetPlayerInfo()->PassiveSkillSlot_;
+	GameInfo::GetPlayerInfo()->ActiveSkillSlot_;
+	GameInfo::GetPlayerInfo()->PassiveSkillSlot_;
 
 	int SkillLevel = GameInfo::GetPlayerInfo()->SkillLevelInfo_[_SkillNumber];
 
@@ -288,19 +278,16 @@ void LevelUpUI::SelectSkill(int _SkillNumber)
 
 		if (_SkillNumber < static_cast<int>(SkillType::ACTIVE_MAX))
 		{
-			ActiveSlot_.push_back(Type);
+			GameInfo::GetPlayerInfo()->ActiveSkillSlot_.push_back(Type);
 		}
 		else if (_SkillNumber > static_cast<int>(SkillType::ACTIVE_MAX) && _SkillNumber < static_cast<int>(SkillType::PASSIVE_MAX))
 		{
-			PassiveSlot_.push_back(Type);
+			GameInfo::GetPlayerInfo()->PassiveSkillSlot_.push_back(Type);
 		}
 
-		GameInfo::GetPlayerInfo()->SkillLevelInfo_[_SkillNumber] += 1;
 	}
-	else
-	{
-		GameInfo::GetPlayerInfo()->SkillLevelInfo_[_SkillNumber] += 1;
-	}
+	
+	GameInfo::GetPlayerInfo()->SkillLevelInfo_[_SkillNumber] += 1;
 
 	
 }

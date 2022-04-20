@@ -70,7 +70,7 @@ void Projectile::SetType(BulletType _BT)
 
 		ProjImage_->SetRotationFilter("Sword_Filter.bmp");
 		ProjCol_->SetPivot(ShootDir_ * 18);
-		Speed_ = 500.0f;
+		Speed_ = 550.0f;
 		break;
 	}
 	case BulletType::FLAME_BLUE:
@@ -79,7 +79,7 @@ void Projectile::SetType(BulletType _BT)
 
 		ProjImage_->SetRotationFilter("ProjectileHoly1_Filter.bmp");
 		ProjCol_->SetPivot(ShootDir_ * 10);
-		Speed_ = 400.0f;
+		Speed_ = 500.0f;
 		break;
 	}
 	case BulletType::FLAME_RED:
