@@ -1,0 +1,76 @@
+#pragma once
+
+enum class ACTOR_ORDER
+{
+	BACKGROUND,
+	PLAYER,
+	ITEM,
+	MONSTER,
+	UI
+};
+
+enum class RENDER_ORDER
+{
+	BACKGROUND,
+	PLAYER,
+	ITEM,
+	MONSTER,
+	UI
+};
+
+enum class TIME_GROUP
+{
+	PLAYER,
+	MONSTER,
+	WEAPON,
+	TIMER,
+};
+
+const int SKILL_LEVELMAX = 8;
+enum class SkillType
+{
+	// @@@ Attribute : Active @@@
+
+	// ½´ÆÃ
+	KNIFE,
+	MAGICWAND,
+	FIREWAND,
+	ACTIVE_MAX,
+	//RUNETRACER,
+	//AXE,
+	//CLOCKLANCET,
+	//CROSS,
+
+	// ³ª¸ÓÁö
+	//KINGBIBLE,
+	//WHIP,
+	//GARLIC,
+	//LAUREL,
+
+	//LIGHTENINGRING,
+	//HOLYWATER,
+	//FIVESTAR,
+
+	// @@@ AttriBute : Passive @@@
+
+	//BRACER,			// + SWORD = THOUSANDEDGE
+	//EMPTYTOME,		// + MAGICWAND = HOLYWAND
+	//SPINACH,			// + FIREWAND = HELLFIRE
+	//SPELLBINDER,		// + KINGBIBLE = UNHOLYVESPERS
+	//HOLLOWHEART,		// + WHIP = BLOODYTEAR
+	//CLOVER,				// + CROSS = HEAVENSWORD
+	//PUMMAROLA,			// + GARLIC = SOULEATER
+	//CANDLELABRADOR,		// + AXE = DEATHSPIRAL
+	//WING,
+	PASSIVE_MAX,
+
+	// etc
+	NONE,
+	THOUSANDEDGE,
+	HOLYWAND,
+	HELLFIRE,
+	UNHOLYVESPERS,
+	BLOODYTEAR,
+	HEAVENSWORD,
+	SOULEATER,
+};

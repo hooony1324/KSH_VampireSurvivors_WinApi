@@ -58,7 +58,5 @@ public:
 	int Revival_;			// 부활 횟수
 
 
-	// 무기 리스트(벡터 예정) WeaponList* wpList;
-
 };
 

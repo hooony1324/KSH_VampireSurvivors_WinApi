@@ -22,6 +22,8 @@ void WeaponSlots::Start()
 	Slot->CameraEffectOff();
 	Slot->SetTransColor(RGB(0, 0, 0));
 	Slot->SetAlpha(100);
+
+
 }
 
 void WeaponSlots::Update()

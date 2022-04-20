@@ -7,7 +7,7 @@
 #include <GameEngine/GameEngineCollision.h>
 #include <GameEngineBase/GameEngineSound.h>
 
-#include "ObjectEnum.h"
+#include "GameEnum.h"
 #include "GameInfo.h"
 #include "Vector2D.h"
 

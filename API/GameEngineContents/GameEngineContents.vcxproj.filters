@@ -182,7 +182,7 @@
     <ClInclude Include="ProjectileShooter.h">
       <Filter>2.Play\Projectile</Filter>
     </ClInclude>
-    <ClInclude Include="ObjectEnum.h">
+    <ClInclude Include="GameEnum.h">
       <Filter>Global</Filter>
     </ClInclude>
     <ClInclude Include="Timer.h">

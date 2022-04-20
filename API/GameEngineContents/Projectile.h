@@ -30,10 +30,7 @@ public:
 
 	void SetType(BulletType _BT);
 
-	void SetDir(float4 _Direction)
-	{
-		ShootDir_ = _Direction;
-	}
+	void SetDir(float4 _Direction);
 
 	GameEngineRenderer* GetProjImage()
 	{

@@ -4,7 +4,7 @@
 #include <GameEngine/GameEngineImageManager.h>
 //#include <GameEngineBase/GameEngineDebug.h>
 
-#include "ObjectEnum.h"
+#include "GameEnum.h"
 #include <GameEngine/GameEngineRenderer.h>
 #include "GameInfo.h"
 #include <string>

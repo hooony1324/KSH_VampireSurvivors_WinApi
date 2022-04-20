@@ -5,10 +5,10 @@
 #include <GameEngine/GameEngineLevel.h>
 
 #include "GameInfo.h"
-#include "ObjectEnum.h"
+#include "GameEnum.h"
 #include "Enemy.h"
 
-const int EnemyNumInScene = 100;
+const int EnemyNumInScene = 2;
 
 EnemyController::EnemyController() 
 	: EnemyCollectorL_(nullptr)

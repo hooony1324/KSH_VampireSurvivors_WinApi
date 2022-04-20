@@ -1,6 +1,5 @@
 #pragma once
 #include <GameEngineBase/GameEngineMath.h>
-#include <cmath>
 
 // 설명 :
 class GameEngineActor;
@@ -18,6 +17,17 @@ public:
 		float4 Result = GetVector(_PosA, _PosB);
 		Result.Normal2D();
 		return Result;
+	}
+
+	static float NormalizedDirToDegree(float4 _Vector)
+	{
+		// float4::RIGHT가 기준
+		float Degree = static_cast<float>(acos(_Vector.x * float4::RIGHT.x + _Vector.y * float4::RIGHT.y) * GameEngineMath::RadianToDegree);
+		if (_Vector.y < 0.0f)
+		{
+			Degree = 360.0f - Degree;
+		}
+		return Degree;
 	}
 
 	static void DebugVectorRender(GameEngineActor* _Actor);

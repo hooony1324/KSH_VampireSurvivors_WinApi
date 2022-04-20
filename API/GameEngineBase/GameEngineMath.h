@@ -9,6 +9,7 @@ public:
 	static const float PIE;
 	static const float DEG;
 	static const float DegreeToRadian;
+	static const float RadianToDegree;
 
 
 private:
@@ -48,7 +49,6 @@ public:
 		Rot.y = _Value.x * sinf(_Radian) + _Value.y * cosf(_Radian);
 		return Rot;
 	}
-
 
 	//X = P1X * cosf(40) - P1Y * sinf(40)
 	//Y = P1X * sinf(40) + P1Y * cosf(40)

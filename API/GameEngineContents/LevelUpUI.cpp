@@ -8,7 +8,7 @@
 #include <GameEngineBase/GameEngineRandom.h>
 #include <string>
 
-#include "ObjectEnum.h"
+#include "GameEnum.h"
 #include "GameInfo.h"
 
 #include "StatUI.h"

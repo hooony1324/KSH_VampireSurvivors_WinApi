@@ -23,15 +23,7 @@ private:
 
 public:
 
-	// 시간을 계속 받아야 한다
-
-	// 무한 반복한다
-
-	// Projectile의 타입을 세팅(공격력, 스피드, 이미지, ...)
-
-
-	void InitShooter(BulletType _BT, int _BulletCount, float _Interval, float _CoolTime, float _WaitTime = 0);	// 발사체, 발사 횟수, 인터벌, 쿨타임
-	void UpgradeShooter();
+	void SetShooter(BulletType _BT, int _BulletCount, float _Interval, float _CoolTime, float _WaitTime = 0);	// 발사체, 발사 횟수, 인터벌, 쿨타임
 	void Shooting(float _DeltaTime, float4 _PlayerPos, float4 _MonsterPos, float4 _PlayerMoveDir = float4::ZERO);								// 총알하나 발사하면 Level에 총알포인터 넘겨줘야됨 
 
 	inline void StopShooting()
@@ -43,11 +35,13 @@ public:
 		ShootAble_ = true;
 	}
 
-
-
 protected:
 
 private:
+	void ShootKnife();
+	void ShootMagic();
+	void ShootFire();
+
 	bool ShootAble_;
 
 	Projectile* Projectile_;
@@ -65,6 +59,8 @@ private:
 	bool isShoot_;
 
 	float4 PlayerMoveDir_;
+	float4 PlayerPos_;
+	float4 MonsterPos_;
 
 };
 

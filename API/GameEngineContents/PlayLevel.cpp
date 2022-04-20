@@ -6,7 +6,7 @@
 #include <GameEngine/GameEngineActor.h>
 #include <GameEngine/GameEngineCollision.h>
 
-#include "ObjectEnum.h"
+#include "GameEnum.h"
 #include "PlayLevelContents.h"
 #include "GameInfo.h"
 

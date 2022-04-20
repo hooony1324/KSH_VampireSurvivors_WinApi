@@ -227,7 +227,7 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="ObjectEnum.h" />
+    <ClInclude Include="GameEnum.h" />
     <ClInclude Include="PauseUI.h">
       <SubType>
       </SubType>

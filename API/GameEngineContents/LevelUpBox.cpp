@@ -5,7 +5,7 @@
 #include <GameEngine/GameEngineRenderer.h>
 #include <GameEngine/GameEngineCollision.h>
 
-#include "ObjectEnum.h"
+#include "GameEnum.h"
 #include "GameInfo.h"
 #include "LevelUpUI.h"
 

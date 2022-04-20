@@ -2,7 +2,7 @@
 #include <GameEngine/GameEngineRenderer.h>
 #include <GameEngine/GameEngineCollision.h>
 
-#include "ObjectEnum.h"
+#include "GameEnum.h"
 #include "GameInfo.h"
 #include "Vector2D.h"
 #include "Counter.h"

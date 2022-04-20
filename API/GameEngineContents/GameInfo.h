@@ -1,64 +1,11 @@
 #pragma once
 #include <GameEngineBase/GameEngineMath.h>
 #include "Character.h"
+#include "GameEnum.h"
 #include <vector>
 #include <map>
 
-const int SKILL_LEVELMAX = 8;
-enum class SkillType
-{
-	// @@@ Attribute : Active @@@
-	
-	// 슈팅
-	KNIFE,
-	MAGICWAND,
-	FIREWAND,
-	ACTIVE_MAX,
-	//RUNETRACER,
-	//AXE,
-	//CLOCKLANCET,
-	//CROSS,
 
-	// 나머지
-	//KINGBIBLE,
-	//WHIP,
-	//GARLIC,
-	//LAUREL,
-
-	//LIGHTENINGRING,
-	//HOLYWATER,
-	//FIVESTAR,
-
-	// @@@ AttriBute : Passive @@@
-
-	//BRACER,			// + SWORD = THOUSANDEDGE
-	//EMPTYTOME,		// + MAGICWAND = HOLYWAND
-	//SPINACH,			// + FIREWAND = HELLFIRE
-	//SPELLBINDER,		// + KINGBIBLE = UNHOLYVESPERS
-	//HOLLOWHEART,		// + WHIP = BLOODYTEAR
-	//CLOVER,				// + CROSS = HEAVENSWORD
-	//PUMMAROLA,			// + GARLIC = SOULEATER
-	//CANDLELABRADOR,		// + AXE = DEATHSPIRAL
-	//WING,
-	PASSIVE_MAX,
-
-	// etc
-	NONE,
-	THOUSANDEDGE,
-	HOLYWAND,
-	HELLFIRE,
-	UNHOLYVESPERS,
-	BLOODYTEAR,
-	HEAVENSWORD,
-	SOULEATER,
-};
-
-class Skill
-{
-public:
-	SkillType Type_ = SkillType::NONE;
-	int Level_ = 0;
-};
 
 // 설명 :
 class GameInfo
