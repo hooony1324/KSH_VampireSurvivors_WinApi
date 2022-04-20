@@ -27,6 +27,7 @@ private:
 	// 기본 정보
 	float4 PlayerPos_;
 	float4 Pos_;
+	float4 DestDir_;
 	float Speed_;
 	int Hp_;
 

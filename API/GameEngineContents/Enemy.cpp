@@ -25,6 +25,7 @@ Enemy::Enemy()
 	, Col_(nullptr)
 	, OtherBlockLeft_(nullptr)
 	, OtherBlockRight_(nullptr)
+	, DestDir_(float4::ZERO)
 {
 }
 
@@ -80,14 +81,14 @@ void Enemy::Update()
 	}
 
 
-	float4 DestDir = Vector2D::GetDirection(Pos_, PlayerPos_);
+	DestDir_ = Vector2D::GetDirection(Pos_, PlayerPos_);
 
 	BlockOther();
 	Hit();
 
-	SetMove((DestDir + KnockBackDir_) * DeltaTime * Speed_);
+	SetMove((DestDir_ + KnockBackDir_) * DeltaTime * Speed_);
 
-	if (0 >= DestDir.x)
+	if (0 >= DestDir_.x)
 	{
 		Renderer_->ChangeAnimation("Mud_WalkLeft");
 	}
@@ -150,7 +151,7 @@ void Enemy::BlockOther()
 	if (true == Col_->CollisionResult("OtherGuard", Others_, CollisionType::Rect, CollisionType::Rect))
 	{
 		float4 OtherPos = Others_[0]->GetActor()->GetPosition();
-		Others_[0]->GetActor()->SetMove(Vector2D::GetDirection(Pos_, OtherPos));
+		Others_[0]->GetActor()->SetMove(Vector2D::GetDirection(Pos_, OtherPos) * GameEngineTime::GetDeltaTime(static_cast<int>(TIME_GROUP::MONSTER)) * 85.0f);
 		Others_.clear();
 	}
 
