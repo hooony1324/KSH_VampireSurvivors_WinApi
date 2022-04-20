@@ -2,15 +2,16 @@
 #include <Windows.h>
 #include <string>
 #include "GameEngineMath.h"
+#include "GameEngineDebug.h"
 
 // Ό³Έν :
 class GameEngineWindow
 {
 private:
 	static GameEngineWindow* Inst_;
-	
+
 public:
-	inline static GameEngineWindow& GetInst()
+	inline static GameEngineWindow& GetInst() 
 	{
 		return *Inst_;
 	}
@@ -44,6 +45,7 @@ public:
 		return Inst_->Scale_;
 	}
 
+
 protected:
 
 private:
@@ -63,6 +65,9 @@ private:
 	GameEngineWindow(GameEngineWindow&& _Other) noexcept = delete;
 	GameEngineWindow& operator=(const GameEngineWindow& _Other) = delete;
 	GameEngineWindow& operator=(GameEngineWindow&& _Other) noexcept = delete;
+
+
+	static LRESULT CALLBACK MessageProcess(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam);
 
 };
 

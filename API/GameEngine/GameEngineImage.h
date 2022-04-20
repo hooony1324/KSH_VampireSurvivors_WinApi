@@ -55,9 +55,16 @@ public:
 
 	void AlphaCopy(GameEngineImage* _Other, const float4& _CopyPos,
 		const float4& _CopyScale,
-		const float4& _OtherPivot, const float4& _OtherScale, unsigned int _TransColor);
+		const float4& _OtherPivot, const float4& _OtherScale, unsigned int _Alpha);
 
-	void PlgCopy(GameEngineImage* _Other, GameEngineImage* _Filter);
+	// const float4& _CopyPos,
+	// const float4& _CopyScale,
+	// 사각형을 만든다
+	// _Angle 회전시킨다.
+
+	void PlgCopy(GameEngineImage* _Other, const float4& _CopyPos,
+		const float4& _CopyScale,
+		const float4& _OtherPivot, const float4& _OtherScale, float _Angle, GameEngineImage* _Filter);
 
 
 	void Cut(const float4& _CutSize);

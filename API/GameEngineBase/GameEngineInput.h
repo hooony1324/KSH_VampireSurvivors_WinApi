@@ -3,21 +3,21 @@
 #include <map>
 #include <string>
 
-// 설명 :
 class GameEngineInput
 {
 private:
+
 	class GameEngineKey
 	{
 		friend GameEngineInput;
 
-		bool Down_;			// 최초로 누를 때
-		bool Press_;		// 이미 누른 상태를 유지할 때
-		bool Up_;			// 이미 누른 상태에서 땔 때
-		bool Free_;			// 땐 상태
+		bool Down_; // 최초로 키를 눌렀을때
+		bool Press_; // 계속 누르는중
+		bool Up_; // 막 뗐을때
+		bool Free_; // 안누르고 있을때.
 
 		float Time_;
-		int Key_;			
+		int Key_; // 이키가 눌렸다면,, 
 
 		bool KeyCheck()
 		{
@@ -34,7 +34,18 @@ private:
 			Free_ = true;
 		}
 
+		// 생성자 주석걸어두기
+		//GameEngineKey(int _Key) 
+		//	: Key_(_Key)
+		//	, Down_(false)
+		//	, Press_(false)
+		//	, Up_(false)
+		//	, Free_(true)
+		//{
+		//}
 	};
+
+	friend class GameEngineWindow;
 
 private:
 	static GameEngineInput* Inst_;
@@ -56,7 +67,7 @@ public:
 
 public:
 	void Update(float _DeltaTime = 0.0f);
-	void CreateKey(const std::string _Name, int _Key);
+	void CreateKey(const std::string& _Name, int _Key);
 
 	float GetTime(const std::string& _Name);
 	bool IsDown(const std::string& _Name);
@@ -65,9 +76,18 @@ public:
 	bool IsFree(const std::string& _Name);
 	bool IsKey(const std::string& _Name);
 
+	inline int GetMouseWheel()
+	{
+		return CurWheelValue;
+	}
+
 protected:
+	
 
 private:
+	int WheelValue;
+	int CurWheelValue;
+
 	std::map<std::string, GameEngineKey> AllInputKey_;
 
 	// constrcuter destructer
