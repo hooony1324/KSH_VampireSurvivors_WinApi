@@ -1,6 +1,7 @@
 #pragma once
 #include <GameEngine/GameEngineActor.h>
 #include <vector>
+#include "Counter.h"
 
 // Ό³Έν :
 class GameEngineActor;
@@ -25,6 +26,10 @@ protected:
 
 private:
 
+	void Spawn();
+
+private:
+
 	GameEngineCollision* EnemyCollectorL_;
 	GameEngineCollision* EnemyCollectorR_;
 
@@ -32,5 +37,8 @@ private:
 	GameEngineCollision* EnemySpawnerR_;
 
 	std::vector<GameEngineActor*> Enemies_;
+
+	Counter SpawnCounter_;
+	bool IsSpawn_;
 };
 

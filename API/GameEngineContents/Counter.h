@@ -15,7 +15,7 @@ public:
 	Counter& operator=(const Counter& _Other) = delete;
 	Counter& operator=(Counter&& _Other) noexcept = delete;
 
-	inline bool Start(float _DeltaTime)
+	bool Start(float _DeltaTime)
 	{
 		if (0 < CountingTime_)
 		{
@@ -28,12 +28,19 @@ public:
 
 	inline void SetCount(float _CountingTime)
 	{
-		CountingTime_ = _CountingTime;
+		SettingTime_ = _CountingTime;
+		CountingTime_ = SettingTime_;
+	}
+
+	inline void Reset()
+	{
+		CountingTime_ = SettingTime_;
 	}
 
 protected:
 
 private:
+	float SettingTime_;
 	float CountingTime_;
 
 };

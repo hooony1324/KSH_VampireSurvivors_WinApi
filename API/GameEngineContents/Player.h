@@ -72,6 +72,8 @@ private:
 
 	// ½´ÆÃ
 	void Shooting();
+
+	// ¹è¿­·Î ¹Ù²Ü ¿¹Á¤
 	ProjectileShooter* MagicShooter_;
 	ProjectileShooter* KnifeShooter_;
 	ProjectileShooter* FireShooter_;

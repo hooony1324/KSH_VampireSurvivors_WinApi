@@ -83,13 +83,20 @@ void PlayLevel::LevelChangeStart(GameEngineLevel* _PrevLevel)
 	FirstGem->SetPosition({ 1000, 500 });
 	FirstGem->SetType(GemType::GREEN);
 
+
+	// 테스트용 아이템
 	Coin* FirstCoin = CreateActor<Coin>(static_cast<int>(ACTOR_ORDER::ITEM), "ITEM");
 	FirstCoin->SetPosition({ 1000, 1000 });
-
+	
 	LevelUpBox* FirstBox = CreateActor<LevelUpBox>(static_cast<int>(ACTOR_ORDER::ITEM), "ITEM");
 	FirstBox->SetPosition({ 1100, 1000 });
+
+	LevelUpBox* SecondBox = CreateActor<LevelUpBox>(static_cast<int>(ACTOR_ORDER::ITEM), "ITEM");
+	SecondBox->SetPosition({ 1150, 1000 });
+
+	LevelUpBox* ThirdBox = CreateActor<LevelUpBox>(static_cast<int>(ACTOR_ORDER::ITEM), "ITEM");
+	ThirdBox->SetPosition({ 1200, 1000 });
 	
-	// 레벨 변경 시, Death안된 Actor들은 따로 Death해주도록 추가해야함-> Item, Bullet, Monster...
 
 }
 

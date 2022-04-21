@@ -12,14 +12,11 @@
 #include <GameEngineBase/GameEngineRandom.h>
 
 #include "GameEnum.h"
-#include "Character.h"
-
 #include "GameInfo.h"
+#include "Character.h"
 
 #include "Vector2D.h"
 #include "ProjectileShooter.h"
-#include "ExpGem.h"
-
 
 
 Player::Player() 
@@ -237,14 +234,15 @@ void Player::AllCollisionCheck()
 
 float Player::MapColCheck(float _PlayerSpeed)
 {
+	// InfiniteMap에 의해 맵 렌더러는 움직이지만
+	// MapColImage는 움직이지 않는다
+
 	// 움직임이 없으면 체크할 필요 없음
 	if (MoveDir_.x == 0.0f && MoveDir_.y == 0.0f)
 	{
 		return _PlayerSpeed;
 	}
 
-	// ex map.x == 14000
-	// 1) {17000, 840} -> 3000 840 	2) {-3000, 840} -> 11000 840	3) {-33000, 840} ->  
 	int PlayerPosX = GetPosition().ix() % MapColImage_->GetScale().ix();
 	if (PlayerPosX < 0)
 	{

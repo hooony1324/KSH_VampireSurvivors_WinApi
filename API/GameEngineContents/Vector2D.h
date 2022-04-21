@@ -19,6 +19,7 @@ public:
 		return Result;
 	}
 
+	// 벡터 -> 각도 반환
 	static float NormalizedDirToDegree(float4 _Vector)
 	{
 		// float4::RIGHT가 기준

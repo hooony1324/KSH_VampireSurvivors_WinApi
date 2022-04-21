@@ -8,7 +8,8 @@
 #include "GameEnum.h"
 #include "Enemy.h"
 
-const int EnemyNumInScene = 2;
+const int EnemyNumInScene = 4;
+const float SpawnCycle = 120.0f;
 
 EnemyController::EnemyController() 
 	: EnemyCollectorL_(nullptr)
@@ -24,6 +25,9 @@ EnemyController::~EnemyController()
 
 void EnemyController::Start()
 {
+	// 몬스터 스폰 주기 : 2분
+	SpawnCounter_.SetCount(SpawnCycle);
+
 	// 몬스터가 충돌하면 리스폰
 	EnemyCollectorL_ = CreateCollision("EnemyCollector", { 30, 700 }, { -500, 0 });
 	EnemyCollectorR_ = CreateCollision("EnemyCollector", { 30, 700 }, { 500, 0 });
@@ -48,11 +52,22 @@ void EnemyController::Update()
 {
 	SetPosition(GameInfo::GetPlayerInfo()->PlayerPos_);
 
+	IsSpawn_ = SpawnCounter_.Start(GameEngineTime::GetDeltaTime(static_cast<int>(TIME_GROUP::MONSTER)));
 
+	if (true == IsSpawn_)
+	{
+		Spawn();
+		SpawnCounter_.Reset();
+	}
 
 }
 
 void EnemyController::Render()
+{
+
+}
+
+void EnemyController::Spawn()
 {
 
 }
