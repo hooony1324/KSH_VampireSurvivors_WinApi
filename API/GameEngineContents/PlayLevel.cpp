@@ -88,14 +88,11 @@ void PlayLevel::LevelChangeStart(GameEngineLevel* _PrevLevel)
 	Coin* FirstCoin = CreateActor<Coin>(static_cast<int>(ACTOR_ORDER::ITEM), "ITEM");
 	FirstCoin->SetPosition({ 1000, 1000 });
 	
-	LevelUpBox* FirstBox = CreateActor<LevelUpBox>(static_cast<int>(ACTOR_ORDER::ITEM), "ITEM");
-	FirstBox->SetPosition({ 1100, 1000 });
-
-	LevelUpBox* SecondBox = CreateActor<LevelUpBox>(static_cast<int>(ACTOR_ORDER::ITEM), "ITEM");
-	SecondBox->SetPosition({ 1150, 1000 });
-
-	LevelUpBox* ThirdBox = CreateActor<LevelUpBox>(static_cast<int>(ACTOR_ORDER::ITEM), "ITEM");
-	ThirdBox->SetPosition({ 1200, 1000 });
+	for (int i = 0; i < 10; i++)
+	{
+		LevelUpBox* Box = CreateActor<LevelUpBox>(static_cast<int>(ACTOR_ORDER::ITEM), "ITEM");
+		Box->SetPosition(float4{ 1100 , 1000 } + float4{ static_cast<float>(i) * 50, 0 });
+	}
 	
 
 }

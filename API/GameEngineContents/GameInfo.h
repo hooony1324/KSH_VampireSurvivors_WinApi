@@ -1,9 +1,9 @@
 #pragma once
 #include <GameEngineBase/GameEngineMath.h>
 #include "Character.h"
-#include "GameEnum.h"
 #include <vector>
 #include <map>
+#include "GameEnum.h"
 
 
 // 설명 :
@@ -48,7 +48,7 @@ public:
 		// 무기 정보, 12개만 장착 가능
 		std::vector<SkillType> ActiveSkillSlot_;
 		std::vector<SkillType> PassiveSkillSlot_;
-		int SkillLevelInfo_[static_cast<int>(SkillType::PASSIVE_MAX)];
+		int SkillLevelInfo_[static_cast<int>(SkillType::MAX)];
 
 	};
 
@@ -119,10 +119,12 @@ private:
 
 static std::string SkillOrder[] =
 {
-	"Knife", "MagicWand", "FireWand", "Runetracer",
-	"Axe", "Clocklancet", "Cross", "Bible",
-	"Whip", "Garlic", "Laurel", "Lightening",
-	"Holywater", "FiveStar", "Bracer", "Emptytome",
-	"Spinach", "Spellbinder", "Hollowheart", "Clover",
-	"Pummarola", "Candle", "Wing"
+	"Knife", "MagicWand", "FireWand", "Clover"
 };
+
+//"Knife", "MagicWand", "FireWand", "Runetracer",
+//"Axe", "Clocklancet", "Cross", "Bible",
+//"Whip", "Garlic", "Laurel", "Lightening",
+//"Holywater", "FiveStar", "Bracer", "Emptytome",
+//"Spinach", "Spellbinder", "Hollowheart", "Clover",
+//"Pummarola", "Candle", "Wing"

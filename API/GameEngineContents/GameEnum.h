@@ -26,7 +26,9 @@ enum class TIME_GROUP
 	TIMER,
 };
 
+
 const int SKILL_LEVELMAX = 8;
+const int ACTIVE_MAX = 3;
 enum class SkillType
 {
 	// @@@ Attribute : Active @@@
@@ -35,7 +37,6 @@ enum class SkillType
 	KNIFE,
 	MAGICWAND,
 	FIREWAND,
-	ACTIVE_MAX,
 	//RUNETRACER,
 	//AXE,
 	//CLOCKLANCET,
@@ -58,11 +59,11 @@ enum class SkillType
 	//SPINACH,			// + FIREWAND = HELLFIRE
 	//SPELLBINDER,		// + KINGBIBLE = UNHOLYVESPERS
 	//HOLLOWHEART,		// + WHIP = BLOODYTEAR
-	//CLOVER,				// + CROSS = HEAVENSWORD
+	CLOVER,				// + CROSS = HEAVENSWORD
 	//PUMMAROLA,			// + GARLIC = SOULEATER
 	//CANDLELABRADOR,		// + AXE = DEATHSPIRAL
 	//WING,
-	PASSIVE_MAX,
+	MAX,
 
 	// etc
 	NONE,

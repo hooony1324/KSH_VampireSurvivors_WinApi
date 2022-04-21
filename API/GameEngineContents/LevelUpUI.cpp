@@ -54,8 +54,8 @@ void LevelUpUI::Start()
 
 
 	// 무기 선택 박스 1~4에 띄울 스킬(액티브/패시브) 선택
-
 	SelectNum_ = 3;
+
 	// 무기 선택 박스 1
 	Renderer1_ = CreateRenderer();
 	Renderer1_->SetImage("LevelupBlank.bmp");
@@ -95,11 +95,11 @@ void LevelUpUI::Start()
 
 	// 중요 : 처음엔 0 ~ 10 이지만 나중에는 뽑은 스킬의 상태에 따라 뽑을 수 있는 스킬배열이 달라져야 함 ex. SelectableSkills[]
 	// 0 ~ 10 연속으로 SelectNum개의 겹치지 않는 랜덤수 뽑기
-	bool SelectedSkills[static_cast<int>(SkillType::PASSIVE_MAX)] = { false, };
+	bool SelectedSkills[static_cast<int>(SkillType::MAX)] = { false, };
 	int TrueCount = 0;
 
 	// 스킬 여유공간 체크
-	int Count = static_cast<int>(SkillType::PASSIVE_MAX)
+	int Count = static_cast<int>(SkillType::MAX)
 		- (static_cast<int>(GameInfo::GetPlayerInfo()->ActiveSkillSlot_.size()) + static_cast<int>(GameInfo::GetPlayerInfo()->PassiveSkillSlot_.size()));
 	int Spare = SKILL_LEVELMAX - Count;
 	if (Spare < SelectNum_)
@@ -109,8 +109,8 @@ void LevelUpUI::Start()
 
 	while (TrueCount < SelectNum_)
 	{
-		int Index = Random.RandomInt(0, static_cast<int>(SkillType::PASSIVE_MAX) - 1);
-		if (Index == static_cast<int>(SkillType::PASSIVE_MAX) || Index == static_cast<int>(SkillType::ACTIVE_MAX))
+		int Index = Random.RandomInt(0, static_cast<int>(SkillType::MAX) - 1);
+		if (Index == static_cast<int>(SkillType::MAX) || Index == static_cast<int>(SkillType::MAX))
 		{
 			continue;
 		}
@@ -272,15 +272,16 @@ void LevelUpUI::SelectSkill(int _SkillNumber)
 
 	int SkillLevel = GameInfo::GetPlayerInfo()->SkillLevelInfo_[_SkillNumber];
 
+
 	if (0 == SkillLevel)
 	{
 		SkillType Type = static_cast<SkillType>(_SkillNumber);
 
-		if (_SkillNumber < static_cast<int>(SkillType::ACTIVE_MAX))
+		if (_SkillNumber < ACTIVE_MAX)
 		{
 			GameInfo::GetPlayerInfo()->ActiveSkillSlot_.push_back(Type);
 		}
-		else if (_SkillNumber > static_cast<int>(SkillType::ACTIVE_MAX) && _SkillNumber < static_cast<int>(SkillType::PASSIVE_MAX))
+		else
 		{
 			GameInfo::GetPlayerInfo()->PassiveSkillSlot_.push_back(Type);
 		}

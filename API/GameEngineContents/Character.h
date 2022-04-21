@@ -1,6 +1,7 @@
 #pragma once
 #include <string>
 #include <GameEngineBase/GameEngineMath.h>
+
 #include "GameEnum.h"
 
 enum class CharacterType

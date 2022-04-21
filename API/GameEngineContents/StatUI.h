@@ -27,7 +27,7 @@ protected:
 private:
 
 	void SetSlotBase();
-
+	void SlotUpdate();
 
 	std::vector<GameEngineRenderer*> ActiveSlots_;
 	std::vector<GameEngineRenderer*> ActiveSkills_;
@@ -37,7 +37,7 @@ private:
 	std::vector<GameEngineRenderer*> PassiveSkills_;
 	std::vector<GameEngineRenderer*> PassiveLevels_;
 
-	int ActiveSlotIndex_;
-	SkillType ActivatedSkill_;
+	size_t ActiveSkillCount_;
+	size_t PassiveSkillCount_;
 };
 
