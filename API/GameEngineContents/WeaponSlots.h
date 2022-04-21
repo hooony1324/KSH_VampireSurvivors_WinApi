@@ -2,6 +2,7 @@
 #include <GameEngine/GameEngineActor.h>
 
 // Ό³Έν :
+class GameEngineRenderer;
 class WeaponSlots : public GameEngineActor
 {
 public:
@@ -22,8 +23,14 @@ protected:
 	void Render() override;
 
 private:
+	void SkillCheck();
 
+private:
 
+	std::vector<GameEngineRenderer*> ActiveSlots_;
+	size_t ActiveCount_;
+	std::vector<GameEngineRenderer*> PassiveSlots_;
+	size_t PassiveCount_;
 
 };
 

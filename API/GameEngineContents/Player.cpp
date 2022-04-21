@@ -72,7 +72,7 @@ void Player::Start()
 
 	PlayerCol_ = CreateCollision("Player", { 40, 40 });
 	PlayerShootRange_ = CreateCollision("PlayerShootRange", { 600, 600 });
-	PlayerShootRange_->On(); // 디버그시 안보이게
+	PlayerShootRange_->Off();
 
 	// 슈팅
 	MagicShooter_ = GetLevel()->CreateActor<ProjectileShooter>(static_cast<int>(RENDER_ORDER::PLAYER), "Shooter");

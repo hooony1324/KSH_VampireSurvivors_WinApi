@@ -67,9 +67,7 @@ void Projectile::SetType(BulletType _BT)
 	case BulletType::KNIFE:
 	{
 		GameEngineSound::SoundPlayOneShot("ProjectileKnife.mp3", 0);
-
 		ProjImage_->SetRotationFilter("Sword_Filter.bmp");
-		ProjCol_->SetPivot(ShootDir_ * 18);
 		Speed_ = 550.0f;
 		break;
 	}
@@ -78,7 +76,6 @@ void Projectile::SetType(BulletType _BT)
 		GameEngineSound::SoundPlayOneShot("ProjectileMagic.mp3", 0);
 
 		ProjImage_->SetRotationFilter("ProjectileHoly1_Filter.bmp");
-		ProjCol_->SetPivot(ShootDir_ * 10);
 		Speed_ = 500.0f;
 		break;
 	}
@@ -87,7 +84,6 @@ void Projectile::SetType(BulletType _BT)
 		GameEngineSound::SoundPlayOneShot("ProjectileMagic.mp3", 0);
 		
 		ProjImage_->SetRotationFilter("ProjectileFlameRed_Filter.bmp");
-		ProjCol_->SetPivot(ShootDir_ * 10);
 		Speed_ = 300.0f;
 		break;
 

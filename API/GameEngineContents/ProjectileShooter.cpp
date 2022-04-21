@@ -51,7 +51,7 @@ void ProjectileShooter::SetShooter(BulletType _BT, int _BulletCount, float _Inte
 
 void ProjectileShooter::Shooting(float _DeltaTime, float4 _PlayerPos, float4 _MonsterPos, float4 _PlayerMoveDir)
 {
-	if (_PlayerMoveDir.x != 0 || _PlayerMoveDir.y != 0)
+	if (_PlayerMoveDir.x != 0.0f || _PlayerMoveDir.y != 0.0f)
 	{
 		PlayerMoveDir_ = _PlayerMoveDir;
 	}
@@ -115,11 +115,11 @@ void ProjectileShooter::ShootKnife()
 {
 	// Knife
 	Projectile* Knife = GetLevel()->CreateActor<Projectile>(static_cast<int>(ACTOR_ORDER::PLAYER), "Bullet");
+	float4 RandomPos = float4{ Random.RandomFloat(PlayerPos_.x - 30, PlayerPos_.x + 30), Random.RandomFloat(PlayerPos_.y - 30, PlayerPos_.y + 30) };
+	Knife->SetPosition(RandomPos);
 	Knife->SetType(BT_);
 	Knife->SetDir(PlayerMoveDir_);
 
-	float4 RandomPos = float4{ Random.RandomFloat(PlayerPos_.x - 30, PlayerPos_.x + 30), Random.RandomFloat(PlayerPos_.y - 30, PlayerPos_.y + 30) };
-	Knife->SetPosition(RandomPos);
 
 	BulletCount_ -= 1;
 	isShoot_ = true;
