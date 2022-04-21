@@ -24,6 +24,7 @@ enum class TIME_GROUP
 	MONSTER,
 	WEAPON,
 	TIMER,
+	ITEM
 };
 
 

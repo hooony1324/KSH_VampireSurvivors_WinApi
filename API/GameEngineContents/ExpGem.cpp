@@ -18,6 +18,7 @@ ExpGem::ExpGem()
 	, Type_(GemType::BLUE)
 	, Exp_(0)
 	, Renderer_(nullptr)
+	, Get_(false)
 {
 }
 
@@ -61,8 +62,43 @@ void ExpGem::Start()
 
 void ExpGem::Update()
 {
+	Pos_ = GetPosition();
+	PlayerPos_ = GameInfo::GetPlayerInfo()->PlayerPos_;
+
+	if (false == Get_)
+	{
+		GetCheck();
+	}
+
+	MoveBeforeCheck();
 
 	PlayerCheck();
+}
+
+void ExpGem::GetCheck()
+{
+	// 처음엔 플레이어 반대방향으로
+	MoveDir_ = Pos_ - PlayerPos_;
+	if (GameInfo::GetPlayerInfo()->Magnet_ * 80.0f > MoveDir_.Len2D())
+	{
+		MoveDir_.Normal2D();
+		MoveDir_ *= 200.0f;
+		Get_ = true;
+	}
+}
+
+void ExpGem::MoveBeforeCheck()
+{
+	if (false == Get_)
+	{
+		return;
+	}
+
+	float4 PlayerDir = PlayerPos_ - Pos_;
+	PlayerDir.Normal2D();
+	MoveDir_ = MoveDir_ + PlayerDir * 3.0f;
+
+	SetMove(MoveDir_ * GameEngineTime::GetDeltaTime(static_cast<int>(TIME_GROUP::ITEM)));
 }
 
 void ExpGem::PlayerCheck()

@@ -37,6 +37,8 @@ protected:
 
 
 private:
+	void GetCheck();
+	void MoveBeforeCheck();
 	void PlayerCheck();
 
 	static float RedExp_;
@@ -47,5 +49,8 @@ private:
 	GemType Type_;
 
 	// 플레이어 상호작용
-	
+	float4 PlayerPos_;
+	float4 Pos_;
+	float4 MoveDir_;
+	bool Get_;
 };
