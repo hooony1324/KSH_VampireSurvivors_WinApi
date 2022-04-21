@@ -20,6 +20,8 @@ public:
 	float4 GetRendererScale();
 	void CheckPlayerOnEnd();
 
+	
+
 protected:
 
 private:
@@ -28,6 +30,7 @@ private:
 	virtual void Render();
 
 	GameEngineRenderer* Map_;
+	float TelePortX_;
 
 	GameEngineCollision* MapEndLeft_;
 	GameEngineCollision* MapEndRight_;

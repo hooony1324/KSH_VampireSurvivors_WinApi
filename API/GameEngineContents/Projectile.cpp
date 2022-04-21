@@ -15,7 +15,7 @@ std::vector<std::string> ProjectileList = { "Sword.bmp", "ProjectileHoly1.bmp", 
 Projectile::Projectile()
 	: ProjImage_(nullptr)
 	, ShootDir_(float4::ZERO)
-	, Damage_(10)
+	, Damage_(100)
 	, Speed_(200)
 	, Duration_(3)	// 지속시간
 {
@@ -32,8 +32,6 @@ void Projectile::Start()
 	ProjCol_ = CreateCollision("PlayerAttack", float4{ 10, 10 });
 
 	SetScale({ 20, 20 });
-	ShootDir_ = float4::RIGHT;
-	Damage_ = 10;
 	NextLevelOff();
 	
 }

@@ -14,18 +14,19 @@
 #include "Projectile.h"
 
 #include "ExpGem.h"
+#include "PlayLevel.h"
+
+GameEngineImage* Enemy::MapColImage_ = nullptr;
 
 Enemy::Enemy()
 	: Speed_(80.0f)
 	, Hp_(100)
-	, AttackCheck_(nullptr)
 	, Renderer_(nullptr)
-	, Hp_BarSize_(float4::ZERO)
-	, Hp_BarRed_(nullptr)
 	, Col_(nullptr)
 	, OtherBlockLeft_(nullptr)
 	, OtherBlockRight_(nullptr)
 	, DestDir_(float4::ZERO)
+	, Dead_(false)
 {
 }
 
@@ -36,57 +37,43 @@ Enemy::~Enemy()
 
 void Enemy::Start()
 {
+	MapColImage_ = PlayLevel::MapColImage_;
+
 	Renderer_ = CreateRenderer();
 	Renderer_->CreateFolderAnimationTimeKey("Mud_WalkLeft.bmp", "Mud_WalkLeft", static_cast<int>(TIME_GROUP::MONSTER), 0, 3, 0.2f, true);
 	Renderer_->CreateFolderAnimationTimeKey("Mud_WalkRight.bmp", "Mud_WalkRight", static_cast<int>(TIME_GROUP::MONSTER), 0, 3, 0.2f, true);
-	Renderer_->CreateFolderAnimationTimeKey("Mud_Dead.bmp", "Mud_Dead", static_cast<int>(TIME_GROUP::MONSTER), 0, 27, 0.05f, true);
+	Renderer_->CreateFolderAnimationTimeKey("Mud_Dead.bmp", "Mud_Dead", static_cast<int>(TIME_GROUP::MONSTER), 0, 27, 0.05f, false);
 	Renderer_->ChangeAnimation("Mud_WalkRight");
 
 	SetScale({ 100, 100 });
 
-	Col_ = CreateCollision("Enemy", { 30, 45 });
+	Col_ = CreateCollision("Enemy", { 28, 45 });
 
-	OtherBlockLeft_ = CreateCollision("OtherGuard", { 4, 45 }, { -16, 0 });
-	OtherBlockRight_ = CreateCollision("OtherGuard", { 4, 45 }, { 16, 0 });
-
-
-
-	// 디버그용
-	//CreateRenderer("hpbar_back.bmp", static_cast<int>(RENDER_ORDER::MONSTER), RenderPivot::CENTER, { 0, 40 });
-	//Hp_BarRed_ = CreateRenderer("hpbar.bmp", static_cast<int>(RENDER_ORDER::MONSTER), RenderPivot::CENTER, { 0, 40 });
-	//Hp_BarSize_ = Hp_BarRed_->GetScale();
+	Others_.reserve(4);
+	OtherBlockLeft_ = CreateCollision("OtherGuard", { 4, 45 }, { -20, 0 });
+	OtherBlockRight_ = CreateCollision("OtherGuard", { 4, 45 }, { 20, 0 });
 
 	DeathCounter_.SetCount(1.0f);
 }
 
 void Enemy::Update()
 {
-	float DeltaTime = GameEngineTime::GetDeltaTime(static_cast<int>(TIME_GROUP::MONSTER));
+	DeltaTime_ = GameEngineTime::GetDeltaTime(static_cast<int>(TIME_GROUP::MONSTER));
 	Pos_ = GetPosition();
-	PlayerPos_ = GameInfo::GetPlayerInfo()->PlayerPos_;
 
-	if (Hp_ <= 0)
+	// 죽었음
+	EnemyDead();
+	if (true == Dead_)
 	{
-		Col_->Death();
-		Renderer_->ChangeAnimation("Mud_Dead");
-
-		if (true == DeathCounter_.Start(DeltaTime))
-		{
-			ExpGem* Gem = GetLevel()->CreateActor<ExpGem>(static_cast<int>(ACTOR_ORDER::ITEM), "ExpGem");
-			Gem->SetType(GemType::BLUE);
-			Gem->SetPosition(GetPosition());
-			Death();
-		}
 		return;
 	}
 
-
+	// 살아있음
+	PlayerPos_ = GameInfo::GetPlayerInfo()->PlayerPos_;
 	DestDir_ = Vector2D::GetDirection(Pos_, PlayerPos_);
-
+	SetMove((DestDir_ + KnockBackDir_) * DeltaTime_ * Speed_);
 	BlockOther();
 	Hit();
-
-	SetMove((DestDir_ + KnockBackDir_) * DeltaTime * Speed_);
 
 	if (0 >= DestDir_.x)
 	{
@@ -97,18 +84,10 @@ void Enemy::Update()
 		Renderer_->ChangeAnimation("Mud_WalkRight");
 	}
 
-
 }
 
 void Enemy::Render()
 {
-
-	// 체력 디버그용
-	//float Ratio = Hp_ / 100.0f;
-	//float NewSizeX = Hp_BarSize_.x * Ratio;
-	//float4 Hp_BarPivot = float4{ 0 - ((Hp_BarSize_.x - NewSizeX) / 2), Hp_BarRed_->GetPivot().y };
-	//Hp_BarRed_->SetScale(float4{ NewSizeX, Hp_BarSize_.y });
-	//Hp_BarRed_->SetPivot(Hp_BarPivot);
 
 }
 
@@ -119,9 +98,9 @@ void Enemy::Hit()
 		return;
 	}
 
-	if (KnockBackDir_.Len2D() >= 0)
+	if (KnockBackDir_.Len2D() >= 0.0f)
 	{
-		KnockBackDir_ -= KnockBackDir_ * 0.1f;
+		KnockBackDir_ -= KnockBackDir_ * 0.25f;
 	}
 
 	if (false == Col_->CollisionResult("PlayerAttack", PlayerAttack_, CollisionType::Rect, CollisionType::Rect))
@@ -139,7 +118,8 @@ void Enemy::Hit()
 
 	Hp_ -= Damage;
 
-	KnockBackDir_ = Vector2D::GetDirection(BulletPos, GetPosition()) * 5;
+	// 넉백 정도
+	KnockBackDir_ = Vector2D::GetDirection(BulletPos, Pos_) * 40.0f;
 
 }
 
@@ -155,4 +135,77 @@ void Enemy::BlockOther()
 		Others_.clear();
 	}
 
+}
+
+void Enemy::EnemyDead()
+{
+	if (Hp_ > 0)
+	{
+		return;
+	}
+
+	if (false == Dead_)
+	{
+		Renderer_->ChangeAnimation("Mud_Dead");
+		Col_->Death();
+		OtherBlockLeft_->Death();
+		OtherBlockRight_->Death();
+		KnockBackDir_.Normal2D();
+	}
+	
+	Dead_ = true;
+
+	SetMove(KnockBackDir_ * DeltaTime_ * 100.0f);
+
+	if (true == DeathCounter_.Start(DeltaTime_))
+	{
+		ExpGem* Gem = GetLevel()->CreateActor<ExpGem>(static_cast<int>(ACTOR_ORDER::ITEM), "ExpGem");
+		Gem->SetType(GemType::BLUE);
+		Gem->SetPosition(Pos_);
+		
+		// 죽음 -> 화면 위로
+		// 일단 Death();
+		Death();
+	}
+
+	
+}
+
+
+float Enemy::MapColCheck(float _EnemySpeed)
+{
+
+	int EnemyPosX = GetPosition().ix() % MapColImage_->GetScale().ix();
+	if (EnemyPosX < 0)
+	{
+		EnemyPosX = EnemyPosX + MapColImage_->GetScale().ix();
+	}
+
+	float4 EnemyMapColPos = { static_cast<float>(EnemyPosX), GetPosition().y };
+	int ColorTop = MapColImage_->GetImagePixel(EnemyMapColPos + float4{ 0, -20 });
+	int ColorBot = MapColImage_->GetImagePixel(EnemyMapColPos + float4{ 0, 20 });
+	int ColorLeft = MapColImage_->GetImagePixel(EnemyMapColPos + float4{ -20, 0 });
+	int ColorRight = MapColImage_->GetImagePixel(EnemyMapColPos + float4{ 20, 0 });
+
+	if (RGB(0, 0, 0) == ColorTop)
+	{
+		return 0.0f;
+	}
+
+	if (RGB(0, 0, 0) == ColorBot)
+	{
+		return 0.0f;
+	}
+
+	if (RGB(0, 0, 0) == ColorLeft)
+	{
+		return 0.0f;
+	}
+
+	if (RGB(0, 0, 0) == ColorRight)
+	{
+		return 0.0f;
+	}
+
+	return _EnemySpeed;
 }

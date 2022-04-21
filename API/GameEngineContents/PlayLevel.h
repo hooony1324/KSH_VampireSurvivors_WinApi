@@ -11,9 +11,8 @@ class Library;
 class Projectile;
 class ProjectileShooter;
 class TimerUI;
-
-// Ό³Έν :
 class GameEngineCollision;
+class GameEngineImage;
 class PlayLevel : public GameEngineLevel
 {
 public:
@@ -27,7 +26,7 @@ public:
 	PlayLevel& operator=(const PlayLevel& _Other) = delete;
 	PlayLevel& operator=(PlayLevel&& _Other) noexcept = delete;
 
-	
+	static GameEngineImage* MapColImage_;
 
 protected:
 	void Loading() override;

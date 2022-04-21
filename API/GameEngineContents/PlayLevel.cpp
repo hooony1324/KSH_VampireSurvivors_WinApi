@@ -5,13 +5,13 @@
 #include <GameEngineBase/GameEngineTime.h>
 #include <GameEngine/GameEngineActor.h>
 #include <GameEngine/GameEngineCollision.h>
+#include <GameEngine/GameEngineImageManager.h>
 
 #include "GameEnum.h"
 #include "PlayLevelContents.h"
 #include "GameInfo.h"
 
-float MapLeftX = 700;
-float MapRightX = 2940;
+GameEngineImage* PlayLevel::MapColImage_ = nullptr;
 
 PlayLevel::PlayLevel()
 	: Player_(nullptr)
@@ -80,7 +80,7 @@ void PlayLevel::LevelChangeStart(GameEngineLevel* _PrevLevel)
 
 	// 아이템 
 	ExpGem* FirstGem = CreateActor<ExpGem>(static_cast<int>(ACTOR_ORDER::ITEM), "ITEM");
-	FirstGem->SetPosition({ 1000, 500 });
+	FirstGem->SetPosition({ 1210, 490 });
 	FirstGem->SetType(GemType::GREEN);
 
 
@@ -210,6 +210,8 @@ void PlayLevel::CreateMap()
 	// 액터의 위치, 크기 설정
 	Map_->SetPosition(float4::ZERO);
 	Map_->SetScale(Map_->GetRendererScale());
+
+	MapColImage_ = GameEngineImageManager::GetInst()->Find("LibraryColMap.bmp");
 
 }
 

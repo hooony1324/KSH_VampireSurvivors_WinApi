@@ -6,6 +6,7 @@
 // 설명 :
 class GameEngineCollision;
 class GameEngineRenderer;
+class GameEngineImage;
 class Enemy : public GameEngineActor
 {
 public:
@@ -19,38 +20,52 @@ public:
 	Enemy& operator=(const Enemy& _Other) = delete;
 	Enemy& operator=(Enemy&& _Other) noexcept = delete;
 
+	inline bool IsDead()
+	{
+		return Dead_;
+	}
+
+	inline void SetLive()
+	{
+		Dead_ = true;
+	}
+
+private:
+	static GameEngineImage* MapColImage_;
+
 private:
 	void Start() override;
 	void Update() override;
 	void Render() override;
 
-	// 기본 정보
+private:
+	// 콜리전 맵
+	float MapColCheck(float _EnemySpeed);
+	// 피격
+	void Hit();
+	// 서로 밀어내기
+	void BlockOther();
+	// 죽음
+	void EnemyDead();
+private:
+	float DeltaTime_;
+	GameEngineRenderer* Renderer_;
 	float4 PlayerPos_;
 	float4 Pos_;
 	float4 DestDir_;
 	float Speed_;
 	int Hp_;
-
+	bool Dead_;
 
 	// 피격
-	void Hit();
-	GameEngineRenderer* Renderer_;
+	std::vector<GameEngineCollision*> PlayerAttack_;
 	GameEngineCollision* Col_;
-	GameEngineCollision* AttackCheck_;
 	float4 KnockBackDir_;
 
-
-	// 서로 밀어내기
-	void BlockOther();
-
+	// 밀어내기
 	GameEngineCollision* OtherBlockLeft_;
 	GameEngineCollision* OtherBlockRight_;
 	std::vector<GameEngineCollision*> Others_;
-	std::vector<GameEngineCollision*> PlayerAttack_;
-
-
-	GameEngineRenderer* Hp_BarRed_;
-	float4 Hp_BarSize_;
 
 	Counter DeathCounter_;
 };

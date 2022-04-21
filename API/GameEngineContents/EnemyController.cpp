@@ -8,7 +8,7 @@
 #include "GameEnum.h"
 #include "Enemy.h"
 
-const int EnemyNumInScene = 4;
+const int EnemyNumInScene = 2;
 const float SpawnCycle = 120.0f;
 
 EnemyController::EnemyController() 
@@ -41,7 +41,7 @@ void EnemyController::Start()
 	for (int i = 0; i < EnemyNumInScene; i++)
 	{
 		GameEngineActor* Ptr = GetLevel()->CreateActor<Enemy>(static_cast<int>(ACTOR_ORDER::MONSTER), "Enemy");
-		Ptr->SetPosition(float4{ static_cast<float>(i) * 50, 40 });
+		Ptr->SetPosition(float4{ static_cast<float>(i) * 50, 700 });
 		Ptr->On();
 		Ptr->NextLevelOff();
 		Enemies_.push_back(Ptr);

@@ -133,7 +133,6 @@ public:
 		y /= Len;
 
 		// sqrtf 제곱근 구해줍니다.
-		return;
 	}
 
 	void Range2D(float _Max)
@@ -142,7 +141,6 @@ public:
 
 		x *= _Max;
 		y *= _Max;
-		return;
 	}
 
 

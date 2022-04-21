@@ -17,6 +17,7 @@
 
 #include "Vector2D.h"
 #include "ProjectileShooter.h"
+#include "PlayLevel.h"
 
 
 Player::Player() 
@@ -42,7 +43,8 @@ Player::~Player()
 
 void Player::Start()
 {
-	SetPosition({ 1000, 700 });
+	//SetPosition({ 1710, 770 });
+	SetPosition({ 1010, 770 });
 	SetScale({ 100, 100 });
 
 	// 플레이어 이미지, 애니메이션 관련 설정
@@ -68,7 +70,7 @@ void Player::Start()
 
 
 	// 충돌
-	MapColImage_ = GameEngineImageManager::GetInst()->Find("LibraryColMap.bmp");
+	MapColImage_ = PlayLevel::MapColImage_;
 
 	PlayerCol_ = CreateCollision("Player", { 40, 40 });
 	PlayerShootRange_ = CreateCollision("PlayerShootRange", { 600, 600 });
@@ -111,7 +113,7 @@ void Player::Render()
 {
 	HpBarRender();
 
-	//Vector2D::DebugVectorRender(this);
+	Vector2D::DebugVectorRender(this);
 }
 
 void Player::SetGameInfo()

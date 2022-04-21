@@ -114,11 +114,12 @@ void ProjectileShooter::Shooting(float _DeltaTime, float4 _PlayerPos, float4 _Mo
 void ProjectileShooter::ShootKnife()
 {
 	// Knife
-	Projectile* Knife = GetLevel()->CreateActor<Projectile>(static_cast<int>(ACTOR_ORDER::PLAYER), "Bullet");
-	float4 RandomPos = float4{ Random.RandomFloat(PlayerPos_.x - 30, PlayerPos_.x + 30), Random.RandomFloat(PlayerPos_.y - 30, PlayerPos_.y + 30) };
-	Knife->SetPosition(RandomPos);
-	Knife->SetType(BT_);
-	Knife->SetDir(PlayerMoveDir_);
+	Projectile* Bullet = GetLevel()->CreateActor<Projectile>(static_cast<int>(ACTOR_ORDER::PLAYER), "Bullet");
+	float4 RandomPos = float4{ Random.RandomFloat(PlayerPos_.x - 25, PlayerPos_.x + 25), Random.RandomFloat(PlayerPos_.y - 25, PlayerPos_.y + 25) };
+	Bullet->SetPosition(RandomPos);
+	Bullet->SetType(BT_);
+	Bullet->SetDamage(50);
+	Bullet->SetDir(PlayerMoveDir_);
 
 
 	BulletCount_ -= 1;
@@ -132,6 +133,7 @@ void ProjectileShooter::ShootMagic()
 	// ÃÑ¾Ë ½î°í isShoot = true
 	Projectile* Bullet = GetLevel()->CreateActor<Projectile>(static_cast<int>(ACTOR_ORDER::PLAYER), "Bullet");
 	Bullet->SetType(BT_);
+	Bullet->SetDamage(100);
 	Bullet->SetDir(Vector2D::GetDirection(PlayerPos_, MonsterPos_));
 	Bullet->SetPosition(PlayerPos_);
 
@@ -148,6 +150,7 @@ void ProjectileShooter::ShootFire()
 	{
 		Projectile* Bullet = GetLevel()->CreateActor<Projectile>(static_cast<int>(ACTOR_ORDER::PLAYER), "Bullet");
 		Bullet->SetType(BT_);
+		Bullet->SetDamage(100);
 		FireShootDir_.x *= 0.8f;
 		FireShootDir_.y *= 1.2f;
 		FireShootDir_.Normal2D();
