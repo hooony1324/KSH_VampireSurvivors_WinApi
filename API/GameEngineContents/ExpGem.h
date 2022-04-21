@@ -45,4 +45,7 @@ private:
 	GameEngineCollision* Col_;
 	float Exp_;
 	GemType Type_;
+
+	// 플레이어 상호작용
+	
 };

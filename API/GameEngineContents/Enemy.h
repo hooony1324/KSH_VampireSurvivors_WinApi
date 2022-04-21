@@ -40,7 +40,7 @@ private:
 
 private:
 	// 콜리전 맵
-	float MapColCheck(float _EnemySpeed);
+	float MapColCheck(float _DestDir);
 	// 피격
 	void Hit();
 	// 서로 밀어내기

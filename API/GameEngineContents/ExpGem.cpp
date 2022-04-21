@@ -61,6 +61,7 @@ void ExpGem::Start()
 
 void ExpGem::Update()
 {
+
 	PlayerCheck();
 }
 

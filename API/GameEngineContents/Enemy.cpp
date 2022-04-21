@@ -71,7 +71,12 @@ void Enemy::Update()
 	// 살아있음
 	PlayerPos_ = GameInfo::GetPlayerInfo()->PlayerPos_;
 	DestDir_ = Vector2D::GetDirection(Pos_, PlayerPos_);
-	SetMove((DestDir_ + KnockBackDir_) * DeltaTime_ * Speed_);
+
+
+	float Speed = MapColCheck(Speed_);
+	SetMove((DestDir_ + KnockBackDir_) * DeltaTime_ * Speed);
+	
+	
 	BlockOther();
 	Hit();
 
@@ -155,7 +160,7 @@ void Enemy::EnemyDead()
 	
 	Dead_ = true;
 
-	SetMove(KnockBackDir_ * DeltaTime_ * 100.0f);
+	SetMove(KnockBackDir_ * DeltaTime_ * 90.0f);
 
 	if (true == DeathCounter_.Start(DeltaTime_))
 	{
@@ -172,7 +177,7 @@ void Enemy::EnemyDead()
 }
 
 
-float Enemy::MapColCheck(float _EnemySpeed)
+float Enemy::MapColCheck(float _Speed)
 {
 
 	int EnemyPosX = GetPosition().ix() % MapColImage_->GetScale().ix();
@@ -187,25 +192,27 @@ float Enemy::MapColCheck(float _EnemySpeed)
 	int ColorLeft = MapColImage_->GetImagePixel(EnemyMapColPos + float4{ -20, 0 });
 	int ColorRight = MapColImage_->GetImagePixel(EnemyMapColPos + float4{ 20, 0 });
 
-	if (RGB(0, 0, 0) == ColorTop)
+	
+	float4 ResultDir;
+	if (RGB(0, 0, 0) == ColorTop && DestDir_.y < 0.0f)
 	{
 		return 0.0f;
 	}
 
-	if (RGB(0, 0, 0) == ColorBot)
+	if (RGB(0, 0, 0) == ColorBot && DestDir_.y > 0.0f)
 	{
 		return 0.0f;
 	}
 
-	if (RGB(0, 0, 0) == ColorLeft)
+	if (RGB(0, 0, 0) == ColorLeft && DestDir_.x < 0.0f)
 	{
 		return 0.0f;
 	}
 
-	if (RGB(0, 0, 0) == ColorRight)
+	if (RGB(0, 0, 0) == ColorRight && DestDir_.x > 0.0f)
 	{
 		return 0.0f;
 	}
 
-	return _EnemySpeed;
+	return _Speed;
 }
