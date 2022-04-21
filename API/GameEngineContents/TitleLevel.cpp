@@ -4,7 +4,7 @@
 #include "GameEngine/GameEngine.h"
 #include "GameEngineBase/GameEngineInput.h"
 
-#include "ObjectEnum.h"
+#include "GameEnum.h"
 #include "Character.h"
 #include "GameInfo.h"
 

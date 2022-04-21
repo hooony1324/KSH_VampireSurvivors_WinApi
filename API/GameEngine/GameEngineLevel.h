@@ -59,6 +59,7 @@ public:
 		NewActor->GameEngineUpdateObject::SetOrder(_Order);
 		NewActor->SetName(_Name);
 		NewActor->SetLevel(this);
+		NewActor->NextLevelOff();
 		StartActor->Start();
 		std::list<GameEngineActor*>& Group = AllActor_[_Order];
 		Group.push_back(NewActor);

@@ -193,15 +193,6 @@ void Player::PlayerMove()
 	/*AccGravity_ += GameEngineTime::GetDeltaTime() * Gravity_;
 	SetMove(float4::DOWN * GameEngineTime::GetDeltaTime() * AccGravity_);*/
 
-	// Pixel 충돌
-	//float4 NextPosTop = PlayerPos_ + (MoveDir_ * GameEngineTime::GetDeltaTime() * Speed_) + float4(0, -40);
-	//float4 NextPosBot = PlayerPos_ + (MoveDir_ * GameEngineTime::GetDeltaTime() * Speed_) + float4(0, 40);
-	//int NextTopColor = MapColImage_->GetImagePixel(NextPosTop);
-	//int NextBotColor = MapColImage_->GetImagePixel(NextPosBot);
-	//if (RGB(0, 0, 0) == NextTopColor || RGB(0, 0, 0) == NextBotColor)
-	//{
-	//	Speed = 0;
-	//}
 }
 
 void Player::HpBarRender()
@@ -317,9 +308,10 @@ void Player::MonsterAttackCheck()
 
 float4 Player::ShootableEnemeyCheck()
 {
+	GameEngineRandom Random;
+
 	if (true == PlayerShootRange_->CollisionResult("Enemy", ShootableEnemy_, CollisionType::Rect, CollisionType::Rect))
 	{
-		GameEngineRandom Random;
 		int Index = Random.RandomInt(0, static_cast<int>(ShootableEnemy_.size()) - 1);
 		float4 MonsterPos = ShootableEnemy_[Index]->GetCollisionPos();
 		ShootableEnemy_.clear();
@@ -328,18 +320,31 @@ float4 Player::ShootableEnemeyCheck()
 	}
 
 	// 몬스터가 없다면 랜덤 방향
-	return GetPosition() + float4::RIGHT;
+	float4 RandomDir = float4{ Random.RandomFloat(-1, 1), Random.RandomFloat(-1, 1) };
+
+	return GetPosition() + RandomDir;
 }
 
 void Player::Shooting()
 {
 	float4 MonsterPos = ShootableEnemeyCheck();
 
+	int* SkillLevelInfo = GameInfo::GetPlayerInfo()->SkillLevelInfo_;
 
+	if (0 < SkillLevelInfo[static_cast<int>(SkillType::KNIFE)])
+	{
+		KnifeShooter_->Shooting(GameEngineTime::GetDeltaTime(static_cast<int>(TIME_GROUP::WEAPON)), PlayerPos_, MonsterPos, MoveDir_);
+	}
 
-	MagicShooter_->Shooting(GameEngineTime::GetDeltaTime(static_cast<int>(TIME_GROUP::WEAPON)), PlayerPos_, MonsterPos);
-	KnifeShooter_->Shooting(GameEngineTime::GetDeltaTime(static_cast<int>(TIME_GROUP::WEAPON)), PlayerPos_, MonsterPos, MoveDir_);
-	FireShooter_->Shooting(GameEngineTime::GetDeltaTime(static_cast<int>(TIME_GROUP::WEAPON)), PlayerPos_, MonsterPos);
+	if (0 < SkillLevelInfo[static_cast<int>(SkillType::MAGICWAND)])
+	{
+		MagicShooter_->Shooting(GameEngineTime::GetDeltaTime(static_cast<int>(TIME_GROUP::WEAPON)), PlayerPos_, MonsterPos);
+	}
+
+	if (0 < SkillLevelInfo[static_cast<int>(SkillType::FIREWAND)])
+	{
+		FireShooter_->Shooting(GameEngineTime::GetDeltaTime(static_cast<int>(TIME_GROUP::WEAPON)), PlayerPos_, MonsterPos);
+	}
 }
 
 
