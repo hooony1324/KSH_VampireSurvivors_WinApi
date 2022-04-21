@@ -14,7 +14,7 @@ GameEngineImage::~GameEngineImage()
 	// Window에서 할당해 온 애들은 릭으로 체크가 안되지만 지워주는게 깔끔하다.
 	// 윈도우에세 할당해왔으므로 윈도우의 함수를 이용해서 지워야한다.
 
-	if ( nullptr != BitMap_)
+	if (nullptr != BitMap_)
 	{
 		DeleteObject(BitMap_);
 		BitMap_ = nullptr;
@@ -182,7 +182,7 @@ void GameEngineImage::TransCopy(GameEngineImage* _Other, const float4& _CopyPos,
 
 void GameEngineImage::AlphaCopy(GameEngineImage* _Other, const float4& _CopyPos,
 	const float4& _CopyScale,
-	const float4& _OtherPivot, const float4& _OtherScale, unsigned int _Alpha) 
+	const float4& _OtherPivot, const float4& _OtherScale, unsigned int _Alpha)
 {
 	BLENDFUNCTION Func;
 	Func.BlendOp = AC_SRC_OVER;
@@ -213,6 +213,11 @@ void GameEngineImage::PlgCopy(GameEngineImage* _Other, const float4& _CopyPos,
 {
 	// 3개의 포인트를 넣어줘야 합니다.
 
+	if (_Angle > 178.005f && _Angle < 181.005f)
+	{
+		_Angle = 181.2f;
+	}
+
 	POINT RotPoint[3];
 
 	GameEngineRect Rect = GameEngineRect(float4::ZERO, _CopyScale);
@@ -242,14 +247,14 @@ void GameEngineImage::PlgCopy(GameEngineImage* _Other, const float4& _CopyPos,
 }
 
 
-void GameEngineImage::CutCount(int _x, int _y) 
+void GameEngineImage::CutCount(int _x, int _y)
 {
 	float4 Scale = { GetScale().x / _x, GetScale().y / _y };
 	Cut(Scale);
 }
 
 void GameEngineImage::Cut(const float4& _CutSize)
-{	
+{
 	// 딱맞아 떨어지게 만들어줄것.
 	if (0 != (GetScale().ix() % _CutSize.ix()))
 	{

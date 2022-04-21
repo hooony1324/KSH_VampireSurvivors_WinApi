@@ -11,11 +11,10 @@ enum class ACTOR_ORDER
 
 enum class RENDER_ORDER
 {
-	HIDE,
 	BACKGROUND,
+	MONSTER,
 	PLAYER,
 	ITEM,
-	MONSTER,
 	UI
 };
 

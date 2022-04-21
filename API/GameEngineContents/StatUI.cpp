@@ -60,12 +60,11 @@ void StatUI::Update()
 		{
 			int a = 0;
 		}
-		// 스킬 슬릇은 한번만 업데이트 : 아직 못함
-
+		
 		ActivatedSkill_ = NewSkill;
 
 		ActiveSlots_[i]->On();
-
+		
 		std::string SkillName = SkillOrder[static_cast<int>(ActivatedSkill_)];
 		ActiveSkills_[i]->On();
 		ActiveSkills_[i]->SetImage(SkillName + "UI.bmp");
