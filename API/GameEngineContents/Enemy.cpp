@@ -201,8 +201,9 @@ float Enemy::MapColCheck(float _Speed)
 
 	// 스폰 됐을 때콜리전 맵 안에 갇혀있으면 빠져나가야함
 	int Trapped = ColorTop + ColorBot + ColorLeft + ColorRight;
-	if (Trapped >= 33554430)
+	if (Trapped <= 33554430)
 	{
+		// 2개 이상이 RGB(0, 0, 0)인 경우, 갇혔다
 		return _Speed;
 	}
 	
