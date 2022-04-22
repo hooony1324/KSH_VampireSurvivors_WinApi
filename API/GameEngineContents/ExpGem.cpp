@@ -56,7 +56,7 @@ void ExpGem::SetType(GemType _Type)
 void ExpGem::Start()
 {
 	Renderer_ = CreateRenderer("GemGreen.bmp");
-	Col_ = CreateCollision("ExpGem", Renderer_->GetScale());
+	Col_ = CreateCollision("ExpGem", Renderer_->GetScale() + float4{10, 10});
 	
 }
 
@@ -77,12 +77,12 @@ void ExpGem::Update()
 
 void ExpGem::GetCheck()
 {
-	// 처음엔 플레이어 반대방향으로
+	// 사정거리안에 들어오면 Get
 	MoveDir_ = Pos_ - PlayerPos_;
-	if (GameInfo::GetPlayerInfo()->Magnet_ * 80.0f > MoveDir_.Len2D())
+	if (GameInfo::GetPlayerInfo()->Magnet_ * 85.0f > MoveDir_.Len2D())
 	{
 		MoveDir_.Normal2D();
-		MoveDir_ *= 200.0f;
+		MoveDir_ *= 180.0f;
 		Get_ = true;
 	}
 }
@@ -96,7 +96,7 @@ void ExpGem::MoveBeforeCheck()
 
 	float4 PlayerDir = PlayerPos_ - Pos_;
 	PlayerDir.Normal2D();
-	MoveDir_ = MoveDir_ + PlayerDir * 3.0f;
+	MoveDir_ = MoveDir_ + PlayerDir * 3.7f;
 
 	SetMove(MoveDir_ * GameEngineTime::GetDeltaTime(static_cast<int>(TIME_GROUP::ITEM)));
 }
