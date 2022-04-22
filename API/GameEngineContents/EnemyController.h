@@ -30,14 +30,11 @@ protected:
 private:
 
 	void SpawnWave();
-	 void SpawnBoss();
+	void SpawnBoss(bool _BossCounter);
 	float4 GetSpawnPos();
 
 private:
 	float Time_;
-
-	GameEngineCollision* EnemyCollectorL_;
-	GameEngineCollision* EnemyCollectorR_;
 
 	std::vector<Enemy*> Enemies_;
 	int EnemiesIndex;
@@ -48,5 +45,14 @@ private:
 	bool IsSpawnTime_;
 	float4 SpawnPosR_;
 
+private:
+	
+	// SpawnBoss°ü·Ã
+	Counter BossCounter_;
+	int BossIndex_;
+	// ShadeRed -> 1
+	// XLMummy -> 2
+	// { 1, 0, 0, 0, 2, ...}
+	// 1Ä­-> 1ºÐ
 };
 

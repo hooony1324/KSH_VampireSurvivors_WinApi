@@ -54,13 +54,17 @@ private:
 	void EnemyDead();
 private:
 	float DeltaTime_;
+
+	// 기본정보
+	std::string EnemyName_;
 	GameEngineRenderer* Renderer_;
-	float4 PlayerPos_;
-	float4 Pos_;
-	float4 DestDir_;
 	float Speed_;
 	int Hp_;
 	bool Dead_;
+	
+	float4 PlayerPos_;
+	float4 Pos_;
+	float4 DestDir_;
 
 	// 피격
 	std::vector<GameEngineCollision*> PlayerAttack_;

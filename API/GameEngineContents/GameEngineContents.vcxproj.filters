@@ -17,9 +17,6 @@
     <ClCompile Include="Library.cpp">
       <Filter>2.Play\Map</Filter>
     </ClCompile>
-    <ClCompile Include="Mud.cpp">
-      <Filter>2.Play\Enemies</Filter>
-    </ClCompile>
     <ClCompile Include="Player.cpp">
       <Filter>2.Play\Player</Filter>
     </ClCompile>
@@ -121,9 +118,6 @@
     </ClInclude>
     <ClInclude Include="Library.h">
       <Filter>2.Play\Map</Filter>
-    </ClInclude>
-    <ClInclude Include="Mud.h">
-      <Filter>2.Play\Enemies</Filter>
     </ClInclude>
     <ClInclude Include="Player.h">
       <Filter>2.Play\Player</Filter>

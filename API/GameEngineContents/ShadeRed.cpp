@@ -26,7 +26,6 @@ ShadeRed::~ShadeRed()
 
 void ShadeRed::Start()
 {
-	//ShadeRed_ = CreateRenderer("ShadeRed_0.bmp");
 	ShadeRed_ = CreateRenderer();
 	ShadeRed_->CreateAnimation("ShadeRed_WalkLeft.bmp", "ShadeRed_WalkLeft", 0, 2, 0.2f, true);
 	ShadeRed_->CreateAnimation("ShadeRed_WalkRight.bmp", "ShadeRed_WalkRight", 0, 2, 0.2f, true);
@@ -41,12 +40,8 @@ void ShadeRed::Start()
 	OtherBlockLeft_ = CreateCollision("OtherGuard", { 4, 36 }, { -20, 0 });
 	OtherBlockRight_ = CreateCollision("OtherGuard", { 4, 36 }, { 20, 0 });
 
-	// 디버그용
-	CreateRenderer("hpbar_back.bmp", static_cast<int>(RENDER_ORDER::MONSTER), RenderPivot::CENTER, { 0, 40 });
-	Hp_BarRed_ = CreateRenderer("hpbar.bmp", static_cast<int>(RENDER_ORDER::MONSTER), RenderPivot::CENTER, { 0, 40 });
-	Hp_BarSize_ = Hp_BarRed_->GetScale();
 
-	Counter1_.SetCount(5);
+	DeathCounter_.SetCount(5);
 }
 
 void ShadeRed::Update()
@@ -58,7 +53,7 @@ void ShadeRed::Update()
 		ShadeRedCol_->Death();
 		ShadeRed_->ChangeAnimation("ShadeRed_Dead");
 
-		if (true == Counter1_.Start(DeltaTime))
+		if (true == DeathCounter_.Start(DeltaTime))
 		{
 			Death();
 		}

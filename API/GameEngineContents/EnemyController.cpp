@@ -10,8 +10,8 @@
 #include "GameEnum.h"
 #include "Enemy.h"
 
-int EnemyController::LiveEnemyNum = 0;
 const int MaxEnemySpawn = 100;
+int EnemyController::LiveEnemyNum = 0;
 const float SpawnCycle = 5.0f;
 
 const int PointNumX = 10;
@@ -23,10 +23,9 @@ float4 SpawnPoint[PointNumY][PointNumX] = { float4::ZERO, };
 bool SpawnPointPicked[PointNumY][PointNumX] = { false, };
 
 EnemyController::EnemyController() 
-	: EnemyCollectorL_(nullptr)
-	, EnemyCollectorR_(nullptr)
-	, EnemiesIndex(0)
+	: EnemiesIndex(0)
 	, IsSpawnTime_(false)
+	, BossIndex_(0)
 {
 	// 몬스터 스폰 겹치지 않도록
 	// 몬스터의 사이즈는 40 x 45(가로, 세로)
@@ -49,13 +48,7 @@ EnemyController::~EnemyController()
 void EnemyController::Start()
 {
 
-	// 몬스터가 충돌하면 리스폰
-	EnemyCollectorL_ = CreateCollision("EnemyCollector", { 30, 700 }, { -500, 0 });
-	EnemyCollectorR_ = CreateCollision("EnemyCollector", { 30, 700 }, { 500, 0 });
-
-	// 충돌체 아닌데 그냥 표시용으로
-
-
+	// 일반몹
 	Enemies_.reserve(MaxEnemySpawn);
 
 	for (int i = 0; i < MaxEnemySpawn; i++)
@@ -73,6 +66,8 @@ void EnemyController::Start()
 	SpawnNum_ = 0;
 	SpawnPosR_ = float4{ GameEngineWindow::GetScale().Half().x , -400};
 
+	// 보스, 스페셜 몹
+	BossCounter_.SetCount(0);
 }
 
 void EnemyController::Update()
@@ -90,6 +85,8 @@ void EnemyController::Update()
 		SpawnCounter_.SetCount(5);
 	}
 
+	SpawnBoss(BossCounter_.Start(DeltaTime));
+
 }
 
 void EnemyController::Render()
@@ -99,7 +96,7 @@ void EnemyController::Render()
 
 void EnemyController::SpawnWave()
 {
-	if (LiveEnemyNum == MaxEnemySpawn)
+	if (LiveEnemyNum >= MaxEnemySpawn)
 	{
 		return;
 	}
@@ -163,7 +160,8 @@ float4 EnemyController::GetSpawnPos()
 	
 }
 
-void EnemyController::SpawnBoss()
+void EnemyController::SpawnBoss(bool _BossCounter)
 {
 
+	BossCounter_.SetCount(60.0f);
 }

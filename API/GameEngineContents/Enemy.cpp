@@ -9,13 +9,13 @@
 #include "GameEnum.h"
 #include "GameInfo.h"
 #include "Vector2D.h"
-
 #include "Counter.h"
 #include "Projectile.h"
-
 #include "ExpGem.h"
 #include "PlayLevel.h"
 #include "EnemyController.h"
+
+#include <string>
 
 GameEngineImage* Enemy::MapColImage_ = nullptr;
 
@@ -40,11 +40,13 @@ void Enemy::Start()
 {
 	MapColImage_ = PlayLevel::MapColImage_;
 
+	EnemyName_ = "Mud";
+	
 	Renderer_ = CreateRenderer();
-	Renderer_->CreateFolderAnimationTimeKey("Mud_WalkLeft.bmp", "Mud_WalkLeft", static_cast<int>(TIME_GROUP::MONSTER), 0, 3, 0.2f, true);
-	Renderer_->CreateFolderAnimationTimeKey("Mud_WalkRight.bmp", "Mud_WalkRight", static_cast<int>(TIME_GROUP::MONSTER), 0, 3, 0.2f, true);
-	Renderer_->CreateFolderAnimationTimeKey("Mud_Dead.bmp", "Mud_Dead", static_cast<int>(TIME_GROUP::MONSTER), 0, 27, 0.05f, false);
-	Renderer_->ChangeAnimation("Mud_WalkRight");
+	Renderer_->CreateFolderAnimationTimeKey(EnemyName_ + "_WalkLeft.bmp", EnemyName_ + "_WalkLeft", static_cast<int>(TIME_GROUP::MONSTER), 0, 3, 0.2f, true);
+	Renderer_->CreateFolderAnimationTimeKey(EnemyName_ + "_WalkRight.bmp", EnemyName_ + "_WalkRight", static_cast<int>(TIME_GROUP::MONSTER), 0, 3, 0.2f, true);
+	Renderer_->CreateFolderAnimationTimeKey(EnemyName_ + "_Dead.bmp", EnemyName_ + "_Dead", static_cast<int>(TIME_GROUP::MONSTER), 0, 27, 0.05f, false);
+	Renderer_->ChangeAnimation(EnemyName_ + "_WalkRight");
 
 	SetScale({ 100, 100 });
 
@@ -152,7 +154,7 @@ void Enemy::EnemyDead()
 
 	if (false == Dead_)
 	{
-		Renderer_->ChangeAnimation("Mud_Dead");
+		Renderer_->ChangeAnimation(EnemyName_ + "_Dead");
 		KnockBackDir_.Normal2D();
 	}
 	

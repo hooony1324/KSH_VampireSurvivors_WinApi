@@ -45,7 +45,7 @@ private:
 	GameEngineCollision* OtherBlockRight_;
 	std::vector<GameEngineCollision*> Others_;
 
-	Counter Counter1_;
+	Counter DeathCounter_;
 
 };
 
