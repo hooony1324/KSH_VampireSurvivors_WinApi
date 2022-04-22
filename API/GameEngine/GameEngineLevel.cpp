@@ -4,7 +4,7 @@
 #include "GameEngineRenderer.h"
 #include <GameEngineBase/GameEngineDebug.h>
 
-bool GameEngineLevel::IsDebug = true;
+bool GameEngineLevel::IsDebug = false;
 
 GameEngineLevel::GameEngineLevel()
 	: CameraPos_(float4::ZERO)

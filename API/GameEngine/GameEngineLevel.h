@@ -36,17 +36,17 @@ public:
 	GameEngineLevel& operator=(const GameEngineLevel& _Other) = delete;
 	GameEngineLevel& operator=(GameEngineLevel&& _Other) noexcept = delete;
 
-	void DebugModeOn() 
+	static void IsDebugModeOn() 
 	{
 		IsDebug = true;
 	}
 
-	void DebugModeOff()
+	static void IsDebugModeOff()
 	{
 		IsDebug = false;
 	}
 
-	void DebugModeSwitch()
+	static void IsDebugModeSwitch()
 	{
 		IsDebug = !IsDebug;
 	}
