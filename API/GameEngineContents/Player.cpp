@@ -44,8 +44,7 @@ Player::~Player()
 
 void Player::Start()
 {
-	//SetPosition({ 1710, 770 });
-	SetPosition({ 1010, 770 });
+	SetPosition({ 1710, 770 });
 	SetScale({ 100, 100 });
 
 	// 플레이어 이미지, 애니메이션 관련 설정

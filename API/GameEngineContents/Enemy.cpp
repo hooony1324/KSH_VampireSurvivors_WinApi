@@ -15,6 +15,7 @@
 
 #include "ExpGem.h"
 #include "PlayLevel.h"
+#include "EnemyController.h"
 
 GameEngineImage* Enemy::MapColImage_ = nullptr;
 
@@ -133,11 +134,6 @@ void Enemy::BlockOther()
 {
 	// Monster³¢¸® ºÎµúÈ÷¸é
 	// ¼­·Î ¹Ð¾î³¿
-	if (nullptr == Col_)
-	{
-		return;
-	}
-
 	if (true == Col_->CollisionResult("OtherGuard", Others_, CollisionType::Rect, CollisionType::Rect))
 	{
 		float4 OtherPos = Others_[0]->GetActor()->GetPosition();
@@ -157,14 +153,12 @@ void Enemy::EnemyDead()
 	if (false == Dead_)
 	{
 		Renderer_->ChangeAnimation("Mud_Dead");
-		Col_->Death();
-		//OtherBlockLeft_->Death();
-		//OtherBlockRight_->Death();
 		KnockBackDir_.Normal2D();
 	}
 	
 	Dead_ = true;
 
+	// Á×À¸¸é¼­ ¹Ð·Á³²
 	SetMove(KnockBackDir_ * DeltaTime_ * 90.0f);
 
 	if (true == DeathCounter_.Start(DeltaTime_))
@@ -173,10 +167,10 @@ void Enemy::EnemyDead()
 		Gem->SetType(GemType::BLUE);
 		Gem->SetPosition(Pos_);
 		
-		// ÀÏ´Ü Death();
 		// Á×À½ -> È­¸é À§·Î
-		SetPosition(float4{ Pos_.x, -40 });
 		Off();
+		EnemyController::LiveEnemyNum -= 1;
+		SetPosition(float4{ Pos_.x, -40 });
 		Hp_ = 100;
 	}
 

@@ -10,6 +10,7 @@
 #include "GameEnum.h"
 #include "Enemy.h"
 
+int EnemyController::LiveEnemyNum = 0;
 const int MaxEnemySpawn = 100;
 const float SpawnCycle = 5.0f;
 
@@ -24,8 +25,6 @@ bool SpawnPointPicked[PointNumY][PointNumX] = { false, };
 EnemyController::EnemyController() 
 	: EnemyCollectorL_(nullptr)
 	, EnemyCollectorR_(nullptr)
-	, EnemySpawnerL_(nullptr)
-	, EnemySpawnerR_(nullptr)
 	, EnemiesIndex(0)
 	, IsSpawnTime_(false)
 {
@@ -49,16 +48,12 @@ EnemyController::~EnemyController()
 
 void EnemyController::Start()
 {
-	// 몬스터 스폰 주기
-
 
 	// 몬스터가 충돌하면 리스폰
 	EnemyCollectorL_ = CreateCollision("EnemyCollector", { 30, 700 }, { -500, 0 });
 	EnemyCollectorR_ = CreateCollision("EnemyCollector", { 30, 700 }, { 500, 0 });
 
 	// 충돌체 아닌데 그냥 표시용으로
-	//EnemySpawnerL_ = CreateCollision("EnemySpawner", { 100, 650 }, { -400, 0 });
-	EnemySpawnerR_ = CreateCollision("EnemySpawner", { 400, 675 }, { 400, 0 });
 
 
 	Enemies_.reserve(MaxEnemySpawn);
@@ -66,17 +61,17 @@ void EnemyController::Start()
 	for (int i = 0; i < MaxEnemySpawn; i++)
 	{
 		Enemy* Ptr = GetLevel()->CreateActor<Enemy>(static_cast<int>(ACTOR_ORDER::MONSTER), "Enemy");
-		Ptr->SetPosition(float4{ 700 + static_cast<float>(i) * 50, 580 });
-		Ptr->On();
+		Ptr->SetPosition(float4{ 700 + static_cast<float>(i) * 50, -40 });
+		Ptr->Off();
 		Ptr->SetDead();
 		Ptr->NextLevelOff();
 		Enemies_.push_back(Ptr);
 	}
 
-	SpawnCounter_.SetCount(5);
+	SpawnCounter_.SetCount(0);
 	SpawnMax_ = 7;
 	SpawnNum_ = 0;
-
+	SpawnPosR_ = float4{ GameEngineWindow::GetScale().Half().x , -400};
 
 }
 
@@ -87,13 +82,12 @@ void EnemyController::Update()
 
 	SetPosition(float4{ GameInfo::GetPlayerInfo()->PlayerPos_.x, 840 });
 
-	IsSpawnTime_ = SpawnCounter_.Start(DeltaTime);
 	
+	IsSpawnTime_ = SpawnCounter_.Start(DeltaTime);
 	if (true == IsSpawnTime_)
 	{
 		SpawnWave();
-		auto ptr = Enemies_;
-		SpawnCounter_.Reset();
+		SpawnCounter_.SetCount(5);
 	}
 
 }
@@ -105,6 +99,11 @@ void EnemyController::Render()
 
 void EnemyController::SpawnWave()
 {
+	if (LiveEnemyNum == MaxEnemySpawn)
+	{
+		return;
+	}
+
 	while (SpawnNum_ < SpawnMax_)
 	{
 		Enemy* Ptr = Enemies_[EnemiesIndex];
@@ -115,9 +114,10 @@ void EnemyController::SpawnWave()
 			
 			// 생성 위치 랜덤위치 너무 좁으면 안됨
 			float4 Pos = GetSpawnPos();
-			Ptr->SetPosition(GetPosition() + float4{ 100 , -400} + Pos);
+			Ptr->SetPosition(GetPosition() + SpawnPosR_ + Pos);
 
 			SpawnNum_++;
+			LiveEnemyNum++;
 			EnemiesIndex++;
 		}
 
@@ -127,7 +127,9 @@ void EnemyController::SpawnWave()
 		}
 	}
 
-	// 랜덤 뽑기 중복 안되도록
+	SpawnNum_ = 0;
+
+	// 랜덤 중복 안되도록
 	for (int y = 0; y < PointNumY; y++)
 	{
 		for (int x = 0; x < PointNumX; x++)
@@ -159,4 +161,9 @@ float4 EnemyController::GetSpawnPos()
 
 	return SpawnPoint[IndexY][IndexX];
 	
+}
+
+void EnemyController::SpawnBoss()
+{
+
 }
