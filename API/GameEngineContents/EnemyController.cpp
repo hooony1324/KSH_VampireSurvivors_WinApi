@@ -13,6 +13,14 @@
 const int MaxEnemySpawn = 100;
 const float SpawnCycle = 5.0f;
 
+const int PointNumX = 10;
+const int PointNumY = 15;
+const float CollisionSizeX = 40;
+const float CollisionSizeY = 45;
+
+float4 SpawnPoint[PointNumY][PointNumX] = { float4::ZERO, };
+bool SpawnPointPicked[PointNumY][PointNumX] = { false, };
+
 EnemyController::EnemyController() 
 	: EnemyCollectorL_(nullptr)
 	, EnemyCollectorR_(nullptr)
@@ -21,6 +29,18 @@ EnemyController::EnemyController()
 	, EnemiesIndex(0)
 	, IsSpawnTime_(false)
 {
+	// 몬스터 스폰 겹치지 않도록
+	// 몬스터의 사이즈는 40 x 45(가로, 세로)
+	for (int y = 0; y < PointNumY; y++)
+	{
+		for (int x = 0; x < PointNumX; x++)
+		{
+			// x: 0 y: 0 -> float4 {0, 0}
+			// x: 1 y: 0 -> float4 {40, 0}
+			// x: 2 y: 3 -> float4 {40*x, 45*y}
+			SpawnPoint[y][x] = float4{ x * CollisionSizeX, y * CollisionSizeY };
+		}
+	}
 }
 
 EnemyController::~EnemyController() 
@@ -37,8 +57,8 @@ void EnemyController::Start()
 	EnemyCollectorR_ = CreateCollision("EnemyCollector", { 30, 700 }, { 500, 0 });
 
 	// 충돌체 아닌데 그냥 표시용으로
-	EnemySpawnerL_ = CreateCollision("EnemySpawner", { 100, 650 }, { -400, 0 });
-	EnemySpawnerR_ = CreateCollision("EnemySpawner", { 200, 650 }, { 400, 0 });
+	//EnemySpawnerL_ = CreateCollision("EnemySpawner", { 100, 650 }, { -400, 0 });
+	EnemySpawnerR_ = CreateCollision("EnemySpawner", { 400, 675 }, { 400, 0 });
 
 
 	Enemies_.reserve(MaxEnemySpawn);
@@ -56,6 +76,8 @@ void EnemyController::Start()
 	SpawnCounter_.SetCount(5);
 	SpawnMax_ = 7;
 	SpawnNum_ = 0;
+
+
 }
 
 void EnemyController::Update()
@@ -66,6 +88,7 @@ void EnemyController::Update()
 	SetPosition(float4{ GameInfo::GetPlayerInfo()->PlayerPos_.x, 840 });
 
 	IsSpawnTime_ = SpawnCounter_.Start(DeltaTime);
+	
 	if (true == IsSpawnTime_)
 	{
 		SpawnWave();
@@ -90,9 +113,9 @@ void EnemyController::SpawnWave()
 			Ptr->On();
 			Ptr->SetLive();
 			
-			// 생성 위치
+			// 생성 위치 랜덤위치 너무 좁으면 안됨
 			float4 Pos = GetSpawnPos();
-			Ptr->SetPosition(Pos);
+			Ptr->SetPosition(GetPosition() + float4{ 100 , -400} + Pos);
 
 			SpawnNum_++;
 			EnemiesIndex++;
@@ -103,16 +126,37 @@ void EnemyController::SpawnWave()
 			EnemiesIndex = 0;
 		}
 	}
+
+	// 랜덤 뽑기 중복 안되도록
+	for (int y = 0; y < PointNumY; y++)
+	{
+		for (int x = 0; x < PointNumX; x++)
+		{
+			SpawnPointPicked[y][x] = false;
+		}
+	}
 }
 
 float4 EnemyController::GetSpawnPos()
 {
-	float4 CurSpawnArea = EnemySpawnerR_->GetCollisionPos();
-	GameEngineRandom Random;
+	// 너무 가까이 소환되면 붙어버림
 	
-	float4 SpawnPos = float4{ Random.RandomFloat(CurSpawnArea.x - 400, CurSpawnArea.x + 400),
-		Random.RandomFloat(CurSpawnArea.y - 300, CurSpawnArea.y + 300) };
+	GameEngineRandom Random;
+	bool Pick = false;
+	int IndexX;
+	int IndexY;
 
-	return SpawnPos;
+	while (false == Pick)
+	{
+		IndexX = Random.RandomInt(0, PointNumX - 1);
+		IndexY = Random.RandomInt(0, PointNumY - 1);
+		if (false == SpawnPointPicked[IndexY][IndexX])
+		{
+			SpawnPointPicked[IndexY][IndexX] = true;
+			Pick = true;
+		}
+	}
+
+	return SpawnPoint[IndexY][IndexX];
 	
 }

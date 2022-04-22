@@ -33,7 +33,6 @@ private:
 private:
 	float Time_;
 
-
 	GameEngineCollision* EnemyCollectorL_;
 	GameEngineCollision* EnemyCollectorR_;
 
@@ -48,5 +47,6 @@ private:
 
 	Counter SpawnCounter_;
 	bool IsSpawnTime_;
+
 };
 

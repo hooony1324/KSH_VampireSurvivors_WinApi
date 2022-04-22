@@ -28,7 +28,7 @@ Projectile::~Projectile()
 
 void Projectile::Start()
 {
-	ProjImage_ = CreateRenderer("Blank.bmp");
+	ProjImage_ = CreateRenderer("Blank.bmp", static_cast<int>(RENDER_ORDER::WEAPON));
 	ProjCol_ = CreateCollision("PlayerAttack", float4{ 10, 10 });
 
 	SetScale({ 20, 20 });

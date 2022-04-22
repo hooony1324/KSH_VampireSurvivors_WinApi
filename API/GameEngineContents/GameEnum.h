@@ -14,6 +14,7 @@ enum class RENDER_ORDER
 	BACKGROUND,
 	MONSTER,
 	PLAYER,
+	WEAPON,
 	ITEM,
 	UI
 };

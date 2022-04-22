@@ -488,7 +488,7 @@ void GameEngineLevel::ObjectLevelMoveCheck(GameEngineLevel* _NextLevel)
 				}
 
 				// 추가해 보았습니다
-				//(*StartActor)->Death();
+				(*StartActor)->Death();
 
 				++StartActor;
 			}

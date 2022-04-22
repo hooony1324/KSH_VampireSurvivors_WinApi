@@ -50,8 +50,8 @@ void Enemy::Start()
 	Col_ = CreateCollision("Enemy", { 28, 45 });
 
 	Others_.reserve(4);
-	OtherBlockLeft_ = CreateCollision("OtherGuard", { 4, 45 }, { -20, 0 });
-	OtherBlockRight_ = CreateCollision("OtherGuard", { 4, 45 }, { 20, 0 });
+	OtherBlockLeft_ = CreateCollision("OtherGuard", { 4, 45 }, { -18, 0 });
+	OtherBlockRight_ = CreateCollision("OtherGuard", { 4, 45 }, { 18, 0 });
 
 	DeathCounter_.SetCount(1.0f);
 }
@@ -199,6 +199,12 @@ float Enemy::MapColCheck(float _Speed)
 	int ColorLeft = MapColImage_->GetImagePixel(EnemyMapColPos + float4{ -20, 0 });
 	int ColorRight = MapColImage_->GetImagePixel(EnemyMapColPos + float4{ 20, 0 });
 
+	// 스폰 됐을 때콜리전 맵 안에 갇혀있으면 빠져나가야함
+	int Trapped = ColorTop + ColorBot + ColorLeft + ColorRight;
+	if (Trapped >= 33554430)
+	{
+		return _Speed;
+	}
 	
 	float4 ResultDir;
 	if (RGB(0, 0, 0) == ColorTop && DestDir_.y < 0.0f)
