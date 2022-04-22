@@ -142,8 +142,6 @@ void PlayLevel::Update()
 
 	InfiniteMap();
 
-	//EnemyController_->();
-
 
 }
 

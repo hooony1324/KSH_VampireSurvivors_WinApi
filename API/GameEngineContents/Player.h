@@ -65,10 +65,12 @@ private:
 	// 충돌 체크
 	void AllCollisionCheck();
 	float MapColCheck(float _PlayerSpeed);
-	void MonsterAttackCheck();
+	void EnemyAttackCheck();
 	float4 ShootableEnemeyCheck();
 
 	GameEngineImage* MapColImage_;
+	std::vector<GameEngineCollision*> BumpEnemy_;
+	bool EnemyBump_;
 
 	// 슈팅
 	void Shooting();

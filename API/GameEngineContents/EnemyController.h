@@ -5,6 +5,7 @@
 
 // Ό³Έν :
 class GameEngineActor;
+class Enemy;
 class EnemyController : public GameEngineActor
 {
 public:
@@ -26,9 +27,12 @@ protected:
 
 private:
 
-	void Spawn();
+	void SpawnWave();
+	float4 GetSpawnPos();
 
 private:
+	float Time_;
+
 
 	GameEngineCollision* EnemyCollectorL_;
 	GameEngineCollision* EnemyCollectorR_;
@@ -36,9 +40,13 @@ private:
 	GameEngineCollision* EnemySpawnerL_;
 	GameEngineCollision* EnemySpawnerR_;
 
-	std::vector<GameEngineActor*> Enemies_;
+	std::vector<Enemy*> Enemies_;
+	int EnemiesIndex;
+	int SpawnMax_;
+	int SpawnNum_;
+
 
 	Counter SpawnCounter_;
-	bool IsSpawn_;
+	bool IsSpawnTime_;
 };
 

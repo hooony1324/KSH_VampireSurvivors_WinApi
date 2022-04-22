@@ -18,6 +18,7 @@
 #include "Vector2D.h"
 #include "ProjectileShooter.h"
 #include "PlayLevel.h"
+#include "Enemy.h"
 
 
 Player::Player() 
@@ -229,7 +230,7 @@ void Player::Attacked(int _Damage)
 
 void Player::AllCollisionCheck()
 {
-	MonsterAttackCheck();
+	EnemyAttackCheck();
 
 
 }
@@ -281,21 +282,28 @@ float Player::MapColCheck(float _PlayerSpeed)
 	return _PlayerSpeed;
 }
 
-void Player::MonsterAttackCheck()
+void Player::EnemyAttackCheck()
 {
-	bool BumpMonster = false;
+	EnemyBump_ = false;
 	if (nullptr != PlayerCol_)
 	{
-		BumpMonster = PlayerCol_->CollisionCheck("Enemy", CollisionType::Rect, CollisionType::Rect);
+		EnemyBump_ = PlayerCol_->CollisionResult("Enemy", BumpEnemy_,CollisionType::Rect, CollisionType::Rect);
 	}
 
-	if (true == BumpMonster)
+	if (true == EnemyBump_ )
 	{
-		Attacked(10);
+		Enemy* Ptr = dynamic_cast<Enemy*>(BumpEnemy_[0]->GetActor());
+		BumpEnemy_.clear();
+		if (false == Ptr->IsDead())
+		{
+			Attacked(10);
+		}
 	}
 
 	if (false == Hitable_)
+	{
 		InvincibleTime_ -= GameEngineTime::GetDeltaTime();
+	}
 
 	if (0 >= InvincibleTime_)
 	{

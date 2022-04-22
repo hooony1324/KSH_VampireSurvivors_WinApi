@@ -68,6 +68,7 @@ void Enemy::Update()
 		return;
 	}
 
+
 	// 살아있음
 	PlayerPos_ = GameInfo::GetPlayerInfo()->PlayerPos_;
 	DestDir_ = Vector2D::GetDirection(Pos_, PlayerPos_);
@@ -132,6 +133,10 @@ void Enemy::BlockOther()
 {
 	// Monster끼리 부딪히면
 	// 서로 밀어냄
+	if (nullptr == Col_)
+	{
+		return;
+	}
 
 	if (true == Col_->CollisionResult("OtherGuard", Others_, CollisionType::Rect, CollisionType::Rect))
 	{
@@ -153,8 +158,8 @@ void Enemy::EnemyDead()
 	{
 		Renderer_->ChangeAnimation("Mud_Dead");
 		Col_->Death();
-		OtherBlockLeft_->Death();
-		OtherBlockRight_->Death();
+		//OtherBlockLeft_->Death();
+		//OtherBlockRight_->Death();
 		KnockBackDir_.Normal2D();
 	}
 	
@@ -168,9 +173,11 @@ void Enemy::EnemyDead()
 		Gem->SetType(GemType::BLUE);
 		Gem->SetPosition(Pos_);
 		
-		// 죽음 -> 화면 위로
 		// 일단 Death();
-		Death();
+		// 죽음 -> 화면 위로
+		SetPosition(float4{ Pos_.x, -40 });
+		Off();
+		Hp_ = 100;
 	}
 
 	

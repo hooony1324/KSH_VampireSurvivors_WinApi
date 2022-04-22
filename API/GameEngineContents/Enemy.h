@@ -25,9 +25,14 @@ public:
 		return Dead_;
 	}
 
-	inline void SetLive()
+	inline void SetDead()
 	{
 		Dead_ = true;
+	}
+
+	inline void SetLive()
+	{
+		Dead_ = false;
 	}
 
 private:
