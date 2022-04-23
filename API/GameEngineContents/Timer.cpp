@@ -28,7 +28,7 @@ void Timer::Start()
 		Numbers_.push_back(Ptr);
 	}
 
-	Numbers_[0]->On(); // 00 : 00 최초상태
+	
 
 }
 
@@ -74,6 +74,11 @@ void Timer::SetTimer(float _CycleTime, int _EndNumberIndex)
 	EndNumberIndex_ = _EndNumberIndex;
 	CycleTime_ = _CycleTime;
 	CycleTimeCounter_ = CycleTime_;
+}
+
+void Timer::SetZero()
+{
+	Numbers_[0]->On(); // 00 : 00 최초상태
 }
 
 void Timer::NumberRender()

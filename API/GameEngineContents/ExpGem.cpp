@@ -82,7 +82,7 @@ void ExpGem::GetCheck()
 	if (GameInfo::GetPlayerInfo()->Magnet_ * 80.0f > MoveDir_.Len2D())
 	{
 		MoveDir_.Normal2D();
-		MoveDir_ *= 180.0f;
+		MoveDir_ *= 250.0f;
 		Get_ = true;
 	}
 }

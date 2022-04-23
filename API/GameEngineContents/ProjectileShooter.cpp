@@ -118,7 +118,7 @@ void ProjectileShooter::ShootKnife()
 	float4 RandomPos = float4{ Random.RandomFloat(PlayerPos_.x - 25, PlayerPos_.x + 25), Random.RandomFloat(PlayerPos_.y - 25, PlayerPos_.y + 25) };
 	Bullet->SetPosition(RandomPos);
 	Bullet->SetType(BT_);
-	Bullet->SetDamage(50);
+	Bullet->SetDamage(100);
 	Bullet->SetDir(PlayerMoveDir_);
 
 

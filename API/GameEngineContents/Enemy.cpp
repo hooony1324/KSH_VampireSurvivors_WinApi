@@ -71,6 +71,8 @@ void Enemy::Start()
 	OtherBlockRight_ = CreateCollision("OtherGuard", { 4, 45 }, { 18, 0 });
 
 	DeathCounter_.SetCount(1.0f);
+
+	NextLevelOff();
 }
 
 void Enemy::Update()

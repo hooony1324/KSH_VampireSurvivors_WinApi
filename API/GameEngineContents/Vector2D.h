@@ -31,8 +31,6 @@ public:
 		return Degree;
 	}
 
-	static void DebugVectorRender(GameEngineActor* _Actor);
-
 protected:
 
 private:

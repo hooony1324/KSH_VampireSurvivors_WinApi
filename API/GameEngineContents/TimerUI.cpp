@@ -41,6 +41,7 @@ void TimerUI::InitNumbers()
 	Digit3_->SetTimer(60, 9);
 	Digit3_->SetScale({ 18, 30 });
 	Digit3_->SetPosition(TimerUIPos_ + float4{ -20, 0 });
+	Digit3_->SetZero();
 
 	Colone_ = CreateRenderer("Colone.bmp", static_cast<int>(RENDER_ORDER::UI));
 	Colone_->SetScale({ 18, 30 });
@@ -50,11 +51,13 @@ void TimerUI::InitNumbers()
 	Digit2_->SetTimer(10, 5);
 	Digit2_->SetScale({ 18, 30 });
 	Digit2_->SetPosition(TimerUIPos_ + float4{ 25, 0 });
+	Digit2_->SetZero();
 
 	Digit1_ = GetLevel()->CreateActor<Timer>(static_cast<int>(ACTOR_ORDER::UI), "Timer");
 	Digit1_->SetTimer(1, 9);
 	Digit1_->SetScale({ 18, 30 });
 	Digit1_->SetPosition(TimerUIPos_ + float4{ 50, 0 });
+	Digit1_->SetZero();
 
 }
 

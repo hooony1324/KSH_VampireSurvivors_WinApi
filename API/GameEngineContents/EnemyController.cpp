@@ -22,6 +22,8 @@ const float CollisionSizeY = 45;
 float4 SpawnPoint[PointNumY][PointNumX] = { float4::ZERO, };
 bool SpawnPointPicked[PointNumY][PointNumX] = { false, };
 
+const float WAVE_TIME = 30.0f;
+
 EnemyController::EnemyController() 
 	: EnemiesIndex(0)
 	, IsSpawnTime_(false)
@@ -98,7 +100,7 @@ void EnemyController::Render()
 
 void EnemyController::WaveIndexUpdate()
 {
-	if (Time_ >= 60.0f)
+	if (Time_ >= WAVE_TIME)
 	{
 		Time_ = 0.0f;
 		WaveIndex_++;

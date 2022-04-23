@@ -26,6 +26,7 @@ public:
 	}
 
 	void SetTimer(float _CycleTime, int _EndNumberIndex);
+	void SetZero();
 
 protected:
 
