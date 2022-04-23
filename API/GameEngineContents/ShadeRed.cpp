@@ -27,10 +27,10 @@ ShadeRed::~ShadeRed()
 void ShadeRed::Start()
 {
 	ShadeRed_ = CreateRenderer();
-	ShadeRed_->CreateAnimation("ShadeRed_WalkLeft.bmp", "ShadeRed_WalkLeft", 0, 2, 0.2f, true);
-	ShadeRed_->CreateAnimation("ShadeRed_WalkRight.bmp", "ShadeRed_WalkRight", 0, 2, 0.2f, true);
-	ShadeRed_->CreateAnimation("ShadeRed_Dead.bmp", "ShadeRed_Dead", 0, 29, 0.1f, false);
-	ShadeRed_->ChangeAnimation("ShadeRed_WalkRight");
+	//ShadeRed_->CreateAnimation("ShadeRed_WalkLeft.bmp", "ShadeRed_WalkLeft", 0, 2, 0.2f, true);
+	//ShadeRed_->CreateAnimation("ShadeRed_WalkRight.bmp", "ShadeRed_WalkRight", 0, 2, 0.2f, true);
+	//ShadeRed_->CreateAnimation("ShadeRed_Dead.bmp", "ShadeRed_Dead", 0, 29, 0.1f, false);
+	//ShadeRed_->ChangeAnimation("ShadeRed_WalkRight");
 	SetScale({ 100, 100 });
 
 	ShadeRedCol_ = CreateCollision("Enemy", { 30, 30 });
@@ -84,11 +84,7 @@ void ShadeRed::Update()
 
 void ShadeRed::Render()
 {
-	float Ratio = Hp_ / 100.0f;
-	float NewSizeX = Hp_BarSize_.x * Ratio;
-	float4 Hp_BarPivot = float4{ 0 - ((Hp_BarSize_.x - NewSizeX) / 2), Hp_BarRed_->GetPivot().y };
-	Hp_BarRed_->SetScale(float4{ NewSizeX, Hp_BarSize_.y });
-	Hp_BarRed_->SetPivot(Hp_BarPivot);
+
 }
 
 
@@ -111,30 +107,6 @@ void ShadeRed::Hit()
 
 void ShadeRed::BlockOther()
 {
-	// À§¿¡ ºÎµúÈù ³à¼® À§·Î
-	if (true == OtherBlockUp_->CollisionResult("Enemy", Others_, CollisionType::Rect, CollisionType::Rect))
-	{
-		Others_[0]->GetActor()->SetPosition(Others_[0]->GetActor()->GetPosition() + float4::UP * 2);
-		Others_.clear();
-	}
 
-	if (true == OtherBlockDown_->CollisionResult("Enemy", Others_, CollisionType::Rect, CollisionType::Rect))
-	{
-		Others_[0]->GetActor()->SetPosition(Others_[0]->GetActor()->GetPosition() + float4::DOWN * 2);
-		Others_.clear();
-	}
-
-	if (true == OtherBlockLeft_->CollisionResult("Enemy", Others_, CollisionType::Rect, CollisionType::Rect))
-	{
-		Others_[0]->GetActor()->SetPosition(Others_[0]->GetActor()->GetPosition() + float4::LEFT * 2);
-		Others_.clear();
-
-	}
-
-	if (true == OtherBlockRight_->CollisionResult("Enemy", Others_, CollisionType::Rect, CollisionType::Rect))
-	{
-		Others_[0]->GetActor()->SetPosition(Others_[0]->GetActor()->GetPosition() + float4::RIGHT * 2);
-		Others_.clear();
-	}
 
 }

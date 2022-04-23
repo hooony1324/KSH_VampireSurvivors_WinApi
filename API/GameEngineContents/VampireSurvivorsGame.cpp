@@ -1,7 +1,4 @@
 #include "VampireSurvivorsGame.h"
-#include "PlayLevel.h"
-#include "ResultLevel.h"
-#include "TitleLevel.h"
 #include <GameEngineBase/GameEngineWindow.h>
 #include <GameEngineBase/GameEngineDirectory.h>
 #include <GameEngineBase/GameEngineFile.h>
@@ -9,8 +6,12 @@
 #include <GameEngine/GameEngineImageManager.h>
 #include <GameEngine/GameEngineFolderImage.h>
 #include <GameEngineBase/GameEngineSound.h>
+#include <Windows.h>
 
 #include "GameInfo.h"
+#include "PlayLevel.h"
+#include "ResultLevel.h"
+#include "TitleLevel.h"
 
 
 VampireSurvivorsGame::VampireSurvivorsGame() 
@@ -66,7 +67,6 @@ void VampireSurvivorsGame::GameInit()
 	}
 
 
-
 }
 
 void VampireSurvivorsGame::GameLoop()
@@ -81,6 +81,7 @@ void VampireSurvivorsGame::GameEnd()
 
 void VampireSurvivorsGame::ResourceLoad()
 {
+
 
 	// 이미지 리소스
 	GameEngineDirectory ResourcesDir;

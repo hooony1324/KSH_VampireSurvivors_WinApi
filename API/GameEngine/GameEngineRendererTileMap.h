@@ -151,6 +151,18 @@ public:
 
 	virtual ~GameEngineRendererTileMap()
 	{
+		for (size_t y = 0; y < Tiles_.size(); y++)
+		{
+			for (size_t x = 0; x < Tiles_[y].size(); x++)
+			{
+				if (nullptr == Tiles_[y][x])
+				{
+					continue;
+				}
+				delete Tiles_[y][x];
+				Tiles_[y][x] = nullptr;
+			}
+		}
 	}
 };
 

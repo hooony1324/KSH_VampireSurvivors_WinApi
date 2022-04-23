@@ -35,6 +35,9 @@ public:
 		Dead_ = false;
 	}
 
+	// 외부에서 EnemySet 관련
+	void SetNextEnemy();
+
 private:
 	static GameEngineImage* MapColImage_;
 
@@ -52,6 +55,11 @@ private:
 	void BlockOther();
 	// 죽음
 	void EnemyDead();
+
+	void EnemyMove();
+
+	void UpdateHeadDir();
+
 private:
 	float DeltaTime_;
 
@@ -77,5 +85,8 @@ private:
 	std::vector<GameEngineCollision*> Others_;
 
 	Counter DeathCounter_;
+
+	// 외부에서 EnemySet 관련
+	bool SetSignalOn;
 };
 

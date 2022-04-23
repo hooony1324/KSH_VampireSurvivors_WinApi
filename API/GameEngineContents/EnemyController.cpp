@@ -96,7 +96,7 @@ void EnemyController::Render()
 
 void EnemyController::SpawnWave()
 {
-	if (LiveEnemyNum >= MaxEnemySpawn)
+	if (LiveEnemyNum == MaxEnemySpawn)
 	{
 		return;
 	}
@@ -104,19 +104,20 @@ void EnemyController::SpawnWave()
 	while (SpawnNum_ < SpawnMax_)
 	{
 		Enemy* Ptr = Enemies_[EnemiesIndex];
+		// 죽어있으면 소환
 		if (true == Ptr->IsDead())
 		{
 			Ptr->On();
 			Ptr->SetLive();
-			
+			Ptr->SetNextEnemy();
 			// 생성 위치 랜덤위치 너무 좁으면 안됨
 			float4 Pos = GetSpawnPos();
 			Ptr->SetPosition(GetPosition() + SpawnPosR_ + Pos);
 
 			SpawnNum_++;
 			LiveEnemyNum++;
-			EnemiesIndex++;
 		}
+		EnemiesIndex++;
 
 		if (EnemiesIndex == static_cast<int>(Enemies_.size()))
 		{

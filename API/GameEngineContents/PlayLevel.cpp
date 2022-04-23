@@ -45,6 +45,7 @@ void PlayLevel::LevelChangeStart(GameEngineLevel* _PrevLevel)
 {	
 	IsDebugModeOff();
 
+
 	// 시간 설정
 	GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::MONSTER), 1.0f);
 	GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::PLAYER), 1.0f);

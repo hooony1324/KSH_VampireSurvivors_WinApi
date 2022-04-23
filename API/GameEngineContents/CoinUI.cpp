@@ -38,12 +38,11 @@ void CoinUI::Update()
 
 void CoinUI::Render()
 {
-	TCHAR Buffer[30] = "";
-	sprintf_s(Buffer, "%d", EarnedCoin_);
 
 	// 들여쓰기
-	int StrLength = static_cast<int>(strlen(Buffer)) - 1; 
-	int Space = 12 * StrLength;
+	std::string Coin = std::to_string(EarnedCoin_);
+	int StrLength = static_cast<int>(Coin.length()) - 1;
+	int Space = 8 * StrLength;
 
-	TextOutA(BackBufferDC_, GetPosition().ix() - Space, GetPosition().iy(), Buffer, static_cast<int>(strlen(Buffer)));
+	TextFont_.Draw(Coin, { GameEngineWindow::GetScale().x - 40 - Space, 37.0f }, 23, 800);
 }

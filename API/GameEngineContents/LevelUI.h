@@ -1,6 +1,7 @@
 #pragma once
 #include <Windows.h>
 #include <GameEngine/GameEngineActor.h>
+#include <GameEngine/GameEngineFont.h>
 #include <vector>
 
 // Ό³Έν :
@@ -29,6 +30,8 @@ private:
 
 	int PlayerLevel_;
 	HDC BackBufferDC_;
+
+	GameEngineFont TextFont_;
 
 };
 

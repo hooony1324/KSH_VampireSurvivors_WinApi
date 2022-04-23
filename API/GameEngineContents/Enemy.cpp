@@ -18,6 +18,7 @@
 #include <string>
 
 GameEngineImage* Enemy::MapColImage_ = nullptr;
+std::string EnemyNameList[] = {"Mud", "ShadeRed", "Medusa", "Mummy"};
 
 Enemy::Enemy()
 	: Speed_(80.0f)
@@ -36,6 +37,12 @@ Enemy::~Enemy()
 
 }
 
+void Enemy::SetNextEnemy()
+{
+	EnemyName_ = EnemyNameList[1];
+	Renderer_->ChangeAnimation(EnemyName_ + "_WalkRight");
+}
+
 void Enemy::Start()
 {
 	MapColImage_ = PlayLevel::MapColImage_;
@@ -46,6 +53,12 @@ void Enemy::Start()
 	Renderer_->CreateFolderAnimationTimeKey(EnemyName_ + "_WalkLeft.bmp", EnemyName_ + "_WalkLeft", static_cast<int>(TIME_GROUP::MONSTER), 0, 3, 0.2f, true);
 	Renderer_->CreateFolderAnimationTimeKey(EnemyName_ + "_WalkRight.bmp", EnemyName_ + "_WalkRight", static_cast<int>(TIME_GROUP::MONSTER), 0, 3, 0.2f, true);
 	Renderer_->CreateFolderAnimationTimeKey(EnemyName_ + "_Dead.bmp", EnemyName_ + "_Dead", static_cast<int>(TIME_GROUP::MONSTER), 0, 27, 0.05f, false);
+
+
+	Renderer_->CreateFolderAnimationTimeKey(EnemyNameList[1] + "_WalkLeft.bmp", EnemyNameList[1] + "_WalkLeft", static_cast<int>(TIME_GROUP::MONSTER), 0, 2, 0.2f, true);
+	Renderer_->CreateFolderAnimationTimeKey(EnemyNameList[1] + "_WalkRight.bmp", EnemyNameList[1] + "_WalkRight", static_cast<int>(TIME_GROUP::MONSTER), 0, 2, 0.2f, true);
+	Renderer_->CreateFolderAnimationTimeKey(EnemyNameList[1] + "_Dead.bmp", EnemyNameList[1] + "_Dead", static_cast<int>(TIME_GROUP::MONSTER), 0, 29, 0.1f, false);
+
 	Renderer_->ChangeAnimation(EnemyName_ + "_WalkRight");
 
 	SetScale({ 100, 100 });
@@ -71,28 +84,11 @@ void Enemy::Update()
 		return;
 	}
 
-
 	// 살아있음
-	PlayerPos_ = GameInfo::GetPlayerInfo()->PlayerPos_;
-	DestDir_ = Vector2D::GetDirection(Pos_, PlayerPos_);
-
-
-	float Speed = MapColCheck(Speed_);
-	SetMove((DestDir_ + KnockBackDir_) * DeltaTime_ * Speed);
-	
-	
+	EnemyMove();
 	BlockOther();
 	Hit();
-
-	if (0 >= DestDir_.x)
-	{
-		Renderer_->ChangeAnimation("Mud_WalkLeft");
-	}
-	else
-	{
-		Renderer_->ChangeAnimation("Mud_WalkRight");
-	}
-
+	UpdateHeadDir();
 }
 
 void Enemy::Render()
@@ -156,9 +152,9 @@ void Enemy::EnemyDead()
 	{
 		Renderer_->ChangeAnimation(EnemyName_ + "_Dead");
 		KnockBackDir_.Normal2D();
+		Dead_ = true;
 	}
-	
-	Dead_ = true;
+
 
 	// 죽으면서 밀려남
 	SetMove(KnockBackDir_ * DeltaTime_ * 90.0f);
@@ -177,6 +173,30 @@ void Enemy::EnemyDead()
 	}
 
 	
+}
+
+void Enemy::EnemyMove()
+{
+	PlayerPos_ = GameInfo::GetPlayerInfo()->PlayerPos_;
+	DestDir_ = Vector2D::GetDirection(Pos_, PlayerPos_);
+
+
+	float Speed = MapColCheck(Speed_);
+	SetMove((DestDir_ + KnockBackDir_) * DeltaTime_ * Speed);
+}
+
+void Enemy::UpdateHeadDir()
+{
+
+	if (0 >= DestDir_.x)
+	{
+		Renderer_->ChangeAnimation(EnemyName_ + "_WalkLeft");
+	}
+	else
+	{
+		Renderer_->ChangeAnimation(EnemyName_ + "_WalkRight");
+	}
+
 }
 
 

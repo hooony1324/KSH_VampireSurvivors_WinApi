@@ -1,6 +1,7 @@
 #pragma once
 #include <Windows.h>
 #include <GameEngine/GameEngineActor.h>
+#include <GameEngine/GameEngineFont.h>
 
 // Ό³Έν :
 class GameEngineRenderer;
@@ -28,5 +29,6 @@ private:
 	int EarnedCoin_;
 
 	GameEngineRenderer* CoinRenderer_;
+	GameEngineFont TextFont_;
 };
 

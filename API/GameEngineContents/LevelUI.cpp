@@ -27,20 +27,13 @@ void LevelUI::Start()
 {
 	SetPosition({ GameEngineWindow::GetScale().x - 50, 0 });
 	SetScale({ 100, 30 });
-	BackBufferDC_ = GameEngine::GetInst().BackBufferDC();
 
 	// 폰트 설정
-	LPCSTR FontSrc = "../Resources/UI/KO.ttf";
-	AddFontResourceA(FontSrc);
+	SetTextColor(GameEngine::BackBufferDC(), RGB(255, 255, 255));
+	SetBkMode(GameEngine::BackBufferDC(), TRANSPARENT);
 
-	HFONT hFont, oldFont;
-	int Size = 28;
-	int Weight = 900;
-	hFont = CreateFont(Size, 0, 0, 0, Weight, 0, 0, 0, JOHAB_CHARSET, 0, 0, 0, VARIABLE_PITCH || FF_ROMAN, TEXT("KO.ttf"));
-	oldFont = (HFONT)SelectObject(BackBufferDC_, hFont);
 
-	SetTextColor(BackBufferDC_, RGB(255, 255, 255));
-	SetBkMode(BackBufferDC_, TRANSPARENT);
+	TextFont_.Load("../Resources/UI/KO.ttf");
 }
 
 void LevelUI::Update()
@@ -50,12 +43,9 @@ void LevelUI::Update()
 
 void LevelUI::Render()
 {
-	TCHAR Buffer[30] = "";
-	sprintf_s(Buffer, "LV %d", PlayerLevel_);
+	std::string Level = std::to_string(PlayerLevel_);
+	int StrLength = static_cast<int>(Level.length()) - 1;
+	int Space = 12 * StrLength;
 
-	int StrLength = static_cast<int>(strlen(Buffer)) - 4;
-	int Space = 10 * StrLength;
-
-	TextOutA(BackBufferDC_, GetPosition().ix() - Space, GetPosition().iy(), Buffer, static_cast<int>(strlen(Buffer)));
-
+	TextFont_.Draw("LV" + Level, { GameEngineWindow::GetScale().x - 45 - Space, 4.0f}, 23, 800);
 }
