@@ -47,6 +47,9 @@ private:
 	void Render() override;
 
 private:
+	// 렌더러 세팅
+	void SetRenderer();
+
 	// 콜리전 맵
 	float MapColCheck(float _DestDir);
 	// 피격
@@ -88,5 +91,6 @@ private:
 
 	// 외부에서 EnemySet 관련
 	bool SetSignalOn;
+	int EnemyNameListIndex;
 };
 
