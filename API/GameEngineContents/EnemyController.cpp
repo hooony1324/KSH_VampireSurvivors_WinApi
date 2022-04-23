@@ -27,6 +27,7 @@ EnemyController::EnemyController()
 	, IsSpawnTime_(false)
 	, BossIndex_(0)
 {
+	WaveIndex_ = 0;
 	// 몬스터 스폰 겹치지 않도록
 	// 몬스터의 사이즈는 40 x 45(가로, 세로)
 	for (int y = 0; y < PointNumY; y++)
@@ -74,6 +75,7 @@ void EnemyController::Update()
 {
 	float DeltaTime = GameEngineTime::GetDeltaTime(static_cast<int>(TIME_GROUP::TIMER));
 	Time_ += DeltaTime;
+	WaveIndexUpdate();
 
 	SetPosition(float4{ GameInfo::GetPlayerInfo()->PlayerPos_.x, 840 });
 
@@ -94,6 +96,15 @@ void EnemyController::Render()
 
 }
 
+void EnemyController::WaveIndexUpdate()
+{
+	if (Time_ >= 60.0f)
+	{
+		Time_ = 0.0f;
+		WaveIndex_++;
+	}
+}
+
 void EnemyController::SpawnWave()
 {
 	while (SpawnNum_ < SpawnMax_)
@@ -103,13 +114,17 @@ void EnemyController::SpawnWave()
 			return;
 		}
 		Enemy* Ptr = Enemies_[EnemiesIndex];
+
 		// 죽어있으면 소환
 		if (true == Ptr->IsDead())
 		{
 			Ptr->On();
 			Ptr->SetLive();
-			Ptr->SetNextEnemy();
-			// 생성 위치 랜덤위치 너무 좁으면 안됨
+
+			
+			Ptr->SetEnemy(WaveIndex_);
+
+			// 생성 위치 너무 가까우면 안됨
 			float4 Pos = GetSpawnPos();
 			Ptr->SetPosition(GetPosition() + SpawnPosR_ + Pos);
 

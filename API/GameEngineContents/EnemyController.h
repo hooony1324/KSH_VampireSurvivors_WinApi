@@ -28,31 +28,34 @@ protected:
 	void Render() override;
 
 private:
-
+	float Time_;
+	void WaveIndexUpdate();
 	void SpawnWave();
 	void SpawnBoss(bool _BossCounter);
 	float4 GetSpawnPos();
 
+// SpawnEnemy관련
 private:
-	float Time_;
-
 	std::vector<Enemy*> Enemies_;
 	int EnemiesIndex;
-	int SpawnMax_;	// 최대 스폰
+	int SpawnMax_;	// 1회 최대 스폰
 	int SpawnNum_;	// 스폰 수
 
 	Counter SpawnCounter_;
 	bool IsSpawnTime_;
 	float4 SpawnPosR_;
 
+// SpawnBoss관련
 private:
-	
-	// SpawnBoss관련
 	Counter BossCounter_;
 	int BossIndex_;
 	// ShadeRed -> 1
 	// XLMummy -> 2
 	// { 1, 0, 0, 0, 2, ...}
 	// 1칸-> 1분
+
+// TimeCheck관련
+private:
+	int WaveIndex_;
 };
 

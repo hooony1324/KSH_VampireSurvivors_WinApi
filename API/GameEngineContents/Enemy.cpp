@@ -38,15 +38,14 @@ Enemy::~Enemy()
 
 }
 
-void Enemy::SetNextEnemy()
+void Enemy::SetEnemy(int _Index)
 {
-	if (EnemyNameListIndex == static_cast<int>(EnemyNameList->size()))
+	if (EnemyNameListIndex >= static_cast<int>(EnemyNameList->size()))
 	{
 		return;
 	}
 
-	//EnemyNameListIndex++;
-	EnemyNameListIndex = 2;
+	EnemyNameListIndex = _Index;
 
 	EnemyName_ = EnemyNameList[EnemyNameListIndex];
 	Renderer_->ChangeAnimation(EnemyName_ + "_WalkRight");
@@ -56,7 +55,7 @@ void Enemy::Start()
 {
 	MapColImage_ = PlayLevel::MapColImage_;
 
-	EnemyName_ = "Mud";
+	EnemyName_ = EnemyNameList[EnemyNameListIndex];
 	
 	Renderer_ = CreateRenderer();
 	SetRenderer();

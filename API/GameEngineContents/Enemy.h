@@ -36,7 +36,7 @@ public:
 	}
 
 	// 외부에서 EnemySet 관련
-	void SetNextEnemy();
+	void SetEnemy(int _Index);
 
 private:
 	static GameEngineImage* MapColImage_;
