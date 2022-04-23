@@ -45,7 +45,8 @@ void Enemy::SetNextEnemy()
 		return;
 	}
 
-	EnemyNameListIndex++;
+	//EnemyNameListIndex++;
+	EnemyNameListIndex = 2;
 
 	EnemyName_ = EnemyNameList[EnemyNameListIndex];
 	Renderer_->ChangeAnimation(EnemyName_ + "_WalkRight");
@@ -256,11 +257,15 @@ void Enemy::SetRenderer()
 	Renderer_->CreateFolderAnimationTimeKey(EnemyName + "_WalkRight.bmp", EnemyName + "_WalkRight", static_cast<int>(TIME_GROUP::MONSTER), 0, 3, 0.2f, true);
 	Renderer_->CreateFolderAnimationTimeKey(EnemyName + "_Dead.bmp", EnemyName + "_Dead", static_cast<int>(TIME_GROUP::MONSTER), 0, 27, 0.05f, false);
 
-	std::string EnemyName = EnemyNameList[1]; // Medusa
+	EnemyName = EnemyNameList[1]; // Medusa
 	Renderer_->CreateFolderAnimationTimeKey(EnemyName + "_WalkLeft.bmp", EnemyName + "_WalkLeft", static_cast<int>(TIME_GROUP::MONSTER), 0, 2, 0.2f, true);
 	Renderer_->CreateFolderAnimationTimeKey(EnemyName + "_WalkRight.bmp", EnemyName + "_WalkRight", static_cast<int>(TIME_GROUP::MONSTER), 0, 2, 0.2f, true);
 	Renderer_->CreateFolderAnimationTimeKey(EnemyName + "_Dead.bmp", EnemyName + "_Dead", static_cast<int>(TIME_GROUP::MONSTER), 0, 29, 0.1f, false);
 
-	std::string EnemyName = EnemyNameList[2]; // Mummy
+	EnemyName = EnemyNameList[2]; // Mummy
+	Renderer_->CreateFolderAnimationTimeKey(EnemyName + "_WalkLeft.bmp", EnemyName + "_WalkLeft", static_cast<int>(TIME_GROUP::MONSTER), 0, 2, 0.2f, true);
+	Renderer_->CreateFolderAnimationTimeKey(EnemyName + "_WalkRight.bmp", EnemyName + "_WalkRight", static_cast<int>(TIME_GROUP::MONSTER), 0, 2, 0.2f, true);
+	Renderer_->CreateFolderAnimationTimeKey(EnemyName + "_Dead.bmp", EnemyName + "_Dead", static_cast<int>(TIME_GROUP::MONSTER), 0, 29, 0.1f, false);
+
 
 }

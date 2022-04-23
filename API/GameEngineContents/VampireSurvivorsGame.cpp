@@ -120,6 +120,10 @@ void VampireSurvivorsGame::ResourceLoad()
 	GameEngineImageManager::GetInst()->Find("Medusa_WalkRight.bmp")->Cut({ 140, 140 });
 	GameEngineImageManager::GetInst()->Find("Medusa_Dead.bmp")->Cut({ 140, 140 });
 
+	GameEngineImageManager::GetInst()->Find("Mummy_WalkLeft.bmp")->Cut({ 140, 140 });
+	GameEngineImageManager::GetInst()->Find("Mummy_WalkRight.bmp")->Cut({ 140, 140 });
+	GameEngineImageManager::GetInst()->Find("Mummy_Dead.bmp")->Cut({ 140, 140 });
+
 	// 사운드 리소스
 	{
 		GameEngineDirectory ResourcesDir;
