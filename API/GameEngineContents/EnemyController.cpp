@@ -96,13 +96,12 @@ void EnemyController::Render()
 
 void EnemyController::SpawnWave()
 {
-	if (LiveEnemyNum == MaxEnemySpawn)
-	{
-		return;
-	}
-
 	while (SpawnNum_ < SpawnMax_)
 	{
+		if (LiveEnemyNum >= MaxEnemySpawn)
+		{
+			return;
+		}
 		Enemy* Ptr = Enemies_[EnemiesIndex];
 		// 죽어있으면 소환
 		if (true == Ptr->IsDead())
