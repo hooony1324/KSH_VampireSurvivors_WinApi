@@ -78,13 +78,13 @@ void Player::Start()
 
 	// ½´ÆÃ
 	MagicShooter_ = GetLevel()->CreateActor<ProjectileShooter>(static_cast<int>(RENDER_ORDER::PLAYER), "Shooter");
-	MagicShooter_->SetShooter(BulletType::FLAME_BLUE, 2, 0.08f, 2.0f, 1.0f);
+	MagicShooter_->SetShooter(SkillType::MAGICWAND , BulletType::FLAME_BLUE, 2, 0.08f, 2.0f, 1.0f);
 
 	KnifeShooter_ = GetLevel()->CreateActor<ProjectileShooter>(static_cast<int>(RENDER_ORDER::PLAYER), "Shooter");
-	KnifeShooter_->SetShooter(BulletType::KNIFE, 2, 0.1f, 2.0f, 1.0f);
+	KnifeShooter_->SetShooter(SkillType::KNIFE, BulletType::KNIFE, 2, 0.1f, 2.0f, 1.0f);
 
 	FireShooter_ = GetLevel()->CreateActor<ProjectileShooter>(static_cast<int>(RENDER_ORDER::PLAYER), "Shooter");
-	FireShooter_->SetShooter(BulletType::FLAME_RED, 1, 0.0f, 4.0f, 1.0f);
+	FireShooter_->SetShooter(SkillType::FIREWAND, BulletType::FLAME_RED, 1, 0.0f, 4.0f, 1.0f);
 }
 
 void Player::Update()

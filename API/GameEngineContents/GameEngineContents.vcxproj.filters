@@ -78,10 +78,10 @@
       <Filter>2.Play\Projectile</Filter>
     </ClCompile>
     <ClCompile Include="Timer.cpp">
-      <Filter>2.Play\Timer</Filter>
+      <Filter>2.Play\Projectile\Timer</Filter>
     </ClCompile>
     <ClCompile Include="Counter.cpp">
-      <Filter>2.Play\Timer</Filter>
+      <Filter>2.Play\Projectile\Timer</Filter>
     </ClCompile>
     <ClCompile Include="GameInfo.cpp">
       <Filter>Global</Filter>
@@ -180,10 +180,10 @@
       <Filter>Global</Filter>
     </ClInclude>
     <ClInclude Include="Timer.h">
-      <Filter>2.Play\Timer</Filter>
+      <Filter>2.Play\Projectile\Timer</Filter>
     </ClInclude>
     <ClInclude Include="Counter.h">
-      <Filter>2.Play\Timer</Filter>
+      <Filter>2.Play\Projectile\Timer</Filter>
     </ClInclude>
     <ClInclude Include="GameInfo.h">
       <Filter>Global</Filter>
@@ -241,7 +241,7 @@
     <Filter Include="2.Play\Item">
       <UniqueIdentifier>{a1bae2c5-4a5a-4ab0-b76a-7c421ff0dd19}</UniqueIdentifier>
     </Filter>
-    <Filter Include="2.Play\Timer">
+    <Filter Include="2.Play\Projectile\Timer">
       <UniqueIdentifier>{3af3fe68-9b87-40ba-be00-8cc596b308c6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>

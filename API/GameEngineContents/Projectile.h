@@ -60,11 +60,13 @@ private:
 	GameEngineCollision* ProjCol_;
 
 	float4 ShootDir_;
+	
+	
 	int Damage_;
 	float Speed_;
+	float Duration_;// 총알 지속시간
 
-	// 총알 지속시간
-	float Duration_;
+
 
 };
 

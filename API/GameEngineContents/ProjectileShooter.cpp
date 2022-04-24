@@ -9,7 +9,7 @@
 #include "Vector2D.h"
 #include "GameInfo.h"
 
-GameEngineRandom Random;
+
 
 ProjectileShooter::ProjectileShooter()
 	: BT_(BulletType::FLAME_BLUE)
@@ -35,8 +35,10 @@ void ProjectileShooter::Update()
 
 }
 
-void ProjectileShooter::SetShooter(BulletType _BT, int _BulletCount, float _Interval, float _CoolTime, float _WaitTime)
+void ProjectileShooter::SetShooter(SkillType _SkillType, BulletType _BT, int _BulletCount, float _Interval, float _CoolTime, float _WaitTime)
 {
+
+	SkillType_ = _SkillType;
 	InitBulletCount_ = _BulletCount;
 	InitInterval_ = _Interval;
 	InitCoolTime_ = _CoolTime;
@@ -114,6 +116,7 @@ void ProjectileShooter::Shooting(float _DeltaTime, float4 _PlayerPos, float4 _Mo
 void ProjectileShooter::ShootKnife()
 {
 	// Knife
+	GameEngineRandom Random;
 	Projectile* Bullet = GetLevel()->CreateActor<Projectile>(static_cast<int>(ACTOR_ORDER::PLAYER), "Bullet");
 	float4 RandomPos = float4{ Random.RandomFloat(PlayerPos_.x - 25, PlayerPos_.x + 25), Random.RandomFloat(PlayerPos_.y - 25, PlayerPos_.y + 25) };
 	Bullet->SetPosition(RandomPos);

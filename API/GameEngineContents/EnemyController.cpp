@@ -29,7 +29,6 @@ EnemyController::EnemyController()
 	, IsSpawnTime_(false)
 	, BossIndex_(0)
 {
-	WaveIndex_ = 0;
 	// 몬스터 스폰 겹치지 않도록
 	// 몬스터의 사이즈는 40 x 45(가로, 세로)
 	for (int y = 0; y < PointNumY; y++)
@@ -71,6 +70,9 @@ void EnemyController::Start()
 
 	// 보스, 스페셜 몹
 	BossCounter_.SetCount(0);
+
+
+	WaveIndex_ = 0;
 }
 
 void EnemyController::Update()

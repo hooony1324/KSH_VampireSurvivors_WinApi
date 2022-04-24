@@ -15,8 +15,6 @@
 #include "PlayLevel.h"
 #include "EnemyController.h"
 
-#include <string>
-
 GameEngineImage* Enemy::MapColImage_ = nullptr;
 std::string EnemyNameList[] = {"Mud", "Medusa", "Mummy"};
 
@@ -71,8 +69,12 @@ void Enemy::Start()
 	OtherBlockRight_ = CreateCollision("OtherGuard", { 4, 45 }, { 18, 0 });
 
 	DeathCounter_.SetCount(1.0f);
+	UpDownCounter_.SetCount(1.0f);
 
 	NextLevelOff();
+
+	// Medusa 움직임
+	UpDown_ = 1;
 }
 
 void Enemy::Update()
@@ -168,7 +170,6 @@ void Enemy::EnemyDead()
 		Gem->SetType(GemType::BLUE);
 		Gem->SetPosition(Pos_);
 		
-		// 죽음 -> 화면 위로
 		Off();
 		EnemyController::LiveEnemyNum -= 1;
 		SetPosition(float4{ Pos_.x, -40 });
@@ -183,6 +184,16 @@ void Enemy::EnemyMove()
 	PlayerPos_ = GameInfo::GetPlayerInfo()->PlayerPos_;
 	DestDir_ = Vector2D::GetDirection(Pos_, PlayerPos_);
 
+	if (0 == EnemyName_.compare("Medusa"))
+	{
+		if (true == UpDownCounter_.Start(DeltaTime_))
+		{
+			UpDown_ *= -1;
+			UpDownCounter_.Reset();
+		}
+
+		DestDir_ = float4{ DestDir_.x, UpDown_ * 2.0f };
+	}
 
 	float Speed = MapColCheck(Speed_);
 	SetMove((DestDir_ + KnockBackDir_) * DeltaTime_ * Speed);

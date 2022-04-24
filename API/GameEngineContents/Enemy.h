@@ -2,6 +2,7 @@
 #include <GameEngine/GameEngineActor.h>
 #include <vector>
 #include "Counter.h"
+#include <string>
 
 // 설명 :
 class GameEngineCollision;
@@ -92,5 +93,9 @@ private:
 	// 외부에서 EnemySet 관련
 	bool SetSignalOn;
 	int EnemyNameListIndex;
+
+	// Medusa 특수 움직임
+	float UpDown_;
+	Counter UpDownCounter_;
 };
 
