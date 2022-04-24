@@ -32,11 +32,13 @@ void ProjectileShooter::Start()
 
 void ProjectileShooter::Update()
 {
-	SkillLevel_ = GameInfo::GetPlayerInfo()->SkillLevelInfo_[static_cast<int>(SkillType_)];
+	
 }
 
 void ProjectileShooter::SetShooter(SkillType _SkillType, float _WaitTime)
 {
+	SkillLevel_ = GameInfo::GetPlayerInfo()->SkillLevelInfo_[static_cast<int>(SkillType_)];
+
 	//탄수		인터벌		쿨타임		데미지		속도			지속시간 
 	SkillType_ = _SkillType;
 	InitBulletCount_ = STAT_SHOOTER[static_cast<int>(SkillType_)][SkillLevel_][0];
@@ -115,7 +117,7 @@ void ProjectileShooter::Shooting(float _DeltaTime, float4 _PlayerPos, float4 _Mo
 void ProjectileShooter::SetSkillStat(Projectile* _Bullet)
 {
 	//탄수		인터벌		쿨타임		데미지		속도			지속시간 
-
+	SkillLevel_ = GameInfo::GetPlayerInfo()->SkillLevelInfo_[static_cast<int>(SkillType_)];
 	InitBulletCount_ = STAT_SHOOTER[static_cast<int>(SkillType_)][SkillLevel_][0];
 	InitInterval_ = STAT_SHOOTER[static_cast<int>(SkillType_)][SkillLevel_][1];
 	InitCoolTime_ = STAT_SHOOTER[static_cast<int>(SkillType_)][SkillLevel_][2];
@@ -161,7 +163,7 @@ void ProjectileShooter::ShootFire()
 {
 	FireShootDir_ = Vector2D::GetDirection(PlayerPos_, MonsterPos_);
 
-	for (int i = 0; i < 3; i++)
+	for (int i = 0; i < BulletCount_; i++)
 	{
 		Projectile* Bullet = GetLevel()->CreateActor<Projectile>(static_cast<int>(ACTOR_ORDER::PLAYER), "Bullet");
 		Bullet->SetType(BulletType::FLAME_RED);
@@ -171,11 +173,9 @@ void ProjectileShooter::ShootFire()
 		FireShootDir_.Normal2D();
 		Bullet->SetDir(FireShootDir_);
 		Bullet->SetPosition(PlayerPos_);
-
+		BulletCount_ -= 1;
 	}
 
-	BulletCount_ -= 1;
 	isShoot_ = true;
 	IntervalCount_ = InitInterval_;
-	
 }
