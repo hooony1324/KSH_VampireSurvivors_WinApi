@@ -206,6 +206,9 @@
     <ClInclude Include="LevelUpBox.h">
       <Filter>2.Play\Item</Filter>
     </ClInclude>
+    <ClInclude Include="Skill_Stat.h">
+      <Filter>Global</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="0.Level">

@@ -8,7 +8,7 @@
 #include "GameEnum.h"
 #include "Vector2D.h"
 #include "GameInfo.h"
-
+#include "Skill_Stat.h"
 
 
 ProjectileShooter::ProjectileShooter()
@@ -27,22 +27,21 @@ ProjectileShooter::~ProjectileShooter()
 
 void ProjectileShooter::Start()
 {
-
+	
 }
 
 void ProjectileShooter::Update()
 {
-
+	SkillLevel_ = GameInfo::GetPlayerInfo()->SkillLevelInfo_[static_cast<int>(SkillType_)];
 }
 
-void ProjectileShooter::SetShooter(SkillType _SkillType, BulletType _BT, int _BulletCount, float _Interval, float _CoolTime, float _WaitTime)
+void ProjectileShooter::SetShooter(SkillType _SkillType, float _WaitTime)
 {
-
+	//Åº¼ö		ÀÎÅÍ¹ú		ÄðÅ¸ÀÓ		µ¥¹ÌÁö		¼Óµµ			Áö¼Ó½Ã°£ 
 	SkillType_ = _SkillType;
-	InitBulletCount_ = _BulletCount;
-	InitInterval_ = _Interval;
-	InitCoolTime_ = _CoolTime;
-	BT_ = _BT;
+	InitBulletCount_ = STAT_SHOOTER[static_cast<int>(SkillType_)][SkillLevel_][0];
+	InitInterval_ = STAT_SHOOTER[static_cast<int>(SkillType_)][SkillLevel_][1];
+	InitCoolTime_ = STAT_SHOOTER[static_cast<int>(SkillType_)][SkillLevel_][2];
 	isShoot_ = false;
 	
 	CoolTimeCount_ = _WaitTime;
@@ -95,15 +94,15 @@ void ProjectileShooter::Shooting(float _DeltaTime, float4 _PlayerPos, float4 _Mo
 	// ÃÑ¾Ë ÀÖÀ¸¸é ½ð´Ù
 	PlayerPos_ = _PlayerPos;
 	MonsterPos_ = _MonsterPos;
-	switch (BT_)
+	switch (SkillType_)
 	{
-	case BulletType::KNIFE:
+	case SkillType::KNIFE:
 		ShootKnife();
 		break;
-	case BulletType::FLAME_BLUE:
+	case SkillType::MAGICWAND:
 		ShootMagic();
 		break;
-	case BulletType::FLAME_RED:
+	case SkillType::FIREWAND:
 		ShootFire();
 		break;
 	default:
@@ -113,15 +112,28 @@ void ProjectileShooter::Shooting(float _DeltaTime, float4 _PlayerPos, float4 _Mo
 	return;
 }
 
+void ProjectileShooter::SetSkillStat(Projectile* _Bullet)
+{
+	//Åº¼ö		ÀÎÅÍ¹ú		ÄðÅ¸ÀÓ		µ¥¹ÌÁö		¼Óµµ			Áö¼Ó½Ã°£ 
+
+	InitBulletCount_ = STAT_SHOOTER[static_cast<int>(SkillType_)][SkillLevel_][0];
+	InitInterval_ = STAT_SHOOTER[static_cast<int>(SkillType_)][SkillLevel_][1];
+	InitCoolTime_ = STAT_SHOOTER[static_cast<int>(SkillType_)][SkillLevel_][2];
+
+	_Bullet->SetDamage(STAT_SHOOTER[static_cast<int>(SkillType_)][SkillLevel_][3]);
+	_Bullet->SetSpeed(STAT_SHOOTER[static_cast<int>(SkillType_)][SkillLevel_][4]);
+	_Bullet->SetDuration(STAT_SHOOTER[static_cast<int>(SkillType_)][SkillLevel_][5]);
+}
+
 void ProjectileShooter::ShootKnife()
 {
 	// Knife
 	GameEngineRandom Random;
 	Projectile* Bullet = GetLevel()->CreateActor<Projectile>(static_cast<int>(ACTOR_ORDER::PLAYER), "Bullet");
 	float4 RandomPos = float4{ Random.RandomFloat(PlayerPos_.x - 25, PlayerPos_.x + 25), Random.RandomFloat(PlayerPos_.y - 25, PlayerPos_.y + 25) };
+	Bullet->SetType(BulletType::KNIFE);
 	Bullet->SetPosition(RandomPos);
-	Bullet->SetType(BT_);
-	Bullet->SetDamage(100);
+	SetSkillStat(Bullet);
 	Bullet->SetDir(PlayerMoveDir_);
 
 
@@ -135,8 +147,8 @@ void ProjectileShooter::ShootMagic()
 	// MagicWand
 	// ÃÑ¾Ë ½î°í isShoot = true
 	Projectile* Bullet = GetLevel()->CreateActor<Projectile>(static_cast<int>(ACTOR_ORDER::PLAYER), "Bullet");
-	Bullet->SetType(BT_);
-	Bullet->SetDamage(100);
+	Bullet->SetType(BulletType::FLAME_BLUE);
+	SetSkillStat(Bullet);
 	Bullet->SetDir(Vector2D::GetDirection(PlayerPos_, MonsterPos_));
 	Bullet->SetPosition(PlayerPos_);
 
@@ -152,8 +164,8 @@ void ProjectileShooter::ShootFire()
 	for (int i = 0; i < 3; i++)
 	{
 		Projectile* Bullet = GetLevel()->CreateActor<Projectile>(static_cast<int>(ACTOR_ORDER::PLAYER), "Bullet");
-		Bullet->SetType(BT_);
-		Bullet->SetDamage(100);
+		Bullet->SetType(BulletType::FLAME_RED);
+		SetSkillStat(Bullet);
 		FireShootDir_.x *= 0.8f;
 		FireShootDir_.y *= 1.2f;
 		FireShootDir_.Normal2D();

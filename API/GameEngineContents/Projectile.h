@@ -48,6 +48,15 @@ public:
 		Damage_ = _Damage;
 	}
 
+	void SetDuration(float _Duration)
+	{
+		Duration_ = _Duration;
+	}
+
+	void SetSpeed(float _Speed)
+	{
+		Speed_ = _Speed;
+	}
 protected:
 
 	void Start() override;

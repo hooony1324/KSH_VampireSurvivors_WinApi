@@ -20,7 +20,7 @@ std::string EnemyNameList[] = {"Mud", "Medusa", "Mummy"};
 
 Enemy::Enemy()
 	: Speed_(80.0f)
-	, Hp_(100)
+	, Hp_(10)
 	, Renderer_(nullptr)
 	, Col_(nullptr)
 	, OtherBlockLeft_(nullptr)
@@ -38,12 +38,11 @@ Enemy::~Enemy()
 
 void Enemy::SetEnemy(int _Index)
 {
+	EnemyNameListIndex = _Index;
 	if (EnemyNameListIndex >= static_cast<int>(EnemyNameList->size()))
 	{
-		return;
+		EnemyNameListIndex = EnemyNameListIndex % static_cast<int>(EnemyNameList->size());
 	}
-
-	EnemyNameListIndex = _Index;
 
 	EnemyName_ = EnemyNameList[EnemyNameListIndex];
 	Renderer_->ChangeAnimation(EnemyName_ + "_WalkRight");
