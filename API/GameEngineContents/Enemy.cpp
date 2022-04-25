@@ -154,6 +154,7 @@ void Enemy::EnemyDead()
 
 	if (false == Dead_)
 	{
+		GameInfo::GetPlayerInfo()->KillCount_ += 1;
 		Renderer_->ChangeAnimation(EnemyName_ + "_Dead");
 		KnockBackDir_.Normal2D();
 		Dead_ = true;

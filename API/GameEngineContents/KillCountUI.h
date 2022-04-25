@@ -1,5 +1,6 @@
 #pragma once
 #include <GameEngine/GameEngineActor.h>
+#include <GameEngine/GameEngineFont.h>
 
 // Ό³Έν :
 class KillCountUI : public GameEngineActor
@@ -22,6 +23,8 @@ protected:
 	void Render() override;
 
 private:
+	GameEngineFont TextFont_;
+
 
 };
 
