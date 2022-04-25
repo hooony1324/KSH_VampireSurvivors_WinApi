@@ -32,6 +32,7 @@ Player::Player()
 	, PlayerCol_(nullptr)
 	, Speed_(0)
 	, PlayerShootRange_(nullptr)
+	, GodMode_(false)
 {
 	// 공격 맞으면 일정시간동안 무적
 	InvincibleTime_ = HitTime_;
@@ -107,6 +108,12 @@ void Player::Update()
 
 	// 카메라
 	GetLevel()->SetCameraPos(PlayerPos_ - GameEngineWindow::GetScale().Half());
+
+	// 디버깅용
+	if (true == GameEngineInput::GetInst()->IsDown("GodMode"))
+	{
+		GodMode_ = !GodMode_;
+	}
 }
 
 void Player::Render()
@@ -281,6 +288,11 @@ float Player::MapColCheck(float _PlayerSpeed)
 
 void Player::EnemyAttackCheck()
 {
+	if (true == GodMode_)
+	{
+		return;
+	}
+
 	EnemyBump_ = false;
 	if (nullptr != PlayerCol_)
 	{

@@ -62,6 +62,7 @@ void VampireSurvivorsGame::GameInit()
 		
 		
 		GameEngineInput::GetInst()->CreateKey("ColDebugger", 'C');
+		GameEngineInput::GetInst()->CreateKey("GodMode", 'G');
 
 
 	}

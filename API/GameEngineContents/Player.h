@@ -45,6 +45,7 @@ private:
 	float4					MoveDir_;
 	float4					Hp_BarSize_;
 	HeadDir					HeadDir_;
+	bool					GodMode_;
 	bool					Hitable_; // 플레이어 무적여부
 	float					InvincibleTime_;
 	float					HitTime_;	// 피격시 무적시간

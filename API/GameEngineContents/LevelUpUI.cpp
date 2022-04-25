@@ -93,31 +93,49 @@ void LevelUpUI::Start()
 		SelectNum_ = 4;
 	}
 
-	// 중요 : 처음엔 0 ~ 10 이지만 나중에는 뽑은 스킬의 상태에 따라 뽑을 수 있는 스킬배열이 달라져야 함 ex. SelectableSkills[]
-	// 0 ~ 10 연속으로 SelectNum개의 겹치지 않는 랜덤수 뽑기
+	// 연속으로 SelectNum개의 겹치지 않는 랜덤수 뽑기
 	bool SelectedSkills[static_cast<int>(SkillType::MAX)] = { false, };
 	int TrueCount = 0;
 
 	// 스킬 여유공간 체크
-	int Count = static_cast<int>(SkillType::MAX)
+	//int SlotSpare = 12
 		- (static_cast<int>(GameInfo::GetPlayerInfo()->ActiveSkillSlot_.size()) + static_cast<int>(GameInfo::GetPlayerInfo()->PassiveSkillSlot_.size()));
-	int Spare = SKILL_LEVELMAX - Count;
-	if (Spare < SelectNum_)
+
+	// SelectNum_ -> 남은 스킬중 8레벨이 아닌 스킬들 선택
+	int MaxLevelCount = 0;
+	for (int i = 0; i < 12; i++)
 	{
-		SelectNum_ = Spare;
+		if (SKILL_LEVELMAX == GameInfo::GetPlayerInfo()->SkillLevelInfo_[i])
+		{
+			MaxLevelCount++;
+		}
 	}
+	
+	int SelectableCount = static_cast<int>(SkillType::MAX) - MaxLevelCount;
+	if (SelectableCount < SelectNum_)
+	{
+		SelectNum_ = SelectableCount;
+	}
+
+
 
 	while (TrueCount < SelectNum_)
 	{
 		int Index = Random.RandomInt(0, static_cast<int>(SkillType::MAX) - 1);
-		if (Index == static_cast<int>(SkillType::MAX) || Index == static_cast<int>(SkillType::MAX))
-		{
-			continue;
-		}
 
 		// 8레벨 미만 스킬들만 고름
 		if (false == SelectedSkills[Index] && GameInfo::GetPlayerInfo()->SkillLevelInfo_[Index] < SKILL_LEVELMAX)
 		{
+			// 스킬슬릇(Active/Passive)에 6개 다 차면 뽑을 수 없음
+			if (Index < ACTIVE_MAX && 6 <= static_cast<int>(GameInfo::GetPlayerInfo()->ActiveSkillSlot_.size()))
+			{
+				continue;
+			}
+			if (Index >= ACTIVE_MAX && 6 <= static_cast<int>(GameInfo::GetPlayerInfo()->PassiveSkillSlot_.size()))
+			{
+				continue;
+			}
+			
 			TrueCount++;
 			SelectedSkills[Index] = true;
 
@@ -157,6 +175,7 @@ void LevelUpUI::ShowRandomSkills()
 	if (0 >= SelectNum_)
 	{
 		// 돈 또는 체력 선택
+		int a = 0;
 		return;
 	}
 
