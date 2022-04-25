@@ -1,11 +1,21 @@
 #pragma once
 #include <GameEngine/GameEngineActor.h>
 #include <vector>
+#include "Counter.h"
+
 
 // Ό³Έν :
 class GameEngineRenderer;
 class GameStartMenu : public GameEngineActor
 {
+	enum class STATE
+	{
+		ANYKEY,
+		START,
+		SELECT_CHARACTER,
+		SELECT_MAP,
+	};
+
 public:
 	// constrcuter destructer
 	GameStartMenu();
@@ -24,11 +34,42 @@ protected:
 	void Render() override;
 
 private:
-	GameEngineRenderer* PressAnyKey_;
 
-	std::vector<GameEngineRenderer*> Buttons_;
-	//  []
-	//[][][]
-	//  []
+	// FSM
+	void StateUpdate();
+	void ChangeState(STATE _State);
+
+	// ANYKEY
+	void BlinkStart();
+	void BlinkUpdate();
+
+	void BlinkAnyKey();
+	void RenderAnyKey();
+
+	// START
+	void ButtonsStart();
+	void ButtonsUpdate();
+
+	// SELECT_CHARACTER
+	void SelectCharacterStart();
+	void SelectCharacterUpdate();
+
+	// SELECT_MAP
+	void SelectMapStart();
+	void SelectMapUpdate();
+
+private:
+	STATE CurState_;
+
+	// ANYKEY
+	GameEngineRenderer* PressAnyKey_;
+	bool AnyKeyActivated_;
+	bool BlinkOn_;
+	Counter BlinkCounter_;
+
+	// START
+	GameEngineRenderer* Buttons_;
+	int* ButtonFocused_;
+
 };
 

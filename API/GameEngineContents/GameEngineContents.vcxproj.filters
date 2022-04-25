@@ -102,13 +102,7 @@
       <Filter>Global</Filter>
     </ClCompile>
     <ClCompile Include="GameStartMenu.cpp">
-      <Filter>1.Intro~Title\01.GameStartMenu</Filter>
-    </ClCompile>
-    <ClCompile Include="CharacterSelectMenu.cpp">
-      <Filter>1.Intro~Title\02.CharacterSelectMenu</Filter>
-    </ClCompile>
-    <ClCompile Include="MapSelectMenu.cpp">
-      <Filter>1.Intro~Title\03.MapSelectMenu</Filter>
+      <Filter>1.Intro~Title</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -219,13 +213,7 @@
       <Filter>Global</Filter>
     </ClInclude>
     <ClInclude Include="GameStartMenu.h">
-      <Filter>1.Intro~Title\01.GameStartMenu</Filter>
-    </ClInclude>
-    <ClInclude Include="CharacterSelectMenu.h">
-      <Filter>1.Intro~Title\02.CharacterSelectMenu</Filter>
-    </ClInclude>
-    <ClInclude Include="MapSelectMenu.h">
-      <Filter>1.Intro~Title\03.MapSelectMenu</Filter>
+      <Filter>1.Intro~Title</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -264,15 +252,6 @@
     </Filter>
     <Filter Include="1.Intro~Title">
       <UniqueIdentifier>{a1af0295-5ec4-49ba-ba07-e0db2f9ac90f}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="1.Intro~Title\01.GameStartMenu">
-      <UniqueIdentifier>{0b064eda-b5ce-49c9-b037-e1fb26ea5023}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="1.Intro~Title\02.CharacterSelectMenu">
-      <UniqueIdentifier>{ac1309b4-93b3-42f9-859d-8b22113d362b}</UniqueIdentifier>
-    </Filter>
-    <Filter Include="1.Intro~Title\03.MapSelectMenu">
-      <UniqueIdentifier>{0418617a-b430-42fc-80c5-b97bc3564272}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

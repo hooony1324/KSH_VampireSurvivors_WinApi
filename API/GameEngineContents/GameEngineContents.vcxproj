@@ -167,10 +167,6 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="CharacterSelectMenu.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
     <ClInclude Include="Coin.h">
       <SubType>
       </SubType>
@@ -236,10 +232,6 @@
       </SubType>
     </ClInclude>
     <ClInclude Include="GameEnum.h" />
-    <ClInclude Include="MapSelectMenu.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
     <ClInclude Include="PauseUI.h">
       <SubType>
       </SubType>
@@ -316,10 +308,6 @@
       <SubType>
       </SubType>
     </ClCompile>
-    <ClCompile Include="CharacterSelectMenu.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
     <ClCompile Include="Coin.cpp">
       <SubType>
       </SubType>
@@ -381,10 +369,6 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="Library.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="MapSelectMenu.cpp">
       <SubType>
       </SubType>
     </ClCompile>
