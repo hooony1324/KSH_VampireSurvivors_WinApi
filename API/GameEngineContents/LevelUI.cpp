@@ -33,7 +33,8 @@ void LevelUI::Start()
 	SetBkMode(GameEngine::BackBufferDC(), TRANSPARENT);*/
 
 
-	TextFont_.Load("../Resources/UI/KO.ttf");
+	//TextFont_.Load("../Resources/UI/KO.ttf");
+	TextFont_.Load("arial.ttf");
 
 	NextLevelOff();
 }

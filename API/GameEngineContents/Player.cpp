@@ -197,9 +197,6 @@ void Player::PlayerMove()
 	float Speed = MapColCheck(Speed_);
 	SetMove(MoveDir_ * GameEngineTime::GetDeltaTime(static_cast<int>(TIME_GROUP::PLAYER)) * Speed);
 
-	// 중력 적용
-	/*AccGravity_ += GameEngineTime::GetDeltaTime() * Gravity_;
-	SetMove(float4::DOWN * GameEngineTime::GetDeltaTime() * AccGravity_);*/
 
 }
 

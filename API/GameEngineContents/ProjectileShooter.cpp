@@ -15,7 +15,6 @@ ProjectileShooter::ProjectileShooter()
 	, Projectile_(nullptr)
 	, ShootAble_(false)
 	, isShoot_(false)
-	, FireShootDir_(float4{1, -1})
 
 {
 }
@@ -128,7 +127,6 @@ void ProjectileShooter::SetSkillStat(Projectile* _Bullet)
 
 void ProjectileShooter::ShootKnife()
 {
-	// Knife
 	Projectile* Bullet = GetLevel()->CreateActor<Projectile>(static_cast<int>(ACTOR_ORDER::PLAYER), "Bullet");
 	Bullet->SetType(BulletType::KNIFE);
 	SetSkillStat(Bullet);
@@ -144,8 +142,6 @@ void ProjectileShooter::ShootKnife()
 
 void ProjectileShooter::ShootMagic()
 {
-	// MagicWand
-	// 총알 쏘고 isShoot = true
 	Projectile* Bullet = GetLevel()->CreateActor<Projectile>(static_cast<int>(ACTOR_ORDER::PLAYER), "Bullet");
 	Bullet->SetType(BulletType::FLAME_BLUE);
 	SetSkillStat(Bullet);
@@ -159,20 +155,23 @@ void ProjectileShooter::ShootMagic()
 
 void ProjectileShooter::ShootFire()
 {
-	FireShootDir_ = Vector2D::GetDirection(PlayerPos_, MonsterPos_);
-
+	// 0에 가까운 값이 나올수록 각도가 벌어지지 않는다
+	float4 FireShootDir = Vector2D::GetDirection(PlayerPos_, MonsterPos_);
+	
+	// 한번에 쏜다
 	for (int i = 0; i < BulletCount_; i++)
 	{
 		Projectile* Bullet = GetLevel()->CreateActor<Projectile>(static_cast<int>(ACTOR_ORDER::PLAYER), "Bullet");
 		Bullet->SetType(BulletType::FLAME_RED);
 		SetSkillStat(Bullet);
-		FireShootDir_.x *= 0.8f;
-		FireShootDir_.y *= 1.2f;
-		FireShootDir_.Normal2D();
-		Bullet->SetDir(FireShootDir_);
+		float4 RotateDir;
+		RotateDir = float4::VectorRotationToDegreeZ(FireShootDir, 15 * static_cast<float>(i));
+		RotateDir.Normal2D();
+		Bullet->SetDir(RotateDir);
 		Bullet->SetPosition(PlayerPos_);
-		BulletCount_ -= 1;
 	}
+	
+	BulletCount_ = 0;
 
 	isShoot_ = true;
 	IntervalCount_ = InitInterval_;

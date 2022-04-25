@@ -44,6 +44,9 @@ void GameEngineFont::Draw(const std::string& _Text, float4 _Postion, float _Size
 	std::wstring WText;
 	GameEngineString::AnsiToUnicode(_Text, WText);
 
+	SetTextColor(GameEngine::BackBufferDC(), RGB(255, 255, 255));
+	SetBkMode(GameEngine::BackBufferDC(), TRANSPARENT);
+
 	oldFont = (HFONT)SelectObject(GameEngine::BackBufferDC(), hFont);
 	TextOutW(GameEngine::BackBufferDC(), _Postion.ix(), _Postion.iy(), WText.c_str(), static_cast<int>(WText.size()));
 	DeleteObject(hFont);
