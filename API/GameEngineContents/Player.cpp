@@ -45,6 +45,9 @@ Player::~Player()
 
 void Player::Start()
 {
+	GameInfo::SetCharacter(CharacterType::Cavallo);	// 디버그용도 : 플레이 레벨에서 시작하기 때문에 설정
+	GameInfo::SetPlayerInfo();						// 선택한 캐릭터정보를 플레이어정보로 세팅
+
 	SetPosition({ 1710, 770 });
 	SetScale({ 100, 100 });
 

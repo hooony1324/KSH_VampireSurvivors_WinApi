@@ -10,7 +10,6 @@
 #include "GameInfo.h"
 #include "Skill_Stat.h"
 
-
 ProjectileShooter::ProjectileShooter()
 	: BT_(BulletType::FLAME_BLUE)
 	, Projectile_(nullptr)
@@ -41,7 +40,7 @@ void ProjectileShooter::SetShooter(SkillType _SkillType, float _WaitTime)
 
 	//탄수		인터벌		쿨타임		데미지		속도			지속시간 
 	SkillType_ = _SkillType;
-	InitBulletCount_ = STAT_SHOOTER[static_cast<int>(SkillType_)][SkillLevel_][0];
+	InitBulletCount_ = static_cast<int>(STAT_SHOOTER[static_cast<int>(SkillType_)][SkillLevel_][0]);
 	InitInterval_ = STAT_SHOOTER[static_cast<int>(SkillType_)][SkillLevel_][1];
 	InitCoolTime_ = STAT_SHOOTER[static_cast<int>(SkillType_)][SkillLevel_][2];
 	isShoot_ = false;
@@ -83,7 +82,7 @@ void ProjectileShooter::Shooting(float _DeltaTime, float4 _PlayerPos, float4 _Mo
 
 	// 쏜 상태 아니면, 인터벌이 끝났으면
 	
-	// 총알이 없으면
+	// 총알이 없으면, 설정된 총알수, 쿨타임, ... 리셋
 	if (BulletCount_ == 0)
 	{
 		BulletCount_ = InitBulletCount_;
@@ -118,7 +117,7 @@ void ProjectileShooter::SetSkillStat(Projectile* _Bullet)
 {
 	//탄수		인터벌		쿨타임		데미지		속도			지속시간 
 	SkillLevel_ = GameInfo::GetPlayerInfo()->SkillLevelInfo_[static_cast<int>(SkillType_)];
-	InitBulletCount_ = STAT_SHOOTER[static_cast<int>(SkillType_)][SkillLevel_][0];
+	InitBulletCount_ = static_cast<int>(STAT_SHOOTER[static_cast<int>(SkillType_)][SkillLevel_][0]);
 	InitInterval_ = STAT_SHOOTER[static_cast<int>(SkillType_)][SkillLevel_][1];
 	InitCoolTime_ = STAT_SHOOTER[static_cast<int>(SkillType_)][SkillLevel_][2];
 
@@ -130,12 +129,11 @@ void ProjectileShooter::SetSkillStat(Projectile* _Bullet)
 void ProjectileShooter::ShootKnife()
 {
 	// Knife
-	GameEngineRandom Random;
 	Projectile* Bullet = GetLevel()->CreateActor<Projectile>(static_cast<int>(ACTOR_ORDER::PLAYER), "Bullet");
-	float4 RandomPos = float4{ Random.RandomFloat(PlayerPos_.x - 25, PlayerPos_.x + 25), Random.RandomFloat(PlayerPos_.y - 25, PlayerPos_.y + 25) };
 	Bullet->SetType(BulletType::KNIFE);
-	Bullet->SetPosition(RandomPos);
 	SetSkillStat(Bullet);
+	float4 RandomPos = float4{ static_cast<float>(Random.RandomInt(PlayerPos_.ix() - 25, PlayerPos_.ix() + 25)), static_cast<float>(Random.RandomInt(PlayerPos_.iy() - 25, PlayerPos_.iy() + 25))};
+	Bullet->SetPosition(RandomPos);
 	Bullet->SetDir(PlayerMoveDir_);
 
 

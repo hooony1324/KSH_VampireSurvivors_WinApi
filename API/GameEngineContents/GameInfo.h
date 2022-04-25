@@ -4,13 +4,15 @@
 #include <vector>
 #include <map>
 #include "GameEnum.h"
+#include <GameEngineBase/GameEngineRandom.h>
 
+static GameEngineRandom Random;
 
 // Ό³Έν :
 class GameInfo
 {
 public:
-
+	
 
 	class PlayerInfo
 	{

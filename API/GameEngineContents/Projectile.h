@@ -38,12 +38,12 @@ public:
 	}
 
 
-	int GetDamage()
+	float GetDamage()
 	{
 		return Damage_;
 	}
 
-	void SetDamage(int _Damage)
+	void SetDamage(float _Damage)
 	{
 		Damage_ = _Damage;
 	}
@@ -71,7 +71,7 @@ private:
 	float4 ShootDir_;
 	
 	
-	int Damage_;
+	float Damage_;
 	float Speed_;
 	float Duration_;// 총알 지속시간
 

@@ -28,7 +28,7 @@ LevelUpUI::~LevelUpUI()
 
 void LevelUpUI::Start()
 {
-	NextLevelOff();
+
 
 	// 배경 
 	GameEngineRenderer* Renderer = CreateRenderer("LevelUpUI.bmp");
@@ -78,7 +78,7 @@ void LevelUpUI::Start()
 	// 무기 선택 박스 4 띄울지 여부
 	float PlayerLuck = GameInfo::GetPlayerInfo()->Luck_;
 	//PlayerLuck = 30;
-	GameEngineRandom Random;
+	//GameEngineRandom Random;
 	int Success = Random.RandomInt(1, 101);
 	
 	// 성공
@@ -98,7 +98,7 @@ void LevelUpUI::Start()
 	int TrueCount = 0;
 
 	// 스킬 여유공간 체크
-	//int SlotSpare = 12 - (static_cast<int>(GameInfo::GetPlayerInfo()->ActiveSkillSlot_.size()) + static_cast<int>(GameInfo::GetPlayerInfo()->PassiveSkillSlot_.size()));
+	//int SlotSpare = 12- (static_cast<int>(GameInfo::GetPlayerInfo()->ActiveSkillSlot_.size()) + static_cast<int>(GameInfo::GetPlayerInfo()->PassiveSkillSlot_.size()));
 
 	// SelectNum_ -> 남은 스킬중 8레벨이 아닌 스킬들 선택
 	int MaxLevelCount = 0;

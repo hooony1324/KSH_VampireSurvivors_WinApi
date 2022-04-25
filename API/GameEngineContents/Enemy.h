@@ -71,7 +71,7 @@ private:
 	std::string EnemyName_;
 	GameEngineRenderer* Renderer_;
 	float Speed_;
-	int Hp_;
+	float Hp_;
 	bool Dead_;
 	
 	float4 PlayerPos_;

@@ -68,5 +68,6 @@ private:
 	float4 FireShootDir_;
 
 	int SkillLevel_;
+	
 };
 

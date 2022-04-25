@@ -120,7 +120,7 @@ void Enemy::Hit()
 	// ¸Â¾ÒÀ½
 	GameEngineSound::SoundPlayOneShot("EnemyHit.mp3", 0);
 
-	int Damage = dynamic_cast<Projectile*>(PlayerAttack_[0]->GetActor())->GetDamage();
+	float Damage = dynamic_cast<Projectile*>(PlayerAttack_[0]->GetActor())->GetDamage();
 	float4 BulletPos = PlayerAttack_[0]->GetCollisionPos();
 	PlayerAttack_[0]->GetActor()->Death();
 	PlayerAttack_.clear();
