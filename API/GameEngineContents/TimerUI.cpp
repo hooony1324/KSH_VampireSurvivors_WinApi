@@ -71,7 +71,7 @@ void TimerUI::Start()
 	InitNumbers();
 
 	
-
+	NextLevelOff();
 }
 
 void TimerUI::Update()

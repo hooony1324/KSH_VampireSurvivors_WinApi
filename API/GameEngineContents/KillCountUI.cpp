@@ -23,6 +23,8 @@ void KillCountUI::Start()
 	Renderer_->CameraEffectOff();
 
 	TextFont_.Load("../Resources/UI/KO.ttf");
+
+	NextLevelOff();
 }
 
 void KillCountUI::Update()

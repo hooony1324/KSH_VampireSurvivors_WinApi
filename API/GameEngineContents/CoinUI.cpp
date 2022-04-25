@@ -29,6 +29,7 @@ void CoinUI::Start()
 	CoinRenderer_->SetTransColor(RGB(0, 0, 0));
 	CoinRenderer_->SetPivot({25, 16});
 	
+	NextLevelOff();
 }
 
 void CoinUI::Update()

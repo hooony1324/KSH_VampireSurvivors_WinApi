@@ -29,11 +29,13 @@ void LevelUI::Start()
 	SetScale({ 100, 30 });
 
 	// 폰트 설정
-	SetTextColor(GameEngine::BackBufferDC(), RGB(255, 255, 255));
-	SetBkMode(GameEngine::BackBufferDC(), TRANSPARENT);
+	/*SetTextColor(GameEngine::BackBufferDC(), RGB(255, 255, 255));
+	SetBkMode(GameEngine::BackBufferDC(), TRANSPARENT);*/
 
 
 	TextFont_.Load("../Resources/UI/KO.ttf");
+
+	NextLevelOff();
 }
 
 void LevelUI::Update()

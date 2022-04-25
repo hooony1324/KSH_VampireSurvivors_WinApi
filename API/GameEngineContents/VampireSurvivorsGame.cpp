@@ -33,7 +33,7 @@ void VampireSurvivorsGame::GameInit()
 	CreateLevel<TitleLevel>("Title");
 	CreateLevel<PlayLevel>("Play");
 	CreateLevel<ResultLevel>("Result");
-	ChangeLevel("Play");
+	ChangeLevel("Title");
 
 
 	// Å° ¼¼ÆÃ
@@ -89,7 +89,7 @@ void VampireSurvivorsGame::ResourceLoad()
 	ResourcesDir.MoveParent("API");
 	ResourcesDir.Move("Resources");
 
-	std::string Directories[] = {"characters", "tilesets", "illustrations", "vfx", "UI", "enemies", "items"};
+	std::string Directories[] = {"characters", "background", "illustrations", "vfx", "UI", "enemies", "items"};
 	
 	for (std::string& Dir : Directories)
 	{

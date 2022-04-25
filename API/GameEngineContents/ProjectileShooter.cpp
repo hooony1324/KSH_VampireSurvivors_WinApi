@@ -27,7 +27,7 @@ ProjectileShooter::~ProjectileShooter()
 
 void ProjectileShooter::Start()
 {
-	
+	NextLevelOff();
 }
 
 void ProjectileShooter::Update()

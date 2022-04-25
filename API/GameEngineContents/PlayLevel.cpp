@@ -60,6 +60,8 @@ void PlayLevel::LevelChangeStart(GameEngineLevel* _PrevLevel)
 
 	// 플레이어
 	Player_ = CreateActor<Player>(static_cast<int>(RENDER_ORDER::PLAYER), "Player");
+	GameInfo::SetCharacter(CharacterType::Cavallo);	// 디버그용도 : 플레이 레벨에서 시작하기 때문에 설정
+	GameInfo::SetPlayerInfo();						// 선택한 캐릭터정보를 플레이어정보로 세팅
 
 	// UI
 	ExpUI_ = CreateActor<ExpBar>(static_cast<int>(RENDER_ORDER::UI), "UI");

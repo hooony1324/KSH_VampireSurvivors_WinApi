@@ -24,6 +24,8 @@ void LevelUpBox::Start()
 	SetScale(Renderer_->GetScale());
 
 	Col_ = CreateCollision("LevelUpBox", Renderer_->GetScale());
+
+	NextLevelOff();
 }
 
 void LevelUpBox::Update()

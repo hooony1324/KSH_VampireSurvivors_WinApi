@@ -35,6 +35,8 @@ void PauseUI::Start()
 	ContinueButton_->CameraEffectOff();
 	ContinueButton_->SetScale(ContinueButton_->GetScale());
 	ContinueButton_->SetPivot({ Scale.Half().x + 144, Scale.y - 65});
+
+	NextLevelOff();
 }
 
 void PauseUI::Update()

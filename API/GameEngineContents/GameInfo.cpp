@@ -54,6 +54,9 @@ void GameInfo::SetPlayerInfo()
 	PlayerInfo_->Magnet_			= Character_->Magnet_;
 	PlayerInfo_->Revival_			= Character_->Revival_;
 
+	// ÃÊ±âÈ­
+	PlayerInfo_->ActiveSkillSlot_.clear();
+	PlayerInfo_->PassiveSkillSlot_.clear();
 	PlayerInfo_->ActiveSkillSlot_.push_back(Character_->BaseSkill_);
 	PlayerInfo_->SkillLevelInfo_[static_cast<int>(Character_->BaseSkill_)] = 1;
 

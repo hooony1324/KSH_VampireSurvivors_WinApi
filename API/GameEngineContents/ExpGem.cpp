@@ -57,7 +57,9 @@ void ExpGem::Start()
 {
 	Renderer_ = CreateRenderer("GemGreen.bmp");
 	Col_ = CreateCollision("ExpGem", Renderer_->GetScale() + float4{15, 15});
-	
+
+
+	NextLevelOff();
 }
 
 void ExpGem::Update()

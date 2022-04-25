@@ -29,7 +29,7 @@ void Timer::Start()
 	}
 
 	
-
+	NextLevelOff();
 }
 
 void Timer::Update()

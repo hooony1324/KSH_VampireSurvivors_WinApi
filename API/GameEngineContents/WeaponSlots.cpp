@@ -52,6 +52,8 @@ void WeaponSlots::Start()
 	int SkillType = static_cast<int>(GameInfo::GetPlayerInfo()->ActiveSkillSlot_[0]);
 	ActiveSlots_[0]->SetImage(SkillOrder[SkillType] + "UISmall.bmp");
 
+
+	NextLevelOff();
 }
 
 void WeaponSlots::Update()

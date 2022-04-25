@@ -44,6 +44,8 @@ void StatUI::Start()
 		SkillType SkillName = GameInfo::GetPlayerInfo()->ActiveSkillSlot_[0];
 	}
 
+
+	NextLevelOff();
 }
 
 void StatUI::Update()

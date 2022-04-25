@@ -71,8 +71,10 @@ void EnemyController::Start()
 	// 보스, 스페셜 몹
 	BossCounter_.SetCount(0);
 
-
+	// 웨이브 시작 몬스터 설정
 	WaveIndex_ = 0;
+
+	NextLevelOff();
 }
 
 void EnemyController::Update()

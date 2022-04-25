@@ -24,6 +24,8 @@ void Library::Start()
 
 	MapEndLeft_ = CreateCollision("MapEndLeft", float4{ 20, 890 }, float4{ 700, 840 });
 	MapEndRight_ = CreateCollision("MapEndRight", float4{ 20, 890 }, float4{ Map_->GetScale().x - 700, 840 });
+
+	NextLevelOff();
 }
 
 void Library::Update()

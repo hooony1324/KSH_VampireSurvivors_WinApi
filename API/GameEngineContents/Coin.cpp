@@ -23,6 +23,8 @@ void Coin::Start()
 	SetScale(Renderer_->GetScale());
 
 	Col_ = CreateCollision("Coin", Renderer_->GetScale());
+
+	NextLevelOff();
 }
 
 void Coin::Update()

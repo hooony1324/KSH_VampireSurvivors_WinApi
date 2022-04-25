@@ -28,7 +28,7 @@ LevelUpUI::~LevelUpUI()
 
 void LevelUpUI::Start()
 {
-
+	NextLevelOff();
 
 	// ¹è°æ 
 	GameEngineRenderer* Renderer = CreateRenderer("LevelUpUI.bmp");

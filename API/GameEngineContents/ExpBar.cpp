@@ -26,6 +26,8 @@ void ExpBar::Start()
 	BlueBar_ = CreateRenderer("ExpBarBlue.bmp");
 	//BlueBar->SetPivot(BlueBar->GetScale().Half());
 	BlueBar_->CameraEffectOff();
+
+	NextLevelOff();
 }
 
 void ExpBar::Update()
