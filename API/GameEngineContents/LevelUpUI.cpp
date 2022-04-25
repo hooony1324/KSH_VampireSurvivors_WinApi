@@ -31,7 +31,7 @@ void LevelUpUI::Start()
 
 
 	// 배경 
-	GameEngineRenderer* Renderer = CreateRenderer("LevelUpUI.bmp");
+	GameEngineRenderer* Renderer = CreateRenderer("LevelUpUI.bmp", static_cast<int>(RENDER_ORDER::UI));
 	SetScale(Renderer->GetScale());
 	Renderer->CameraEffectOff();
 	Renderer->SetPivot(GameEngineWindow::GetScale().Half() + float4{0, 10});
@@ -57,21 +57,18 @@ void LevelUpUI::Start()
 	SelectNum_ = 3;
 
 	// 무기 선택 박스 1
-	Renderer1_ = CreateRenderer();
-	Renderer1_->SetImage("LevelupBlank.bmp");
+	Renderer1_ = CreateRenderer("LevelupBlank.bmp", static_cast<int>(RENDER_ORDER::UI));
 	Renderer1_->CameraEffectOff();
 	Renderer1_->SetPivot(GameEngineWindow::GetScale().Half() + float4{2, -Renderer1_->GetImageScale().y});
 	
 
 	// 무기 선택 박스 2
-	Renderer2_ = CreateRenderer();
-	Renderer2_->SetImage("LevelupBlank.bmp");
+	Renderer2_ = CreateRenderer("LevelupBlank.bmp", static_cast<int>(RENDER_ORDER::UI));
 	Renderer2_->CameraEffectOff();
 	Renderer2_->SetPivot(GameEngineWindow::GetScale().Half() + float4{ 2, 0 });
 
 	// 무기 선택 박스 3
-	Renderer3_ = CreateRenderer();
-	Renderer3_->SetImage("LevelupBlank.bmp");
+	Renderer3_ = CreateRenderer("LevelupBlank.bmp", static_cast<int>(RENDER_ORDER::UI));
 	Renderer3_->CameraEffectOff();
 	Renderer3_->SetPivot(GameEngineWindow::GetScale().Half() + float4{ 2, Renderer1_->GetImageScale().y });
 
@@ -85,8 +82,7 @@ void LevelUpUI::Start()
 	if (Success <= PlayerLuck)
 	{
 		// 무기 선택 박스 4
-		Renderer4_ = CreateRenderer();
-		Renderer4_->SetImage("LevelupBlank.bmp");
+		Renderer4_ = CreateRenderer("LevelupBlank.bmp", static_cast<int>(RENDER_ORDER::UI));
 		Renderer4_->CameraEffectOff();
 		Renderer4_->SetPivot(GameEngineWindow::GetScale().Half() + float4{ 2, Renderer1_->GetImageScale().y * 2 });
 

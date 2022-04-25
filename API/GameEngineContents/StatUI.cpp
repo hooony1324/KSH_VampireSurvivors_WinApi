@@ -21,8 +21,8 @@ StatUI::~StatUI()
 void StatUI::Start()
 {
 	SetPosition(float4{8, 40});
-	GameEngineRenderer* RendererBack = CreateRenderer("StatUI.bmp");
-	GameEngineRenderer* RendererText = CreateRenderer("StatUIText.bmp");
+	GameEngineRenderer* RendererBack = CreateRenderer("StatUI.bmp", static_cast<int>(RENDER_ORDER::UI));
+	GameEngineRenderer* RendererText = CreateRenderer("StatUIText.bmp", static_cast<int>(RENDER_ORDER::UI));
 
 
 	SetScale(RendererBack->GetScale());

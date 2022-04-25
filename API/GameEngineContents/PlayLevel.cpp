@@ -64,7 +64,7 @@ void PlayLevel::LevelChangeStart(GameEngineLevel* _PrevLevel)
 
 	// UI
 	ExpUI_ = CreateActor<ExpBar>(static_cast<int>(RENDER_ORDER::UI), "UI");
-	WeaponUI_ = CreateActor<WeaponSlots>(static_cast<int>(RENDER_ORDER::UI), "UI");
+	WeaponUI_ = CreateActor<WeaponSlots>(static_cast<int>(RENDER_ORDER::PLAY_UI), "UI");
 	TimerUI_ = CreateActor<TimerUI>(static_cast<int>(RENDER_ORDER::UI), "UI");
 	CoinUI_ = CreateActor<CoinUI>(static_cast<int>(RENDER_ORDER::UI), "UI");
 	LevelUI_ = CreateActor<LevelUI>(static_cast<int>(RENDER_ORDER::UI), "UI");

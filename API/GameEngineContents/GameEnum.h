@@ -16,6 +16,7 @@ enum class RENDER_ORDER
 	PLAYER,
 	WEAPON,
 	ITEM,
+	PLAY_UI,
 	UI
 };
 

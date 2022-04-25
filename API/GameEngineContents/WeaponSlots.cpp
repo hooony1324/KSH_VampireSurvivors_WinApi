@@ -18,7 +18,7 @@ WeaponSlots::~WeaponSlots()
 
 void WeaponSlots::Start()
 {
-	GameEngineRenderer* Slot = CreateRenderer("WeaponSlots.bmp");
+	GameEngineRenderer* Slot = CreateRenderer("WeaponSlots.bmp", static_cast<int>(RENDER_ORDER::PLAY_UI));
 	
 	SetPosition(float4{ 4, 32 });
 	SetScale(Slot->GetScale());
@@ -32,8 +32,8 @@ void WeaponSlots::Start()
 	// 스킬 슬릇 초기화
 	for (int i = 0; i < 6; i++)
 	{
-		GameEngineRenderer* ActiveSkillPtr = CreateRenderer("KnifeUISmall.bmp", static_cast<int>(RENDER_ORDER::UI));
-		GameEngineRenderer* PassiveSkillPtr = CreateRenderer("KnifeUISmall.bmp", static_cast<int>(RENDER_ORDER::UI));
+		GameEngineRenderer* ActiveSkillPtr = CreateRenderer("KnifeUISmall.bmp", static_cast<int>(RENDER_ORDER::PLAY_UI));
+		GameEngineRenderer* PassiveSkillPtr = CreateRenderer("KnifeUISmall.bmp", static_cast<int>(RENDER_ORDER::PLAY_UI));
 
 		ActiveSkillPtr->CameraEffectOff();
 		ActiveSkillPtr->SetPivot(float4{ 13, 12 } + float4{ (static_cast<float>(i) * 27) + (static_cast<float>(i) * 1), 0 });
