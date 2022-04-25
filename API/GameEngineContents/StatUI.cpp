@@ -59,20 +59,22 @@ void StatUI::Render()
 
 void StatUI::SlotUpdate()
 {
-	// 액티브
+	// 액티브 UI
 	std::vector<SkillType> ActiveSkillSlot = GameInfo::GetPlayerInfo()->ActiveSkillSlot_;
 	if (ActiveSkillCount_ != ActiveSkillSlot.size())
 	{
 		ActiveSkillCount_ = ActiveSkillSlot.size();
-		ActiveSlots_[ActiveSkillCount_ - 1]->On();
-		ActiveSkills_[ActiveSkillCount_ - 1]->On();
-		ActiveLevels_[ActiveSkillCount_ - 1]->On();
-
-		int SkillType = static_cast<int>(ActiveSkillSlot[ActiveSkillCount_ - 1]);
-		ActiveSkills_[ActiveSkillCount_ - 1]->SetImage(SkillOrder[SkillType] + "UI.bmp");
+		for (int i = 0; i < ActiveSkillCount_; i++)
+		{
+			ActiveSlots_[i]->On();
+			ActiveSkills_[i]->On();
+			ActiveLevels_[i]->On();
+			int SkillType = static_cast<int>(ActiveSkillSlot[i]);
+			ActiveSkills_[i]->SetImage(SkillOrder[SkillType] + "UI.bmp");
+		}
 	}
 
-	// 엑티브 레벨
+	// 엑티브 레벨 UI
 	for (int i = 0; i < static_cast<int>(ActiveSkillSlot.size()); i++)
 	{
 		SkillType Skill = ActiveSkillSlot[i];
@@ -80,20 +82,22 @@ void StatUI::SlotUpdate()
 		ActiveLevels_[i]->SetImage("WeaponLevel_" + std::to_string(SkillLevel) + ".bmp");
 	}
 
-	// 패시브
+	// 패시브 UI
 	std::vector<SkillType> PassiveSkillSlot = GameInfo::GetPlayerInfo()->PassiveSkillSlot_;
 	if (PassiveSkillCount_ != PassiveSkillSlot.size())
 	{
 		PassiveSkillCount_ = PassiveSkillSlot.size();
-		PassiveSlots_[PassiveSkillCount_ - 1]->On();
-		PassiveSkills_[PassiveSkillCount_ - 1]->On();
-		PassiveLevels_[PassiveSkillCount_ - 1]->On();
-
-		int SkillType = static_cast<int>(PassiveSkillSlot[PassiveSkillCount_ - 1]);
-		PassiveSkills_[PassiveSkillCount_ - 1]->SetImage(SkillOrder[SkillType] + "UI.bmp");
+		for (int i = 0; i < PassiveSkillCount_; i++)
+		{
+			PassiveSlots_[i]->On();
+			PassiveSkills_[i]->On();
+			PassiveLevels_[i]->On();
+			int SkillType = static_cast<int>(PassiveSkillSlot[i]);
+			PassiveSkills_[i]->SetImage(SkillOrder[SkillType] + "UI.bmp");
+		}
 	}
 
-	// 패시브 레벨
+	// 패시브 레벨 UI
 	for (int i = 0; i < static_cast<int>(PassiveSkillSlot.size()); i++)
 	{
 		SkillType Skill = PassiveSkillSlot[i];
