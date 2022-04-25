@@ -107,6 +107,9 @@ void VampireSurvivorsGame::ResourceLoad()
 	}
 
 	// 애니메이션용 이미지는 Cut선행되어야 함
+	GameEngineImageManager::GetInst()->Find("CautionToMain.bmp")->Cut({ 1280, 800 });
+
+
 	GameEngineImageManager::GetInst()->Find("Cavallo_WalkRight.bmp")->Cut({ 56, 56 });
 	GameEngineImageManager::GetInst()->Find("Cavallo_WalkLeft.bmp")->Cut({ 56, 56 });
 

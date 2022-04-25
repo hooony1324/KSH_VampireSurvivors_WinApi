@@ -4,6 +4,7 @@
 #include <GameEngine/GameEngineImageManager.h>
 #include <GameEngine/GameEngineRenderer.h>
 #include <GameEngineBase/GameEngineTime.h>
+#include <GameEngineBase/GameEngineInput.h>
 
 #include "Counter.h"
 
@@ -18,13 +19,22 @@ Intro::~Intro()
 
 void Intro::Start()
 {
-	GameEngineRenderer* Renderer = CreateRenderer("Caution.bmp", 0, RenderPivot::CENTER ,GameEngineWindow::GetScale().Half());
-	//Renderer->CreateAnimation("ddddd", "CautionOut", 0, 888, 0.1f, false);
+	Renderer_ = CreateRenderer();
+	Renderer_->SetPivot(GameEngineWindow::GetScale().Half());
+
+	Renderer_->CreateAnimation("CautionToMain.bmp", "Caution", 0, 0, 0.1f, false);
+	Renderer_->CreateAnimation("CautionToMain.bmp", "CautionToMain", 0, 72, 0.025f, false);
+	Renderer_->ChangeAnimation("Caution");
+
 	NextLevelOff();
 }
 
 void Intro::Update()
 {
+	if (true == GameEngineInput::GetInst()->IsDown("SpaceBar"))
+	{
+		Renderer_->ChangeAnimation("CautionToMain");
+	}
 }
 
 void Intro::Render()
@@ -34,6 +44,6 @@ void Intro::Render()
 
 bool Intro::IsCautionOut()
 {
-
-	return false;
+	bool Result = Renderer_->IsAnimationName("CautionToMain") && Renderer_->IsEndAnimation();
+	return Result;
 }

@@ -2,6 +2,7 @@
 #include <GameEngine/GameEngineActor.h>
 
 // Ό³Έν :
+class GameEngineRenderer;
 class Intro : public GameEngineActor
 {
 public:
@@ -24,6 +25,6 @@ protected:
 	void Render() override;
 
 private:
-
+	GameEngineRenderer* Renderer_;
 };
 
