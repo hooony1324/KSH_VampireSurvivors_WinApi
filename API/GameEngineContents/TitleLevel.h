@@ -23,9 +23,6 @@ protected:
 	void LevelChangeEnd(GameEngineLevel* _NextLevel) override;
 
 private:
-	//
-	//GameEngineActor* BG_;
-	//GameEngineActor* Logo_;
 	
 };
 

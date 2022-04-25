@@ -1,6 +1,4 @@
 #include "TitleLevel.h"
-#include "TitleBackGround.h"
-#include "TitleLogo.h"
 #include "GameEngine/GameEngine.h"
 #include "GameEngineBase/GameEngineInput.h"
 
@@ -24,9 +22,8 @@ void TitleLevel::Loading()
 
 void TitleLevel::LevelChangeStart(GameEngineLevel* _PrevLevel)
 {
-	//BG_ = CreateActor<TitleBackGround>(static_cast<int>(RENDER_ORDER::BACKGROUND));
-	//Logo_ = CreateActor<TitleLogo>(static_cast<int>(RENDER_ORDER::UI));
-
+	// BlinkingBG -> 시작하려면 아무키나 누르세요
+	// 
 	
 
 }

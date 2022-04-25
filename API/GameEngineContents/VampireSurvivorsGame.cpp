@@ -9,6 +9,7 @@
 #include <Windows.h>
 
 #include "GameInfo.h"
+#include "IntroLevel.h"
 #include "PlayLevel.h"
 #include "ResultLevel.h"
 #include "TitleLevel.h"
@@ -30,10 +31,11 @@ void VampireSurvivorsGame::GameInit()
 	ResourceLoad();
 
 	// Level을 맵 형태로 관리
+	CreateLevel<IntroLevel>("Intro");
 	CreateLevel<TitleLevel>("Title");
 	CreateLevel<PlayLevel>("Play");
 	CreateLevel<ResultLevel>("Result");
-	ChangeLevel("Title");
+	ChangeLevel("Intro");
 
 
 	// 키 세팅

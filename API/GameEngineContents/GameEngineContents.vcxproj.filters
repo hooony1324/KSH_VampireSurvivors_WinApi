@@ -80,9 +80,6 @@
     <ClCompile Include="Timer.cpp">
       <Filter>2.Play\Projectile\Timer</Filter>
     </ClCompile>
-    <ClCompile Include="Counter.cpp">
-      <Filter>2.Play\Projectile\Timer</Filter>
-    </ClCompile>
     <ClCompile Include="GameInfo.cpp">
       <Filter>Global</Filter>
     </ClCompile>
@@ -100,6 +97,15 @@
     </ClCompile>
     <ClCompile Include="LevelUpBox.cpp">
       <Filter>2.Play\Item</Filter>
+    </ClCompile>
+    <ClCompile Include="IntroLevel.cpp">
+      <Filter>0.Level</Filter>
+    </ClCompile>
+    <ClCompile Include="Intro.cpp">
+      <Filter>1.Title</Filter>
+    </ClCompile>
+    <ClCompile Include="Counter.cpp">
+      <Filter>Global</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -182,9 +188,6 @@
     <ClInclude Include="Timer.h">
       <Filter>2.Play\Projectile\Timer</Filter>
     </ClInclude>
-    <ClInclude Include="Counter.h">
-      <Filter>2.Play\Projectile\Timer</Filter>
-    </ClInclude>
     <ClInclude Include="GameInfo.h">
       <Filter>Global</Filter>
     </ClInclude>
@@ -207,6 +210,15 @@
       <Filter>2.Play\Item</Filter>
     </ClInclude>
     <ClInclude Include="Skill_Stat.h">
+      <Filter>Global</Filter>
+    </ClInclude>
+    <ClInclude Include="IntroLevel.h">
+      <Filter>0.Level</Filter>
+    </ClInclude>
+    <ClInclude Include="Intro.h">
+      <Filter>1.Title</Filter>
+    </ClInclude>
+    <ClInclude Include="Counter.h">
       <Filter>Global</Filter>
     </ClInclude>
   </ItemGroup>
