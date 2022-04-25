@@ -8,11 +8,8 @@
     <ClCompile Include="TitleLevel.cpp">
       <Filter>0.Level</Filter>
     </ClCompile>
-    <ClCompile Include="TitleLogo.cpp">
-      <Filter>1.Title</Filter>
-    </ClCompile>
     <ClCompile Include="TitleBackGround.cpp">
-      <Filter>1.Title</Filter>
+      <Filter>1.Intro~Title</Filter>
     </ClCompile>
     <ClCompile Include="Library.cpp">
       <Filter>2.Play\Map</Filter>
@@ -37,9 +34,6 @@
     </ClCompile>
     <ClCompile Include="Character.cpp">
       <Filter>Global</Filter>
-    </ClCompile>
-    <ClCompile Include="GameStartButton.cpp">
-      <Filter>1.Title</Filter>
     </ClCompile>
     <ClCompile Include="ExpBar.cpp">
       <Filter>2.Play\UI</Filter>
@@ -102,10 +96,19 @@
       <Filter>0.Level</Filter>
     </ClCompile>
     <ClCompile Include="Intro.cpp">
-      <Filter>1.Title</Filter>
+      <Filter>1.Intro~Title</Filter>
     </ClCompile>
     <ClCompile Include="Counter.cpp">
       <Filter>Global</Filter>
+    </ClCompile>
+    <ClCompile Include="GameStartMenu.cpp">
+      <Filter>1.Intro~Title\01.GameStartMenu</Filter>
+    </ClCompile>
+    <ClCompile Include="CharacterSelectMenu.cpp">
+      <Filter>1.Intro~Title\02.CharacterSelectMenu</Filter>
+    </ClCompile>
+    <ClCompile Include="MapSelectMenu.cpp">
+      <Filter>1.Intro~Title\03.MapSelectMenu</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -116,11 +119,8 @@
     <ClInclude Include="TitleLevel.h">
       <Filter>0.Level</Filter>
     </ClInclude>
-    <ClInclude Include="TitleLogo.h">
-      <Filter>1.Title</Filter>
-    </ClInclude>
     <ClInclude Include="TitleBackGround.h">
-      <Filter>1.Title</Filter>
+      <Filter>1.Intro~Title</Filter>
     </ClInclude>
     <ClInclude Include="Library.h">
       <Filter>2.Play\Map</Filter>
@@ -145,9 +145,6 @@
     </ClInclude>
     <ClInclude Include="Character.h">
       <Filter>Global</Filter>
-    </ClInclude>
-    <ClInclude Include="GameStartButton.h">
-      <Filter>1.Title</Filter>
     </ClInclude>
     <ClInclude Include="ExpBar.h">
       <Filter>2.Play\UI</Filter>
@@ -216,10 +213,19 @@
       <Filter>0.Level</Filter>
     </ClInclude>
     <ClInclude Include="Intro.h">
-      <Filter>1.Title</Filter>
+      <Filter>1.Intro~Title</Filter>
     </ClInclude>
     <ClInclude Include="Counter.h">
       <Filter>Global</Filter>
+    </ClInclude>
+    <ClInclude Include="GameStartMenu.h">
+      <Filter>1.Intro~Title\01.GameStartMenu</Filter>
+    </ClInclude>
+    <ClInclude Include="CharacterSelectMenu.h">
+      <Filter>1.Intro~Title\02.CharacterSelectMenu</Filter>
+    </ClInclude>
+    <ClInclude Include="MapSelectMenu.h">
+      <Filter>1.Intro~Title\03.MapSelectMenu</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -241,9 +247,6 @@
     <Filter Include="2.Play\Player">
       <UniqueIdentifier>{c18ab25f-cdab-4701-a8ed-9a10a3fd881c}</UniqueIdentifier>
     </Filter>
-    <Filter Include="1.Title">
-      <UniqueIdentifier>{a1af0295-5ec4-49ba-ba07-e0db2f9ac90f}</UniqueIdentifier>
-    </Filter>
     <Filter Include="2.Play\Projectile">
       <UniqueIdentifier>{62b75236-71c0-4b9e-89cd-ec9706f7d35c}</UniqueIdentifier>
     </Filter>
@@ -258,6 +261,18 @@
     </Filter>
     <Filter Include="2.Play\Projectile\Timer">
       <UniqueIdentifier>{3af3fe68-9b87-40ba-be00-8cc596b308c6}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="1.Intro~Title">
+      <UniqueIdentifier>{a1af0295-5ec4-49ba-ba07-e0db2f9ac90f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="1.Intro~Title\01.GameStartMenu">
+      <UniqueIdentifier>{0b064eda-b5ce-49c9-b037-e1fb26ea5023}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="1.Intro~Title\02.CharacterSelectMenu">
+      <UniqueIdentifier>{ac1309b4-93b3-42f9-859d-8b22113d362b}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="1.Intro~Title\03.MapSelectMenu">
+      <UniqueIdentifier>{0418617a-b430-42fc-80c5-b97bc3564272}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

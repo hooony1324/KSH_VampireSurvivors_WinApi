@@ -2,7 +2,7 @@
 #include <GameEngineBase/GameEngineWindow.h>
 #include <GameEngine/GameEngine.h>
 #include <GameEngine/GameEngineImageManager.h>
-#include <GameEngineBase/GameEngineDebug.h>
+#include <GameEngine/GameEngineRenderer.h>
 
 TitleBackGround::TitleBackGround() 
 {
@@ -14,10 +14,11 @@ TitleBackGround::~TitleBackGround()
 
 void TitleBackGround::Start()
 {
-	SetPosition(GameEngineWindow::GetScale().Half());
+	SetPosition(float4::ZERO);
 	SetScale(GameEngineWindow::GetScale());
 
-	CreateRenderer("MainBG.bmp");
+	GameEngineRenderer* Renderer = CreateRenderer("MainBG.bmp");
+	Renderer->SetPivot(GameEngineWindow::GetScale().Half());
 }
 
 void TitleBackGround::Render()
