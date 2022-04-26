@@ -7,8 +7,17 @@
 #include <GameEngineBase/GameEngineInput.h>
 #include <GameEngineBase/GameEngineTime.h>
 
+#include "GameInfo.h"
 #include "GameEnum.h"
 #include "Counter.h"
+
+// Buttons
+int ButtonFocused[3][3] =
+{
+	{-1, 0, -1},
+	{0, 0, 0},
+	{-1, 0, -1}
+};
 
 GameStartMenu::GameStartMenu() 
 {
@@ -25,13 +34,19 @@ void GameStartMenu::Start()
 	SetPosition(GameEngineWindow::GetScale().Half());
 	SetScale(GameEngineWindow::GetScale());
 
-	// 시작 상태
-	CurState_ = STATE::ANYKEY;
-
 	// 아무 키나 눌러주세요 블링크
 	PressAnyKey_ = CreateRenderer("PressAnyKey.bmp", static_cast<int>(RENDER_ORDER::UI));
 
-	
+	// 스타트 메뉴
+
+
+	// 캐릭터 선택 메뉴
+
+
+	// 맵 선택 메뉴
+
+
+	ChangeState(STATE::ANYKEY);
 }
 
 void GameStartMenu::Update()
@@ -109,12 +124,18 @@ void GameStartMenu::BlinkUpdate()
 {
 	if (true == GameEngineInput::GetInst()->IsPress("SpaceBar"))
 	{
+		BlinkEnd();
 		ChangeState(STATE::START);
 	}
-
-	BlinkAnyKey();
 }
 
+void GameStartMenu::BlinkEnd()
+{
+	PressAnyKey_->Off();
+	AnyKeyActivated_ = true;
+	BlinkOn_ = false;
+}
+// ANYKEY RENDER
 void GameStartMenu::BlinkAnyKey()
 {
 	if (true == BlinkCounter_.Start(GameEngineTime::GetDeltaTime()))
@@ -139,8 +160,9 @@ void GameStartMenu::RenderAnyKey()
 // START
 void GameStartMenu::ButtonsStart()
 {
+	ButtonFocused[1][1] = 1;
 
-
+	// 렌더러 On
 }
 
 void GameStartMenu::ButtonsUpdate()

@@ -10,6 +10,7 @@ class GameStartMenu : public GameEngineActor
 {
 	enum class STATE
 	{
+		NONE,
 		ANYKEY,
 		START,
 		SELECT_CHARACTER,
@@ -42,6 +43,7 @@ private:
 	// ANYKEY
 	void BlinkStart();
 	void BlinkUpdate();
+	void BlinkEnd();
 
 	void BlinkAnyKey();
 	void RenderAnyKey();
@@ -69,7 +71,7 @@ private:
 
 	// START
 	GameEngineRenderer* Buttons_;
-	int* ButtonFocused_;
 
+	
 };
 
