@@ -26,5 +26,6 @@ protected:
 
 private:
 	GameEngineRenderer* Renderer_;
+	bool IntroSoundPlay_;
 };
 

@@ -5,6 +5,8 @@
 #include <GameEngine/GameEngineRenderer.h>
 #include <GameEngineBase/GameEngineTime.h>
 #include <GameEngineBase/GameEngineInput.h>
+#include <GameEngineBase/GameEngineSound.h>
+
 
 #include "Counter.h"
 
@@ -34,7 +36,16 @@ void Intro::Update()
 	if (true == GameEngineInput::GetInst()->IsDown("SpaceBar"))
 	{
 		Renderer_->ChangeAnimation("CautionToMain");
+		IntroSoundPlay_ = true;
 	}
+	
+	
+	if (true == IntroSoundPlay_)
+	{
+		GameEngineSound::SoundPlayOneShot("Intro.mp3", 0);
+		IntroSoundPlay_ = false;
+	}
+
 }
 
 void Intro::Render()

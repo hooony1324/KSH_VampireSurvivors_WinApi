@@ -6,6 +6,7 @@
 #include <GameEngine/GameEngine.h>
 #include <GameEngine/GameEngineImageManager.h>
 #include <GameEngine/GameEngineRenderer.h>
+#include <GameEngineBase/GameEngineSound.h>
 
 #include "GameEnum.h"
 #include "Counter.h"
@@ -125,8 +126,6 @@ void GameStartMenu::Render()
 		BlinkAnyKey();
 		RenderAnyKey();
 	}
-
-
 
 
 }
@@ -268,6 +267,7 @@ void GameStartMenu::ButtonsUpdate()
 		if (ButtonPos{ 0, 1 } == CurrentButtonPos)
 		{
 			// StartButton 누름
+			GameEngineSound::SoundPlayOneShot("ButtonDown.mp3", 0);
 			ButtonsEnd();
 			CurButton = nullptr;
 			ChangeState(STATE::SELECT_CHARACTER);
@@ -345,10 +345,6 @@ void GameStartMenu::SelectCharacterStart()
 
 void GameStartMenu::SelectCharacterUpdate()
 {
-
-	//Characters_[CurCharacterIndex_]->SetImage("CharacterButtonFocused_" + CharacterNameList[CurCharacterIndex_] + ".bmp");
-	//CurCharacterInfoAndButton_->SetImage("CharacterInfoAndButton_" + CharacterNameList[CurCharacterIndex_] + ".bmp");
-
 	if (true == CharacterFocusedOn[CurCharacterIndex_])
 	{
 		Characters_[CurCharacterIndex_]->SetImage("CharacterButtonFocusedOn_" + CharacterNameList[CurCharacterIndex_] + ".bmp");
@@ -375,11 +371,13 @@ void GameStartMenu::SelectCharacterUpdate()
 		// 포커스 상태 false 면 true로 바꾸고 
 		if (false == CharacterFocusedOn[CurCharacterIndex_])
 		{
+			GameEngineSound::SoundPlayOneShot("ButtonDown.mp3", 0);
 			CharacterFocusedOn[CurCharacterIndex_] = true;
 		}
 		else
 		{
 			// 맵 선택으로 넘어감
+			GameEngineSound::SoundPlayOneShot("ButtonDown.mp3", 0);
 			ChangeState(STATE::SELECT_MAP);
 			GameInfo::SetCharacter(static_cast<CharacterType>(CurCharacterIndex_));
 			SelectCharacterEnd();
