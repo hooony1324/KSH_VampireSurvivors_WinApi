@@ -64,12 +64,14 @@ private:
 	void ButtonsUpdate();
 	void ButtonsEnd();
 
-	bool SetNextButton(int _y, int _x);
+	bool FocusNextButton(int _y, int _x);
 
 	// SELECT_CHARACTER
 	void SelectCharacterStart();
 	void SelectCharacterUpdate();
 	void SelectCharacterEnd();
+
+	void FocusNextCharacter(int _x);
 
 	// SELECT_MAP
 	void SelectMapStart();
@@ -90,7 +92,6 @@ private:
 	GameEngineRenderer* ArrowL_;
 
 	// START
-	//std::vector<std::vector<GameEngineRenderer*>> Buttons_;
 	GameEngineRenderer* ButtonStart_;
 	GameEngineRenderer* ButtonPowerUp_;
 	GameEngineRenderer* ButtonChallenge_;
@@ -99,13 +100,12 @@ private:
 	
 	
 	// SELECT_CHARACTER
-	//std::vector<std::vector<GameEngineRenderer*>> Characters_;
-	GameEngineRenderer* CharacterSelectUI_;
-	GameEngineRenderer* CharacterImelda_;
-	GameEngineRenderer* CharacterCavallo_;
-	GameEngineRenderer* CharacterPoe_;
+	GameEngineRenderer* CharacterSelectBackGround_;
 	GameEngineRenderer* Characters_[static_cast<int>(CharacterType::MAX)];
-	
+	GameEngineRenderer* CurCharacterInfoAndButton_;
+	int CurCharacterIndex_;
+
+		
 
 };
 

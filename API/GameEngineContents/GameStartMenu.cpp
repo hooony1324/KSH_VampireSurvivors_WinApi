@@ -19,6 +19,9 @@ GameEngineRenderer* CurButton = nullptr;
 ButtonPos CurrentButtonPos{0, 0};
 
 // SELECT_CHARACTER
+const int CharacterNum = static_cast<int>(CharacterType::MAX);
+std::vector<GameEngineRenderer*> Characters(CharacterNum, nullptr);
+bool CharacterFocusedOn[CharacterNum] = { false, };		// 한번 더 선택하면 활성화시키기 위함
 
 GameStartMenu::GameStartMenu() 
 {
@@ -38,7 +41,7 @@ void GameStartMenu::Start()
 	// 아무 키나 눌러주세요 블링크
 	PressAnyKey_ = CreateRenderer("PressAnyKey.bmp", static_cast<int>(RENDER_ORDER::UI));
 
-	// 스타트 메뉴
+	// START 메뉴
 	ButtonStart_ = CreateRenderer("ButtonStart.bmp", static_cast<int>(RENDER_ORDER::UI));
 	ButtonPowerUp_ = CreateRenderer("ButtonPowerUp.bmp", static_cast<int>(RENDER_ORDER::UI));
 	ButtonChallenge_ = CreateRenderer("ButtonChallenge.bmp", static_cast<int>(RENDER_ORDER::UI));
@@ -75,13 +78,16 @@ void GameStartMenu::Start()
 	ArrowR_->ChangeAnimation("ArrowL");
 	ArrowR_->Off();
 
-	// 캐릭터 선택 메뉴
-	CharacterSelectUI_ = CreateRenderer("CharacterSelectUI.bmp", static_cast<int>(RENDER_ORDER::UI));
-	CharacterSelectUI_->SetPivot({ 0, 38 });
-	CharacterSelectUI_->Off();
+	// SELECT_CHARACTER 메뉴
+	CharacterSelectBackGround_ = CreateRenderer("CharacterSelectUI.bmp", static_cast<int>(RENDER_ORDER::UI));
+	CharacterSelectBackGround_->SetPivot({ 0, 38 });
+	CharacterSelectBackGround_->Off();
 	
+	// 최초위치
+	CurCharacterIndex_ = 0;
+
 	// - 캐릭터 버튼 위치 조정
-	float4 TopLeft = float4{ -220, -178 };
+	float4 TopLeft = float4{ -215, -178 };
 
 	for (int i = 0; i < static_cast<int>(CharacterType::MAX); i++)
 	{
@@ -91,9 +97,17 @@ void GameStartMenu::Start()
 		Characters_[i]->SetPivot(TopLeft + float4{ (Characters_[i]->GetScale().x * i) + (18 * i), 0 });
 	}
 
-	// 맵 선택 메뉴
+	// - 캐릭터 설명 UI
+	TopLeft = { 1, 325 };
+	CurCharacterInfoAndButton_ = CreateRenderer("CharacterButton_" + CharacterNameList[CurCharacterIndex_] + ".bmp", static_cast<int>(RENDER_ORDER::UI));
+	CurCharacterInfoAndButton_->SetPivot(TopLeft);
+	CurCharacterInfoAndButton_->Off();
+
+	// SELECT_MAP 메뉴
 
 
+
+	// 최초 상태
 	ChangeState(STATE::ANYKEY);
 }
 
@@ -106,8 +120,12 @@ void GameStartMenu::Update()
 
 void GameStartMenu::Render()
 {
-	BlinkAnyKey();
-	RenderAnyKey();
+	if (true == AnyKeyActivated_)
+	{
+		BlinkAnyKey();
+		RenderAnyKey();
+	}
+
 
 
 
@@ -190,11 +208,6 @@ void GameStartMenu::BlinkEnd()
 // ANYKEY RENDER
 void GameStartMenu::BlinkAnyKey()
 {
-	if (false == AnyKeyActivated_)
-	{
-		return;
-	}
-
 	if (true == BlinkCounter_.Start(GameEngineTime::GetDeltaTime()))
 	{
 		BlinkOn_ = !BlinkOn_;
@@ -234,19 +247,19 @@ void GameStartMenu::ButtonsUpdate()
 	// 입력
 	if (true == GameEngineInput::GetInst()->IsDown("MoveLeft"))
 	{
-		SetNextButton(0, -1);
+		FocusNextButton(0, -1);
 	}
 	if (true == GameEngineInput::GetInst()->IsDown("MoveRight"))
 	{
-		SetNextButton(0, 1);
+		FocusNextButton(0, 1);
 	}
 	if (true == GameEngineInput::GetInst()->IsDown("MoveUp"))
 	{
-		SetNextButton(-1, 0);
+		FocusNextButton(-1, 0);
 	}
 	if (true == GameEngineInput::GetInst()->IsDown("MoveDown"))
 	{
-		SetNextButton(1, 0);
+		FocusNextButton(1, 0);
 	}
 
 	if (true == GameEngineInput::GetInst()->IsDown("SpaceBar"))
@@ -289,7 +302,7 @@ void GameStartMenu::ButtonsEnd()
 	CurrentButtonPos = { 0, 1 };
 }
 
-bool GameStartMenu::SetNextButton(int _y, int _x)
+bool GameStartMenu::FocusNextButton(int _y, int _x)
 {
 	int NewY = CurrentButtonPos.y + _y;
 	int NewX = CurrentButtonPos.x + _x;
@@ -314,27 +327,58 @@ bool GameStartMenu::SetNextButton(int _y, int _x)
 // SELECT_CHARACTER
 void GameStartMenu::SelectCharacterStart()
 {
-	CharacterSelectUI_->On();
+	CharacterSelectBackGround_->On();
 
 	for (int i = 0; i < static_cast<int>(CharacterType::MAX); i++)
 	{
 		Characters_[i]->On();
 	}
+
+	CurCharacterInfoAndButton_->On();
 }
 
 void GameStartMenu::SelectCharacterUpdate()
 {
 
+	Characters_[CurCharacterIndex_]->SetImage("CharacterButtonFocused_" + CharacterNameList[CurCharacterIndex_] + ".bmp");
+	CurCharacterInfoAndButton_->SetImage("CharacterInfoAndButton_" + CharacterNameList[CurCharacterIndex_] + ".bmp");
+
+	// 입력
+	if (true == GameEngineInput::GetInst()->IsDown("MoveLeft"))
+	{
+		FocusNextCharacter(-1);
+	}
+	if (true == GameEngineInput::GetInst()->IsDown("MoveRight"))
+	{
+		FocusNextCharacter(1);
+	}
+
 }
 
 void GameStartMenu::SelectCharacterEnd()
 {
-	CharacterSelectUI_->Off();
+	CharacterSelectBackGround_->Off();
 
 	for (int i = 0; i < static_cast<int>(CharacterType::MAX); i++)
 	{
 		Characters_[i]->Off();
 	}
+}
+
+void GameStartMenu::FocusNextCharacter(int _x)
+{
+	int NextFocusPos = CurCharacterIndex_ + _x;
+	if (0 > NextFocusPos || static_cast<int>(CharacterType::MAX) <= NextFocusPos)
+	{
+		return;
+	}
+
+	// 원래이미지로 돌려놓고
+	Characters_[CurCharacterIndex_]->SetImage("CharacterButton_" + CharacterNameList[CurCharacterIndex_] + ".bmp");
+
+	// 인덱스 변경
+	CurCharacterIndex_ = NextFocusPos;
+
 }
 
 // SELECT_MAP
