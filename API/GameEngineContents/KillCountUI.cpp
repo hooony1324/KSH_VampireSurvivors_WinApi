@@ -22,7 +22,7 @@ void KillCountUI::Start()
 	GameEngineRenderer* Renderer_ = CreateRenderer("SkullToken.bmp");
 	Renderer_->CameraEffectOff();
 
-	TextFont_.Load("../Resources/UI/KO.ttf");
+	TextFont_.Load("../Resources/PlayUI/KO.ttf");
 
 	NextLevelOff();
 }

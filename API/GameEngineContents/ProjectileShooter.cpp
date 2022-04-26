@@ -30,12 +30,13 @@ void ProjectileShooter::Start()
 
 void ProjectileShooter::Update()
 {
-	
+	UpdateSkillStat();
+
 }
 
 void ProjectileShooter::SetShooter(SkillType _SkillType, float _WaitTime)
 {
-	SkillLevel_ = GameInfo::GetPlayerInfo()->SkillLevelInfo_[static_cast<int>(SkillType_)];
+	SkillLevel_ = GameInfo::GetPlayerInfo()->SkillLevelInfo_[static_cast<int>(_SkillType)];
 
 	//탄수		인터벌		쿨타임		데미지		속도			지속시간 
 	SkillType_ = _SkillType;
@@ -112,14 +113,16 @@ void ProjectileShooter::Shooting(float _DeltaTime, float4 _PlayerPos, float4 _Mo
 	return;
 }
 
-void ProjectileShooter::SetSkillStat(Projectile* _Bullet)
+void ProjectileShooter::UpdateSkillStat()
 {
-	//탄수		인터벌		쿨타임		데미지		속도			지속시간 
 	SkillLevel_ = GameInfo::GetPlayerInfo()->SkillLevelInfo_[static_cast<int>(SkillType_)];
 	InitBulletCount_ = static_cast<int>(STAT_SHOOTER[static_cast<int>(SkillType_)][SkillLevel_][0]);
 	InitInterval_ = STAT_SHOOTER[static_cast<int>(SkillType_)][SkillLevel_][1];
 	InitCoolTime_ = STAT_SHOOTER[static_cast<int>(SkillType_)][SkillLevel_][2];
+}
 
+void ProjectileShooter::SetBulletStat(Projectile* _Bullet)
+{
 	_Bullet->SetDamage(STAT_SHOOTER[static_cast<int>(SkillType_)][SkillLevel_][3]);
 	_Bullet->SetSpeed(STAT_SHOOTER[static_cast<int>(SkillType_)][SkillLevel_][4]);
 	_Bullet->SetDuration(STAT_SHOOTER[static_cast<int>(SkillType_)][SkillLevel_][5]);
@@ -129,7 +132,7 @@ void ProjectileShooter::ShootKnife()
 {
 	Projectile* Bullet = GetLevel()->CreateActor<Projectile>(static_cast<int>(ACTOR_ORDER::PLAYER), "Bullet");
 	Bullet->SetType(BulletType::KNIFE);
-	SetSkillStat(Bullet);
+	SetBulletStat(Bullet);
 	float4 RandomPos = float4{ static_cast<float>(Random.RandomInt(PlayerPos_.ix() - 25, PlayerPos_.ix() + 25)), static_cast<float>(Random.RandomInt(PlayerPos_.iy() - 25, PlayerPos_.iy() + 25))};
 	Bullet->SetPosition(RandomPos);
 	Bullet->SetDir(PlayerMoveDir_);
@@ -144,7 +147,7 @@ void ProjectileShooter::ShootMagic()
 {
 	Projectile* Bullet = GetLevel()->CreateActor<Projectile>(static_cast<int>(ACTOR_ORDER::PLAYER), "Bullet");
 	Bullet->SetType(BulletType::FLAME_BLUE);
-	SetSkillStat(Bullet);
+	SetBulletStat(Bullet);
 	Bullet->SetDir(Vector2D::GetDirection(PlayerPos_, MonsterPos_));
 	Bullet->SetPosition(PlayerPos_);
 
@@ -163,7 +166,7 @@ void ProjectileShooter::ShootFire()
 	{
 		Projectile* Bullet = GetLevel()->CreateActor<Projectile>(static_cast<int>(ACTOR_ORDER::PLAYER), "Bullet");
 		Bullet->SetType(BulletType::FLAME_RED);
-		SetSkillStat(Bullet);
+		SetBulletStat(Bullet);
 		float4 RotateDir;
 		RotateDir = float4::VectorRotationToDegreeZ(FireShootDir, 15 * static_cast<float>(i));
 		RotateDir.Normal2D();

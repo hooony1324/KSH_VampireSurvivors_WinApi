@@ -39,7 +39,8 @@ public:
 protected:
 
 private:
-	void SetSkillStat(Projectile* _Bullet);
+	void UpdateSkillStat();
+	void SetBulletStat(Projectile* _Bullet);
 
 	void ShootKnife();
 	void ShootMagic();

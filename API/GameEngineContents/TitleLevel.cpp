@@ -34,16 +34,10 @@ void TitleLevel::LevelChangeStart(GameEngineLevel* _PrevLevel)
 
 void TitleLevel::Update()
 {
-	if (true == GameEngineInput::GetInst()->IsDown("ChangeLevelNext"))
-	{
-		GameEngine::GetInst().ChangeLevel("Play");
 
-	}
 }
 
 void TitleLevel::LevelChangeEnd(GameEngineLevel* _NextLevel)
 {
 
-	//PlayerInfo::GetInst()->ChangeCharacter(CharacterType::Cavallo);
-	GameInfo::SetCharacter(CharacterType::Cavallo);
 }

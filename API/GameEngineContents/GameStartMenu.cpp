@@ -335,13 +335,30 @@ void GameStartMenu::SelectCharacterStart()
 	}
 
 	CurCharacterInfoAndButton_->On();
+
+	for (int i = 0; i < static_cast<int>(CharacterType::MAX); i++)
+	{
+		CharacterFocusedOn[i] = false;
+	}
+
 }
 
 void GameStartMenu::SelectCharacterUpdate()
 {
 
-	Characters_[CurCharacterIndex_]->SetImage("CharacterButtonFocused_" + CharacterNameList[CurCharacterIndex_] + ".bmp");
-	CurCharacterInfoAndButton_->SetImage("CharacterInfoAndButton_" + CharacterNameList[CurCharacterIndex_] + ".bmp");
+	//Characters_[CurCharacterIndex_]->SetImage("CharacterButtonFocused_" + CharacterNameList[CurCharacterIndex_] + ".bmp");
+	//CurCharacterInfoAndButton_->SetImage("CharacterInfoAndButton_" + CharacterNameList[CurCharacterIndex_] + ".bmp");
+
+	if (true == CharacterFocusedOn[CurCharacterIndex_])
+	{
+		Characters_[CurCharacterIndex_]->SetImage("CharacterButtonFocusedOn_" + CharacterNameList[CurCharacterIndex_] + ".bmp");
+		CurCharacterInfoAndButton_->SetImage("CharacterInfoAndButtonOn_" + CharacterNameList[CurCharacterIndex_] + ".bmp");
+	}
+	else
+	{
+		Characters_[CurCharacterIndex_]->SetImage("CharacterButtonFocused_" + CharacterNameList[CurCharacterIndex_] + ".bmp");
+		CurCharacterInfoAndButton_->SetImage("CharacterInfoAndButton_" + CharacterNameList[CurCharacterIndex_] + ".bmp");
+	}
 
 	// 입력
 	if (true == GameEngineInput::GetInst()->IsDown("MoveLeft"))
@@ -351,6 +368,23 @@ void GameStartMenu::SelectCharacterUpdate()
 	if (true == GameEngineInput::GetInst()->IsDown("MoveRight"))
 	{
 		FocusNextCharacter(1);
+	}
+
+	if (true == GameEngineInput::GetInst()->IsDown("SpaceBar"))
+	{
+		// 포커스 상태 false 면 true로 바꾸고 
+		if (false == CharacterFocusedOn[CurCharacterIndex_])
+		{
+			CharacterFocusedOn[CurCharacterIndex_] = true;
+		}
+		else
+		{
+			// 맵 선택으로 넘어감
+			ChangeState(STATE::SELECT_MAP);
+			GameInfo::SetCharacter(static_cast<CharacterType>(CurCharacterIndex_));
+			SelectCharacterEnd();
+			GameEngine::GetInst().ChangeLevel("Play");
+		}
 	}
 
 }
@@ -363,6 +397,8 @@ void GameStartMenu::SelectCharacterEnd()
 	{
 		Characters_[i]->Off();
 	}
+
+	CurCharacterInfoAndButton_->Off();
 }
 
 void GameStartMenu::FocusNextCharacter(int _x)
@@ -375,6 +411,12 @@ void GameStartMenu::FocusNextCharacter(int _x)
 
 	// 원래이미지로 돌려놓고
 	Characters_[CurCharacterIndex_]->SetImage("CharacterButton_" + CharacterNameList[CurCharacterIndex_] + ".bmp");
+
+	// 만약 Focused상태였다면 돌려놓고
+	if (true == CharacterFocusedOn[CurCharacterIndex_])
+	{
+		CharacterFocusedOn[CurCharacterIndex_] = false;
+	}
 
 	// 인덱스 변경
 	CurCharacterIndex_ = NextFocusPos;

@@ -30,6 +30,8 @@ void CoinUI::Start()
 	CoinRenderer_->SetPivot({25, 16});
 	
 	NextLevelOff();
+
+	TextFont_.Load("../Resources/PlayUI/KO.ttf");
 }
 
 void CoinUI::Update()

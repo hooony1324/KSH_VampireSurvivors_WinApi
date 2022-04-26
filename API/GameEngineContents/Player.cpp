@@ -45,15 +45,13 @@ Player::~Player()
 
 void Player::Start()
 {
-	GameInfo::SetCharacter(CharacterType::Cavallo);	// 디버그용도 : 플레이 레벨에서 시작하기 때문에 설정
-	GameInfo::SetPlayerInfo();						// 선택한 캐릭터정보를 플레이어정보로 세팅
-
 	SetPosition({ 1710, 770 });
 	SetScale({ 100, 100 });
 
 	// 플레이어 이미지, 애니메이션 관련 설정
 
 	CharacterStat_ = GameInfo::GetCharacter();
+	GameInfo::SetPlayerInfo();
 
 	PlayerRenderer_ = CreateRenderer();
 	PlayerRenderer_->CreateAnimation(CharacterStat_->WalkRightAnim_, "Idle_Right", 0, 0, 0.1f, false);
@@ -348,6 +346,7 @@ void Player::Shooting()
 	float4 MonsterPos = ShootableEnemeyCheck();
 
 	int* SkillLevelInfo = GameInfo::GetPlayerInfo()->SkillLevelInfo_;
+	int MagicLevel = GameInfo::GetPlayerInfo()->SkillLevelInfo_[1];
 
 	if (0 < SkillLevelInfo[static_cast<int>(SkillType::KNIFE)])
 	{
