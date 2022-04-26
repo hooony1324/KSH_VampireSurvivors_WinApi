@@ -3,6 +3,16 @@
 #include <vector>
 #include "Counter.h"
 
+struct ButtonPos
+{
+	int y = 0;
+	int x = 0;
+
+	bool operator==(const ButtonPos& _Other)
+	{
+		return y == _Other.y && x == _Other.x;
+	}
+};
 
 // Ό³Έν :
 class GameEngineRenderer;
@@ -51,6 +61,9 @@ private:
 	// START
 	void ButtonsStart();
 	void ButtonsUpdate();
+	void ButtonsEnd();
+
+	bool SetNextButton(int _y, int _x);
 
 	// SELECT_CHARACTER
 	void SelectCharacterStart();
@@ -69,8 +82,21 @@ private:
 	bool BlinkOn_;
 	Counter BlinkCounter_;
 
+	// ARROW
+	GameEngineRenderer* ArrowR_;
+	GameEngineRenderer* ArrowL_;
+
 	// START
-	GameEngineRenderer* Buttons_;
+	//std::vector<std::vector<GameEngineRenderer*>> Buttons_;
+	GameEngineRenderer* ButtonStart_;
+	GameEngineRenderer* ButtonPowerUp_;
+	GameEngineRenderer* ButtonChallenge_;
+	GameEngineRenderer* ButtonCollection_;
+	GameEngineRenderer* ButtonCrew_;
+	
+	
+	// 
+
 
 	
 };

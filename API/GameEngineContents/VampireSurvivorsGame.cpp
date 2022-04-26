@@ -130,8 +130,8 @@ void VampireSurvivorsGame::ResourceLoad()
 	GameEngineImageManager::GetInst()->Find("Mummy_WalkRight.bmp")->Cut({ 140, 140 });
 	GameEngineImageManager::GetInst()->Find("Mummy_Dead.bmp")->Cut({ 140, 140 });
 
-	GameEngineImageManager::GetInst()->Find("Arrow_L.bmp")->Cut({ 20, 20 });
-	GameEngineImageManager::GetInst()->Find("Arrow_R.bmp")->Cut({ 20, 20 });
+	GameEngineImageManager::GetInst()->Find("Arrow_L.bmp")->Cut({ 40, 40 });
+	GameEngineImageManager::GetInst()->Find("Arrow_R.bmp")->Cut({ 40, 40 });
 
 
 	// 사운드 리소스
