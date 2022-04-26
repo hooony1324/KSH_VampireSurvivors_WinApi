@@ -59,9 +59,6 @@
     <ClCompile Include="Player_State.cpp">
       <Filter>2.Play\Player</Filter>
     </ClCompile>
-    <ClCompile Include="EnemyController.cpp">
-      <Filter>2.Play\Map</Filter>
-    </ClCompile>
     <ClCompile Include="Vector2D.cpp">
       <Filter>Global</Filter>
     </ClCompile>
@@ -103,6 +100,9 @@
     </ClCompile>
     <ClCompile Include="GameStartMenu.cpp">
       <Filter>1.Intro~Title</Filter>
+    </ClCompile>
+    <ClCompile Include="EnemyController.cpp">
+      <Filter>2.Play\Enemies</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -161,9 +161,6 @@
     <ClInclude Include="KillCountUI.h">
       <Filter>2.Play\UI</Filter>
     </ClInclude>
-    <ClInclude Include="EnemyController.h">
-      <Filter>2.Play\Map</Filter>
-    </ClInclude>
     <ClInclude Include="Vector2D.h">
       <Filter>Global</Filter>
     </ClInclude>
@@ -214,6 +211,9 @@
     </ClInclude>
     <ClInclude Include="GameStartMenu.h">
       <Filter>1.Intro~Title</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyController.h">
+      <Filter>2.Play\Enemies</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

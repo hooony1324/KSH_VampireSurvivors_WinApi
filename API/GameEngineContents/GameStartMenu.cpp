@@ -1,25 +1,24 @@
 #include "GameStartMenu.h"
-#include <GameEngine/GameEngine.h>
 #include <GameEngineBase/GameEngineWindow.h>
-#include <GameEngine/GameEngineImageManager.h>
-#include <GameEngine/GameEngineRenderer.h>
-#include <GameEngineBase/GameEngineDebug.h>
 #include <GameEngineBase/GameEngineInput.h>
 #include <GameEngineBase/GameEngineTime.h>
+#include <GameEngineBase/GameEngineMath.h>
+#include <GameEngine/GameEngine.h>
+#include <GameEngine/GameEngineImageManager.h>
+#include <GameEngine/GameEngineRenderer.h>
 
-#include "GameInfo.h"
 #include "GameEnum.h"
 #include "Counter.h"
 
 #include <vector>
+#include <string>
 
-// Focus Direction
-
-// Buttons
+// START
 std::vector<std::vector<GameEngineRenderer*>> Buttons(3, std::vector<GameEngineRenderer*>(3, nullptr));
 GameEngineRenderer* CurButton = nullptr;
-
 ButtonPos CurrentButtonPos{0, 0};
+
+// SELECT_CHARACTER
 
 GameStartMenu::GameStartMenu() 
 {
@@ -77,7 +76,20 @@ void GameStartMenu::Start()
 	ArrowR_->Off();
 
 	// 캐릭터 선택 메뉴
+	CharacterSelectUI_ = CreateRenderer("CharacterSelectUI.bmp", static_cast<int>(RENDER_ORDER::UI));
+	CharacterSelectUI_->SetPivot({ 0, 38 });
+	CharacterSelectUI_->Off();
+	
+	// - 캐릭터 버튼 위치 조정
+	float4 TopLeft = float4{ -220, -178 };
 
+	for (int i = 0; i < static_cast<int>(CharacterType::MAX); i++)
+	{
+		std::string Name = CharacterNameList[i];
+		Characters_[i] = CreateRenderer("CharacterButton_"+ Name + ".bmp", static_cast<int>(RENDER_ORDER::UI));
+		Characters_[i]->Off();
+		Characters_[i]->SetPivot(TopLeft + float4{ (Characters_[i]->GetScale().x * i) + (18 * i), 0 });
+	}
 
 	// 맵 선택 메뉴
 
@@ -302,12 +314,27 @@ bool GameStartMenu::SetNextButton(int _y, int _x)
 // SELECT_CHARACTER
 void GameStartMenu::SelectCharacterStart()
 {
+	CharacterSelectUI_->On();
 
+	for (int i = 0; i < static_cast<int>(CharacterType::MAX); i++)
+	{
+		Characters_[i]->On();
+	}
 }
 
 void GameStartMenu::SelectCharacterUpdate()
 {
 
+}
+
+void GameStartMenu::SelectCharacterEnd()
+{
+	CharacterSelectUI_->Off();
+
+	for (int i = 0; i < static_cast<int>(CharacterType::MAX); i++)
+	{
+		Characters_[i]->Off();
+	}
 }
 
 // SELECT_MAP
@@ -319,4 +346,8 @@ void GameStartMenu::SelectMapStart()
 void GameStartMenu::SelectMapUpdate()
 {
 
+}
+
+void GameStartMenu::SelectMapEnd()
+{
 }

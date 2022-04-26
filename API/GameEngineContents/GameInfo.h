@@ -130,3 +130,10 @@ static std::string SkillOrder[] =
 //"Holywater", "FiveStar", "Bracer", "Emptytome",
 //"Spinach", "Spellbinder", "Hollowheart", "Clover",
 //"Pummarola", "Candle", "Wing"
+
+
+// Character.h 의 CharacterType과 동일한 순서 유지
+static std::string CharacterNameList[] =
+{
+	"Imelda", "Cavallo", "Poe"
+};

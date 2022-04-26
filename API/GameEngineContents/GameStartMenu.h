@@ -2,6 +2,7 @@
 #include <GameEngine/GameEngineActor.h>
 #include <vector>
 #include "Counter.h"
+#include "GameInfo.h"
 
 struct ButtonPos
 {
@@ -68,10 +69,12 @@ private:
 	// SELECT_CHARACTER
 	void SelectCharacterStart();
 	void SelectCharacterUpdate();
+	void SelectCharacterEnd();
 
 	// SELECT_MAP
 	void SelectMapStart();
 	void SelectMapUpdate();
+	void SelectMapEnd();
 
 private:
 	STATE CurState_;
@@ -95,9 +98,14 @@ private:
 	GameEngineRenderer* ButtonCrew_;
 	
 	
-	// 
-
-
+	// SELECT_CHARACTER
+	//std::vector<std::vector<GameEngineRenderer*>> Characters_;
+	GameEngineRenderer* CharacterSelectUI_;
+	GameEngineRenderer* CharacterImelda_;
+	GameEngineRenderer* CharacterCavallo_;
+	GameEngineRenderer* CharacterPoe_;
+	GameEngineRenderer* Characters_[static_cast<int>(CharacterType::MAX)];
 	
+
 };
 

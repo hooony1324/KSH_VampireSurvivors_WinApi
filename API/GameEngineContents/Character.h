@@ -6,9 +6,9 @@
 
 enum class CharacterType
 {
-	Old = 0,
-	Cavallo,
 	Imelda,
+	Cavallo,
+	Old,
 	MAX
 };
 
