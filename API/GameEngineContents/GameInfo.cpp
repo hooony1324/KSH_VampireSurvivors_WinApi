@@ -57,6 +57,14 @@ void GameInfo::SetPlayerInfo()
 	// 초기화
 	PlayerInfo_->ActiveSkillSlot_.clear();
 	PlayerInfo_->PassiveSkillSlot_.clear();
+
+	for (int i = 0; i < static_cast<int>(SkillType::MAX); i++)
+	{
+		PlayerInfo_->SkillLevelInfo_[i] = 0;
+	}
+
+
+	// 기본 스킬 입력
 	PlayerInfo_->ActiveSkillSlot_.push_back(Character_->BaseSkill_);
 	PlayerInfo_->SkillLevelInfo_[static_cast<int>(Character_->BaseSkill_)] = 1;
 

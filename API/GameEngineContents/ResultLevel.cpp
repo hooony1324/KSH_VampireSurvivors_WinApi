@@ -4,6 +4,7 @@
 
 #include "GameEnum.h"
 #include "ResultBoard.h"
+#include "GameInfo.h"
 
 
 ResultLevel::ResultLevel() 

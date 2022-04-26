@@ -101,25 +101,11 @@ void PlayLevel::LevelChangeStart(GameEngineLevel* _PrevLevel)
 
 void PlayLevel::LevelChangeEnd(GameEngineLevel* _NextLevel)
 {
-	//ExpUI_->Death();
-	//WeaponUI_->Death();
-
-	//TimerUI* Ptr = dynamic_cast<TimerUI*>(TimerUI_);
-	//Ptr->KillDigits();
-	//TimerUI_->Death();
-
-	//CoinUI_->Death();
-	//LevelUI_->Death();
-	//KillCountUI_->Death();
-	//PauseUI_->Death();
-
-	//Player_->Death();
-	//Map_->Death();
-	//EnemyController_->Death();
+	// 캐릭터 정보 정리
 
 
+	// BGM 종료
 	//BgmPlayer.Stop();
-
 }
 
 void PlayLevel::Update()
