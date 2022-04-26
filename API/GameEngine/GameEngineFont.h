@@ -19,7 +19,8 @@ public:
 	GameEngineFont& operator=(GameEngineFont&& _Other) noexcept = delete;
 
 	bool Load(const std::string& _Path);
-	void Draw(const std::string& _Text, float4 _Postion, float _Size, float _Weight);
+	void Draw(const std::string& _Text, float4 _Postion, int TextColor, float _Size, float _Weight);
+	void Draw(const std::wstring& _Text, float4 _Postion, int TextColor, float _Size, float _Weight);
 
 protected:
 

@@ -49,5 +49,5 @@ void LevelUI::Render()
 	int StrLength = static_cast<int>(Level.length()) - 1;
 	int Space = 12 * StrLength;
 
-	TextFont_.Draw("LV" + Level, { GameEngineWindow::GetScale().x - 45 - Space, 4.0f}, 23, 800);
+	TextFont_.Draw("LV" + Level, { GameEngineWindow::GetScale().x - 45 - Space, 4.0f}, RGB(255, 255, 255), 23, 800);
 }

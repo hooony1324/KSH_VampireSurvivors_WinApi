@@ -44,13 +44,8 @@ public:
 		return Inst_->DeltaTime_ * Inst_->GetTimeScale(_Key);
 	}
 
-	void SetTimeScale(int _Key, float _TimeScale) 
+	void SetTimeScale(int _Key, float _TimeScale)
 	{
-		if (TimeScale_.end() == TimeScale_.find(_Key))
-		{
-			_TimeScale = 1.0f;
-		}
-
 		TimeScale_[_Key] = _TimeScale;
 	}
 

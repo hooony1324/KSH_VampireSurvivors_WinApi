@@ -47,5 +47,5 @@ void CoinUI::Render()
 	int StrLength = static_cast<int>(Coin.length()) - 1;
 	int Space = 8 * StrLength;
 
-	TextFont_.Draw(Coin, { GameEngineWindow::GetScale().x - 40 - Space, 37.0f }, 23, 800);
+	TextFont_.Draw(Coin, { GameEngineWindow::GetScale().x - 40 - Space, 37.0f }, RGB(255, 255, 255), 23, 800);
 }

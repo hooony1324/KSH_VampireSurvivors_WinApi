@@ -76,6 +76,11 @@ bool GameEngineCollision::CollisionCheck(
 
 	for (; StartIter != EndIter; ++StartIter)
 	{
+		if (false == (*StartIter)->IsUpdate() || true == (*StartIter)->IsDeath())
+		{
+			continue;
+		}
+
 		if (CollisionCheckArray[static_cast<int>(_This)][static_cast<int>(_Target)](this, *StartIter))
 		{
 			return true;
@@ -85,7 +90,7 @@ bool GameEngineCollision::CollisionCheck(
 	return false;
 }
 
-bool GameEngineCollision::NextPostCollisionCheck(
+bool GameEngineCollision::NextPosCollisionCheck(
 	const std::string& _TargetGroup,
 	float4 _NextPos,
 	CollisionType _This /*= CollisionType::Circle*/,
@@ -121,6 +126,11 @@ bool GameEngineCollision::NextPostCollisionCheck(
 
 	for (; StartIter != EndIter; ++StartIter)
 	{
+		if (false == (*StartIter)->IsUpdate() || true == (*StartIter)->IsDeath())
+		{
+			continue;
+		}
+
 		if (CollisionCheckArray[static_cast<int>(_This)][static_cast<int>(_Target)](this, *StartIter))
 		{
 			return true;
@@ -193,6 +203,12 @@ bool GameEngineCollision::CollisionResult(
 
 	for (; StartIter != EndIter; ++StartIter)
 	{
+		if (false == (*StartIter)->IsUpdate() || true == (*StartIter)->IsDeath())
+		{
+			continue;
+		}
+
+
 		if (CollisionCheckArray[static_cast<int>(_This)][static_cast<int>(_Target)](this, *StartIter))
 		{
 			_ColResult.push_back(*StartIter);

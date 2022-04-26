@@ -37,5 +37,5 @@ void KillCountUI::Render()
 	int StrLength = static_cast<int>(KillCount.length()) - 1;
 	int Space = 8 * StrLength;
 
-	TextFont_.Draw(KillCount, { GetPosition().x - 22 - Space, GetPosition().y - 11}, 23, 800);
+	TextFont_.Draw(KillCount, { GetPosition().x - 22 - Space, GetPosition().y - 11}, RGB(255, 255, 255), 23, 800);
 }

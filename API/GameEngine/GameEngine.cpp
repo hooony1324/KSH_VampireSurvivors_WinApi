@@ -82,7 +82,7 @@ void GameEngine::EngineLoop()
             CurrentLevel_->ObjectLevelMoveCheck(NextLevel_);
 
         }
-        
+
         GameEngineLevel* PrevLevel = CurrentLevel_;
         CurrentLevel_ = NextLevel_;
 
@@ -94,6 +94,7 @@ void GameEngine::EngineLoop()
 
         NextLevel_ = nullptr;
         GameEngineTime::GetInst()->Reset();
+        GameEngineInput::GetInst()->Reset();
 
         Rectangle(WindowMainImage_->ImageDC(), 0, 0, WindowMainImage_->GetScale().ix(), WindowMainImage_->GetScale().iy());
         Rectangle(BackBufferImage_->ImageDC(), 0, 0, BackBufferImage_->GetScale().ix(), BackBufferImage_->GetScale().iy());
