@@ -148,8 +148,8 @@ void ProjectileShooter::ShootMagic()
 	Projectile* Bullet = GetLevel()->CreateActor<Projectile>(static_cast<int>(ACTOR_ORDER::PLAYER), "Bullet");
 	Bullet->SetType(BulletType::FLAME_BLUE);
 	SetBulletStat(Bullet);
-	Bullet->SetDir(Vector2D::GetDirection(PlayerPos_, MonsterPos_));
 	Bullet->SetPosition(PlayerPos_);
+	Bullet->SetDir(Vector2D::GetDirection(PlayerPos_, MonsterPos_));
 
 	BulletCount_ -= 1;
 	isShoot_ = true;

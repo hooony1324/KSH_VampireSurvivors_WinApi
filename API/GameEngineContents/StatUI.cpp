@@ -35,14 +35,7 @@ void StatUI::Start()
 
 	SetSlotBase();
 
-	// 처음에 주어진 스킬은 활성화
-	{
-		ActiveSlots_[0]->On();
-		ActiveSkills_[0]->On();
-		ActiveLevels_[0]->On();
 
-		SkillType SkillName = GameInfo::GetPlayerInfo()->ActiveSkillSlot_[0];
-	}
 
 
 	NextLevelOff();
@@ -156,4 +149,12 @@ void StatUI::SetSlotBase()
 		PassiveSkills_.push_back(SkillPtr);
 		PassiveLevels_.push_back(LevelPtr);
 	}
+
+	// 처음에 주어진 스킬은 활성화
+	ActiveSlots_[0]->On();
+	ActiveSkills_[0]->On();
+	ActiveLevels_[0]->On();
+
+	SkillType SkillType = GameInfo::GetPlayerInfo()->ActiveSkillSlot_[0];
+	ActiveSkills_[0]->SetImage(SkillOrder[static_cast<int>(SkillType)] + "UI.bmp");
 }

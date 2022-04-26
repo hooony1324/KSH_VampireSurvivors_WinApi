@@ -66,23 +66,18 @@ void Projectile::SetType(BulletType _BT)
 	{
 		GameEngineSound::SoundPlayOneShot("ProjectileKnife.mp3", 0);
 		ProjImage_->SetRotationFilter("Sword_Filter.bmp");
-		Speed_ = 550.0f;
 		break;
 	}
 	case BulletType::FLAME_BLUE:
 	{
 		GameEngineSound::SoundPlayOneShot("ProjectileMagic.mp3", 0);
-
 		ProjImage_->SetRotationFilter("ProjectileHoly1_Filter.bmp");
-		Speed_ = 500.0f;
 		break;
 	}
 	case BulletType::FLAME_RED:
 		
 		GameEngineSound::SoundPlayOneShot("ProjectileMagic.mp3", 0);
-		
 		ProjImage_->SetRotationFilter("ProjectileFlameRed_Filter.bmp");
-		Speed_ = 300.0f;
 		break;
 
 	}

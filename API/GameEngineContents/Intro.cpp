@@ -29,22 +29,23 @@ void Intro::Start()
 	Renderer_->ChangeAnimation("Caution");
 
 	NextLevelOff();
+
+	SpaceBarOnce_ = false;
 }
 
 void Intro::Update()
 {
 	if (true == GameEngineInput::GetInst()->IsDown("SpaceBar"))
 	{
+		if (true == SpaceBarOnce_)
+		{
+			return;
+		}
 		Renderer_->ChangeAnimation("CautionToMain");
-		IntroSoundPlay_ = true;
-	}
-	
-	
-	if (true == IntroSoundPlay_)
-	{
 		GameEngineSound::SoundPlayOneShot("Intro.mp3", 0);
-		IntroSoundPlay_ = false;
+		SpaceBarOnce_ = true;
 	}
+	
 
 }
 

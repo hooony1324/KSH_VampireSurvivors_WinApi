@@ -26,6 +26,6 @@ protected:
 
 private:
 	GameEngineRenderer* Renderer_;
-	bool IntroSoundPlay_;
+	bool SpaceBarOnce_;
 };
 
