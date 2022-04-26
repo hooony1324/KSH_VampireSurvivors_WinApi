@@ -163,6 +163,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Arrow.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="Character.h">
       <SubType>
       </SubType>
@@ -253,10 +257,6 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="ResultBackGround.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
     <ClInclude Include="ResultBoard.h">
       <SubType>
       </SubType>
@@ -304,6 +304,10 @@
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Arrow.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
     <ClCompile Include="Character.cpp">
       <SubType>
       </SubType>
@@ -390,10 +394,6 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="ProjectileShooter.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="ResultBackGround.cpp">
       <SubType>
       </SubType>
     </ClCompile>

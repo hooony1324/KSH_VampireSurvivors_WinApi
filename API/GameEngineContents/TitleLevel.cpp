@@ -19,16 +19,16 @@ TitleLevel::~TitleLevel()
 
 void TitleLevel::Loading()
 {
-	CreateActor<TitleBackGround>(static_cast<int>(ACTOR_ORDER::BACKGROUND));
 
-	StartMenu_ = CreateActor<GameStartMenu>(static_cast<int>(ACTOR_ORDER::UI));
 }
 
 void TitleLevel::LevelChangeStart(GameEngineLevel* _PrevLevel)
 {
 	// BlinkingBG -> 시작하려면 아무키나 누르세요
 	// 
-	
+	CreateActor<TitleBackGround>(static_cast<int>(ACTOR_ORDER::BACKGROUND));
+
+	StartMenu_ = CreateActor<GameStartMenu>(static_cast<int>(ACTOR_ORDER::UI));
 
 }
 

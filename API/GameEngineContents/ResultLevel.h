@@ -23,7 +23,6 @@ protected:
 
 private:
 
-	GameEngineActor* BG_;
-	GameEngineActor* Board_;
+
 };
 

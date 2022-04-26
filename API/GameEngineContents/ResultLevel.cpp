@@ -1,17 +1,19 @@
 #include "ResultLevel.h"
-#include "ResultBackGround.h"
-#include "ResultBoard.h"
 #include <GameEngine/GameEngine.h>
 #include <GameEngineBase/GameEngineInput.h>
 
 #include "GameEnum.h"
+#include "ResultBoard.h"
+
 
 ResultLevel::ResultLevel() 
 {
+
 }
 
 ResultLevel::~ResultLevel() 
 {
+
 }
 
 void ResultLevel::Loading()
@@ -21,15 +23,14 @@ void ResultLevel::Loading()
 
 void ResultLevel::LevelChangeStart(GameEngineLevel* _PrevLevel)
 {
-	BG_ = CreateActor<ResultBackGround>();
-	Board_ = CreateActor<ResultBoard>(1);
+	CreateActor<ResultBoard>(static_cast<int>(RENDER_ORDER::BACKGROUND), "Background");
 }
 
 void ResultLevel::Update()
 {
 	
 
-	if (true == GameEngineInput::GetInst()->IsDown("ChangeLevelNext"))
+	if (true == GameEngineInput::GetInst()->IsDown("SpaceBar"))
 	{
 		GameEngine::GetInst().ChangeLevel("Title");
 	}
@@ -37,7 +38,6 @@ void ResultLevel::Update()
 
 void ResultLevel::LevelChangeEnd(GameEngineLevel* _NextLevel)
 {
-	BG_->Death();
-	Board_->Death();
+
 }
 

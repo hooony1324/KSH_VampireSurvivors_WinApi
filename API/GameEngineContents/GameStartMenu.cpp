@@ -377,8 +377,8 @@ void GameStartMenu::SelectCharacterUpdate()
 		else
 		{
 			// 맵 선택으로 넘어감
+			//ChangeState(STATE::SELECT_MAP);
 			GameEngineSound::SoundPlayOneShot("ButtonDown.mp3", 0);
-			ChangeState(STATE::SELECT_MAP);
 			GameInfo::SetCharacter(static_cast<CharacterType>(CurCharacterIndex_));
 			SelectCharacterEnd();
 			GameEngine::GetInst().ChangeLevel("Play");

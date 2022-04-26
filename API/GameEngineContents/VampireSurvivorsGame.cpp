@@ -35,7 +35,7 @@ void VampireSurvivorsGame::GameInit()
 	CreateLevel<TitleLevel>("Title");
 	CreateLevel<PlayLevel>("Play");
 	CreateLevel<ResultLevel>("Result");
-	ChangeLevel("Intro");
+	ChangeLevel("Result");
 
 
 	// Å° ¼¼ÆÃ
@@ -121,9 +121,9 @@ void VampireSurvivorsGame::ResourceLoad()
 	GameEngineImageManager::GetInst()->Find("Poe_WalkRight.bmp")->Cut({ 70, 70 });
 	GameEngineImageManager::GetInst()->Find("Poe_WalkLeft.bmp")->Cut({ 70, 70 });
 
-	GameEngineImageManager::GetInst()->Find("Mud_WalkLeft.bmp")->Cut({ 70, 70 });
-	GameEngineImageManager::GetInst()->Find("Mud_WalkRight.bmp")->Cut({ 70, 70 });
-	GameEngineImageManager::GetInst()->Find("Mud_Dead.bmp")->Cut({ 70, 70 });
+	GameEngineImageManager::GetInst()->Find("Mud_WalkLeft.bmp")->Cut({ 140, 140 });
+	GameEngineImageManager::GetInst()->Find("Mud_WalkRight.bmp")->Cut({ 140, 140 });
+	GameEngineImageManager::GetInst()->Find("Mud_Dead.bmp")->Cut({ 140, 140 });
 
 	GameEngineImageManager::GetInst()->Find("ShadeRed_WalkLeft.bmp")->Cut({ 70, 70 });
 	GameEngineImageManager::GetInst()->Find("ShadeRed_WalkRight.bmp")->Cut({ 70, 70 });

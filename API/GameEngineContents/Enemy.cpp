@@ -184,15 +184,17 @@ void Enemy::EnemyMove()
 	PlayerPos_ = GameInfo::GetPlayerInfo()->PlayerPos_;
 	DestDir_ = Vector2D::GetDirection(Pos_, PlayerPos_);
 
+	// 현재 몬스터가 Medusa 라면
 	if (0 == EnemyName_.compare("Medusa"))
 	{
+		Speed_ = 200.0f;
 		if (true == UpDownCounter_.Start(DeltaTime_))
 		{
 			UpDown_ *= -1;
 			UpDownCounter_.Reset();
 		}
 
-		DestDir_ = float4{ DestDir_.x, UpDown_ * 2.0f };
+		DestDir_ = float4{ DestDir_.x, UpDown_};
 	}
 
 	float Speed = MapColCheck(Speed_);
@@ -264,20 +266,11 @@ float Enemy::MapColCheck(float _Speed)
 
 void Enemy::SetRenderer()
 {
-	std::string EnemyName = EnemyNameList[0]; // Mud
-	Renderer_->CreateFolderAnimationTimeKey(EnemyName + "_WalkLeft.bmp", EnemyName + "_WalkLeft", static_cast<int>(TIME_GROUP::MONSTER), 0, 3, 0.2f, true);
-	Renderer_->CreateFolderAnimationTimeKey(EnemyName + "_WalkRight.bmp", EnemyName + "_WalkRight", static_cast<int>(TIME_GROUP::MONSTER), 0, 3, 0.2f, true);
-	Renderer_->CreateFolderAnimationTimeKey(EnemyName + "_Dead.bmp", EnemyName + "_Dead", static_cast<int>(TIME_GROUP::MONSTER), 0, 27, 0.05f, false);
-
-	EnemyName = EnemyNameList[1]; // Medusa
-	Renderer_->CreateFolderAnimationTimeKey(EnemyName + "_WalkLeft.bmp", EnemyName + "_WalkLeft", static_cast<int>(TIME_GROUP::MONSTER), 0, 2, 0.2f, true);
-	Renderer_->CreateFolderAnimationTimeKey(EnemyName + "_WalkRight.bmp", EnemyName + "_WalkRight", static_cast<int>(TIME_GROUP::MONSTER), 0, 2, 0.2f, true);
-	Renderer_->CreateFolderAnimationTimeKey(EnemyName + "_Dead.bmp", EnemyName + "_Dead", static_cast<int>(TIME_GROUP::MONSTER), 0, 29, 0.1f, false);
-
-	EnemyName = EnemyNameList[2]; // Mummy
-	Renderer_->CreateFolderAnimationTimeKey(EnemyName + "_WalkLeft.bmp", EnemyName + "_WalkLeft", static_cast<int>(TIME_GROUP::MONSTER), 0, 2, 0.2f, true);
-	Renderer_->CreateFolderAnimationTimeKey(EnemyName + "_WalkRight.bmp", EnemyName + "_WalkRight", static_cast<int>(TIME_GROUP::MONSTER), 0, 2, 0.2f, true);
-	Renderer_->CreateFolderAnimationTimeKey(EnemyName + "_Dead.bmp", EnemyName + "_Dead", static_cast<int>(TIME_GROUP::MONSTER), 0, 29, 0.1f, false);
-
-
+	for (int i = 0; i < 4; i++)
+	{
+		std::string EnemyName = EnemyNameList[i];
+		Renderer_->CreateFolderAnimationTimeKey(EnemyName + "_WalkLeft.bmp", EnemyName + "_WalkLeft", static_cast<int>(TIME_GROUP::MONSTER), 0, 3, 0.2f, true);
+		Renderer_->CreateFolderAnimationTimeKey(EnemyName + "_WalkRight.bmp", EnemyName + "_WalkRight", static_cast<int>(TIME_GROUP::MONSTER), 0, 3, 0.2f, true);
+		Renderer_->CreateFolderAnimationTimeKey(EnemyName + "_Dead.bmp", EnemyName + "_Dead", static_cast<int>(TIME_GROUP::MONSTER), 0, 29, 0.1f, false);
+	}
 }
