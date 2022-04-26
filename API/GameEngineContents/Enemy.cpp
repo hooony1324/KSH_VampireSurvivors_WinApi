@@ -16,7 +16,7 @@
 #include "EnemyController.h"
 
 GameEngineImage* Enemy::MapColImage_ = nullptr;
-std::string EnemyNameList[] = {"Mud", "Medusa", "Mummy"};
+std::string EnemyNameList[] = {"Mud", "Medusa", "Ecto", "Mummy"};
 
 Enemy::Enemy()
 	: Speed_(80.0f)

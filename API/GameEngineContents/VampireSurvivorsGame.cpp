@@ -109,6 +109,8 @@ void VampireSurvivorsGame::ResourceLoad()
 	// 애니메이션용 이미지는 Cut선행되어야 함
 	GameEngineImageManager::GetInst()->Find("CautionToMain.bmp")->Cut({ 1280, 800 });
 
+	GameEngineImageManager::GetInst()->Find("Arrow_L.bmp")->Cut({ 40, 40 });
+	GameEngineImageManager::GetInst()->Find("Arrow_R.bmp")->Cut({ 40, 40 });
 
 	GameEngineImageManager::GetInst()->Find("Cavallo_WalkRight.bmp")->Cut({ 56, 56 });
 	GameEngineImageManager::GetInst()->Find("Cavallo_WalkLeft.bmp")->Cut({ 56, 56 });
@@ -135,8 +137,13 @@ void VampireSurvivorsGame::ResourceLoad()
 	GameEngineImageManager::GetInst()->Find("Mummy_WalkRight.bmp")->Cut({ 140, 140 });
 	GameEngineImageManager::GetInst()->Find("Mummy_Dead.bmp")->Cut({ 140, 140 });
 
-	GameEngineImageManager::GetInst()->Find("Arrow_L.bmp")->Cut({ 40, 40 });
-	GameEngineImageManager::GetInst()->Find("Arrow_R.bmp")->Cut({ 40, 40 });
+	GameEngineImageManager::GetInst()->Find("XLMummy_WalkLeft.bmp")->Cut({ 100, 100 });
+	GameEngineImageManager::GetInst()->Find("XLMummy_WalkRight.bmp")->Cut({ 100, 100 });
+	GameEngineImageManager::GetInst()->Find("XLMummy_Dead.bmp")->Cut({ 100, 100 });
+
+	GameEngineImageManager::GetInst()->Find("Ecto_WalkLeft.bmp")->Cut({ 140, 140 });
+	GameEngineImageManager::GetInst()->Find("Ecto_WalkRight.bmp")->Cut({ 140, 140 });
+	GameEngineImageManager::GetInst()->Find("Ecto_Dead.bmp")->Cut({ 140, 140 });
 
 
 	// 사운드 리소스
