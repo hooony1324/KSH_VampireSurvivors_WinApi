@@ -42,7 +42,6 @@ void PlayLevel::Loading()
 // 맵, 캐릭터, .. 가 선택 되면 해당하는 맵으로 액터를 생성해야 함
 void PlayLevel::LevelChangeStart(GameEngineLevel* _PrevLevel)
 {	
-	GameInfo::SetPause(false);
 
 	IsDebugModeOff();
 
@@ -55,30 +54,28 @@ void PlayLevel::LevelChangeStart(GameEngineLevel* _PrevLevel)
 	CreateMap();	
 
 	// 몬스터 생성기 
-	EnemyController_ = CreateActor<EnemyController>(static_cast<int>(RENDER_ORDER::MONSTER), "EnemyController");
-
+	EnemyController_ = CreateActor<EnemyController>(static_cast<int>(ACTOR_ORDER::MONSTER), "EnemyController");
 
 	// 플레이어
-	Player_ = CreateActor<Player>(static_cast<int>(RENDER_ORDER::PLAYER), "Player");
-
+	Player_ = CreateActor<Player>(static_cast<int>(ACTOR_ORDER::PLAYER), "Player");
 
 	// UI
-	ExpUI_ = CreateActor<ExpBar>(static_cast<int>(RENDER_ORDER::UI), "UI");
-	WeaponUI_ = CreateActor<WeaponSlots>(static_cast<int>(RENDER_ORDER::PLAY_UI), "UI");
-	TimerUI_ = CreateActor<TimerUI>(static_cast<int>(RENDER_ORDER::UI), "UI");
-	CoinUI_ = CreateActor<CoinUI>(static_cast<int>(RENDER_ORDER::UI), "UI");
-	LevelUI_ = CreateActor<LevelUI>(static_cast<int>(RENDER_ORDER::UI), "UI");
-	KillCountUI_ = CreateActor<KillCountUI>(static_cast<int>(RENDER_ORDER::UI), "UI");
+	ExpUI_ = CreateActor<ExpBar>(static_cast<int>(ACTOR_ORDER::UI), "UI");
+	WeaponUI_ = CreateActor<WeaponSlots>(static_cast<int>(ACTOR_ORDER::UI), "UI");
+	TimerUI_ = CreateActor<TimerUI>(static_cast<int>(ACTOR_ORDER::UI), "UI");
+	CoinUI_ = CreateActor<CoinUI>(static_cast<int>(ACTOR_ORDER::UI), "UI");
+	LevelUI_ = CreateActor<LevelUI>(static_cast<int>(ACTOR_ORDER::UI), "UI");
+	KillCountUI_ = CreateActor<KillCountUI>(static_cast<int>(ACTOR_ORDER::UI), "UI");
 
-	PauseUI_ = CreateActor<PauseUI>(static_cast<int>(RENDER_ORDER::UI), "UI");
-	StatUI_ = CreateActor<StatUI>(static_cast<int>(RENDER_ORDER::UI), "UI");
+	PauseUI_ = CreateActor<PauseUI>(static_cast<int>(ACTOR_ORDER::UI), "UI");
+	StatUI_ = CreateActor<StatUI>(static_cast<int>(ACTOR_ORDER::UI), "UI");
 	
 	PauseUI_->Off();
 	StatUI_->Off();
 
 
 
-	//BgmPlayer = GameEngineSound::SoundPlayControl("bgm_elrond_library_quiet.MP3");
+	BgmPlayer = GameEngineSound::SoundPlayControl("bgm_elrond_library_quiet.MP3");
 
 	// 아이템 
 	ExpGem* FirstGem = CreateActor<ExpGem>(static_cast<int>(ACTOR_ORDER::ITEM), "ITEM");
@@ -96,105 +93,42 @@ void PlayLevel::LevelChangeStart(GameEngineLevel* _PrevLevel)
 		Box->SetPosition(float4{ 1100 , 1000 } + float4{ static_cast<float>(i) * 50, 0 });
 	}
 	
+	ChangeState(LevelState::PLAY);
 
+	
 }
 
 void PlayLevel::LevelChangeEnd(GameEngineLevel* _NextLevel)
 {
-	GameInfo::SetPause(false);
-	
-
-	// 캐릭터 정보 정리
-
 	// BGM 종료
-	//BgmPlayer.Stop();
+	BgmPlayer.Stop();
 }
 
 
 void PlayLevel::Update()
 {
-	// Key Check
-	if (true == GameEngineInput::GetInst()->IsDown("ChangeLevelNext"))
-	{
-		GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::MONSTER), 1.0f);
-		GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::PLAYER), 1.0f);
-		GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::WEAPON), 1.0f);
-		GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::TIMER), 1.0f);
-		GameInfo::SetPause(false);
-		GameEngine::GetInst().ChangeLevel("Result");
-	}
 
 	if (true == GameEngineInput::GetInst()->IsDown("ColDebugger"))
 	{
 		IsDebugModeSwitch();
 	}
 
+	if (true == GameEngineInput::GetInst()->IsDown("LevelUP"))
+	{
+		int* SkillLevelInfo = GameInfo::GetPlayerInfo()->SkillLevelInfo_;
+
+		for (auto i = 0; i < static_cast<int>(SkillType::MAX); i++)
+		{
+			SkillLevelInfo[i] = 8;
+		}
+
+		auto val = GameInfo::GetPlayerInfo()->SkillLevelInfo_;
+	}
+
+
 	UpdateState();
 
 }
-
-void PlayLevel::GamePause()
-{
-	if (true == GameInfo::IsPause())
-	{
-		GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::MONSTER), 0.0f);
-		GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::PLAYER), 0.0f);
-		GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::WEAPON), 0.0f);
-		GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::TIMER), 0.0f);
-	}
-	else
-	{
-		GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::MONSTER), 1.0f);
-		GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::PLAYER), 1.0f);
-		GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::WEAPON), 1.0f);
-		GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::TIMER), 1.0f);
-	}
-}
-
-//void PlayLevel::ShowPauseMenu()
-//{
-//	if ( true == LevelUpUI::IsActivated())
-//	{
-//		return;
-//	}
-//
-//	if (true == GameEngineInput::GetInst()->IsDown("Esc"))
-//	{
-//		if (false == GameInfo::IsPause())
-//		{
-//			GameInfo::SetPause(true);
-//		}
-//		else
-//		{
-//			GameInfo::SetPause(false);
-//		}
-//
-//		if (false == GameInfo::IsPause())
-//		{
-//			PauseUI_->Off();
-//			StatUI_->Off();
-//		}
-//		else
-//		{
-//			PauseUI_->On();
-//			StatUI_->On();
-//		}
-//	}
-//
-//}
-
-//void PlayLevel::LevelUpUICheck()
-//{
-//	if (LevelUpUI::CreateCount_ <= 0)
-//	{
-//		return;
-//	}
-//
-//	if (false == LevelUpUI::IsActivated())
-//	{
-//		CreateActor<LevelUpUI>(static_cast<int>(ACTOR_ORDER::UI), "UI");
-//	}
-//}
 
 void PlayLevel::CreateMap()
 {
@@ -265,11 +199,13 @@ void PlayLevel::LevelUpStart()
 	GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::PLAYER), 0.0f);
 	GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::WEAPON), 0.0f);
 	GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::TIMER), 0.0f);
+
 	CreateActor<LevelUpUI>(static_cast<int>(ACTOR_ORDER::UI), "UI");
 }
 
 void PlayLevel::PauseStart()
 {
+	PauseUI::Activated_ = true;
 	GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::MONSTER), 0.0f);
 	GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::PLAYER), 0.0f);
 	GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::WEAPON), 0.0f);
@@ -290,7 +226,6 @@ void PlayLevel::PlayUpdate()
 	}
 
 
-
 	InfiniteMap();
 
 }
@@ -308,7 +243,7 @@ void PlayLevel::LevelUpUpdate()
 
 void PlayLevel::PauseUpdate()
 {
-	if (true == GameEngineInput::GetInst()->IsDown("Esc"))
+	if (false == PauseUI::Activated_)
 	{
 		PauseUI_->Off();
 		StatUI_->Off();
@@ -316,7 +251,12 @@ void PlayLevel::PauseUpdate()
 		return;
 	}
 
+
+	if (true == GameEngineInput::GetInst()->IsDown("Esc"))
+	{
+		PauseUI::Activated_ = false;
+	}
+
 	PauseUI_->On();
 	StatUI_->On();
-
 }

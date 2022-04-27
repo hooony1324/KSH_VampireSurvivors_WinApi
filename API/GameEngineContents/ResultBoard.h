@@ -24,5 +24,6 @@ protected:
 
 private:
 	Arrow* ArrowPtr_;
+	GameEngineRenderer* ButtonConfirm_;
 };
 

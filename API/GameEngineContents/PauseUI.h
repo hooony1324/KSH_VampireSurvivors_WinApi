@@ -15,7 +15,8 @@ public:
 	PauseUI(PauseUI&& _Other) noexcept = delete;
 	PauseUI& operator=(const PauseUI& _Other) = delete;
 	PauseUI& operator=(PauseUI&& _Other) noexcept = delete;
-
+	
+	static bool Activated_;
 protected:
 
 	void Start() override;
@@ -23,9 +24,14 @@ protected:
 	void Render() override;
 
 private:
-	Arrow* ArrowPtr_;
-	bool IsOption_;
+	bool OptionActivated_;
 	GameEngineRenderer* Buttons_[2];
-	int CurButtonIdex_;
+	int CurButtonIndex_;
+
+	Arrow* Arrow_;
+
+	GameEngineRenderer* OptionButton_;
+	GameEngineRenderer* QuitButton_;
+
 };
 

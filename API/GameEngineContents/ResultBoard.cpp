@@ -23,18 +23,19 @@ void ResultBoard::Start()
 
 	GameEngineRenderer* Background = CreateRenderer("ResultBoard.bmp", static_cast<int>(RENDER_ORDER::BACKGROUND));
 
-	GameEngineRenderer* ButtonConfirm = CreateRenderer("ButtonQuit.bmp", static_cast<int>(RENDER_ORDER::UI));
+	ButtonConfirm_ = CreateRenderer("ButtonComplete.bmp", static_cast<int>(RENDER_ORDER::UI));
 
-	ButtonConfirm->SetPivot({ 0, 350 });
-	ButtonConfirm->Off();
+	ButtonConfirm_->SetPivot({ 0, 350 });
+	ButtonConfirm_->On();
 
 	ArrowPtr_ = GetLevel()->CreateActor<Arrow>(static_cast<int>(ACTOR_ORDER::UI));
-	ArrowPtr_->SetTarget(ButtonConfirm);
+
 
 }
 
 void ResultBoard::Update()
 {
+	ArrowPtr_->SetTarget(ButtonConfirm_);
 }
 
 void ResultBoard::Render()

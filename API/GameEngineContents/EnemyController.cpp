@@ -52,7 +52,8 @@ void EnemyController::Start()
 {
 	// 재진입 시 필요
 	LiveEnemyNum = 0;
-
+	Enemy::EnemyNameListIndex = 0;
+	Boss::BossIndex_ = 0;
 	// 일반몹
 	Enemies_.reserve(MaxEnemySpawn);
 

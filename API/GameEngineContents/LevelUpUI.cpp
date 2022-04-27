@@ -169,6 +169,8 @@ void LevelUpUI::ShowRandomSkills()
 	if (0 >= SelectNum_)
 	{
 		// 돈 또는 체력 선택
+		//Renderer1_->SetImage("");
+		//Renderer2_->SetImage("");
 		int a = 0;
 		return;
 	}

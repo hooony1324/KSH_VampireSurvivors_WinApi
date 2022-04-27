@@ -4,6 +4,9 @@
 #include <GameEngine/GameEngineCollision.h>
 #include <GameEngine/GameEngineImageManager.h>
 
+
+#include "GameEnum.h"
+
 Library::Library() 
 {
 
@@ -15,7 +18,7 @@ Library::~Library()
 
 void Library::Start()
 {
-	Map_ = CreateRenderer("LibraryMap.bmp", 0 ,RenderPivot::CENTER);
+	Map_ = CreateRenderer("LibraryMap.bmp", static_cast<int>(RENDER_ORDER::BACKGROUND), RenderPivot::CENTER);
 	Map_->SetPivot(Map_->GetScale().Half()); // ·»´õ·¯ À§Ä¡
 	SetScale(Map_->GetScale());
 

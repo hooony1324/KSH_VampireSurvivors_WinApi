@@ -17,11 +17,13 @@ enum class RENDER_ORDER
 	WEAPON,
 	ITEM,
 	PLAY_UI,
-	UI
+	UI,
+	UI2,
 };
 
 enum class TIME_GROUP
 {
+	NONE,
 	PLAYER,
 	MONSTER,
 	WEAPON,

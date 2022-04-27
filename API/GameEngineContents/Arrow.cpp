@@ -38,12 +38,11 @@ void Arrow::Start()
 
 void Arrow::Update()
 {
-	// 애로우 표시, Buttons일때만
-	if (nullptr != TargetRenderer_)
+
+	if (nullptr != TargetRenderer_ && TargetRenderer_->IsUpdate())
 	{
 		ArrowL_->On();
 		ArrowR_->On();
-		auto val = TargetRenderer_->GetPivot() + float4{ -TargetRenderer_->GetScale().Half().x - 20, 0 };
 		ArrowL_->SetPivot(TargetRenderer_->GetPivot() + float4{ -TargetRenderer_->GetScale().Half().x - 20, 0 });
 		ArrowR_->SetPivot(TargetRenderer_->GetPivot() + float4{ TargetRenderer_->GetScale().Half().x + 20, 0 });
 

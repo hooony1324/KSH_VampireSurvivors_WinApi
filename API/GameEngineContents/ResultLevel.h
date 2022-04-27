@@ -1,6 +1,7 @@
 #pragma once
 #include <GameEngine/GameEngineLevel.h>
 
+#include "Counter.h"
 // Ό³Έν :
 class ResultLevel : public GameEngineLevel
 {
@@ -23,6 +24,6 @@ protected:
 
 private:
 
-
+	Counter InputActivateCount_;
 };
 
