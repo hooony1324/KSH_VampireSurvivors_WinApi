@@ -104,6 +104,9 @@
     <ClCompile Include="Arrow.cpp">
       <Filter>Global</Filter>
     </ClCompile>
+    <ClCompile Include="Boss.cpp">
+      <Filter>2.Play\Enemies</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="VampireSurvivorsGame.h" />
@@ -214,6 +217,9 @@
     </ClInclude>
     <ClInclude Include="Arrow.h">
       <Filter>Global</Filter>
+    </ClInclude>
+    <ClInclude Include="Boss.h">
+      <Filter>2.Play\Enemies</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

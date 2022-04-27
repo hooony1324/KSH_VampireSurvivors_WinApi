@@ -31,7 +31,7 @@ private:
 	float Time_;
 	void WaveIndexUpdate();
 	void SpawnWave();
-	void SpawnBoss(bool _BossCounter);
+	void SpawnBoss(bool _BossCounterEnd);
 	float4 GetSpawnPos();
 
 // SpawnEnemy°ü·Ã

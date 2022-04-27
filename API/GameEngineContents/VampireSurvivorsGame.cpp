@@ -35,7 +35,7 @@ void VampireSurvivorsGame::GameInit()
 	CreateLevel<TitleLevel>("Title");
 	CreateLevel<PlayLevel>("Play");
 	CreateLevel<ResultLevel>("Result");
-	ChangeLevel("Result");
+	ChangeLevel("Play");
 
 
 	// 키 세팅
@@ -125,9 +125,7 @@ void VampireSurvivorsGame::ResourceLoad()
 	GameEngineImageManager::GetInst()->Find("Mud_WalkRight.bmp")->Cut({ 140, 140 });
 	GameEngineImageManager::GetInst()->Find("Mud_Dead.bmp")->Cut({ 140, 140 });
 
-	GameEngineImageManager::GetInst()->Find("ShadeRed_WalkLeft.bmp")->Cut({ 70, 70 });
-	GameEngineImageManager::GetInst()->Find("ShadeRed_WalkRight.bmp")->Cut({ 70, 70 });
-	GameEngineImageManager::GetInst()->Find("ShadeRed_Dead.bmp")->Cut({ 140, 140 });
+
 
 	GameEngineImageManager::GetInst()->Find("Medusa_WalkLeft.bmp")->Cut({ 140, 140 });
 	GameEngineImageManager::GetInst()->Find("Medusa_WalkRight.bmp")->Cut({ 140, 140 });
@@ -137,13 +135,20 @@ void VampireSurvivorsGame::ResourceLoad()
 	GameEngineImageManager::GetInst()->Find("Mummy_WalkRight.bmp")->Cut({ 140, 140 });
 	GameEngineImageManager::GetInst()->Find("Mummy_Dead.bmp")->Cut({ 140, 140 });
 
-	GameEngineImageManager::GetInst()->Find("XLMummy_WalkLeft.bmp")->Cut({ 100, 100 });
-	GameEngineImageManager::GetInst()->Find("XLMummy_WalkRight.bmp")->Cut({ 100, 100 });
-	GameEngineImageManager::GetInst()->Find("XLMummy_Dead.bmp")->Cut({ 100, 100 });
+
 
 	GameEngineImageManager::GetInst()->Find("Ecto_WalkLeft.bmp")->Cut({ 140, 140 });
 	GameEngineImageManager::GetInst()->Find("Ecto_WalkRight.bmp")->Cut({ 140, 140 });
 	GameEngineImageManager::GetInst()->Find("Ecto_Dead.bmp")->Cut({ 140, 140 });
+
+	// Boss 100 x 100
+	GameEngineImageManager::GetInst()->Find("ShadeRed_WalkLeft.bmp")->Cut({ 100, 100 });
+	GameEngineImageManager::GetInst()->Find("ShadeRed_WalkRight.bmp")->Cut({ 100, 100 });
+	GameEngineImageManager::GetInst()->Find("ShadeRed_Dead.bmp")->Cut({ 100, 100 });
+
+	GameEngineImageManager::GetInst()->Find("XLMummy_WalkLeft.bmp")->Cut({ 100, 100 });
+	GameEngineImageManager::GetInst()->Find("XLMummy_WalkRight.bmp")->Cut({ 100, 100 });
+	GameEngineImageManager::GetInst()->Find("XLMummy_Dead.bmp")->Cut({ 100, 100 });
 
 
 	// 사운드 리소스

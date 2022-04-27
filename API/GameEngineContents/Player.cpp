@@ -51,6 +51,14 @@ void Player::Start()
 	// 플레이어 이미지, 애니메이션 관련 설정
 
 	CharacterStat_ = GameInfo::GetCharacter();
+
+	// 디버그로 플레이레벨부터 시작하면 CharacterStat_ 은 nullptr
+	if (nullptr == CharacterStat_)
+	{
+		GameInfo::SetCharacter(CharacterType::Imelda);
+		CharacterStat_ = GameInfo::GetCharacter();
+	}
+
 	GameInfo::SetPlayerInfo();
 
 	PlayerRenderer_ = CreateRenderer();
@@ -325,7 +333,16 @@ float4 Player::ShootableEnemeyCheck()
 {
 	GameEngineRandom Random;
 
-	if (true == PlayerShootRange_->CollisionResult("Enemy", ShootableEnemy_, CollisionType::Rect, CollisionType::Rect))
+	if (true == PlayerShootRange_->CollisionResult("Boss", ShootableEnemy_))
+	{
+		float4 MonsterPos = ShootableEnemy_[0]->GetCollisionPos();
+		ShootableEnemy_.clear();
+
+		return MonsterPos;
+	}
+
+
+	if (true == PlayerShootRange_->CollisionResult("Enemy", ShootableEnemy_))
 	{
 		int Index = Random.RandomInt(0, static_cast<int>(ShootableEnemy_.size()) - 1);
 		float4 MonsterPos = ShootableEnemy_[Index]->GetCollisionPos();

@@ -3,7 +3,7 @@
 #include <vector>
 #include <GameEngineBase/GameEngineSound.h>
 
-enum class BulletType
+enum class ProjectileType
 {
 	KNIFE,
 	FLAME_BLUE,
@@ -28,7 +28,7 @@ public:
 	Projectile& operator=(const Projectile& _Other) = delete;
 	Projectile& operator=(Projectile&& _Other) noexcept = delete;
 
-	void SetType(BulletType _BT);
+	void SetType(ProjectileType _BT);
 
 	void SetDir(float4 _Direction);
 
@@ -57,6 +57,12 @@ public:
 	{
 		Speed_ = _Speed;
 	}
+
+	bool IsBullet()
+	{
+		return IsBullet_;
+	}
+
 protected:
 
 	void Start() override;
@@ -64,6 +70,7 @@ protected:
 	void Render() override;
 
 private:
+	bool IsBullet_;
 
 	GameEngineRenderer* ProjImage_;
 	GameEngineCollision* ProjCol_;

@@ -9,6 +9,7 @@
 #include "GameInfo.h"
 #include "GameEnum.h"
 #include "Enemy.h"
+#include "Boss.h"
 
 const int MaxEnemySpawn = 100;
 int EnemyController::LiveEnemyNum = 0;
@@ -49,6 +50,8 @@ EnemyController::~EnemyController()
 
 void EnemyController::Start()
 {
+	// 재진입 시 필요
+	LiveEnemyNum = 0;
 
 	// 일반몹
 	Enemies_.reserve(MaxEnemySpawn);
@@ -181,8 +184,17 @@ float4 EnemyController::GetSpawnPos()
 	
 }
 
-void EnemyController::SpawnBoss(bool _BossCounter)
+void EnemyController::SpawnBoss(bool _BossCounterEnd)
 {
+	if (true == _BossCounterEnd)
+	{
+		GameEngineActor* Ptr = GetLevel()->CreateActor<Boss>(static_cast<int>(ACTOR_ORDER::MONSTER));
+		Boss* BossPtr = dynamic_cast<Boss*>(Ptr);
 
-	BossCounter_.SetCount(60.0f);
+		// 소환 위치 조정
+		BossPtr->SetPosition(GetSpawnPos());
+
+		BossCounter_.SetCount(60.0f);
+	}
+
 }

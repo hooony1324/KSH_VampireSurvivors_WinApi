@@ -43,8 +43,9 @@ void PlayLevel::Loading()
 // 맵, 캐릭터, .. 가 선택 되면 해당하는 맵으로 액터를 생성해야 함
 void PlayLevel::LevelChangeStart(GameEngineLevel* _PrevLevel)
 {	
-	IsDebugModeOff();
+	GameInfo::SetPause(false);
 
+	IsDebugModeOff();
 
 	// 시간 설정
 	GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::MONSTER), 1.0f);
@@ -101,6 +102,8 @@ void PlayLevel::LevelChangeStart(GameEngineLevel* _PrevLevel)
 
 void PlayLevel::LevelChangeEnd(GameEngineLevel* _NextLevel)
 {
+	
+
 	// 캐릭터 정보 정리
 
 

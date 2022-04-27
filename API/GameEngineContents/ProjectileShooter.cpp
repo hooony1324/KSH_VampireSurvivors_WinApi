@@ -11,7 +11,7 @@
 #include "Skill_Stat.h"
 
 ProjectileShooter::ProjectileShooter()
-	: BT_(BulletType::FLAME_BLUE)
+	: BT_(ProjectileType::FLAME_BLUE)
 	, Projectile_(nullptr)
 	, ShootAble_(false)
 	, isShoot_(false)
@@ -131,7 +131,7 @@ void ProjectileShooter::SetBulletStat(Projectile* _Bullet)
 void ProjectileShooter::ShootKnife()
 {
 	Projectile* Bullet = GetLevel()->CreateActor<Projectile>(static_cast<int>(ACTOR_ORDER::PLAYER), "Bullet");
-	Bullet->SetType(BulletType::KNIFE);
+	Bullet->SetType(ProjectileType::KNIFE);
 	SetBulletStat(Bullet);
 	float4 RandomPos = float4{ static_cast<float>(Random.RandomInt(PlayerPos_.ix() - 25, PlayerPos_.ix() + 25)), static_cast<float>(Random.RandomInt(PlayerPos_.iy() - 25, PlayerPos_.iy() + 25))};
 	Bullet->SetPosition(RandomPos);
@@ -146,7 +146,7 @@ void ProjectileShooter::ShootKnife()
 void ProjectileShooter::ShootMagic()
 {
 	Projectile* Bullet = GetLevel()->CreateActor<Projectile>(static_cast<int>(ACTOR_ORDER::PLAYER), "Bullet");
-	Bullet->SetType(BulletType::FLAME_BLUE);
+	Bullet->SetType(ProjectileType::FLAME_BLUE);
 	SetBulletStat(Bullet);
 	Bullet->SetPosition(PlayerPos_);
 	Bullet->SetDir(Vector2D::GetDirection(PlayerPos_, MonsterPos_));
@@ -165,7 +165,7 @@ void ProjectileShooter::ShootFire()
 	for (int i = 0; i < BulletCount_; i++)
 	{
 		Projectile* Bullet = GetLevel()->CreateActor<Projectile>(static_cast<int>(ACTOR_ORDER::PLAYER), "Bullet");
-		Bullet->SetType(BulletType::FLAME_RED);
+		Bullet->SetType(ProjectileType::FLAME_RED);
 		SetBulletStat(Bullet);
 		float4 RotateDir;
 		RotateDir = float4::VectorRotationToDegreeZ(FireShootDir, 15 * static_cast<float>(i));

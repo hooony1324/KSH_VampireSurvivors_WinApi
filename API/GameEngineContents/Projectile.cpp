@@ -2,7 +2,6 @@
 #include <GameEngine/GameEngine.h>
 #include <GameEngineBase/GameEngineWindow.h>
 #include <GameEngine/GameEngineImageManager.h>
-//#include <GameEngineBase/GameEngineDebug.h>
 #include <GameEngine/GameEngineCollision.h>
 #include <GameEngine/GameEngineRenderer.h>
 #include <string>
@@ -18,6 +17,7 @@ Projectile::Projectile()
 	, Damage_(100)
 	, Speed_(200)
 	, Duration_(3)	// 지속시간
+	, IsBullet_(true)
 {
 }
 
@@ -54,7 +54,7 @@ void Projectile::Render()
 }
 
 
-void Projectile::SetType(BulletType _BT)
+void Projectile::SetType(ProjectileType _BT)
 {
 
 	ProjImage_->SetImage(ProjectileList[static_cast<int>(_BT)]);
@@ -62,19 +62,19 @@ void Projectile::SetType(BulletType _BT)
 	// 세부 설정
 	switch (_BT)
 	{
-	case BulletType::KNIFE:
+	case ProjectileType::KNIFE:
 	{
 		GameEngineSound::SoundPlayOneShot("ProjectileKnife.mp3", 0);
 		ProjImage_->SetRotationFilter("Sword_Filter.bmp");
 		break;
 	}
-	case BulletType::FLAME_BLUE:
+	case ProjectileType::FLAME_BLUE:
 	{
 		GameEngineSound::SoundPlayOneShot("ProjectileMagic.mp3", 0);
 		ProjImage_->SetRotationFilter("ProjectileHoly1_Filter.bmp");
 		break;
 	}
-	case BulletType::FLAME_RED:
+	case ProjectileType::FLAME_RED:
 		
 		GameEngineSound::SoundPlayOneShot("ProjectileMagic.mp3", 0);
 		ProjImage_->SetRotationFilter("ProjectileFlameRed_Filter.bmp");

@@ -49,7 +49,7 @@ private:
 	bool ShootAble_;
 
 	Projectile* Projectile_;
-	BulletType BT_;
+	ProjectileType BT_;
 	SkillType SkillType_;
 
 	// 초기상태

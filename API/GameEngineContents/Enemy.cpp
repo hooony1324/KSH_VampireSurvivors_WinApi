@@ -226,10 +226,10 @@ float Enemy::MapColCheck(float _Speed)
 	}
 
 	float4 EnemyMapColPos = { static_cast<float>(EnemyPosX), GetPosition().y };
-	int ColorTop = MapColImage_->GetImagePixel(EnemyMapColPos + float4{ 0, -20 });
-	int ColorBot = MapColImage_->GetImagePixel(EnemyMapColPos + float4{ 0, 20 });
-	int ColorLeft = MapColImage_->GetImagePixel(EnemyMapColPos + float4{ -20, 0 });
-	int ColorRight = MapColImage_->GetImagePixel(EnemyMapColPos + float4{ 20, 0 });
+	int ColorTop = MapColImage_->GetImagePixel(EnemyMapColPos + float4{ 0, -25 });
+	int ColorBot = MapColImage_->GetImagePixel(EnemyMapColPos + float4{ 0, 25 });
+	int ColorLeft = MapColImage_->GetImagePixel(EnemyMapColPos + float4{ -25, 0 });
+	int ColorRight = MapColImage_->GetImagePixel(EnemyMapColPos + float4{ 25, 0 });
 
 	// 스폰 됐을 때콜리전 맵 안에 갇혀있으면 빠져나가야함
 	int Trapped = ColorTop + ColorBot + ColorLeft + ColorRight;
