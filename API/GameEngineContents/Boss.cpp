@@ -300,7 +300,7 @@ void Boss::SetStat()
 	case BOSSTYPE::XLMUMMY:
 		Hp_ = 500.0f;
 		Speed_ = 50.0f;
-		KnockBackRatio_ = 0.5f;
+		KnockBackRatio_ = 0.35f;
 		break;
 	default:
 		break;

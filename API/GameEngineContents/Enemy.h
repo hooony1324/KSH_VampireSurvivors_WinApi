@@ -39,6 +39,7 @@ public:
 	// 외부에서 EnemySet 관련
 	void SetEnemy(int _Index);
 
+	static int EnemyNameListIndex;
 private:
 	static GameEngineImage* MapColImage_;
 
@@ -91,8 +92,7 @@ private:
 	Counter DeathCounter_;
 
 	// 외부에서 EnemySet 관련
-	bool SetSignalOn;
-	int EnemyNameListIndex;
+	
 
 	// Medusa 특수 움직임
 	float UpDown_;

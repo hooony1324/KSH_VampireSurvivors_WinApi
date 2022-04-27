@@ -192,7 +192,7 @@ void EnemyController::SpawnBoss(bool _BossCounterEnd)
 		Boss* BossPtr = dynamic_cast<Boss*>(Ptr);
 
 		// 소환 위치 조정
-		BossPtr->SetPosition(GetSpawnPos());
+		BossPtr->SetPosition(GetPosition() + SpawnPosR_ + GetSpawnPos());
 
 		BossCounter_.SetCount(60.0f);
 	}

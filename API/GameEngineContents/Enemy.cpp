@@ -17,6 +17,7 @@
 
 GameEngineImage* Enemy::MapColImage_ = nullptr;
 std::string EnemyNameList[] = {"Mud", "Medusa", "Ecto", "Mummy"};
+int Enemy::EnemyNameListIndex = 0;
 
 Enemy::Enemy()
 	: Speed_(80.0f)
@@ -27,7 +28,6 @@ Enemy::Enemy()
 	, OtherBlockRight_(nullptr)
 	, DestDir_(float4::ZERO)
 	, Dead_(false)
-	, EnemyNameListIndex(0)
 {
 }
 
@@ -39,9 +39,11 @@ Enemy::~Enemy()
 void Enemy::SetEnemy(int _Index)
 {
 	EnemyNameListIndex = _Index;
+
 	if (EnemyNameListIndex >= static_cast<int>(EnemyNameList->size()))
 	{
-		EnemyNameListIndex = EnemyNameListIndex % static_cast<int>(EnemyNameList->size());
+		//EnemyNameListIndex = EnemyNameListIndex % static_cast<int>(EnemyNameList->size());
+		EnemyNameListIndex = -1;
 	}
 
 	EnemyName_ = EnemyNameList[EnemyNameListIndex];
