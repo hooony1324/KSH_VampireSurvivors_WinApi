@@ -30,7 +30,7 @@ void LevelUpBox::Start()
 
 void LevelUpBox::Update()
 {
-	if (false == Col_->CollisionCheck("Player", CollisionType::Rect, CollisionType::Rect))
+	if (false == Col_->CollisionCheck("Player"))
 	{
 		return;
 	}

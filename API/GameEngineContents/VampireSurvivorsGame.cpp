@@ -121,9 +121,9 @@ void VampireSurvivorsGame::ResourceLoad()
 	GameEngineImageManager::GetInst()->Find("Poe_WalkRight.bmp")->Cut({ 70, 70 });
 	GameEngineImageManager::GetInst()->Find("Poe_WalkLeft.bmp")->Cut({ 70, 70 });
 
-	GameEngineImageManager::GetInst()->Find("Mud_WalkLeft.bmp")->Cut({ 140, 140 });
-	GameEngineImageManager::GetInst()->Find("Mud_WalkRight.bmp")->Cut({ 140, 140 });
-	GameEngineImageManager::GetInst()->Find("Mud_Dead.bmp")->Cut({ 140, 140 });
+	GameEngineImageManager::GetInst()->Find("Mud_WalkLeft.bmp")->Cut({ 120, 120 });
+	GameEngineImageManager::GetInst()->Find("Mud_WalkRight.bmp")->Cut({ 120, 120 });
+	GameEngineImageManager::GetInst()->Find("Mud_Dead.bmp")->Cut({ 120, 120 });
 
 
 

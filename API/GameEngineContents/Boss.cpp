@@ -166,7 +166,10 @@ void Boss::DieStart()
 	GameInfo::GetPlayerInfo()->KillCount_ += 1;
 	Renderer_->ChangeAnimation(BossNameList[BossIndex_] + "_Dead");
 	BossCol_->Off();
-	
+
+	// ¹Ú½º ¶³±À
+	GameEngineActor* Ptr = GetLevel()->CreateActor<LevelUpBox>(static_cast<int>(ACTOR_ORDER::UI));
+	Ptr->SetPosition(BossPos_);
 }
 
 void Boss::DieUpdate()
@@ -194,8 +197,6 @@ void Boss::DieUpdate()
 void Boss::DieEnd()
 {
 	Death();
-
-	// ¹Ú½º ¶³±À
 
 	// ´ÙÀ½ º¸½º·Î °»½Å
 	BossIndex_++;
@@ -299,6 +300,7 @@ void Boss::SetStat()
 	case BOSSTYPE::XLMUMMY:
 		Hp_ = 500.0f;
 		Speed_ = 50.0f;
+		KnockBackRatio_ = 0.5f;
 		break;
 	default:
 		break;
