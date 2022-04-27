@@ -4,6 +4,8 @@
 #include <GameEngine/GameEngineImageManager.h>
 #include <GameEngine/GameEngineRenderer.h>
 
+#include "GameEnum.h"
+
 Arrow::Arrow() 
 {
 }
@@ -19,12 +21,14 @@ void Arrow::Start()
 
 	TargetRenderer_ = nullptr;
 
-	ArrowL_ = CreateRenderer();
+	ArrowL_ = CreateRenderer((static_cast<int>(RENDER_ORDER::UI)));
+	ArrowL_->CameraEffectOff();
 	ArrowL_->CreateAnimation("Arrow_R.bmp", "ArrowR", 0, 7, 0.1f, true);
 	ArrowL_->ChangeAnimation("ArrowR");
 	ArrowL_->Off();
 
-	ArrowR_ = CreateRenderer();
+	ArrowR_ = CreateRenderer((static_cast<int>(RENDER_ORDER::UI)));
+	ArrowR_->CameraEffectOff();
 	ArrowR_->CreateAnimation("Arrow_L.bmp", "ArrowL", 0, 7, 0.1f, true);
 	ArrowR_->ChangeAnimation("ArrowL");
 	ArrowR_->Off();
@@ -39,7 +43,7 @@ void Arrow::Update()
 	{
 		ArrowL_->On();
 		ArrowR_->On();
-
+		auto val = TargetRenderer_->GetPivot() + float4{ -TargetRenderer_->GetScale().Half().x - 20, 0 };
 		ArrowL_->SetPivot(TargetRenderer_->GetPivot() + float4{ -TargetRenderer_->GetScale().Half().x - 20, 0 });
 		ArrowR_->SetPivot(TargetRenderer_->GetPivot() + float4{ TargetRenderer_->GetScale().Half().x + 20, 0 });
 

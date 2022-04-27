@@ -28,13 +28,13 @@ void ResultBoard::Start()
 	ButtonConfirm->SetPivot({ 0, 350 });
 	ButtonConfirm->Off();
 
-	Arrow* ArrowPtr = GetLevel()->CreateActor<Arrow>(static_cast<int>(ACTOR_ORDER::UI));
-	ArrowPtr->SetTarget(ButtonConfirm);
+	ArrowPtr_ = GetLevel()->CreateActor<Arrow>(static_cast<int>(ACTOR_ORDER::UI));
+	ArrowPtr_->SetTarget(ButtonConfirm);
+
 }
 
 void ResultBoard::Update()
 {
-
 }
 
 void ResultBoard::Render()

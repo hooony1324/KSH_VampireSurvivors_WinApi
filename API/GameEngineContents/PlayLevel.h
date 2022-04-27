@@ -16,6 +16,14 @@ class GameEngineImage;
 class PlayLevel : public GameEngineLevel
 {
 public:
+	enum class LevelState
+	{
+		PLAY,
+		LEVELUP,
+		PAUSE
+	};
+
+public:
 	// constrcuter destructer
 	PlayLevel();
 	~PlayLevel();
@@ -38,6 +46,19 @@ private:
 	// Sound
 	GameEngineSoundPlayer BgmPlayer;
 
+	// FSM
+	void UpdateState();
+	void ChangeState(LevelState _State);
+
+	void PlayStart();
+	void LevelUpStart();
+	void PauseStart();
+
+	void PlayUpdate();
+	void LevelUpUpdate();
+	void PauseUpdate();
+
+	LevelState LevelState_;
 
 private:
 	// UI
@@ -56,8 +77,6 @@ private:
 	void GamePause();
 	void ShowPauseMenu();
 	void LevelUpUICheck();
-
-	bool PlayLevelPause_;
 
 	// Map
 	void CreateMap();

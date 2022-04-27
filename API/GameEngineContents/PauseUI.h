@@ -1,5 +1,6 @@
 #pragma once
 #include <GameEngine/GameEngineActor.h>
+#include "Arrow.h"
 
 // Ό³Έν :
 class PauseUI : public GameEngineActor
@@ -22,7 +23,9 @@ protected:
 	void Render() override;
 
 private:
-
-
+	Arrow* ArrowPtr_;
+	bool IsOption_;
+	GameEngineRenderer* Buttons_[2];
+	int CurButtonIdex_;
 };
 

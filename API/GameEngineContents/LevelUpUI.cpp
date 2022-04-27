@@ -29,7 +29,6 @@ LevelUpUI::~LevelUpUI()
 void LevelUpUI::Start()
 {
 
-
 	// ¹è°æ 
 	GameEngineRenderer* Renderer = CreateRenderer("LevelUpUI.bmp", static_cast<int>(RENDER_ORDER::UI));
 	SetScale(Renderer->GetScale());

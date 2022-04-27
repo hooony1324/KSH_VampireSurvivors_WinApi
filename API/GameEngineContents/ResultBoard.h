@@ -2,6 +2,7 @@
 #include <GameEngine/GameEngineActor.h>
 
 // Ό³Έν :
+class Arrow;
 class ResultBoard : public GameEngineActor
 {
 public:
@@ -22,6 +23,6 @@ protected:
 	void Render() override;
 
 private:
-
+	Arrow* ArrowPtr_;
 };
 
