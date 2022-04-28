@@ -94,7 +94,6 @@ void GameEngine::EngineLoop()
 
         NextLevel_ = nullptr;
         GameEngineTime::GetInst()->Reset();
-        GameEngineInput::GetInst()->Reset();
 
         Rectangle(WindowMainImage_->ImageDC(), 0, 0, WindowMainImage_->GetScale().ix(), WindowMainImage_->GetScale().iy());
         Rectangle(BackBufferImage_->ImageDC(), 0, 0, BackBufferImage_->GetScale().ix(), BackBufferImage_->GetScale().iy());
@@ -117,6 +116,13 @@ void GameEngine::EngineLoop()
     WindowMainImage_->BitCopy(BackBufferImage_);
 
     CurrentLevel_->ActorRelease();
+
+    if (true == CurrentLevel_->IsReset)
+    {
+        CurrentLevel_->Reset();
+        // 리셋되고 나서 로딩을 다시 호출하건 자신만의 뭐가 있건 알아서 해라.
+        CurrentLevel_->UserResetEnd();
+    }
 
 }
 

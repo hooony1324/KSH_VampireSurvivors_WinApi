@@ -133,7 +133,7 @@ void ExpGem::PlayerCheck()
 			GameInfo::GetPlayerInfo()->Level_ += LevelUp;
 			
 			// 레벨 업 한만큼 UI호출
-			LevelUpUI::CreateCount_ += LevelUp;
+			LevelUpUI::CreateCount_ = LevelUp;
 		}
 
 	}

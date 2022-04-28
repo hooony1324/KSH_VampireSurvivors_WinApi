@@ -59,7 +59,7 @@ enum class SkillType
 
 	// @@@ AttriBute : Passive @@@
 
-	//BRACER,			// + SWORD = THOUSANDEDGE
+	BRACER,			// + SWORD = THOUSANDEDGE
 	//EMPTYTOME,		// + MAGICWAND = HOLYWAND
 	//SPINACH,			// + FIREWAND = HELLFIRE
 	//SPELLBINDER,		// + KINGBIBLE = UNHOLYVESPERS

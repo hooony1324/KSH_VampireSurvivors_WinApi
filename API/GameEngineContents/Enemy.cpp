@@ -48,6 +48,7 @@ void Enemy::SetEnemy(int _Index)
 
 	EnemyName_ = EnemyNameList[EnemyNameListIndex];
 	Renderer_->ChangeAnimation(EnemyName_ + "_WalkRight");
+	KnockBackDir_ = float4::ZERO;
 }
 
 void Enemy::Start()
@@ -76,6 +77,9 @@ void Enemy::Start()
 
 	// Medusa 움직임
 	UpDown_ = 1;
+
+	// 되살아날때 더 강해진다
+	DeadCount_ = 0;
 }
 
 void Enemy::Update()
@@ -129,8 +133,8 @@ void Enemy::Hit()
 
 	Hp_ -= Damage;
 
-	// 넉백 정도
-	KnockBackDir_ = Vector2D::GetDirection(BulletPos, Pos_) * 40.0f;
+	// 넉백 방향
+	KnockBackDir_ = Vector2D::GetDirection(BulletPos, Pos_);
 
 }
 
@@ -175,7 +179,9 @@ void Enemy::EnemyDead()
 		Off();
 		EnemyController::LiveEnemyNum -= 1;
 		SetPosition(float4{ Pos_.x, -40 });
-		Hp_ = 100;
+		DeadCount_++;
+		Hp_ = static_cast<float>(100 + (DeadCount_ * 20));
+
 	}
 
 	
@@ -200,7 +206,7 @@ void Enemy::EnemyMove()
 	}
 
 	float Speed = MapColCheck(Speed_);
-	SetMove((DestDir_ + KnockBackDir_) * DeltaTime_ * Speed);
+	SetMove((DestDir_ + (KnockBackDir_ * 40.0f)) * DeltaTime_ * Speed);
 }
 
 void Enemy::UpdateHeadDir()

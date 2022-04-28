@@ -168,7 +168,7 @@ void LevelUpUI::ShowRandomSkills()
 {
 	if (0 >= SelectNum_)
 	{
-		// 돈 또는 체력 선택
+		// 돈 또는 체력 선택a
 		//Renderer1_->SetImage("");
 		//Renderer2_->SetImage("");
 		int a = 0;
@@ -219,7 +219,6 @@ void LevelUpUI::SelectSkillBox()
 		// 종료
 		Death();
 		CreateCount_--;
-		GameInfo::SetPause(false);
 		IsActivated_ = false;
 		StatUI_->Off();
 		return;
@@ -236,7 +235,6 @@ void LevelUpUI::SelectSkillBox()
 		// 종료
 		Death();
 		CreateCount_--;
-		GameInfo::SetPause(false);
 		IsActivated_ = false;
 		StatUI_->Off();
 		return;
@@ -253,7 +251,6 @@ void LevelUpUI::SelectSkillBox()
 		// 종료
 		Death();
 		CreateCount_--;
-		GameInfo::SetPause(false);
 		IsActivated_ = false;
 		StatUI_->Off();
 		return;
@@ -270,7 +267,6 @@ void LevelUpUI::SelectSkillBox()
 		// 종료
 		Death();
 		CreateCount_--;
-		GameInfo::SetPause(false);
 		IsActivated_ = false;
 		StatUI_->Off();
 		return;

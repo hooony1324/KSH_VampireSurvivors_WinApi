@@ -121,7 +121,7 @@ private:
 
 static std::string SkillOrder[] =
 {
-	"Knife", "MagicWand", "FireWand", "Clover"
+	"Knife", "MagicWand", "FireWand", "Bracer", "Clover", 
 };
 
 //"Knife", "MagicWand", "FireWand", "Runetracer",

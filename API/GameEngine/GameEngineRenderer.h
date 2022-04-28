@@ -71,10 +71,16 @@ public:
 		return RenderImageScale_;
 	}
 
+	inline float4 GetSortingPivot()
+	{
+		return GetActor()->GetPosition() + RenderPivot_ + SortingPivot;
+	}
+
 	inline GameEngineImage* GetImage()
 	{
 		return Image_;
 	}
+
 
 	inline void SetAlpha(unsigned int _Alpha)
 	{
@@ -145,6 +151,8 @@ private:
 	// 이미지에서 잘라낼 좌표와 크기
 	float4 RenderImagePivot_;	// 복사받으려는 이미지 시작 좌표
 	float4 RenderImageScale_;	// 복사받으려는 이미지 한칸의 크기
+
+	float4 SortingPivot;	// 복사받으려는 이미지 한칸의 크기
 
 	unsigned int TransColor_;	// TransParents 에서 쓸 제외할 RGB 값
 	unsigned int Alpha_;

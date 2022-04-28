@@ -243,7 +243,7 @@ void PlayLevel::LevelUpUpdate()
 		return;
 	}
 
-	
+	int a = 0;
 }
 
 void PlayLevel::PauseUpdate()

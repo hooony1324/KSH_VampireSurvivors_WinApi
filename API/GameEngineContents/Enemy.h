@@ -74,6 +74,7 @@ private:
 	float Speed_;
 	float Hp_;
 	bool Dead_;
+	int DeadCount_;
 	
 	float4 PlayerPos_;
 	float4 Pos_;

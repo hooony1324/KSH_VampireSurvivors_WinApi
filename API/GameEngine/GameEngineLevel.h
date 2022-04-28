@@ -1,6 +1,7 @@
 #pragma once
 #include <list>
 #include <map>
+#include <set>
 #include <vector>
 #include <GameEngineBase/GameEngineNameObject.h>
 #include <GameEngineBase/GameEngineMath.h>
@@ -36,7 +37,7 @@ public:
 	GameEngineLevel& operator=(const GameEngineLevel& _Other) = delete;
 	GameEngineLevel& operator=(GameEngineLevel&& _Other) noexcept = delete;
 
-	static void IsDebugModeOn() 
+	static void IsDebugModeOn()
 	{
 		IsDebug = true;
 	}
@@ -63,12 +64,33 @@ public:
 		std::list<GameEngineActor*>& Group = AllActor_[_Order];
 		Group.push_back(NewActor);
 
+		//// _Order 액터들이 돌아가는 순서를 의미하게 된다.
+		//// insert와 find를 동시에
+		//std::map<int, std::list<GameEngineActor*>>::iterator FindGroup
+		//	= AllActor_.find(_Order);
+
+		//if (FindGroup == AllActor_.end())
+		//{
+
+		//	// AllActor_.insert(std::make_pair(_Order, std::list<GameEngineActor*>()));
+		//	// 이게더 빠름
+		//	AllActor_.insert(
+		//		std::map<int, std::list<GameEngineActor*>>::value_type(_Order, std::list<GameEngineActor*>())
+		//	);
+		//	FindGroup = AllActor_.find(_Order);
+		//}
+
 		return NewActor;
 	}
 
-	inline float4 GetCameraPos() 
+	inline float4 GetCameraPos()
 	{
 		return CameraPos_;
+	}
+
+	inline void ResetOn()
+	{
+		IsReset = true;
 	}
 
 	inline void MoveCameraPos(const float4& _Value)
@@ -76,9 +98,9 @@ public:
 		CameraPos_ += _Value;
 	}
 
-	inline void SetCameraPos(const float4& _Value )
+	inline void SetCameraPos(const float4& _Value)
 	{
-		CameraPos_  = _Value;
+		CameraPos_ = _Value;
 	}
 
 	template<typename ConvertType>
@@ -90,6 +112,12 @@ public:
 	GameEngineActor* FindActor(const std::string& _Name);
 
 	void RegistActor(const std::string& _Name, GameEngineActor* _Actor);
+
+	// 이 오더는 sort를 하겠다.
+	void YSortOn(int _SortOrder)
+	{
+		IsYSort_.insert(_SortOrder);
+	}
 
 protected:
 	// 시점함수
@@ -106,8 +134,14 @@ protected:
 
 	void ObjectLevelMoveCheck(GameEngineLevel* _NextLevel);
 
+	void Reset();
+
+	virtual void UserResetEnd() {}
+
 private:
 	static bool IsDebug;
+
+	bool IsReset;
 
 	// std::vector로 관리하는게 더 좋다고 생각..
 	std::map<int, std::list<GameEngineActor*>> AllActor_;
@@ -125,6 +159,9 @@ private:
 
 private:
 	std::map<int, std::list<GameEngineRenderer*>> AllRenderer_;
+
+	// 존재하냐 안하냐
+	std::set<int> IsYSort_;
 
 	void AddRenderer(GameEngineRenderer* _Renderer);
 
