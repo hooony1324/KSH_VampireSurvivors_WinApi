@@ -6,8 +6,8 @@
 
 enum class BOSSTYPE
 {
-	SHADERED,
 	XLMUMMY,
+	XLRREAPER,
 	MAX
 };
 
@@ -23,8 +23,6 @@ public:
 		CHASE,
 		HIT,
 		DIE,
-		RED_ALARMCHASE,
-		RED_DIE
 	};
 
 	static int BossIndex_;
@@ -46,6 +44,9 @@ protected:
 	void Render() override;
 
 private:
+	void SetRenderer(BOSSTYPE _BossType);
+	BOSSTYPE BossType_;
+
 	// FSM
 	void UpdateState();
 	void ChangeState(BOSS_STATE _State);
@@ -59,12 +60,6 @@ private:
 	void DieStart();
 	void DieUpdate();
 	void DieEnd();
-
-	// ½ÃÇÑÆøÅº ¸÷ + ÆøÆÄÁ×À½
-	void RedAlarmChaseStart();
-	void RedAlarmChaseUpdate();
-	void RedDieStart();
-	void RedDieUpdate();
 
 	// ½ºÅÈ
 	void SetStat();
@@ -110,10 +105,7 @@ private:
 	float4 KnockBackDir_;
 	float KnockBackRatio_;
 
-	// Æ¯¼ö : ShadeRed
-	GameEngineCollision* BombRange_;	// Æø¹ß¹üÀ§
-	GameEngineCollision* ActivateRange_;	// Æø¹ß
-	Counter BombTime_;
+
 	
 
 };

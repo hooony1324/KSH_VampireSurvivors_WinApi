@@ -15,8 +15,9 @@
 #include "Player.h"
 #include <vector>
 
-std::vector<std::string> BossNameList{ "ShadeRed", "XLMummy" };
+std::vector<std::string> BossNameList{ "XLMummy", "XLReaper"};
 int Boss::BossIndex_ = 0;
+
 
 Boss::Boss() 
 {
@@ -31,15 +32,13 @@ void Boss::Start()
 	NextLevelOff();
 	MapColImage_ = PlayLevel::MapColImage_;
 
+	BossType_ = static_cast<BOSSTYPE>(BossIndex_);
+	BossName_ = BossNameList[BossIndex_];
 	Renderer_ = CreateRenderer();
 
 	// 이름대로 애니메이션 세팅
-	BossName_ = BossNameList[BossIndex_];
-
-	Renderer_->CreateFolderAnimationTimeKey(BossName_ + "_WalkLeft.bmp", BossName_ + "_WalkLeft", static_cast<int>(TIME_GROUP::MONSTER), 0, 3, 0.2f, true);
-	Renderer_->CreateFolderAnimationTimeKey(BossName_ + "_WalkRight.bmp", BossName_ + "_WalkRight", static_cast<int>(TIME_GROUP::MONSTER), 0, 3, 0.2f, true);
-	Renderer_->CreateFolderAnimationTimeKey(BossName_ + "_Dead.bmp", BossName_ + "_Dead", static_cast<int>(TIME_GROUP::MONSTER), 0, 29, 0.1f, false);
-	Renderer_->ChangeAnimation(BossName_ + "_WalkLeft");
+	SetRenderer(BossType_);
+	
 
 	// 보스 인덱스로 스탯 조정
 	SetStat();
@@ -47,22 +46,12 @@ void Boss::Start()
 	// 콜리전 설정
 	BossCol_ = CreateCollision("Boss", { 28, 45 });
 	
-	
+	// 피격 
 	KnockBackRatio_ = 1.0f;
 	HitCounter_.SetCount(0.5f);
 
-	if (0 == BossName_.compare("ShadeRed"))
-	{
-		Renderer_->CreateFolderAnimationTimeKey("ShadeRed_SmokeDead.bmp", "SmokeDead", static_cast<int>(TIME_GROUP::MONSTER), 0, 3, 0.1f, false);
-		BombRange_ = CreateCollision("Bomb", { 80, 80 });
-		ActivateRange_ = CreateCollision("ActivateRange", { 500, 500 });
-		BombTime_.SetCount(3.0f);
-		ChangeState(BOSS_STATE::CHASE);
-	}
-	else
-	{
-		ChangeState(BOSS_STATE::CHASE);
-	}
+
+	ChangeState(BOSS_STATE::CHASE);
 
 }
 
@@ -80,6 +69,8 @@ void Boss::Render()
 
 }
 
+
+
 void Boss::UpdateState()
 {
 	switch (State_)
@@ -92,12 +83,6 @@ void Boss::UpdateState()
 		break;
 	case BOSS_STATE::DIE:
 		DieUpdate();
-		break;
-	case BOSS_STATE::RED_ALARMCHASE:
-		RedAlarmChaseUpdate();
-		break;
-	case BOSS_STATE::RED_DIE:
-		RedDieUpdate();
 		break;
 	default:
 		break;
@@ -115,12 +100,6 @@ void Boss::ChangeState(BOSS_STATE _State)
 			break;
 		case BOSS_STATE::DIE:
 			DieStart();
-			break;
-		case BOSS_STATE::RED_ALARMCHASE:
-			RedAlarmChaseStart();
-			break;
-		case BOSS_STATE::RED_DIE:
-			RedDieStart();
 			break;
 		default:
 			break;
@@ -143,20 +122,14 @@ void Boss::ChaseUpdate()
 	//왼쪽 오른쪽 쳐다보기
 	if (0 >= DestDir.x)
 	{
-		Renderer_->ChangeAnimation(BossNameList[BossIndex_] + "_WalkLeft");
+		Renderer_->ChangeAnimation(BossName_ + "_WalkLeft");
 	}
 	else
 	{
-		Renderer_->ChangeAnimation(BossNameList[BossIndex_] + "_WalkRight");
+		Renderer_->ChangeAnimation(BossName_ + "_WalkRight");
 	}
 
-	if (0 == BossName_.compare("ShadeRed") && true == ActivateRange_->CollisionCheck("Player"))
-	{
-		int a = 0;
-		ActivateRange_->Death();
-		GameEngineSound::SoundPlayOneShot("RedAlarm.mp3", 5);
-		ChangeState(BOSS_STATE::RED_ALARMCHASE);
-	}
+
 }
 
 void Boss::HitStart()
@@ -188,14 +161,8 @@ void Boss::HitEnd()
 		return;
 	}
 
-	if (0 == BossName_.compare("ShadeRed"))
-	{
-		ChangeState(BOSS_STATE::RED_ALARMCHASE);
-	}
-	else
-	{
-		ChangeState(BOSS_STATE::CHASE);
-	}
+	ChangeState(BOSS_STATE::CHASE);
+
 
 
 }
@@ -236,72 +203,10 @@ void Boss::DieUpdate()
 void Boss::DieEnd()
 {
 	Death();
-
-	// 다음 보스로 갱신
-	BossIndex_++;
 }
 
-void Boss::RedAlarmChaseStart()
-{
 
-}
 
-void Boss::RedAlarmChaseUpdate()
-{
-	PlayerPos_ = GameInfo::GetPlayerInfo()->PlayerPos_;
-	float4 DestDir = Vector2D::GetDirection(BossPos_, PlayerPos_);
-
-	float Speed = MapColCheck(Speed_, DestDir);
-	SetMove(DestDir * DeltaTime_ * Speed);
-
-	HitCheck();
-
-	//왼쪽 오른쪽 쳐다보기
-	if (0 >= DestDir.x)
-	{
-		Renderer_->ChangeAnimation(BossNameList[BossIndex_] + "_WalkLeft");
-	}
-	else
-	{
-		Renderer_->ChangeAnimation(BossNameList[BossIndex_] + "_WalkRight");
-	}
-
-	// 시한폭탄
-
-	if (true == BombTime_.Start(GameEngineTime::GetDeltaTime(static_cast<int>(TIME_GROUP::MONSTER))))
-	{
-		std::vector<GameEngineCollision*> PlayerCol;
-		if (true == BombRange_->CollisionResult("Player", PlayerCol))
-		{
-			Player* PlayerPtr = dynamic_cast<Player*>(PlayerCol[0]->GetActor());
-			PlayerPtr->Attacked(50.0f);
-			PlayerCol.clear();
-		}
-		// 터지고 죽음
-		GameEngineSound::SoundPlayOneShot("RedBlow.mp3", 0);
-		ChangeState(BOSS_STATE::RED_DIE);
-	}
-}
-
-void Boss::RedDieStart()
-{
-	// 폭발
-	Renderer_->ChangeAnimation("SmokeDead");
-
-	// 폭팔형 죽음, 맞아서 죽는거랑은 다른 분기
-	BombRange_->Death();
-	ActivateRange_->Death();
-	BombTime_.Reset();
-}
-
-void Boss::RedDieUpdate()
-{
-	// 애니메이션 끝나면 죽음
-	if (true == Renderer_->IsEndAnimation())
-	{
-		DieEnd();
-	}
-}
 
 float Boss::MapColCheck(float _Speed, float4 _DestDir)
 {
@@ -393,17 +298,44 @@ void Boss::SetStat()
 	BOSSTYPE Type = static_cast<BOSSTYPE>(BossIndex_);
 	switch (Type)
 	{
-	case BOSSTYPE::SHADERED:
-		Hp_ = 100.0f;
-		Speed_ = 170.0f;
-		KnockBackRatio_ = 2.0f;
-		break;
 	case BOSSTYPE::XLMUMMY:
 		Hp_ = 500.0f;
 		Speed_ = 50.0f;
-		KnockBackRatio_ = 0.35f;
+		KnockBackRatio_ = 0.6f;
+		break;
+	case BOSSTYPE::XLRREAPER:
+		Hp_ = 10000.0f;
+		Speed_ = 300.0f;
+		KnockBackRatio_ = 0.1f;
 		break;
 	default:
+		break;
+	}
+}
+
+void Boss::SetRenderer(BOSSTYPE _BossType)
+{
+	switch (_BossType)
+	{
+	case BOSSTYPE::XLMUMMY:
+		Renderer_->CreateFolderAnimationTimeKey(BossName_ + "_WalkLeft.bmp", BossName_ + "_WalkLeft", static_cast<int>(TIME_GROUP::MONSTER), 0, 3, 0.2f, true);
+		Renderer_->CreateFolderAnimationTimeKey(BossName_ + "_WalkRight.bmp", BossName_ + "_WalkRight", static_cast<int>(TIME_GROUP::MONSTER), 0, 3, 0.2f, true);
+		Renderer_->CreateFolderAnimationTimeKey(BossName_ + "_Dead.bmp", BossName_ + "_Dead", static_cast<int>(TIME_GROUP::MONSTER), 0, 29, 0.1f, false);
+		Renderer_->ChangeAnimation(BossName_ + "_WalkLeft");
+		break;
+	case BOSSTYPE::XLRREAPER:
+		Renderer_->CreateFolderAnimationTimeKey(BossName_ + "_WalkLeft.bmp", BossName_ + "_WalkLeft", static_cast<int>(TIME_GROUP::MONSTER), 0, 7, 0.2f, true);
+		Renderer_->CreateFolderAnimationTimeKey(BossName_ + "_WalkRight.bmp", BossName_ + "_WalkRight", static_cast<int>(TIME_GROUP::MONSTER), 0, 7, 0.2f, true);
+		Renderer_->CreateFolderAnimationTimeKey(BossName_ + "_Dead.bmp", BossName_ + "_Dead", static_cast<int>(TIME_GROUP::MONSTER), 0, 29, 0.1f, false);
+		Renderer_->ChangeAnimation(BossName_ + "_WalkLeft");
+		break;
+	case BOSSTYPE::MAX:
+		break;
+	default:
+		Renderer_->CreateFolderAnimationTimeKey(BossName_ + "_WalkLeft.bmp", BossName_ + "_WalkLeft", static_cast<int>(TIME_GROUP::MONSTER), 0, 3, 0.2f, true);
+		Renderer_->CreateFolderAnimationTimeKey(BossName_ + "_WalkRight.bmp", BossName_ + "_WalkRight", static_cast<int>(TIME_GROUP::MONSTER), 0, 3, 0.2f, true);
+		Renderer_->CreateFolderAnimationTimeKey(BossName_ + "_Dead.bmp", BossName_ + "_Dead", static_cast<int>(TIME_GROUP::MONSTER), 0, 29, 0.1f, false);
+		Renderer_->ChangeAnimation(BossName_ + "_WalkLeft");
 		break;
 	}
 }

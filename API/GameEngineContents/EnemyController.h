@@ -33,6 +33,7 @@ private:
 	void SpawnWave();
 	void SpawnBoss(bool _BossCounterEnd);
 	float4 GetSpawnPos();
+	void ChangeSpawnPosBase();
 
 // SpawnEnemy관련
 private:
@@ -43,7 +44,8 @@ private:
 
 	Counter SpawnCounter_;
 	bool IsSpawnTime_;
-	float4 SpawnPosR_;
+	int SpawnLeftRight_;
+	float4 SpawnPosBase_;
 
 // SpawnBoss관련
 private:

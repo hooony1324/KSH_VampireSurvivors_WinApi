@@ -11,7 +11,7 @@
 #include "Enemy.h"
 #include "Boss.h"
 
-const int MaxEnemySpawn = 100;
+const int MaxEnemySpawn = 0;
 int EnemyController::LiveEnemyNum = 0;
 const float SpawnCycle = 5.0f;
 
@@ -23,7 +23,7 @@ const float CollisionSizeY = 45;
 float4 SpawnPoint[PointNumY][PointNumX] = { float4::ZERO, };
 bool SpawnPointPicked[PointNumY][PointNumX] = { false, };
 
-const float WAVE_TIME = 30.0f;
+const float WAVE_TIME = 30.0f; // 다른 종류의 Enemy로 바뀌는 주기
 
 EnemyController::EnemyController() 
 	: EnemiesIndex(0)
@@ -54,6 +54,7 @@ void EnemyController::Start()
 	LiveEnemyNum = 0;
 	Enemy::EnemyNameListIndex = 0;
 	Boss::BossIndex_ = 0;
+
 	// 일반몹
 	Enemies_.reserve(MaxEnemySpawn);
 
@@ -70,7 +71,7 @@ void EnemyController::Start()
 	SpawnCounter_.SetCount(0);
 	SpawnMax_ = 7;
 	SpawnNum_ = 0;
-	SpawnPosR_ = float4{ GameEngineWindow::GetScale().Half().x , -400};
+	SpawnPosBase_ = float4{ 700, -400 };
 
 	// 보스, 스페셜 몹
 	BossCounter_.SetCount(0);
@@ -94,7 +95,9 @@ void EnemyController::Update()
 	if (true == IsSpawnTime_)
 	{
 		SpawnWave();
+		ChangeSpawnPosBase();
 		SpawnCounter_.SetCount(5);
+
 	}
 
 	SpawnBoss(BossCounter_.Start(DeltaTime));
@@ -112,6 +115,7 @@ void EnemyController::WaveIndexUpdate()
 	{
 		Time_ = 0.0f;
 		WaveIndex_++;
+		
 	}
 }
 
@@ -135,8 +139,8 @@ void EnemyController::SpawnWave()
 			Ptr->SetEnemy(WaveIndex_);
 
 			// 생성 위치 너무 가까우면 안됨
-			float4 Pos = GetSpawnPos();
-			Ptr->SetPosition(GetPosition() + SpawnPosR_ + Pos);
+			float4 RandomPos = GetSpawnPos();
+			Ptr->SetPosition(GetPosition() + SpawnPosBase_ + RandomPos);
 
 			SpawnNum_++;
 			LiveEnemyNum++;
@@ -185,6 +189,18 @@ float4 EnemyController::GetSpawnPos()
 	
 }
 
+void EnemyController::ChangeSpawnPosBase()
+{
+	if ( 0 < SpawnPosBase_.ix())
+	{
+		SpawnPosBase_.x = -1400;
+	}
+	else
+	{
+		SpawnPosBase_.x = 700;
+	}
+}
+
 void EnemyController::SpawnBoss(bool _BossCounterEnd)
 {
 	if (true == _BossCounterEnd)
@@ -193,9 +209,16 @@ void EnemyController::SpawnBoss(bool _BossCounterEnd)
 		Boss* BossPtr = dynamic_cast<Boss*>(Ptr);
 
 		// 소환 위치 조정
-		BossPtr->SetPosition(GetPosition() + SpawnPosR_ + GetSpawnPos());
+		BossPtr->SetPosition(GetPosition() + SpawnPosBase_ + GetSpawnPos());
 
+		// 다음 보스 소환 주기
 		BossCounter_.SetCount(10.0f);
+
+		// 다음 보스 지정
+		int Index = Boss::BossIndex_ + 1;
+		Index %= static_cast<int>(BOSSTYPE::MAX);
+		Boss::BossIndex_ = Index;
+
 	}
 
 }

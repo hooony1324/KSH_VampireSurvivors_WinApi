@@ -152,6 +152,10 @@ void VampireSurvivorsGame::ResourceLoad()
 	GameEngineImageManager::GetInst()->Find("XLMummy_WalkRight.bmp")->Cut({ 100, 100 });
 	GameEngineImageManager::GetInst()->Find("XLMummy_Dead.bmp")->Cut({ 100, 100 });
 
+	GameEngineImageManager::GetInst()->Find("XLReaper_WalkLeft.bmp")->Cut({ 200, 200 });
+	GameEngineImageManager::GetInst()->Find("XLReaper_WalkRight.bmp")->Cut({ 200, 200 });
+	GameEngineImageManager::GetInst()->Find("XLReaper_Dead.bmp")->Cut({ 200, 200 });
+
 
 	// 사운드 리소스
 	{
