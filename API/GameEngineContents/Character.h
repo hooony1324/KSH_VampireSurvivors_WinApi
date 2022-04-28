@@ -48,8 +48,9 @@ public:
 	float Power_;			// 추가 데미지, 괴력
 	float MeleeRange_;		// 근접 공격 범위(성서, 마늘, 성수, 번개 등 범위 공격만 해당)
 	float ShootSpeedRatio_;	// 전체 투사체 속도 증가비율
-	float AddShootNum_;		// 추가 투사체 수
 	float Duration_;		// 스킬 지속시간
+	float AddShootNum_;		// 추가 투사체 수
+	float CoolTime_;
 
 
 	// 패시브 서브 능력치

@@ -48,6 +48,8 @@ void GameInfo::SetPlayerInfo()
 	PlayerInfo_->ShootSpeedRatio_	= Character_->ShootSpeedRatio_;
 	PlayerInfo_->AddShootNum_		= Character_->AddShootNum_;
 	PlayerInfo_->Duration_			= Character_->Duration_;
+	PlayerInfo_->CoolTime_			= Character_->CoolTime_;
+
 	PlayerInfo_->Luck_				= Character_->Luck_;
 	PlayerInfo_->Growth_			= Character_->Growth_;
 	PlayerInfo_->Greed_				= Character_->Greed_;

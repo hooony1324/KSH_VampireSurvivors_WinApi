@@ -8,6 +8,8 @@
 class GameEngineRenderer;
 class StatUI : public GameEngineActor
 {
+private:
+
 public:
 	// constrcuter destructer
 	StatUI();
@@ -24,6 +26,9 @@ protected:
 	void Start() override;
 	void Update() override;
 	void Render() override;
+
+private:
+	void TextDraw();
 
 private:
 

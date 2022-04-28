@@ -51,8 +51,9 @@ void Character::SetCharacter(CharacterType _CharacterType)
 		Power_ = 0;
 		MeleeRange_ = 1;
 		ShootSpeedRatio_ = 1;
-		AddShootNum_ = 1;
 		Duration_ = 3;
+		AddShootNum_ = 1;
+		CoolTime_ = 0;
 		Luck_ = 0;
 		Growth_ = 1;
 		Greed_ = 1;
@@ -78,8 +79,9 @@ void Character::SetCharacter(CharacterType _CharacterType)
 		Power_ = 0;
 		MeleeRange_ = 1;
 		ShootSpeedRatio_ = 1;
-		AddShootNum_ = 1;
 		Duration_ = 3;
+		AddShootNum_ = 1;
+		CoolTime_ = 0;
 		Luck_ = 0;
 		Growth_ = 1;
 		Greed_ = 1;
@@ -105,8 +107,9 @@ void Character::SetCharacter(CharacterType _CharacterType)
 		Power_ = 0;
 		MeleeRange_ = 1;
 		ShootSpeedRatio_ = 1;
-		AddShootNum_ = 1;
 		Duration_ = 3;
+		AddShootNum_ = 1;
+		CoolTime_ = 0;
 		Luck_ = 0;
 		Growth_ = 1;
 		Greed_ = 1;
@@ -132,8 +135,9 @@ void Character::SetCharacter(CharacterType _CharacterType)
 		Power_ = 0;
 		MeleeRange_ = 1;
 		ShootSpeedRatio_ = 1;
-		AddShootNum_ = 1;
 		Duration_ = 3;
+		AddShootNum_ = 1;
+		CoolTime_ = 0;
 		Luck_ = 0;
 		Growth_ = 1;
 		Greed_ = 1;

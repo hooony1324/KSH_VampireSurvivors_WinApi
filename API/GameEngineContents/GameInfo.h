@@ -29,16 +29,17 @@ public:
 		int KillCount_;
 
 		// 패시브 기본 능력치 (체력, 스피드, 공격력, ...)
-		float Speed_;			// 이동속도
-		float CurrentHp_;		// 체력
 		float MaxHp_;
+		float CurrentHp_;		// 체력
+		float Speed_;			// 이동속도
 		float Recovery_;		// 체력 재생
 		float Guard_;			// 방어력
 		float Power_;			// 추가 데미지, 괴력
 		float MeleeRange_;		// 근접 공격 범위(성서, 마늘, 성수, 번개 등 범위 공격만 해당)
 		float ShootSpeedRatio_;	// 전체 투사체 속도 증가비율
-		float AddShootNum_;		// 투사체 수
 		float Duration_;		// 스킬 지속시간
+		float AddShootNum_;		// 투사체 수
+		float CoolTime_;
 
 		// 패시브 서브 능력치
 		float Luck_;			// 아이템 확률 3개 -> 4개

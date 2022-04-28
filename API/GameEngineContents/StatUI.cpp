@@ -38,18 +38,22 @@ void StatUI::Start()
 	SetSlotBase();
 
 	TextFont_.Load("../Resources/PlayUI/KO.ttf");
+
 }
 
 void StatUI::Update()
 {
 	SlotUpdate();
+	
+
 
 }
 
 void StatUI::Render()
 {
-	TextFont_.Draw("LVasdfasdfasdf", { 100, 100 }, RGB(255, 255, 255), 23, 800);
+	TextDraw();
 }
+
 
 void StatUI::SlotUpdate()
 {
@@ -158,4 +162,96 @@ void StatUI::SetSlotBase()
 
 	SkillType SkillType = GameInfo::GetPlayerInfo()->ActiveSkillSlot_[0];
 	ActiveSkills_[0]->SetImage(SkillOrder[static_cast<int>(SkillType)] + "UI.bmp");
+}
+
+
+void StatUI::TextDraw()
+{
+
+	float TextWidth = 8;
+	float Space;
+	float TextX = 228.0f;
+	std::string Stat;
+
+	float FirstY = 200;
+	float FirstHeight = 19;
+	Stat = std::to_string((int)GameInfo::GetPlayerInfo()->MaxHp_);
+	Space = static_cast<int>(Stat.length()) * TextWidth;
+	TextFont_.Draw(Stat, { TextX - Space, FirstY }, RGB(255, 255, 255), 20, 800);
+
+	Stat = std::to_string((int)GameInfo::GetPlayerInfo()->Recovery_);
+	Space = static_cast<int>(Stat.length()) * TextWidth;
+	TextFont_.Draw(Stat, { TextX - Space, FirstY + FirstHeight * 1 }, RGB(255, 255, 255), 20, 800);
+
+	Stat = std::to_string((int)GameInfo::GetPlayerInfo()->Guard_);
+	Space = static_cast<int>(Stat.length()) * TextWidth;
+	TextFont_.Draw(Stat, { TextX - Space, FirstY + FirstHeight * 2 }, RGB(255, 255, 255), 20, 800);
+
+	Stat = std::to_string((int)GameInfo::GetPlayerInfo()->Speed_);
+	Space = static_cast<int>(Stat.length()) * TextWidth;
+	TextFont_.Draw(Stat + "%", {TextX - Space - 8, FirstY + FirstHeight * 3}, RGB(255, 255, 255), 20, 800);
+
+
+	float SecondY = 297.0f;
+	float SecondHeight = 19;
+	Stat = std::to_string((int)GameInfo::GetPlayerInfo()->Power_);
+	Space = static_cast<int>(Stat.length()) * TextWidth;
+	TextFont_.Draw(Stat + "%", {TextX - Space - 8, SecondY}, RGB(255, 255, 255), 20, 800);
+
+	Stat = std::to_string((int)GameInfo::GetPlayerInfo()->MeleeRange_);
+	Space = static_cast<int>(Stat.length()) * TextWidth;
+	TextFont_.Draw(Stat + "%", { TextX - Space - 8, SecondY + SecondHeight }, RGB(255, 255, 255), 20, 800);
+
+	Stat = std::to_string((int)GameInfo::GetPlayerInfo()->ShootSpeedRatio_);
+	Space = static_cast<int>(Stat.length()) * TextWidth;
+	TextFont_.Draw(Stat, { TextX - Space, SecondY + SecondHeight * 2 }, RGB(255, 255, 255), 20, 800);
+
+	Stat = std::to_string((int)GameInfo::GetPlayerInfo()->Duration_);
+	Space = static_cast<int>(Stat.length()) * TextWidth;
+	TextFont_.Draw(Stat, { TextX - Space, SecondY + SecondHeight * 3 }, RGB(255, 255, 255), 20, 800);
+
+	Stat = std::to_string((int)GameInfo::GetPlayerInfo()->AddShootNum_);
+	Space = static_cast<int>(Stat.length()) * TextWidth;
+	TextFont_.Draw(Stat, { TextX - Space, SecondY + SecondHeight * 4 }, RGB(255, 255, 255), 20, 800);
+
+	Stat = std::to_string((int)GameInfo::GetPlayerInfo()->CoolTime_);
+	Space = static_cast<int>(Stat.length()) * TextWidth;
+	TextFont_.Draw(Stat + "%", { TextX - Space - 8, SecondY + SecondHeight * 5 }, RGB(255, 255, 255), 20, 800);
+
+
+	float ThirdY = 429.0f;
+	float ThirdHeight = 19;
+	Stat = std::to_string((int)GameInfo::GetPlayerInfo()->Luck_);
+	Space = static_cast<int>(Stat.length()) * TextWidth;
+	TextFont_.Draw(Stat, { TextX - Space, ThirdY }, RGB(255, 255, 255), 20, 800);
+
+	Stat = std::to_string((int)GameInfo::GetPlayerInfo()->Growth_);
+	Space = static_cast<int>(Stat.length()) * TextWidth;
+	TextFont_.Draw(Stat + "%", { TextX - Space - 8, ThirdY + ThirdHeight * 1 }, RGB(255, 255, 255), 20, 800);
+
+	Stat = std::to_string((int)GameInfo::GetPlayerInfo()->Greed_);
+	Space = static_cast<int>(Stat.length()) * TextWidth;
+	TextFont_.Draw(Stat, { TextX - Space, ThirdY + ThirdHeight * 2 }, RGB(255, 255, 255), 20, 800);
+
+	// 저주
+	TextFont_.Draw("-", { TextX - Space, ThirdY + ThirdHeight * 3}, RGB(255, 255, 255), 20, 800);
+
+	Stat = std::to_string((int)GameInfo::GetPlayerInfo()->Magnet_);
+	Space = static_cast<int>(Stat.length()) * TextWidth;
+	TextFont_.Draw(Stat, { TextX - Space, ThirdY + ThirdHeight * 4}, RGB(255, 255, 255), 20, 800);
+
+
+
+	float FourthY = 539.0f;
+	float FourthHeight = 19;
+	Stat = std::to_string((int)GameInfo::GetPlayerInfo()->Revival_);
+	Space = static_cast<int>(Stat.length()) * TextWidth;
+	TextFont_.Draw(Stat, { TextX - Space, FourthY }, RGB(255, 255, 255), 20, 800);
+
+	// 새로고침
+	TextFont_.Draw("-", { TextX - Space, FourthY + FourthHeight * 1 }, RGB(255, 255, 255), 20, 800);
+	// 건너뛰기
+	TextFont_.Draw("-", { TextX - Space, FourthY + FourthHeight * 2 }, RGB(255, 255, 255), 20, 800);
+	// 지우기
+	TextFont_.Draw("-", { TextX - Space, FourthY + FourthHeight * 3 }, RGB(255, 255, 255), 20, 800);
 }
