@@ -15,9 +15,8 @@
 #include "Player.h"
 #include <vector>
 
-std::vector<std::string> BossNameList{ "XLMummy", "XLReaper"};
+std::vector<std::string> BossNameList = { "XLMummy"/*, "XLReaper"*/ };
 int Boss::BossIndex_ = 0;
-
 
 Boss::Boss() 
 {
@@ -31,6 +30,12 @@ void Boss::Start()
 {
 	NextLevelOff();
 	MapColImage_ = PlayLevel::MapColImage_;
+
+	// ÀÎµ¦½º Á¶Á¤
+	if (BossIndex_ >= static_cast<int>(BOSSTYPE::MAX) - 1)
+	{
+		BossIndex_ = 0;
+	}
 
 	BossType_ = static_cast<BOSSTYPE>(BossIndex_);
 	BossName_ = BossNameList[BossIndex_];

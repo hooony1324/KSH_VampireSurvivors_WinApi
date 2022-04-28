@@ -16,7 +16,7 @@
 #include "EnemyController.h"
 
 GameEngineImage* Enemy::MapColImage_ = nullptr;
-std::string EnemyNameList[] = {"Mud", "Medusa", "Ecto", "Mummy"};
+std::vector<std::string> EnemyNameList = {"Mud", "Medusa", "Ecto", "Mummy"};
 int Enemy::EnemyNameListIndex = 0;
 
 Enemy::Enemy()
@@ -40,9 +40,10 @@ void Enemy::SetEnemy(int _Index)
 {
 	EnemyNameListIndex = _Index;
 
-	if (EnemyNameListIndex >= static_cast<int>(EnemyNameList->size()))
+	if (EnemyNameListIndex >= static_cast<int>(EnemyNameList.size()))
 	{
-		EnemyNameListIndex = EnemyNameListIndex % static_cast<int>(EnemyNameList->size());
+		int a = static_cast<int>(EnemyNameList.size());
+		EnemyNameListIndex = EnemyNameListIndex % static_cast<int>(EnemyNameList.size());
 	}
 
 	EnemyName_ = EnemyNameList[EnemyNameListIndex];

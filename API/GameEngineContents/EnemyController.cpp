@@ -12,7 +12,7 @@
 #include "Boss.h"
 #include "ShadeRed.h"
 
-const int MaxEnemySpawn = 0;
+const int MaxEnemySpawn = 150;
 int EnemyController::LiveEnemyNum = 0;
 const float SpawnCycle = 5.0f;
 
@@ -79,14 +79,14 @@ void EnemyController::Start()
 	ShadeRedCounter_.SetCount(0);
 
 	// 웨이브 시작 몬스터 설정
-	WaveIndex_ = 1;
+	WaveIndex_ = 0;
 
 	NextLevelOff();
 }
 
 void EnemyController::Update()
 {
-	float DeltaTime = GameEngineTime::GetDeltaTime(static_cast<int>(TIME_GROUP::TIMER));
+	float DeltaTime = GameEngineTime::GetDeltaTime(static_cast<int>(TIME_GROUP::MONSTER));
 	Time_ += DeltaTime;
 	WaveIndexUpdate();
 
@@ -102,7 +102,7 @@ void EnemyController::Update()
 
 	}
 
-	//SpawnBoss(BossCounter_.Start(DeltaTime));
+	SpawnBoss(BossCounter_.Start(DeltaTime));
 	SpawnShadeRed(ShadeRedCounter_.Start(DeltaTime));
 }
 
@@ -235,12 +235,10 @@ void EnemyController::SpawnBoss(bool _BossCounterEnd)
 		BossPtr->SetPosition(GetPosition() + SpawnPosBase_ + GetSpawnPos());
 
 		// 다음 보스 소환 주기
-		BossCounter_.SetCount(10.0f);
+		BossCounter_.SetCount(20.0f);
 
 		// 다음 보스 지정
-		int Index = Boss::BossIndex_ + 1;
-		Index %= static_cast<int>(BOSSTYPE::MAX);
-		Boss::BossIndex_ = Index;
+		Boss::BossIndex_ += 1;
 
 	}
 

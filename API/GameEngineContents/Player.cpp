@@ -220,6 +220,11 @@ void Player::HpBarRender()
 
 void Player::Attacked(float _Damage)
 {
+	if (true == GodMode_)
+	{
+		return;
+	}
+
 	if (false == Hitable_ || true == IsDeath())
 	{
 		return;
