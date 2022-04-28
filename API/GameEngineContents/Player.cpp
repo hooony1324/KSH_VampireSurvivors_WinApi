@@ -242,7 +242,7 @@ void Player::AllCollisionCheck()
 {
 	EnemyAttackCheck();
 
-
+	BossAttackCheck();
 }
 
 float Player::MapColCheck(float _PlayerSpeed)
@@ -302,7 +302,8 @@ void Player::EnemyAttackCheck()
 	EnemyBump_ = false;
 	if (nullptr != PlayerCol_)
 	{
-		EnemyBump_ = PlayerCol_->CollisionResult("Enemy", BumpEnemy_,CollisionType::Rect, CollisionType::Rect);
+		EnemyBump_ = PlayerCol_->CollisionResult("Enemy", BumpEnemy_);
+		//EnemyBump_ = PlayerCol_->CollisionCheck("Boss");
 	}
 
 	if (true == EnemyBump_ )
@@ -313,6 +314,30 @@ void Player::EnemyAttackCheck()
 		{
 			Attacked(10);
 		}
+	}
+
+	if (false == Hitable_)
+	{
+		InvincibleTime_ -= GameEngineTime::GetDeltaTime();
+	}
+
+	if (0 >= InvincibleTime_)
+	{
+		Hitable_ = true;
+		InvincibleTime_ = HitTime_;
+	}
+}
+
+void Player::BossAttackCheck()
+{
+	if (true == GodMode_)
+	{
+		return;
+	}
+
+	if (true == Hitable_ && true == PlayerCol_->CollisionCheck("Boss"))
+	{
+		Attacked(10);
 	}
 
 	if (false == Hitable_)

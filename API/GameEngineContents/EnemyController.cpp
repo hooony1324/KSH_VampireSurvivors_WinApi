@@ -10,6 +10,7 @@
 #include "GameEnum.h"
 #include "Enemy.h"
 #include "Boss.h"
+#include "ShadeRed.h"
 
 const int MaxEnemySpawn = 0;
 int EnemyController::LiveEnemyNum = 0;
@@ -219,6 +220,12 @@ void EnemyController::SpawnBoss(bool _BossCounterEnd)
 		Index %= static_cast<int>(BOSSTYPE::MAX);
 		Boss::BossIndex_ = Index;
 
+
+		// ShadeRed¼ÒÈ¯
+		GameEngineActor* RedPtr = GetLevel()->CreateActor<ShadeRed>(static_cast<int>(ACTOR_ORDER::MONSTER));
+		ShadeRed* Red = dynamic_cast<ShadeRed*>(RedPtr);
+
+		Red->SetPosition(GetPosition() + SpawnPosBase_ + GetSpawnPos());
 	}
 
 }

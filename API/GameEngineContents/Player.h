@@ -68,6 +68,7 @@ private:
 	void AllCollisionCheck();
 	float MapColCheck(float _PlayerSpeed);
 	void EnemyAttackCheck();
+	void BossAttackCheck();
 	float4 ShootableEnemeyCheck();
 
 	GameEngineImage* MapColImage_;

@@ -48,7 +48,7 @@ void Boss::Start()
 	
 	// ÇÇ°Ý 
 	KnockBackRatio_ = 1.0f;
-	HitCounter_.SetCount(0.5f);
+	HitCounter_.SetCount(0.3f);
 
 
 	ChangeState(BOSS_STATE::CHASE);
