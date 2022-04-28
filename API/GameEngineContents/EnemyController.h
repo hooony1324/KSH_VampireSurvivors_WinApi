@@ -51,10 +51,12 @@ private:
 private:
 	Counter BossCounter_;
 	int BossIndex_;
-	// ShadeRed -> 1
-	// XLMummy -> 2
-	// { 1, 0, 0, 0, 2, ...}
-	// 1Ä­-> 1ºÐ
+
+// SpawnShadeRed
+private:
+	Counter ShadeRedCounter_;
+	void SpawnShadeRed(bool _CounterEnd);
+
 
 // TimeCheck°ü·Ã
 private:

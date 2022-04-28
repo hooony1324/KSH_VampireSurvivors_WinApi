@@ -24,7 +24,7 @@ const float CollisionSizeY = 45;
 float4 SpawnPoint[PointNumY][PointNumX] = { float4::ZERO, };
 bool SpawnPointPicked[PointNumY][PointNumX] = { false, };
 
-const float WAVE_TIME = 30.0f; // 다른 종류의 Enemy로 바뀌는 주기
+const float WAVE_TIME = 20.0f; // 다른 종류의 Enemy로 바뀌는 주기
 
 EnemyController::EnemyController() 
 	: EnemiesIndex(0)
@@ -76,9 +76,10 @@ void EnemyController::Start()
 
 	// 보스, 스페셜 몹
 	BossCounter_.SetCount(0);
+	ShadeRedCounter_.SetCount(0);
 
 	// 웨이브 시작 몬스터 설정
-	WaveIndex_ = 0;
+	WaveIndex_ = 1;
 
 	NextLevelOff();
 }
@@ -101,8 +102,8 @@ void EnemyController::Update()
 
 	}
 
-	SpawnBoss(BossCounter_.Start(DeltaTime));
-
+	//SpawnBoss(BossCounter_.Start(DeltaTime));
+	SpawnShadeRed(ShadeRedCounter_.Start(DeltaTime));
 }
 
 void EnemyController::Render()
@@ -116,7 +117,6 @@ void EnemyController::WaveIndexUpdate()
 	{
 		Time_ = 0.0f;
 		WaveIndex_++;
-		
 	}
 }
 
@@ -164,6 +164,7 @@ void EnemyController::SpawnWave()
 			SpawnPointPicked[y][x] = false;
 		}
 	}
+
 }
 
 float4 EnemyController::GetSpawnPos()
@@ -202,6 +203,27 @@ void EnemyController::ChangeSpawnPosBase()
 	}
 }
 
+void EnemyController::SpawnShadeRed(bool _CounterEnd)
+{
+	if (false == _CounterEnd)
+	{
+		return;
+	}
+
+	int SpawnNum = (WaveIndex_ % 10);
+
+	for (int i = 0; i < SpawnNum; i++)
+	{
+		// ShadeRed소환
+		GameEngineActor* RedPtr = GetLevel()->CreateActor<ShadeRed>(static_cast<int>(ACTOR_ORDER::MONSTER));
+		ShadeRed* Red = dynamic_cast<ShadeRed*>(RedPtr);
+
+		Red->SetPosition(GetPosition() + SpawnPosBase_ + GetSpawnPos());
+	}
+
+	ShadeRedCounter_.SetCount(20);
+}
+
 void EnemyController::SpawnBoss(bool _BossCounterEnd)
 {
 	if (true == _BossCounterEnd)
@@ -220,12 +242,6 @@ void EnemyController::SpawnBoss(bool _BossCounterEnd)
 		Index %= static_cast<int>(BOSSTYPE::MAX);
 		Boss::BossIndex_ = Index;
 
-
-		// ShadeRed소환
-		GameEngineActor* RedPtr = GetLevel()->CreateActor<ShadeRed>(static_cast<int>(ACTOR_ORDER::MONSTER));
-		ShadeRed* Red = dynamic_cast<ShadeRed*>(RedPtr);
-
-		Red->SetPosition(GetPosition() + SpawnPosBase_ + GetSpawnPos());
 	}
 
 }

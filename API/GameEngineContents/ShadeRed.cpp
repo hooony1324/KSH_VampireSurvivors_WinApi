@@ -37,13 +37,14 @@ void ShadeRed::Start()
 	Renderer_->ChangeAnimation("WalkLeft");
 
 	RedCol_ = CreateCollision("Boss", { 28, 45 });
-	BombRange_ = CreateCollision("Bomb", { 80, 80 });
+	BombRange_ = CreateCollision("Bomb", { 100, 100 });
 	ActivateRange_ = CreateCollision("ActivateRange", { 600, 600 });
-	ExplodeTime_.SetCount(4.0f);
+	ExplodeTime_.SetCount(3.5f);
 	HitCounter_.SetCount(0.3f);
-
+	Ring_ = CreateRenderer("ShadeRed_Ring.bmp", static_cast<int>(RENDER_ORDER::MONSTER));
+	Ring_->Off();
 	
-	Hp_ = 30.0f;
+	Hp_ = 40.0f;
 	Speed_ = 170;
 
 	ExState_ = STATE::NONE;
@@ -94,7 +95,6 @@ void ShadeRed::ChangeState(STATE _State)
 		case ShadeRed::STATE::CHASE:
 			break;
 		case ShadeRed::STATE::ALERT_CHASE:
-			AlertChaseStart();
 			break;
 		case ShadeRed::STATE::HIT:
 			HitStart();
@@ -134,6 +134,7 @@ void ShadeRed::ChaseUpdate()
 	if (true == ActivateRange_->CollisionCheck("Player"))
 	{
 		ActivateRange_->Off();
+		Ring_->On();
 		GameEngineSound::SoundPlayOneShot("RedAlarm.mp3", 5);
 		ChangeState(STATE::ALERT_CHASE);
 	}
@@ -201,6 +202,7 @@ void ShadeRed::HitEnd()
 void ShadeRed::ExplosionStart()
 {
 	Renderer_->ChangeAnimation("SmokeDead");
+	Ring_->Off();
 	RedCol_->Off();
 }
 

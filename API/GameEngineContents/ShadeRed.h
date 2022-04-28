@@ -81,6 +81,7 @@ private:
 	float4 KnockBackDir_;
 
 	GameEngineRenderer* Renderer_;
+	GameEngineRenderer* Ring_;
 	GameEngineCollision* RedCol_;
 	GameEngineCollision* BombRange_;	// Æø¹ß¹üÀ§
 	GameEngineCollision* ActivateRange_;	// Æø¹ß

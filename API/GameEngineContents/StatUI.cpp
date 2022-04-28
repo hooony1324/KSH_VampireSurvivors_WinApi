@@ -20,6 +20,8 @@ StatUI::~StatUI()
 
 void StatUI::Start()
 {
+	NextLevelOff();
+
 	SetPosition(float4{8, 40});
 	GameEngineRenderer* RendererBack = CreateRenderer("StatUI.bmp", static_cast<int>(RENDER_ORDER::UI));
 	GameEngineRenderer* RendererText = CreateRenderer("StatUIText.bmp", static_cast<int>(RENDER_ORDER::UI));
@@ -35,17 +37,18 @@ void StatUI::Start()
 
 	SetSlotBase();
 
-
-	NextLevelOff();
+	TextFont_.Load("../Resources/PlayUI/KO.ttf");
 }
 
 void StatUI::Update()
 {
 	SlotUpdate();
+
 }
 
 void StatUI::Render()
 {
+	TextFont_.Draw("LVasdfasdfasdf", { 100, 100 }, RGB(255, 255, 255), 23, 800);
 }
 
 void StatUI::SlotUpdate()

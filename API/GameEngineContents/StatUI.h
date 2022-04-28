@@ -1,5 +1,6 @@
 #pragma once
 #include <GameEngine/GameEngineActor.h>
+#include <GameEngine/GameEngineFont.h>
 #include <vector>
 #include "GameEnum.h"
 
@@ -39,5 +40,7 @@ private:
 
 	size_t ActiveSkillCount_;
 	size_t PassiveSkillCount_;
+
+	GameEngineFont TextFont_;
 };
 
