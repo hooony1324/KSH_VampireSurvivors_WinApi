@@ -42,8 +42,7 @@ void Enemy::SetEnemy(int _Index)
 
 	if (EnemyNameListIndex >= static_cast<int>(EnemyNameList->size()))
 	{
-		//EnemyNameListIndex = EnemyNameListIndex % static_cast<int>(EnemyNameList->size());
-		EnemyNameListIndex = -1;
+		EnemyNameListIndex = EnemyNameListIndex % static_cast<int>(EnemyNameList->size());
 	}
 
 	EnemyName_ = EnemyNameList[EnemyNameListIndex];

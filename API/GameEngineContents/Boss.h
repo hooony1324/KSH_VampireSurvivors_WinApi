@@ -22,7 +22,9 @@ public:
 	{
 		CHASE,
 		HIT,
-		DIE
+		DIE,
+		RED_ALARMCHASE,
+		RED_DIE
 	};
 
 	static int BossIndex_;
@@ -58,6 +60,12 @@ private:
 	void DieUpdate();
 	void DieEnd();
 
+	// ½ÃÇÑÆøÅº ¸÷ + ÆøÆÄÁ×À½
+	void RedAlarmChaseStart();
+	void RedAlarmChaseUpdate();
+	void RedDieStart();
+	void RedDieUpdate();
+
 	// ½ºÅÈ
 	void SetStat();
 
@@ -68,6 +76,8 @@ private:
 	void HitCheck();
 
 private:
+	std::string BossName_;
+
 	// FSM
 	BOSS_STATE State_;
 
@@ -91,7 +101,6 @@ private:
 	GameEngineImage* MapColImage_;
 
 	// ¹Ð¾î³»±â
-	GameEngineCollision* EnemyBlock_;
 	std::vector<GameEngineCollision*> Enemies_;
 
 	// ÇÇ°Ý
@@ -101,6 +110,10 @@ private:
 	float4 KnockBackDir_;
 	float KnockBackRatio_;
 
+	// Æ¯¼ö : ShadeRed
+	GameEngineCollision* BombRange_;	// Æø¹ß¹üÀ§
+	GameEngineCollision* ActivateRange_;	// Æø¹ß
+	Counter BombTime_;
 	
 
 };

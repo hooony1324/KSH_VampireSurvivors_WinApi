@@ -12,6 +12,7 @@
 #include "Vector2D.h"
 #include "PlayLevel.h"
 #include "Projectile.h"
+#include "Player.h"
 #include <vector>
 
 std::vector<std::string> BossNameList{ "ShadeRed", "XLMummy" };
@@ -33,23 +34,36 @@ void Boss::Start()
 	Renderer_ = CreateRenderer();
 
 	// ÀÌ¸§´ë·Î ¾Ö´Ï¸ÞÀÌ¼Ç ¼¼ÆÃ
-	std::string BossName = BossNameList[BossIndex_];
+	BossName_ = BossNameList[BossIndex_];
 
-	Renderer_->CreateFolderAnimationTimeKey(BossName + "_WalkLeft.bmp", BossName + "_WalkLeft", static_cast<int>(TIME_GROUP::MONSTER), 0, 3, 0.2f, true);
-	Renderer_->CreateFolderAnimationTimeKey(BossName + "_WalkRight.bmp", BossName + "_WalkRight", static_cast<int>(TIME_GROUP::MONSTER), 0, 3, 0.2f, true);
-	Renderer_->CreateFolderAnimationTimeKey(BossName + "_Dead.bmp", BossName + "_Dead", static_cast<int>(TIME_GROUP::MONSTER), 0, 29, 0.1f, false);
-	Renderer_->ChangeAnimation(BossName + "_WalkLeft");
+	Renderer_->CreateFolderAnimationTimeKey(BossName_ + "_WalkLeft.bmp", BossName_ + "_WalkLeft", static_cast<int>(TIME_GROUP::MONSTER), 0, 3, 0.2f, true);
+	Renderer_->CreateFolderAnimationTimeKey(BossName_ + "_WalkRight.bmp", BossName_ + "_WalkRight", static_cast<int>(TIME_GROUP::MONSTER), 0, 3, 0.2f, true);
+	Renderer_->CreateFolderAnimationTimeKey(BossName_ + "_Dead.bmp", BossName_ + "_Dead", static_cast<int>(TIME_GROUP::MONSTER), 0, 29, 0.1f, false);
+	Renderer_->ChangeAnimation(BossName_ + "_WalkLeft");
 
 	// º¸½º ÀÎµ¦½º·Î ½ºÅÈ Á¶Á¤
 	SetStat();
 
 	// ÄÝ¸®Àü ¼³Á¤
 	BossCol_ = CreateCollision("Boss", { 28, 45 });
-	//EnemyBlock_ = CreateCollision("OtherGuard", { 4, 45 }, { 18, 0 });
+	
 	
 	KnockBackRatio_ = 1.0f;
+	HitCounter_.SetCount(0.5f);
 
-	ChangeState(BOSS_STATE::CHASE);
+	if (0 == BossName_.compare("ShadeRed"))
+	{
+		Renderer_->CreateFolderAnimationTimeKey("ShadeRed_SmokeDead.bmp", "SmokeDead", static_cast<int>(TIME_GROUP::MONSTER), 0, 3, 0.1f, false);
+		BombRange_ = CreateCollision("Bomb", { 80, 80 });
+		ActivateRange_ = CreateCollision("ActivateRange", { 500, 500 });
+		BombTime_.SetCount(3.0f);
+		ChangeState(BOSS_STATE::CHASE);
+	}
+	else
+	{
+		ChangeState(BOSS_STATE::CHASE);
+	}
+
 }
 
 void Boss::Update()
@@ -79,6 +93,12 @@ void Boss::UpdateState()
 	case BOSS_STATE::DIE:
 		DieUpdate();
 		break;
+	case BOSS_STATE::RED_ALARMCHASE:
+		RedAlarmChaseUpdate();
+		break;
+	case BOSS_STATE::RED_DIE:
+		RedDieUpdate();
+		break;
 	default:
 		break;
 	}
@@ -95,6 +115,12 @@ void Boss::ChangeState(BOSS_STATE _State)
 			break;
 		case BOSS_STATE::DIE:
 			DieStart();
+			break;
+		case BOSS_STATE::RED_ALARMCHASE:
+			RedAlarmChaseStart();
+			break;
+		case BOSS_STATE::RED_DIE:
+			RedDieStart();
 			break;
 		default:
 			break;
@@ -123,13 +149,20 @@ void Boss::ChaseUpdate()
 	{
 		Renderer_->ChangeAnimation(BossNameList[BossIndex_] + "_WalkRight");
 	}
+
+	if (0 == BossName_.compare("ShadeRed") && true == ActivateRange_->CollisionCheck("Player"))
+	{
+		int a = 0;
+		ActivateRange_->Death();
+		GameEngineSound::SoundPlayOneShot("RedAlarm.mp3", 5);
+		ChangeState(BOSS_STATE::RED_ALARMCHASE);
+	}
 }
 
 void Boss::HitStart()
 {
 	GameEngineSound::SoundPlayOneShot("EnemyHit.mp3", 0);
 	Hp_ -= HitDamage_;
-
 
 }
 
@@ -138,13 +171,10 @@ void Boss::HitUpdate()
 	// ³Ëº¤ º¤ÅÍ ÁÙÀÌ±â ~ 0 ±îÁö
 	float Distance = 40.0f;
 	SetMove(KnockBackDir_ * DeltaTime_ * Distance * KnockBackRatio_);
-	KnockBackDir_ *= 0.95f;
+	KnockBackDir_ *= 0.90f;
 
-
-	// ³Ëº¤ º¤ÅÍ 0ÀÌ¸é HitEnd
-	if (0.05f > KnockBackDir_.Len2D())
+	if (true == HitCounter_.Start(GameEngineTime::GetDeltaTime(static_cast<int>(TIME_GROUP::MONSTER))))
 	{
-		KnockBackDir_ = float4::ZERO;
 		HitEnd();
 	}
 
@@ -158,7 +188,16 @@ void Boss::HitEnd()
 		return;
 	}
 
-	ChangeState(BOSS_STATE::CHASE);
+	if (0 == BossName_.compare("ShadeRed"))
+	{
+		ChangeState(BOSS_STATE::RED_ALARMCHASE);
+	}
+	else
+	{
+		ChangeState(BOSS_STATE::CHASE);
+	}
+
+
 }
 
 void Boss::DieStart()
@@ -200,6 +239,68 @@ void Boss::DieEnd()
 
 	// ´ÙÀ½ º¸½º·Î °»½Å
 	BossIndex_++;
+}
+
+void Boss::RedAlarmChaseStart()
+{
+
+}
+
+void Boss::RedAlarmChaseUpdate()
+{
+	PlayerPos_ = GameInfo::GetPlayerInfo()->PlayerPos_;
+	float4 DestDir = Vector2D::GetDirection(BossPos_, PlayerPos_);
+
+	float Speed = MapColCheck(Speed_, DestDir);
+	SetMove(DestDir * DeltaTime_ * Speed);
+
+	HitCheck();
+
+	//¿ÞÂÊ ¿À¸¥ÂÊ ÃÄ´Ùº¸±â
+	if (0 >= DestDir.x)
+	{
+		Renderer_->ChangeAnimation(BossNameList[BossIndex_] + "_WalkLeft");
+	}
+	else
+	{
+		Renderer_->ChangeAnimation(BossNameList[BossIndex_] + "_WalkRight");
+	}
+
+	// ½ÃÇÑÆøÅº
+
+	if (true == BombTime_.Start(GameEngineTime::GetDeltaTime(static_cast<int>(TIME_GROUP::MONSTER))))
+	{
+		std::vector<GameEngineCollision*> PlayerCol;
+		if (true == BombRange_->CollisionResult("Player", PlayerCol))
+		{
+			Player* PlayerPtr = dynamic_cast<Player*>(PlayerCol[0]->GetActor());
+			PlayerPtr->Attacked(50.0f);
+			PlayerCol.clear();
+		}
+		// ÅÍÁö°í Á×À½
+		GameEngineSound::SoundPlayOneShot("RedBlow.mp3", 0);
+		ChangeState(BOSS_STATE::RED_DIE);
+	}
+}
+
+void Boss::RedDieStart()
+{
+	// Æø¹ß
+	Renderer_->ChangeAnimation("SmokeDead");
+
+	// ÆøÆÈÇü Á×À½, ¸Â¾Æ¼­ Á×´Â°Å¶ûÀº ´Ù¸¥ ºÐ±â
+	BombRange_->Death();
+	ActivateRange_->Death();
+	BombTime_.Reset();
+}
+
+void Boss::RedDieUpdate()
+{
+	// ¾Ö´Ï¸ÞÀÌ¼Ç ³¡³ª¸é Á×À½
+	if (true == Renderer_->IsEndAnimation())
+	{
+		DieEnd();
+	}
 }
 
 float Boss::MapColCheck(float _Speed, float4 _DestDir)
@@ -293,7 +394,7 @@ void Boss::SetStat()
 	switch (Type)
 	{
 	case BOSSTYPE::SHADERED:
-		Hp_ = 30.0f;
+		Hp_ = 100.0f;
 		Speed_ = 170.0f;
 		KnockBackRatio_ = 2.0f;
 		break;

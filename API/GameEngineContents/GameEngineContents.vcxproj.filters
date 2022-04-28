@@ -59,9 +59,6 @@
     <ClCompile Include="Vector2D.cpp">
       <Filter>Global</Filter>
     </ClCompile>
-    <ClCompile Include="ShadeRed.cpp">
-      <Filter>2.Play\Enemies</Filter>
-    </ClCompile>
     <ClCompile Include="ProjectileShooter.cpp">
       <Filter>2.Play\Projectile</Filter>
     </ClCompile>
@@ -166,9 +163,6 @@
     </ClInclude>
     <ClInclude Include="Vector2D.h">
       <Filter>Global</Filter>
-    </ClInclude>
-    <ClInclude Include="ShadeRed.h">
-      <Filter>2.Play\Enemies</Filter>
     </ClInclude>
     <ClInclude Include="ProjectileShooter.h">
       <Filter>2.Play\Projectile</Filter>

@@ -16,6 +16,8 @@ public:
 	WeaponSlots& operator=(const WeaponSlots& _Other) = delete;
 	WeaponSlots& operator=(WeaponSlots&& _Other) noexcept = delete;
 
+	void SkillCheck();
+
 protected:
 
 	void Start() override;
@@ -23,7 +25,7 @@ protected:
 	void Render() override;
 
 private:
-	void SkillCheck();
+	
 
 private:
 

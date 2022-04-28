@@ -75,7 +75,7 @@ void PlayLevel::LevelChangeStart(GameEngineLevel* _PrevLevel)
 
 
 
-	BgmPlayer = GameEngineSound::SoundPlayControl("bgm_elrond_library_quiet.MP3");
+	//BgmPlayer = GameEngineSound::SoundPlayControl("bgm_elrond_library_quiet.MP3");
 
 	// 아이템 
 	ExpGem* FirstGem = CreateActor<ExpGem>(static_cast<int>(ACTOR_ORDER::ITEM), "ITEM");
@@ -90,7 +90,7 @@ void PlayLevel::LevelChangeStart(GameEngineLevel* _PrevLevel)
 	for (int i = 0; i < 10; i++)
 	{
 		LevelUpBox* Box = CreateActor<LevelUpBox>(static_cast<int>(ACTOR_ORDER::ITEM), "ITEM");
-		Box->SetPosition(float4{ 1100 , 1000 } + float4{ static_cast<float>(i) * 50, 0 });
+		Box->SetPosition(float4{ 1100 , 1050 } + float4{ static_cast<float>(i) * 50, 0 });
 	}
 	
 	ChangeState(LevelState::PLAY);
@@ -101,7 +101,7 @@ void PlayLevel::LevelChangeStart(GameEngineLevel* _PrevLevel)
 void PlayLevel::LevelChangeEnd(GameEngineLevel* _NextLevel)
 {
 	// BGM 종료
-	BgmPlayer.Stop();
+	//BgmPlayer.Stop();
 }
 
 
@@ -117,10 +117,15 @@ void PlayLevel::Update()
 	{
 		int* SkillLevelInfo = GameInfo::GetPlayerInfo()->SkillLevelInfo_;
 
-		for (auto i = 0; i < static_cast<int>(SkillType::MAX); i++)
+		for (auto i = 0; i < static_cast<int>(GameInfo::GetPlayerInfo()->ActiveSkillSlot_.size()); i++)
 		{
-			SkillLevelInfo[i] = 8;
+			int SkillIndex = static_cast<int>(GameInfo::GetPlayerInfo()->ActiveSkillSlot_[0]);
+			SkillLevelInfo[SkillIndex] = 8;
 		}
+
+		// UI갱신도 해야됨
+		WeaponSlots* Ptr = dynamic_cast<WeaponSlots*>(WeaponUI_);
+		Ptr->SkillCheck();
 
 		auto val = GameInfo::GetPlayerInfo()->SkillLevelInfo_;
 	}

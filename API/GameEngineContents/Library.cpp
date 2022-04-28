@@ -49,7 +49,7 @@ float4 Library::GetRendererScale()
 
 void Library::CheckPlayerOnEnd()
 {
-
+	// 배경 옮기기
 	if (true == MapEndLeft_->CollisionCheck("Player", CollisionType::Rect, CollisionType::Rect))
 	{
 		float4 Teleport(-TelePortX_, 0);

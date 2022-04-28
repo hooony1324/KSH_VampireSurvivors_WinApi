@@ -62,7 +62,7 @@ void EnemyController::Start()
 		Enemy* Ptr = GetLevel()->CreateActor<Enemy>(static_cast<int>(ACTOR_ORDER::MONSTER), "Enemy");
 		Ptr->SetPosition(float4{ 700 + static_cast<float>(i) * 50, -40 });
 		Ptr->Off();
-		Ptr->SetDead();
+		Ptr->SetDead();		// 엑터는 살아있는 죽음
 		Ptr->NextLevelOff();
 		Enemies_.push_back(Ptr);
 	}
@@ -195,7 +195,7 @@ void EnemyController::SpawnBoss(bool _BossCounterEnd)
 		// 소환 위치 조정
 		BossPtr->SetPosition(GetPosition() + SpawnPosR_ + GetSpawnPos());
 
-		BossCounter_.SetCount(60.0f);
+		BossCounter_.SetCount(10.0f);
 	}
 
 }

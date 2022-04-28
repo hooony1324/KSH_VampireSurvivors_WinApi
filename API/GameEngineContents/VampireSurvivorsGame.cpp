@@ -35,7 +35,7 @@ void VampireSurvivorsGame::GameInit()
 	CreateLevel<TitleLevel>("Title");
 	CreateLevel<PlayLevel>("Play");
 	CreateLevel<ResultLevel>("Result");
-	ChangeLevel("Intro");
+	ChangeLevel("Play");
 
 
 	// Å° ¼¼ÆÃ
@@ -145,6 +145,8 @@ void VampireSurvivorsGame::ResourceLoad()
 	GameEngineImageManager::GetInst()->Find("ShadeRed_WalkLeft.bmp")->Cut({ 100, 100 });
 	GameEngineImageManager::GetInst()->Find("ShadeRed_WalkRight.bmp")->Cut({ 100, 100 });
 	GameEngineImageManager::GetInst()->Find("ShadeRed_Dead.bmp")->Cut({ 100, 100 });
+	
+	GameEngineImageManager::GetInst()->Find("ShadeRed_SmokeDead.bmp")->Cut({ 50, 50 });
 
 	GameEngineImageManager::GetInst()->Find("XLMummy_WalkLeft.bmp")->Cut({ 100, 100 });
 	GameEngineImageManager::GetInst()->Find("XLMummy_WalkRight.bmp")->Cut({ 100, 100 });

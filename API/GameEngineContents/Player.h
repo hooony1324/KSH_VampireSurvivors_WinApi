@@ -21,6 +21,7 @@ public:
 	Player& operator=(const Player& _Other) = delete;
 	Player& operator=(Player&& _Other) noexcept = delete;
 
+	void Attacked(float _Damage);
 
 private:
 	/*float Gravity_;
@@ -61,7 +62,7 @@ private:
 
 	void PlayerMove();
 	void HpBarRender();
-	void Attacked(int _Damage);
+
 
 	// 충돌 체크
 	void AllCollisionCheck();

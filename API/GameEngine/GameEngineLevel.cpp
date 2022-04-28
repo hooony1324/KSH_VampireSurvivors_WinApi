@@ -487,7 +487,7 @@ void GameEngineLevel::ObjectLevelMoveCheck(GameEngineLevel* _NextLevel)
 					continue;
 				}
 
-				// 추가해 보았습니다
+				// 추가해 보았습니다 : NextLevelOff 인 액터 삭제
 				(*StartActor)->Death();
 
 				++StartActor;

@@ -13,6 +13,13 @@ class GameEngineCollision;
 class ExpGem : public GameEngineActor
 {
 public:
+	enum class GemState
+	{
+		MOVE_BACK,
+		MOVE_FORWARD,
+	};
+
+public:
 	// constrcuter destructer
 	ExpGem();
 	~ExpGem();

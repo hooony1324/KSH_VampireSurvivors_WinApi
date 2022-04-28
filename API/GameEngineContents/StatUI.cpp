@@ -36,8 +36,6 @@ void StatUI::Start()
 	SetSlotBase();
 
 
-
-
 	NextLevelOff();
 }
 

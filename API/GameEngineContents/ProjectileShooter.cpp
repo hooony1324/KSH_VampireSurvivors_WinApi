@@ -148,7 +148,8 @@ void ProjectileShooter::ShootMagic()
 	Projectile* Bullet = GetLevel()->CreateActor<Projectile>(static_cast<int>(ACTOR_ORDER::PLAYER), "Bullet");
 	Bullet->SetType(ProjectileType::FLAME_BLUE);
 	SetBulletStat(Bullet);
-	Bullet->SetPosition(PlayerPos_);
+	float4 RandomPos = float4{ static_cast<float>(Random.RandomInt(PlayerPos_.ix() - 25, PlayerPos_.ix() + 25)), PlayerPos_.y + 20};
+	Bullet->SetPosition(RandomPos);
 	Bullet->SetDir(Vector2D::GetDirection(PlayerPos_, MonsterPos_));
 
 	BulletCount_ -= 1;

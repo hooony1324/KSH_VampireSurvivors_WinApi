@@ -218,7 +218,7 @@ void Player::HpBarRender()
 	
 }
 
-void Player::Attacked(int _Damage)
+void Player::Attacked(float _Damage)
 {
 	if (false == Hitable_ || true == IsDeath())
 	{

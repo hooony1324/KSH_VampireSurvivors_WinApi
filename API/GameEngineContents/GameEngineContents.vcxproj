@@ -273,10 +273,6 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="ShadeRed.h">
-      <SubType>
-      </SubType>
-    </ClInclude>
     <ClInclude Include="Skill_Stat.h" />
     <ClInclude Include="StatUI.h">
       <SubType>
@@ -418,10 +414,6 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="ResultLevel.cpp">
-      <SubType>
-      </SubType>
-    </ClCompile>
-    <ClCompile Include="ShadeRed.cpp">
       <SubType>
       </SubType>
     </ClCompile>
