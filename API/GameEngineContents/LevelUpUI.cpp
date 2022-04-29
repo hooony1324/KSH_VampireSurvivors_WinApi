@@ -15,6 +15,7 @@
 
 int LevelUpUI::CreateCount_ = 0;
 bool LevelUpUI::IsActivated_ = false;
+LevelUpUI::STATE LevelUpUI::State_ = STATE::NONE;
 
 LevelUpUI::LevelUpUI() 
 {
@@ -149,13 +150,16 @@ void LevelUpUI::Update()
 		return;
 	}
 
+	//UpdateState();
+
+	
+
 	if (0 < SelectNum_)
 	{
 		SelectSkillBox();
 		return;
 	}
 
-	SelectHpMoneyBox();
 
 
 }
@@ -163,6 +167,7 @@ void LevelUpUI::Update()
 void LevelUpUI::Render()
 {
 }
+
 
 void LevelUpUI::ShowRandomSkills()
 {
@@ -304,7 +309,68 @@ void LevelUpUI::SelectSkill(int _SkillNumber)
 	
 }
 
-void LevelUpUI::SelectHpMoneyBox()
-{
 
+void LevelUpUI::UpdateState()
+{
+	switch (State_)
+	{
+	case LevelUpUI::STATE::BOXES:
+		BoxesUpdate();
+		break;
+	case LevelUpUI::STATE::EVOLVE:
+		EvolveUpdate();
+		break;
+	case LevelUpUI::STATE::HPMONEY:
+		HpMoneyUpdate();
+		break;
+	default:
+		break;
+	}
+}
+
+void LevelUpUI::ChangeState(STATE _State)
+{
+	if (State_ != _State)
+	{
+		switch (_State)
+		{
+		case LevelUpUI::STATE::BOXES:
+			BoxesStart();
+			break;
+		case LevelUpUI::STATE::EVOLVE:
+			EvolveStart();
+			break;
+		case LevelUpUI::STATE::HPMONEY:
+			HpMoneyStart();
+			break;
+		default:
+			break;
+		}
+	}
+
+	State_ = _State;
+}
+
+void LevelUpUI::BoxesStart()
+{
+}
+
+void LevelUpUI::EvolveStart()
+{
+}
+
+void LevelUpUI::HpMoneyStart()
+{
+}
+
+void LevelUpUI::BoxesUpdate()
+{
+}
+
+void LevelUpUI::EvolveUpdate()
+{
+}
+
+void LevelUpUI::HpMoneyUpdate()
+{
 }

@@ -7,6 +7,16 @@ class GameEngineRenderer;
 class LevelUpUI : public GameEngineActor
 {
 public:
+
+	enum class STATE
+	{
+		NONE,
+		BOXES,
+		EVOLVE,
+		HPMONEY,
+	};
+
+public:
 	// constrcuter destructer
 	LevelUpUI();
 	~LevelUpUI();
@@ -37,16 +47,35 @@ protected:
 	void Render() override;
 
 private:
+	
+	// FSM
+	static STATE State_;
+
+	void UpdateState();
+	void ChangeState(STATE _State);
+
+	void BoxesStart();
+	void EvolveStart();
+	void HpMoneyStart();
+
+	void BoxesUpdate();
+	void EvolveUpdate();
+	void HpMoneyUpdate();
+
+private:
 	static bool IsActivated_;
 
 	GameEngineActor* StatUI_;
 
+
+
+
+	// STATE : BOXES
 	// Render1_ ~ Render4_ 액티브/패시브
 	int SelectNum_;
 	std::vector<int> RandomSkills_;
 	void ShowRandomSkills();
 	void SelectSkillBox();
-	void SelectHpMoneyBox();
 	void SelectSkill(int _SkillNumber);
 
 	GameEngineRenderer* Renderer1_;
@@ -55,6 +84,11 @@ private:
 	GameEngineRenderer* Renderer4_;
 
 	GameEngineRenderer* Renderers_[4];
+
+
+	// STATE : EVOLVE
+
+	// STATE : HPMONEY
 
 };
 

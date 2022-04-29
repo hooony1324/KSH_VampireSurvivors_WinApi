@@ -35,7 +35,7 @@ void VampireSurvivorsGame::GameInit()
 	CreateLevel<TitleLevel>("Title");
 	CreateLevel<PlayLevel>("Play");
 	CreateLevel<ResultLevel>("Result");
-	ChangeLevel("Play");
+	ChangeLevel("Intro");
 
 
 	// Å° ¼¼ÆÃ
