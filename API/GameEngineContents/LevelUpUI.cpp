@@ -30,10 +30,13 @@ LevelUpUI::~LevelUpUI()
 void LevelUpUI::Start()
 {
 	// 배경 
-	GameEngineRenderer* Renderer = CreateRenderer("LevelUpUI.bmp", static_cast<int>(RENDER_ORDER::UI));
-	SetScale(Renderer->GetScale());
-	Renderer->CameraEffectOff();
-	Renderer->SetPivot(GameEngineWindow::GetScale().Half() + float4{0, 10});
+	BoxBackGround_ = CreateRenderer("LevelUpUI.bmp", static_cast<int>(RENDER_ORDER::UI));
+	SetScale(BoxBackGround_->GetScale());
+	BoxBackGround_->CameraEffectOff();
+	BoxBackGround_->SetPivot(GameEngineWindow::GetScale().Half() + float4{0, 10});
+	BoxBackGround_->Off();
+
+
 
 	// 스탯 UI 같이 킴
 	if (nullptr == StatUI_)
@@ -50,7 +53,8 @@ void LevelUpUI::Start()
 	GameEngineSound::SoundPlayOneShot("LevelUp.MP3", 0);
 	IsActivated_ = true;
 
-
+	// 문제발생 : 레벨업 + 무기조합 가능은 BOXES 뜨도록
+	// 모든 스킬레벨이 최대라면
 	if (true == GameInfo::SkillLevelFull())
 	{
 		ChangeState(STATE::HPMONEY);
@@ -58,15 +62,20 @@ void LevelUpUI::Start()
 	else
 	{
 		// 조합 여부 확인
-		SkillType EvolveSkill = GameInfo::SkillEvolveCheck();
-		if (SkillType::NONE != EvolveSkill)
+		EvolveSkill_ = GameInfo::SkillEvolveCheck();
+		if (SkillType::NONE != EvolveSkill_)
 		{
-			ChangeState(STATE::EVOLVE);
+			ChangeState(STATE::TREASURE);
+		}
+		else
+		{
+			// 조합 여부 없으면 일반 
+			ChangeState(STATE::BOXES);
 		}
 
-		// 조합 여부 없으면 일반 
-		ChangeState(STATE::BOXES);
 	}
+
+
 
 }
 
@@ -239,8 +248,14 @@ void LevelUpUI::UpdateState()
 	case LevelUpUI::STATE::BOXES:
 		BoxesUpdate();
 		break;
-	case LevelUpUI::STATE::EVOLVE:
-		EvolveUpdate();
+	case LevelUpUI::STATE::TREASURE:
+		TreasureUpdate();
+		break;
+	case LevelUpUI::STATE::TREASURE_OPENING:
+		TreasureOpeningUpdate();
+		break;
+	case LevelUpUI::STATE::TREASURE_END:
+		TreasureEndingUpdate();
 		break;
 	case LevelUpUI::STATE::HPMONEY:
 		HpMoneyUpdate();
@@ -257,8 +272,14 @@ void LevelUpUI::ChangeState(STATE _State)
 	case LevelUpUI::STATE::BOXES:
 		BoxesStart();
 		break;
-	case LevelUpUI::STATE::EVOLVE:
-		EvolveStart();
+	case LevelUpUI::STATE::TREASURE:
+		TreasureStart();
+		break;
+	case LevelUpUI::STATE::TREASURE_OPENING:
+		TreasureOpeningStart();
+		break;
+	case LevelUpUI::STATE::TREASURE_END:
+		TreasureEndingStart();
 		break;
 	case LevelUpUI::STATE::HPMONEY:
 		HpMoneyStart();
@@ -272,6 +293,8 @@ void LevelUpUI::ChangeState(STATE _State)
 
 void LevelUpUI::BoxesStart()
 {
+	BoxBackGround_->On();
+
 	// 무기 선택 박스 1~4에 띄울 스킬(액티브/패시브) 선택
 	SelectNum_ = 3;
 
@@ -361,25 +384,93 @@ void LevelUpUI::BoxesStart()
 	ShowRandomSkills();
 }
 
-void LevelUpUI::EvolveStart()
+void LevelUpUI::BoxesUpdate()
 {
-
+	SelectSkillBox();
 }
+
+void LevelUpUI::TreasureStart()
+{
+	// 보물상자
+	GameEngineSound::SoundPlayOneShot("TreasureFound.mp3", 0);
+	BoxAnim_ = CreateRenderer("BoxFound.bmp", static_cast<int>(RENDER_ORDER::UI));
+	BoxAnim_->CameraEffectOff();
+	BoxAnim_->SetPivot(GameEngineWindow::GetScale().Half() + float4{ 0, 10 });
+	BoxAnim_->CreateAnimation("Box_Bounce.bmp", "Box_Bounce", 0, 89, 0.025f, true);
+	BoxAnim_->CreateAnimation("Box_Opening.bmp", "Box_Opening", 0, 209, 0.025f, false);
+	BoxAnim_->CreateAnimation("Box_Ending.bmp", "Box_Ending", 0, 172, 0.025f, false);
+	BoxAnim_->CreateAnimation("Box_End.bmp", "Box_End", 0, 132, 0.025f, true);
+	BoxAnim_->ChangeAnimation("Box_Bounce");
+
+	// Treasure
+	Treasure_ = CreateRenderer("Box_ThousandEdge.bmp", static_cast<int>(RENDER_ORDER::UI2));
+	Treasure_->CameraEffectOff();
+	Treasure_->Off();
+	Treasure_->SetPivot(GameEngineWindow::GetScale().Half() + float4{ 0, 10 });
+
+	TreasureOnCounter_.SetCount(6.0f);
+}
+
+void LevelUpUI::TreasureUpdate()
+{
+	if (true == GameEngineInput::GetInst()->IsDown("SpaceBar"))
+	{
+		ChangeState(STATE::TREASURE_OPENING);
+	}
+}
+
+void LevelUpUI::TreasureOpeningStart()
+{
+	GameEngineSound::SoundPlayOneShot("TreasureOpening.mp3", 0);
+	BoxAnim_->ChangeAnimation("Box_Opening");
+}
+
+void LevelUpUI::TreasureOpeningUpdate()
+{
+	// 도중에 각성무기 출력
+	if (true == TreasureOnCounter_.Start(GameEngineTime::GetDeltaTime()))
+	{
+		Treasure_->On();
+	}
+
+	if (true == BoxAnim_->IsEndAnimation())
+	{
+		ChangeState(STATE::TREASURE_END);
+	}
+}
+
+void LevelUpUI::TreasureEndingStart()
+{
+	BoxAnim_->ChangeAnimation("Box_Ending");
+}
+
+void LevelUpUI::TreasureEndingUpdate()
+{
+	if (true == BoxAnim_->IsEndAnimation())
+	{
+		BoxAnim_->ChangeAnimation("Box_End");
+	}
+
+	if (true == GameEngineInput::GetInst()->IsDown("SpaceBar"))
+	{
+		// 무기 획득
+		GameInfo::ChangeEvolvedSkill(EvolveSkill_);
+
+		Death();
+		CreateCount_--;
+		IsActivated_ = false;
+		StatUI_->Off();
+		return;
+	}
+}
+
 
 void LevelUpUI::HpMoneyStart()
 {
 
 }
 
-void LevelUpUI::BoxesUpdate()
-{
-	SelectSkillBox();
-}
 
-void LevelUpUI::EvolveUpdate()
-{
-
-}
 
 void LevelUpUI::HpMoneyUpdate()
 {

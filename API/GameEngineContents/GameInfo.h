@@ -57,6 +57,7 @@ public:
 
 	static bool SkillLevelFull();
 	static SkillType SkillEvolveCheck();
+	static void ChangeEvolvedSkill(SkillType _EvolvedType);
 
 public:
 	static void Destroy()
@@ -114,7 +115,8 @@ private:
 	static bool Pause_;
 
 	static SkillType CombinationSkill(SkillType _Type);
-	static SkillType EvolveSkill(SkillType _Type);
+	static SkillType ChangeSkill(SkillType _Type);
+	
 
 private:
 	// constrcuter destructer
@@ -128,9 +130,10 @@ private:
 	GameInfo& operator=(GameInfo&& _Other) noexcept = delete;
 };
 
+// GameEnum의 SkillType과 동일한 순서유지
 static std::string SkillOrder[] =
 {
-	"Knife", "MagicWand", "FireWand", "Bracer", "Clover", 
+	"Knife", "MagicWand", "FireWand", "Bracer", "Clover"
 };
 
 //"Knife", "MagicWand", "FireWand", "Runetracer",

@@ -108,51 +108,32 @@ void PlayLevel::LevelChangeEnd(GameEngineLevel* _NextLevel)
 void PlayLevel::Update()
 {
 
-	if (true == GameEngineInput::GetInst()->IsDown("ColDebugger"))
+	// 디버깅
 	{
-		IsDebugModeSwitch();
+		if (true == GameEngineInput::GetInst()->IsDown("ColDebugger"))
+		{
+			IsDebugModeSwitch();
+		}
+
+		if (true == GameEngineInput::GetInst()->IsDown("LevelUP"))
+		{
+			int* SkillLevelInfo = GameInfo::GetPlayerInfo()->SkillLevelInfo_;
+
+			// 가지고 있는 스킬만 레벨 8
+			for (int i = 0; i < static_cast<int>(GameInfo::GetPlayerInfo()->ActiveSkillSlot_.size()); i++)
+			{
+				int SkillIndex = static_cast<int>(GameInfo::GetPlayerInfo()->ActiveSkillSlot_[i]);
+				SkillLevelInfo[SkillIndex] = 8;
+			}
+
+			for (int i = 0; i < static_cast<int>(GameInfo::GetPlayerInfo()->PassiveSkillSlot_.size()); i++)
+			{
+				int SkillIndex = static_cast<int>(GameInfo::GetPlayerInfo()->PassiveSkillSlot_[i]);
+				SkillLevelInfo[SkillIndex] = 8;
+			}
+		}
 	}
 
-	if (true == GameEngineInput::GetInst()->IsDown("LevelUP"))
-	{
-		int* SkillLevelInfo = GameInfo::GetPlayerInfo()->SkillLevelInfo_;
-
-		for (int i = 0; i < static_cast<int>(ACTIVE_MAX); i++)
-		{
-			if (GameInfo::GetPlayerInfo()->SkillLevelInfo_[i] > 0)
-			{
-				continue;
-			}
-			GameInfo::GetPlayerInfo()->ActiveSkillSlot_.push_back(static_cast<SkillType>(i));
-		}
-
-		for (int i = static_cast<int>(ACTIVE_MAX); i < static_cast<int>(SkillType::MAX); i++)
-		{
-			if (GameInfo::GetPlayerInfo()->SkillLevelInfo_[i] > 0)
-			{
-				continue;
-			}
-			GameInfo::GetPlayerInfo()->PassiveSkillSlot_.push_back(static_cast<SkillType>(i));
-		}
-
-		// 모든 스킬 레벨 업
-		for (int i = 0; i < static_cast<int>(SkillType::MAX); i++)
-		{
-			GameInfo::GetPlayerInfo()->SkillLevelInfo_[i] = SKILL_LEVELMAX;
-		}
-
-		// 가지고 있는 스킬만 레벨 8
-		/*for (int i = 0; i < static_cast<int>(GameInfo::GetPlayerInfo()->ActiveSkillSlot_.size()); i++)
-		{
-			int SkillIndex = static_cast<int>(GameInfo::GetPlayerInfo()->ActiveSkillSlot_[0]);
-			SkillLevelInfo[SkillIndex] = 8;
-		}*/
-
-		// UI갱신도 해야됨
-		//WeaponSlots* Ptr = dynamic_cast<WeaponSlots*>(WeaponUI_);
-		//Ptr->SkillCheck();
-
-	}
 
 
 	UpdateState();

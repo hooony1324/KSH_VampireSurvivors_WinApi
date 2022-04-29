@@ -68,10 +68,10 @@ enum class SkillType
 	//PUMMAROLA,			// + GARLIC = SOULEATER
 	//CANDLELABRADOR,		// + AXE = DEATHSPIRAL
 	//WING,
+
 	MAX,
 
 	// etc
-	NONE,
 	THOUSANDEDGE,
 	HOLYWAND,
 	HELLFIRE,
@@ -79,4 +79,5 @@ enum class SkillType
 	BLOODYTEAR,
 	HEAVENSWORD,
 	SOULEATER,
+	NONE, 
 };

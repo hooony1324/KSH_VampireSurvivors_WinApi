@@ -57,49 +57,34 @@ void StatUI::Render()
 
 void StatUI::SlotUpdate()
 {
-	// 액티브 UI
+	// 액티브
 	std::vector<SkillType> ActiveSkillSlot = GameInfo::GetPlayerInfo()->ActiveSkillSlot_;
-	if (ActiveSkillCount_ != ActiveSkillSlot.size())
+	ActiveSkillCount_ = ActiveSkillSlot.size();
+	for (int i = 0; i < ActiveSkillCount_; i++)
 	{
-		ActiveSkillCount_ = ActiveSkillSlot.size();
-		for (int i = 0; i < ActiveSkillCount_; i++)
-		{
-			ActiveSlots_[i]->On();
-			ActiveSkills_[i]->On();
-			ActiveLevels_[i]->On();
-			int SkillType = static_cast<int>(ActiveSkillSlot[i]);
-			ActiveSkills_[i]->SetImage(SkillOrder[SkillType] + "UI.bmp");
-		}
-	}
+		ActiveSlots_[i]->On();
+		ActiveSkills_[i]->On();
+		ActiveLevels_[i]->On();
+		int SkillType = static_cast<int>(ActiveSkillSlot[i]);
+		ActiveSkills_[i]->SetImage(SkillOrder[SkillType] + "UI.bmp");
 
-	// 엑티브 레벨 UI
-	for (int i = 0; i < static_cast<int>(ActiveSkillSlot.size()); i++)
-	{
-		SkillType Skill = ActiveSkillSlot[i];
-		int SkillLevel = GameInfo::GetPlayerInfo()->SkillLevelInfo_[static_cast<int>(Skill)];
+		int SkillLevel = GameInfo::GetPlayerInfo()->SkillLevelInfo_[SkillType];
 		ActiveLevels_[i]->SetImage("WeaponLevel_" + std::to_string(SkillLevel) + ".bmp");
 	}
 
-	// 패시브 UI
-	std::vector<SkillType> PassiveSkillSlot = GameInfo::GetPlayerInfo()->PassiveSkillSlot_;
-	if (PassiveSkillCount_ != PassiveSkillSlot.size())
-	{
-		PassiveSkillCount_ = PassiveSkillSlot.size();
-		for (int i = 0; i < PassiveSkillCount_; i++)
-		{
-			PassiveSlots_[i]->On();
-			PassiveSkills_[i]->On();
-			PassiveLevels_[i]->On();
-			int SkillType = static_cast<int>(PassiveSkillSlot[i]);
-			PassiveSkills_[i]->SetImage(SkillOrder[SkillType] + "UI.bmp");
-		}
-	}
 
-	// 패시브 레벨 UI
-	for (int i = 0; i < static_cast<int>(PassiveSkillSlot.size()); i++)
+	// 패시브
+	std::vector<SkillType> PassiveSkillSlot = GameInfo::GetPlayerInfo()->PassiveSkillSlot_;
+	PassiveSkillCount_ = PassiveSkillSlot.size();
+	for (int i = 0; i < PassiveSkillCount_; i++)
 	{
-		SkillType Skill = PassiveSkillSlot[i];
-		int SkillLevel = GameInfo::GetPlayerInfo()->SkillLevelInfo_[static_cast<int>(Skill)];
+		PassiveSlots_[i]->On();
+		PassiveSkills_[i]->On();
+		PassiveLevels_[i]->On();
+		int SkillType = static_cast<int>(PassiveSkillSlot[i]);
+		PassiveSkills_[i]->SetImage(SkillOrder[SkillType] + "UI.bmp");
+
+		int SkillLevel = GameInfo::GetPlayerInfo()->SkillLevelInfo_[SkillType];
 		PassiveLevels_[i]->SetImage("WeaponLevel_" + std::to_string(SkillLevel) + ".bmp");
 	}
 

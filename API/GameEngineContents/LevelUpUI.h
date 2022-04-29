@@ -1,6 +1,8 @@
 #pragma once
 #include <GameEngine/GameEngineActor.h>
 #include <vector>
+#include "Counter.h"
+#include "GameEnum.h"
 
 // 설명 :
 class GameEngineRenderer;
@@ -12,7 +14,9 @@ public:
 	{
 		NONE,
 		BOXES,
-		EVOLVE,
+		TREASURE,
+		TREASURE_OPENING,
+		TREASURE_END,
 		HPMONEY,
 	};
 
@@ -57,19 +61,31 @@ private:
 	void ChangeState(STATE _State);
 
 	void BoxesStart();
-	void EvolveStart();
-	void HpMoneyStart();
-
 	void BoxesUpdate();
-	void EvolveUpdate();
+
+	void TreasureStart();
+	void TreasureUpdate();
+
+	void TreasureOpeningStart();
+	void TreasureOpeningUpdate();
+
+	void TreasureEndingStart();
+	void TreasureEndingUpdate();
+
+	void HpMoneyStart();
 	void HpMoneyUpdate();
 
 private:
 	static bool IsActivated_;
-
+	GameEngineRenderer* BoxBackGround_;
 	GameEngineActor* StatUI_;
 
 
+	// 보물상자
+	SkillType EvolveSkill_;
+	GameEngineRenderer* BoxAnim_;
+	GameEngineRenderer* Treasure_;
+	Counter TreasureOnCounter_;
 
 
 	// STATE : BOXES

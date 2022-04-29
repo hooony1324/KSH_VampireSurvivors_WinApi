@@ -157,6 +157,13 @@ void VampireSurvivorsGame::ResourceLoad()
 	GameEngineImageManager::GetInst()->Find("XLReaper_Dead.bmp")->Cut({ 200, 200 });
 
 
+	// 보물상자
+	GameEngineImageManager::GetInst()->Find("Box_Bounce.bmp")->Cut({ 456, 620 });
+	GameEngineImageManager::GetInst()->Find("Box_Opening.bmp")->Cut({ 456, 620 });
+	GameEngineImageManager::GetInst()->Find("Box_Ending.bmp")->Cut({ 456, 620 });
+	GameEngineImageManager::GetInst()->Find("Box_End.bmp")->Cut({ 456, 620 });
+
+
 	// 사운드 리소스
 	{
 		GameEngineDirectory ResourcesDir;

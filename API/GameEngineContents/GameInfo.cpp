@@ -45,16 +45,16 @@ void GameInfo::SetPlayerInfo()
 	PlayerInfo_->Guard_				= Character_->Guard_;
 	PlayerInfo_->Power_				= Character_->Power_;
 	PlayerInfo_->MeleeRange_		= Character_->MeleeRange_;
-	PlayerInfo_->ShootSpeedRatio_	= Character_->ShootSpeedRatio_;
-	PlayerInfo_->AddShootNum_		= Character_->AddShootNum_;
-	PlayerInfo_->Duration_			= Character_->Duration_;
-	PlayerInfo_->CoolTime_			= Character_->CoolTime_;
+	PlayerInfo_->ShootSpeedRatio_ = Character_->ShootSpeedRatio_;
+	PlayerInfo_->AddShootNum_ = Character_->AddShootNum_;
+	PlayerInfo_->Duration_ = Character_->Duration_;
+	PlayerInfo_->CoolTime_ = Character_->CoolTime_;
 
-	PlayerInfo_->Luck_				= Character_->Luck_;
-	PlayerInfo_->Growth_			= Character_->Growth_;
-	PlayerInfo_->Greed_				= Character_->Greed_;
-	PlayerInfo_->Magnet_			= Character_->Magnet_;
-	PlayerInfo_->Revival_			= Character_->Revival_;
+	PlayerInfo_->Luck_ = Character_->Luck_;
+	PlayerInfo_->Growth_ = Character_->Growth_;
+	PlayerInfo_->Greed_ = Character_->Greed_;
+	PlayerInfo_->Magnet_ = Character_->Magnet_;
+	PlayerInfo_->Revival_ = Character_->Revival_;
 
 	// 초기화
 	PlayerInfo_->ActiveSkillSlot_.clear();
@@ -91,7 +91,7 @@ SkillType GameInfo::SkillEvolveCheck()
 	SkillType MaxLevelActiveSkill = SkillType::NONE;
 	for (int i = 0; i < static_cast<int>(PlayerInfo_->ActiveSkillSlot_.size()); i++)
 	{
-		if ( 8 <= PlayerInfo_->SkillLevelInfo_[static_cast<int>(PlayerInfo_->ActiveSkillSlot_[i])] )
+		if (8 <= PlayerInfo_->SkillLevelInfo_[static_cast<int>(PlayerInfo_->ActiveSkillSlot_[i])])
 		{
 			MaxLevelActiveSkill = PlayerInfo_->ActiveSkillSlot_[i];
 			break;
@@ -110,7 +110,7 @@ SkillType GameInfo::SkillEvolveCheck()
 	if (8 == PlayerInfo_->SkillLevelInfo_[static_cast<int>(Combination)])
 	{
 		// 융합 스킬 리턴
-		return EvolveSkill(Combination);
+		return ChangeSkill(Combination);
 	}
 
 	return SkillType::NONE;
@@ -127,13 +127,34 @@ SkillType GameInfo::CombinationSkill(SkillType _Type)
 	}
 }
 
-SkillType GameInfo::EvolveSkill(SkillType _Type)
+SkillType GameInfo::ChangeSkill(SkillType _Type)
 {
 	switch (_Type)
 	{
 	case SkillType::BRACER:
 		return SkillType::THOUSANDEDGE;
 		break;
+	case SkillType::THOUSANDEDGE:
+		return SkillType::KNIFE;
+		break;
 	}
+}
+
+void GameInfo::ChangeEvolvedSkill(SkillType _EvolvedType)
+{
+	SkillType BeforeType = ChangeSkill(_EvolvedType);
+
+	for (int i = 0; i < static_cast<int>(PlayerInfo_->ActiveSkillSlot_.size()); i++)
+	{
+		if (BeforeType == PlayerInfo_->ActiveSkillSlot_[i])
+		{
+			// 그 인덱스 위치에 각성무기 삽입
+			PlayerInfo_->ActiveSkillSlot_[i] = _EvolvedType;
+			PlayerInfo_->SkillLevelInfo_[static_cast<int>(_EvolvedType)] = 1;
+			return;
+		}
+	}
+
+	
 }
 
