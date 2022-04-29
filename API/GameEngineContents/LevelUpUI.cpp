@@ -51,21 +51,23 @@ void LevelUpUI::Start()
 	IsActivated_ = true;
 
 
-	// 외부에서 설정해준 상태로 생성
-	switch (State_)
+	if (true == GameInfo::SkillLevelFull())
 	{
-	case LevelUpUI::STATE::BOXES:
-		ChangeState(STATE::BOXES);
-		break;
-	case LevelUpUI::STATE::EVOLVE:
-		ChangeState(STATE::EVOLVE);
-		break;
-	case LevelUpUI::STATE::HPMONEY:
 		ChangeState(STATE::HPMONEY);
-		break;
-	default:
-		break;
 	}
+	else
+	{
+		// 조합 여부 확인
+		SkillType EvolveSkill = GameInfo::SkillEvolveCheck();
+		if (SkillType::NONE != EvolveSkill)
+		{
+			ChangeState(STATE::EVOLVE);
+		}
+
+		// 조합 여부 없으면 일반 
+		ChangeState(STATE::BOXES);
+	}
+
 }
 
 void LevelUpUI::Update()
@@ -140,7 +142,6 @@ void LevelUpUI::SelectSkillBox()
 		SelectSkill(RandomSkills_[0]);
 
 		RandomSkills_.clear();
-
 
 		// 종료
 		Death();
@@ -362,10 +363,12 @@ void LevelUpUI::BoxesStart()
 
 void LevelUpUI::EvolveStart()
 {
+
 }
 
 void LevelUpUI::HpMoneyStart()
 {
+
 }
 
 void LevelUpUI::BoxesUpdate()
@@ -375,8 +378,10 @@ void LevelUpUI::BoxesUpdate()
 
 void LevelUpUI::EvolveUpdate()
 {
+
 }
 
 void LevelUpUI::HpMoneyUpdate()
 {
+
 }

@@ -56,6 +56,7 @@ public:
 	};
 
 	static bool SkillLevelFull();
+	static SkillType SkillEvolveCheck();
 
 public:
 	static void Destroy()
@@ -104,11 +105,16 @@ public:
 		Pause_ = _Value;
 	}
 
+	
+
 private:
 	// 계속 업데이트 되야 되는 정보, UI에 표시할 정보
 	static Character* Character_;	// 캐릭터 선택 정보
 	static PlayerInfo* PlayerInfo_;	// 인게임 플레이어 정보
 	static bool Pause_;
+
+	static SkillType CombinationSkill(SkillType _Type);
+	static SkillType EvolveSkill(SkillType _Type);
 
 private:
 	// constrcuter destructer

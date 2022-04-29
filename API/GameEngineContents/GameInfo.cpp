@@ -83,5 +83,57 @@ bool GameInfo::SkillLevelFull()
 	}
 
 	return true;
-	
 }
+
+SkillType GameInfo::SkillEvolveCheck()
+{
+	// 8레벨 엑티브스킬확인
+	SkillType MaxLevelActiveSkill = SkillType::NONE;
+	for (int i = 0; i < static_cast<int>(PlayerInfo_->ActiveSkillSlot_.size()); i++)
+	{
+		if ( 8 <= PlayerInfo_->SkillLevelInfo_[static_cast<int>(PlayerInfo_->ActiveSkillSlot_[i])] )
+		{
+			MaxLevelActiveSkill = PlayerInfo_->ActiveSkillSlot_[i];
+			break;
+		}
+	}
+
+	// 8레벨 없으면
+	if (MaxLevelActiveSkill == SkillType::NONE)
+	{
+		return MaxLevelActiveSkill;
+	}
+
+	// 그 스킬의 담당 패시브 8레벨 확인
+	SkillType Combination = CombinationSkill(MaxLevelActiveSkill);
+
+	if (8 == PlayerInfo_->SkillLevelInfo_[static_cast<int>(Combination)])
+	{
+		// 융합 스킬 리턴
+		return EvolveSkill(Combination);
+	}
+
+	return SkillType::NONE;
+
+}
+
+SkillType GameInfo::CombinationSkill(SkillType _Type)
+{
+	switch (_Type)
+	{
+	case SkillType::KNIFE:
+		return SkillType::BRACER;
+		break;
+	}
+}
+
+SkillType GameInfo::EvolveSkill(SkillType _Type)
+{
+	switch (_Type)
+	{
+	case SkillType::BRACER:
+		return SkillType::THOUSANDEDGE;
+		break;
+	}
+}
+
