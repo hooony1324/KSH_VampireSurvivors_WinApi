@@ -18,6 +18,7 @@ public:
 
 	bool IsCautionOut();
 
+
 protected:
 
 	void Start() override;
@@ -25,6 +26,8 @@ protected:
 	void Render() override;
 
 private:
+
+
 	GameEngineRenderer* Renderer_;
 	bool SpaceBarOnce_;
 };

@@ -71,3 +71,17 @@ void GameInfo::SetPlayerInfo()
 	PlayerInfo_->SkillLevelInfo_[static_cast<int>(Character_->BaseSkill_)] = 1;
 
 }
+
+bool GameInfo::SkillLevelFull()
+{
+	for (int i = 0; i < static_cast<int>(SkillType::MAX); i++)
+	{
+		if (PlayerInfo_->SkillLevelInfo_[i] < SKILL_LEVELMAX)
+		{
+			return false;
+		}
+	}
+
+	return true;
+	
+}

@@ -67,24 +67,28 @@ void WeaponSlots::Render()
 
 void WeaponSlots::SkillCheck()
 {
-	size_t ActiveSize = GameInfo::GetPlayerInfo()->ActiveSkillSlot_.size();
 
-	if (ActiveSize != ActiveCount_)
+	for (size_t i = 0; i < GameInfo::GetPlayerInfo()->ActiveSkillSlot_.size(); i++)
 	{
-		ActiveCount_ = ActiveSize;
-		ActiveSlots_[ActiveCount_ - 1]->On();
-		int SkillType = static_cast<int>(GameInfo::GetPlayerInfo()->ActiveSkillSlot_[ActiveCount_ - 1]);
-		ActiveSlots_[ActiveCount_ - 1]->SetImage(SkillOrder[SkillType] + "UISmall.bmp");
+		int SkillType = static_cast<int>(GameInfo::GetPlayerInfo()->ActiveSkillSlot_[i]);
+		if (1 > GameInfo::GetPlayerInfo()->SkillLevelInfo_[SkillType])
+		{
+			continue;
+		}
+		ActiveSlots_[i]->On();
+		ActiveSlots_[i]->SetImage(SkillOrder[SkillType] + "UISmall.bmp");
+
 	}
 
-	size_t PassiveSize = GameInfo::GetPlayerInfo()->PassiveSkillSlot_.size();
-
-	if (PassiveSize != PassiveCount_)
+	for (size_t i = 0; i < GameInfo::GetPlayerInfo()->PassiveSkillSlot_.size(); i++)
 	{
-		PassiveCount_ = PassiveSize;
-		PassiveSlots_[PassiveCount_ - 1]->On();
-		int SkillType = static_cast<int>(GameInfo::GetPlayerInfo()->PassiveSkillSlot_[PassiveCount_ - 1]);
-		PassiveSlots_[PassiveCount_ - 1]->SetImage(SkillOrder[SkillType] + "UISmall.bmp");
+		int SkillType = static_cast<int>(GameInfo::GetPlayerInfo()->PassiveSkillSlot_[i]);
+		if (1 > GameInfo::GetPlayerInfo()->SkillLevelInfo_[SkillType])
+		{
+			continue;
+		}
+		PassiveSlots_[i]->On();
+		PassiveSlots_[i]->SetImage(SkillOrder[SkillType] + "UISmall.bmp");
 	}
 
 }

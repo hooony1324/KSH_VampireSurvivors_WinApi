@@ -16,6 +16,8 @@ public:
 		HPMONEY,
 	};
 
+	static STATE State_;
+
 public:
 	// constrcuter destructer
 	LevelUpUI();
@@ -49,7 +51,7 @@ protected:
 private:
 	
 	// FSM
-	static STATE State_;
+
 
 	void UpdateState();
 	void ChangeState(STATE _State);

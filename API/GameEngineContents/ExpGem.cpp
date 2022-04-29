@@ -133,6 +133,18 @@ void ExpGem::PlayerCheck()
 			GameInfo::GetPlayerInfo()->Level_ += LevelUp;
 			
 			// 레벨 업 한만큼 UI호출
+			int ActiveMax = static_cast<int>(GameInfo::GetPlayerInfo()->ActiveSkillSlot_.size());
+			int PassiveMax = static_cast<int>(GameInfo::GetPlayerInfo()->PassiveSkillSlot_.size());
+			
+			if (true == GameInfo::SkillLevelFull())
+			{
+				LevelUpUI::State_ = LevelUpUI::STATE::HPMONEY;
+			}
+			else
+			{
+				LevelUpUI::State_ = LevelUpUI::STATE::BOXES;
+			}
+
 			LevelUpUI::CreateCount_ = LevelUp;
 		}
 

@@ -35,8 +35,16 @@ void LevelUpBox::Update()
 		return;
 	}
 
+
+	// 일단은 LevelUPUI, 추후에 보물상자 에니메이션으로
+	LevelUpUI::State_ = LevelUpUI::STATE::BOXES;
 	LevelUpUI::CreateCount_ += 1;
 	
+	// LevelUpUI상태설정
+	// 8레벨 무기 있으면 패시브의 조합 확인
+	// LevelUpUI상태 -> 각성무기
+	
+
 	Death();
 
 }

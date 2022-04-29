@@ -55,6 +55,8 @@ public:
 
 	};
 
+	static bool SkillLevelFull();
+
 public:
 	static void Destroy()
 	{
