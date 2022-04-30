@@ -117,19 +117,19 @@ void PlayLevel::Update()
 
 		if (true == GameEngineInput::GetInst()->IsDown("LevelUP"))
 		{
-			int* SkillLevelInfo = GameInfo::GetPlayerInfo()->SkillLevelInfo_;
+			std::map<SkillType, int>& AllSkillLevel = GameInfo::GetPlayerInfo()->AllSkillLevel_;
 
 			// 가지고 있는 스킬만 레벨 8
 			for (int i = 0; i < static_cast<int>(GameInfo::GetPlayerInfo()->ActiveSkillSlot_.size()); i++)
 			{
-				int SkillIndex = static_cast<int>(GameInfo::GetPlayerInfo()->ActiveSkillSlot_[i]);
-				SkillLevelInfo[SkillIndex] = 8;
+				SkillType Type = GameInfo::GetPlayerInfo()->ActiveSkillSlot_[i];
+				AllSkillLevel[Type] = 8;
 			}
 
 			for (int i = 0; i < static_cast<int>(GameInfo::GetPlayerInfo()->PassiveSkillSlot_.size()); i++)
 			{
-				int SkillIndex = static_cast<int>(GameInfo::GetPlayerInfo()->PassiveSkillSlot_[i]);
-				SkillLevelInfo[SkillIndex] = 8;
+				SkillType Type = GameInfo::GetPlayerInfo()->PassiveSkillSlot_[i];
+				AllSkillLevel[Type] = 8;
 			}
 		}
 	}

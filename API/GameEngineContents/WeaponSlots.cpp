@@ -23,8 +23,6 @@ void WeaponSlots::Start()
 	SetPosition(float4{ 4, 32 });
 	SetScale(Slot->GetScale());
 	Slot->SetPivot(Slot->GetScale().Half());
-	/*SetPosition(Slot->GetScale().Half() + float4{ 0, 35 });
-	SetScale(Slot->GetScale());*/
 	Slot->CameraEffectOff();
 	Slot->SetTransColor(RGB(0, 0, 0));
 	Slot->SetAlpha(100);
@@ -49,8 +47,8 @@ void WeaponSlots::Start()
 
 	// 1¹ø ½½¸© 
 	ActiveSlots_[0]->On();
-	int SkillType = static_cast<int>(GameInfo::GetPlayerInfo()->ActiveSkillSlot_[0]);
-	ActiveSlots_[0]->SetImage(SkillOrder[SkillType] + "UISmall.bmp");
+	SkillType Type = GameInfo::GetPlayerInfo()->ActiveSkillSlot_[0];
+	ActiveSlots_[0]->SetImage(SkillTypeToName(Type) + "UISmall.bmp");
 
 
 	NextLevelOff();
@@ -70,25 +68,25 @@ void WeaponSlots::SkillCheck()
 
 	for (size_t i = 0; i < GameInfo::GetPlayerInfo()->ActiveSkillSlot_.size(); i++)
 	{
-		int SkillType = static_cast<int>(GameInfo::GetPlayerInfo()->ActiveSkillSlot_[i]);
-		if (1 > GameInfo::GetPlayerInfo()->SkillLevelInfo_[SkillType])
+		SkillType Type = GameInfo::GetPlayerInfo()->ActiveSkillSlot_[i];
+		if (1 > GameInfo::GetPlayerInfo()->AllSkillLevel_[Type])
 		{
 			continue;
 		}
 		ActiveSlots_[i]->On();
-		ActiveSlots_[i]->SetImage(SkillOrder[SkillType] + "UISmall.bmp");
+		ActiveSlots_[i]->SetImage(SkillTypeToName(Type) + "UISmall.bmp");
 
 	}
 
 	for (size_t i = 0; i < GameInfo::GetPlayerInfo()->PassiveSkillSlot_.size(); i++)
 	{
-		int SkillType = static_cast<int>(GameInfo::GetPlayerInfo()->PassiveSkillSlot_[i]);
-		if (1 > GameInfo::GetPlayerInfo()->SkillLevelInfo_[SkillType])
+		SkillType Type = GameInfo::GetPlayerInfo()->PassiveSkillSlot_[i];
+		if (1 > GameInfo::GetPlayerInfo()->AllSkillLevel_[Type])
 		{
 			continue;
 		}
 		PassiveSlots_[i]->On();
-		PassiveSlots_[i]->SetImage(SkillOrder[SkillType] + "UISmall.bmp");
+		PassiveSlots_[i]->SetImage(SkillTypeToName(Type) + "UISmall.bmp");
 	}
 
 }

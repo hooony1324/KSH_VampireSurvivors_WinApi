@@ -65,10 +65,10 @@ void StatUI::SlotUpdate()
 		ActiveSlots_[i]->On();
 		ActiveSkills_[i]->On();
 		ActiveLevels_[i]->On();
-		int SkillType = static_cast<int>(ActiveSkillSlot[i]);
-		ActiveSkills_[i]->SetImage(SkillOrder[SkillType] + "UI.bmp");
+		SkillType Type = ActiveSkillSlot[i];
+		ActiveSkills_[i]->SetImage(SkillTypeToName(Type) + "UI.bmp");
 
-		int SkillLevel = GameInfo::GetPlayerInfo()->SkillLevelInfo_[SkillType];
+		int SkillLevel = GameInfo::GetPlayerInfo()->AllSkillLevel_[Type];
 		ActiveLevels_[i]->SetImage("WeaponLevel_" + std::to_string(SkillLevel) + ".bmp");
 	}
 
@@ -81,10 +81,10 @@ void StatUI::SlotUpdate()
 		PassiveSlots_[i]->On();
 		PassiveSkills_[i]->On();
 		PassiveLevels_[i]->On();
-		int SkillType = static_cast<int>(PassiveSkillSlot[i]);
-		PassiveSkills_[i]->SetImage(SkillOrder[SkillType] + "UI.bmp");
+		SkillType Type = PassiveSkillSlot[i];
+		PassiveSkills_[i]->SetImage(SkillTypeToName(Type) + "UI.bmp");
 
-		int SkillLevel = GameInfo::GetPlayerInfo()->SkillLevelInfo_[SkillType];
+		int SkillLevel = GameInfo::GetPlayerInfo()->AllSkillLevel_[Type];
 		PassiveLevels_[i]->SetImage("WeaponLevel_" + std::to_string(SkillLevel) + ".bmp");
 	}
 
@@ -145,8 +145,8 @@ void StatUI::SetSlotBase()
 	ActiveSkills_[0]->On();
 	ActiveLevels_[0]->On();
 
-	SkillType SkillType = GameInfo::GetPlayerInfo()->ActiveSkillSlot_[0];
-	ActiveSkills_[0]->SetImage(SkillOrder[static_cast<int>(SkillType)] + "UI.bmp");
+	SkillType Type = GameInfo::GetPlayerInfo()->ActiveSkillSlot_[0];
+	ActiveSkills_[0]->SetImage(SkillTypeToName(Type) + "UI.bmp");
 }
 
 

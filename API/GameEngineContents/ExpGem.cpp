@@ -132,12 +132,8 @@ void ExpGem::PlayerCheck()
 			GameInfo::GetPlayerInfo()->CurrentExp_ = RestExp;
 			GameInfo::GetPlayerInfo()->Level_ += LevelUp;
 			
-			// 레벨 업 한만큼 UI호출
-			int ActiveMax = static_cast<int>(GameInfo::GetPlayerInfo()->ActiveSkillSlot_.size());
-			int PassiveMax = static_cast<int>(GameInfo::GetPlayerInfo()->PassiveSkillSlot_.size());
-			
-
-
+			// 레벨업이 1레벨을 초과 할 시, 여러번 호출하기 위함
+			LevelUpUI::GetBox_ = false;
 			LevelUpUI::CreateCount_ = LevelUp;
 		}
 

@@ -37,7 +37,7 @@ void LevelUpBox::Update()
 
 
 	// 일단은 LevelUPUI, 추후에 보물상자 에니메이션으로
-	LevelUpUI::State_ = LevelUpUI::STATE::BOXES;
+	LevelUpUI::GetBox_ = true;
 	LevelUpUI::CreateCount_ += 1;
 	
 	// LevelUpUI상태설정

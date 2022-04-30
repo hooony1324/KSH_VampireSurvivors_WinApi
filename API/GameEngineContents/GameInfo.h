@@ -1,10 +1,11 @@
 #pragma once
 #include <GameEngineBase/GameEngineMath.h>
+#include <GameEngineBase/GameEngineRandom.h>
+#include <GameEngineBase/GameEngineDebug.h>
 #include "Character.h"
 #include <vector>
 #include <map>
 #include "GameEnum.h"
-#include <GameEngineBase/GameEngineRandom.h>
 
 static GameEngineRandom Random;
 
@@ -48,10 +49,19 @@ public:
 		float Magnet_;			// 아이템 획득 범위
 		int	Revival_;			// 부활 횟수
 
-		// 무기 정보, 12개만 장착 가능
+		// 스킬 정보, 12개만 장착 가능
 		std::vector<SkillType> ActiveSkillSlot_;
 		std::vector<SkillType> PassiveSkillSlot_;
-		int SkillLevelInfo_[static_cast<int>(SkillType::MAX)];
+
+		//int SkillLevelInfo_[static_cast<int>(SkillType::MAX)];
+
+		// 스킬정보 맵으로 바꿈
+
+		// 스킬 레벨 정보
+		std::map<SkillType, int> AllSkillLevel_;
+
+		
+
 
 	};
 
@@ -130,11 +140,51 @@ private:
 	GameInfo& operator=(GameInfo&& _Other) noexcept = delete;
 };
 
-// GameEnum의 SkillType과 동일한 순서유지
-static std::string SkillOrder[] =
+
+static std::string SkillTypeToName(SkillType _SkillType)
 {
-	"Knife", "MagicWand", "FireWand", "Bracer", "Clover"
-};
+	switch (_SkillType)
+	{
+	case SkillType::KNIFE:
+		return "Knife";
+		break;
+	case SkillType::MAGICWAND:
+		return "MagicWand";
+		break;
+	case SkillType::FIREWAND:
+		return "FireWand";
+		break;
+	case SkillType::BRACER:
+		return "Bracer";
+		break;
+	case SkillType::CLOVER:
+		return "Clover";
+		break;
+	case SkillType::MAX:
+		break;
+	case SkillType::THOUSANDEDGE:
+		return "ThousandEdge";
+		break;
+	case SkillType::HOLYWAND:
+		break;
+	case SkillType::HELLFIRE:
+		break;
+	case SkillType::UNHOLYVESPERS:
+		break;
+	case SkillType::BLOODYTEAR:
+		break;
+	case SkillType::HEAVENSWORD:
+		break;
+	case SkillType::SOULEATER:
+		break;
+	case SkillType::NONE:
+		break;
+	default:
+		break;
+	}
+
+	MsgBoxAssert("존재하지 않는 스킬입니다");
+}
 
 //"Knife", "MagicWand", "FireWand", "Runetracer",
 //"Axe", "Clocklancet", "Cross", "Bible",

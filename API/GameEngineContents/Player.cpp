@@ -391,20 +391,19 @@ void Player::Shooting()
 {
 	float4 MonsterPos = ShootableEnemeyCheck();
 
-	int* SkillLevelInfo = GameInfo::GetPlayerInfo()->SkillLevelInfo_;
-	int MagicLevel = GameInfo::GetPlayerInfo()->SkillLevelInfo_[1];
+	std::map<SkillType, int>& AllSkillLevel = GameInfo::GetPlayerInfo()->AllSkillLevel_;
 
-	if (0 < SkillLevelInfo[static_cast<int>(SkillType::KNIFE)])
+	if (0 < AllSkillLevel[SkillType::KNIFE] )
 	{
 		KnifeShooter_->Shooting(GameEngineTime::GetDeltaTime(static_cast<int>(TIME_GROUP::WEAPON)), PlayerPos_, MonsterPos, MoveDir_);
 	}
 
-	if (0 < SkillLevelInfo[static_cast<int>(SkillType::MAGICWAND)])
+	if (0 < AllSkillLevel[SkillType::MAGICWAND])
 	{
 		MagicShooter_->Shooting(GameEngineTime::GetDeltaTime(static_cast<int>(TIME_GROUP::WEAPON)), PlayerPos_, MonsterPos);
 	}
 
-	if (0 < SkillLevelInfo[static_cast<int>(SkillType::FIREWAND)])
+	if (0 < AllSkillLevel[SkillType::FIREWAND])
 	{
 		FireShooter_->Shooting(GameEngineTime::GetDeltaTime(static_cast<int>(TIME_GROUP::WEAPON)), PlayerPos_, MonsterPos);
 	}

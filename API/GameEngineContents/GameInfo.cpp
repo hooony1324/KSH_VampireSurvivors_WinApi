@@ -60,23 +60,47 @@ void GameInfo::SetPlayerInfo()
 	PlayerInfo_->ActiveSkillSlot_.clear();
 	PlayerInfo_->PassiveSkillSlot_.clear();
 
-	for (int i = 0; i < static_cast<int>(SkillType::MAX); i++)
-	{
-		PlayerInfo_->SkillLevelInfo_[i] = 0;
-	}
+	//for (int i = 0; i < static_cast<int>(SkillType::MAX); i++)
+	//{
+	//	PlayerInfo_->SkillLevelInfo_[i] = 0;
+	//}
 
 
 	// 기본 스킬 입력
 	PlayerInfo_->ActiveSkillSlot_.push_back(Character_->BaseSkill_);
-	PlayerInfo_->SkillLevelInfo_[static_cast<int>(Character_->BaseSkill_)] = 1;
+	//PlayerInfo_->SkillLevelInfo_[static_cast<int>(Character_->BaseSkill_)] = 1;
+
+
+	// 초기화 : 맵
+	for (int i = 0; i < static_cast<int>(SkillType::MAX); i++)
+	{
+		SkillType Type = static_cast<SkillType>(i);
+		PlayerInfo_->AllSkillLevel_[Type] = 0;
+	}
+	// 기본스킬 입력 : 맵
+	PlayerInfo_->AllSkillLevel_[Character_->BaseSkill_] = 1;
+
+
 
 }
 
 bool GameInfo::SkillLevelFull()
 {
-	for (int i = 0; i < static_cast<int>(SkillType::MAX); i++)
+	//for (int i = 0; i < static_cast<int>(SkillType::MAX); i++)
+	//{
+	//	if (PlayerInfo_->SkillLevelInfo_[i] < SKILL_LEVELMAX)
+	//	{
+	//		return false;
+	//	}
+	//}
+
+	// 하나라도 8레벨 미만 스킬 있으면 HP/MONEY 박스 띄우지 않음
+	std::map<SkillType, int>::iterator FindIter = PlayerInfo_->AllSkillLevel_.begin();
+	std::map<SkillType, int>::iterator EndIter = PlayerInfo_->AllSkillLevel_.end();
+
+	for (; FindIter != EndIter; ++FindIter)
 	{
-		if (PlayerInfo_->SkillLevelInfo_[i] < SKILL_LEVELMAX)
+		if ((*FindIter).second < SKILL_LEVELMAX)
 		{
 			return false;
 		}
@@ -87,11 +111,11 @@ bool GameInfo::SkillLevelFull()
 
 SkillType GameInfo::SkillEvolveCheck()
 {
-	// 8레벨 엑티브스킬확인
+	// 액티브 슬롯에서 8레벨 엑티브스킬확인
 	SkillType MaxLevelActiveSkill = SkillType::NONE;
 	for (int i = 0; i < static_cast<int>(PlayerInfo_->ActiveSkillSlot_.size()); i++)
 	{
-		if (8 <= PlayerInfo_->SkillLevelInfo_[static_cast<int>(PlayerInfo_->ActiveSkillSlot_[i])])
+		if (8 <= PlayerInfo_->AllSkillLevel_[PlayerInfo_->ActiveSkillSlot_[i]])
 		{
 			MaxLevelActiveSkill = PlayerInfo_->ActiveSkillSlot_[i];
 			break;
@@ -107,7 +131,7 @@ SkillType GameInfo::SkillEvolveCheck()
 	// 그 스킬의 담당 패시브 8레벨 확인
 	SkillType Combination = CombinationSkill(MaxLevelActiveSkill);
 
-	if (8 == PlayerInfo_->SkillLevelInfo_[static_cast<int>(Combination)])
+	if (8 == PlayerInfo_->AllSkillLevel_[Combination])
 	{
 		// 융합 스킬 리턴
 		return ChangeSkill(Combination);
@@ -150,7 +174,7 @@ void GameInfo::ChangeEvolvedSkill(SkillType _EvolvedType)
 		{
 			// 그 인덱스 위치에 각성무기 삽입
 			PlayerInfo_->ActiveSkillSlot_[i] = _EvolvedType;
-			PlayerInfo_->SkillLevelInfo_[static_cast<int>(_EvolvedType)] = 1;
+			PlayerInfo_->AllSkillLevel_[_EvolvedType] = 1;
 			return;
 		}
 	}

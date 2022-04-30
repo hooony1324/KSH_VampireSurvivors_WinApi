@@ -36,7 +36,7 @@ void ProjectileShooter::Update()
 
 void ProjectileShooter::SetShooter(SkillType _SkillType, float _WaitTime)
 {
-	SkillLevel_ = GameInfo::GetPlayerInfo()->SkillLevelInfo_[static_cast<int>(_SkillType)];
+	SkillLevel_ = GameInfo::GetPlayerInfo()->AllSkillLevel_[_SkillType];
 
 	//탄수		인터벌		쿨타임		데미지		속도			지속시간 
 	SkillType_ = _SkillType;
@@ -115,7 +115,7 @@ void ProjectileShooter::Shooting(float _DeltaTime, float4 _PlayerPos, float4 _Mo
 
 void ProjectileShooter::UpdateSkillStat()
 {
-	SkillLevel_ = GameInfo::GetPlayerInfo()->SkillLevelInfo_[static_cast<int>(SkillType_)];
+	SkillLevel_ = GameInfo::GetPlayerInfo()->AllSkillLevel_[SkillType_];
 	InitBulletCount_ = static_cast<int>(STAT_SHOOTER[static_cast<int>(SkillType_)][SkillLevel_][0]);
 	InitInterval_ = STAT_SHOOTER[static_cast<int>(SkillType_)][SkillLevel_][1];
 	InitCoolTime_ = STAT_SHOOTER[static_cast<int>(SkillType_)][SkillLevel_][2];

@@ -47,5 +47,4 @@ float STAT_SHOOTER[static_cast<int>(SkillType::MAX)][SKILL_LEVELMAX + 1][6] =
 
 };
 
-
 // ETC : KINGBIBLE, GARLIC, 

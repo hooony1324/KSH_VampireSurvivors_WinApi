@@ -21,6 +21,7 @@ public:
 	};
 
 	static STATE State_;
+	static bool GetBox_;
 
 public:
 	// constrcuter destructer
@@ -75,6 +76,8 @@ private:
 	void HpMoneyStart();
 	void HpMoneyUpdate();
 
+	void UIEnd();
+
 private:
 	static bool IsActivated_;
 	GameEngineRenderer* BoxBackGround_;
@@ -91,10 +94,10 @@ private:
 	// STATE : BOXES
 	// Render1_ ~ Render4_ 액티브/패시브
 	int SelectNum_;
-	std::vector<int> RandomSkills_;
+	std::vector<SkillType> RandomSkills_;
 	void ShowRandomSkills();
 	void SelectSkillBox();
-	void SelectSkill(int _SkillNumber);
+	void SelectSkill(SkillType _SkillType);
 
 	GameEngineRenderer* Renderer1_;
 	GameEngineRenderer* Renderer2_;
