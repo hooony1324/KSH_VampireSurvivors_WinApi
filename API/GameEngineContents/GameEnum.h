@@ -36,16 +36,13 @@ const int SKILL_LEVELMAX = 8;
 const int ACTIVE_MAX = 3;
 enum class SkillType
 {
-	// @@@ Attribute : Active @@@
-
-	// ½´ÆÃ
 	KNIFE,
 	MAGICWAND,
 	FIREWAND,
-	BRACER,			// + SWORD = THOUSANDEDGE
+	BRACER,				// + SWORD = THOUSANDEDGE
 	CLOVER,				// + CROSS = HEAVENSWORD
-	THOUSANDEDGE,
 	MAX,
+	THOUSANDEDGE,
 	//RUNETRACER,
 	//AXE,
 	//CLOCKLANCET,
@@ -61,10 +58,9 @@ enum class SkillType
 	//HOLYWATER,
 	//FIVESTAR,
 
-	// @@@ AttriBute : Passive @@@
 
-	//EMPTYTOME,		// + MAGICWAND = HOLYWAND
-	//SPINACH,			// + FIREWAND = HELLFIRE
+	EMPTYTOME,		// + MAGICWAND = HOLYWAND
+	SPINACH,			// + FIREWAND = HELLFIRE
 	//SPELLBINDER,		// + KINGBIBLE = UNHOLYVESPERS
 	//HOLLOWHEART,		// + WHIP = BLOODYTEAR
 	//PUMMAROLA,			// + GARLIC = SOULEATER

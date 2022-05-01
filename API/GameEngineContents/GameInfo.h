@@ -9,6 +9,19 @@
 
 static GameEngineRandom Random;
 
+
+class SkillStat
+{
+public:
+	//탄수		인터벌		쿨타임		데미지		속도			지속시간 
+	int SkillCount_;
+	float Interval_;
+	float CoolTime_;
+	float Damage_;
+	float Speed_;
+	float Duration_;
+};
+
 // 설명 :
 class GameInfo
 {
@@ -53,21 +66,17 @@ public:
 		std::vector<SkillType> ActiveSkillSlot_;
 		std::vector<SkillType> PassiveSkillSlot_;
 
-		//int SkillLevelInfo_[static_cast<int>(SkillType::MAX)];
-
-		// 스킬정보 맵으로 바꿈
-
 		// 스킬 레벨 정보
 		std::map<SkillType, int> AllSkillLevel_;
-
-		
-
-
 	};
 
 	static bool SkillLevelFull();
 	static SkillType SkillEvolveCheck();
 	static void ChangeEvolvedSkill(SkillType _EvolvedType);
+
+	// Type | Level(1~8) | Stat(6개)
+	static std::map<SkillType, std::map<int, SkillStat>> AllSkillStat_;
+	static std::map<SkillType, std::map<int, SkillStat>> SetAllSkillStat();
 
 public:
 	static void Destroy()
@@ -127,7 +136,6 @@ private:
 	static SkillType CombinationSkill(SkillType _Type);
 	static SkillType ChangeSkill(SkillType _Type);
 	
-
 private:
 	// constrcuter destructer
 	GameInfo();
@@ -139,7 +147,6 @@ private:
 	GameInfo& operator=(const GameInfo& _Other) = delete;
 	GameInfo& operator=(GameInfo&& _Other) noexcept = delete;
 };
-
 
 static std::string SkillTypeToName(SkillType _SkillType)
 {
@@ -160,30 +167,16 @@ static std::string SkillTypeToName(SkillType _SkillType)
 	case SkillType::CLOVER:
 		return "Clover";
 		break;
-	case SkillType::MAX:
-		break;
 	case SkillType::THOUSANDEDGE:
 		return "ThousandEdge";
-		break;
-	case SkillType::HOLYWAND:
-		break;
-	case SkillType::HELLFIRE:
-		break;
-	case SkillType::UNHOLYVESPERS:
-		break;
-	case SkillType::BLOODYTEAR:
-		break;
-	case SkillType::HEAVENSWORD:
-		break;
-	case SkillType::SOULEATER:
-		break;
-	case SkillType::NONE:
 		break;
 	default:
 		break;
 	}
 
 	MsgBoxAssert("존재하지 않는 스킬입니다");
+
+	return "None";
 }
 
 //"Knife", "MagicWand", "FireWand", "Runetracer",
@@ -199,3 +192,4 @@ static std::string CharacterNameList[] =
 {
 	"Imelda", "Cavallo", "Poe"
 };
+

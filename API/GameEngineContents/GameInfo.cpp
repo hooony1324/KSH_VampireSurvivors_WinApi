@@ -5,6 +5,8 @@ Character* GameInfo::Character_ = nullptr;
 GameInfo::PlayerInfo* GameInfo::PlayerInfo_ = new PlayerInfo();
 bool GameInfo::Pause_ = false;
 
+std::map<SkillType, std::map<int, SkillStat>> GameInfo::AllSkillStat_ = SetAllSkillStat();
+
 GameInfo::GameInfo()
 {
 	
@@ -60,40 +62,23 @@ void GameInfo::SetPlayerInfo()
 	PlayerInfo_->ActiveSkillSlot_.clear();
 	PlayerInfo_->PassiveSkillSlot_.clear();
 
-	//for (int i = 0; i < static_cast<int>(SkillType::MAX); i++)
-	//{
-	//	PlayerInfo_->SkillLevelInfo_[i] = 0;
-	//}
-
-
-	// 기본 스킬 입력
-	PlayerInfo_->ActiveSkillSlot_.push_back(Character_->BaseSkill_);
-	//PlayerInfo_->SkillLevelInfo_[static_cast<int>(Character_->BaseSkill_)] = 1;
-
-
-	// 초기화 : 맵
+	// 모든 스킬 레벨 정보 초기화
 	for (int i = 0; i < static_cast<int>(SkillType::MAX); i++)
 	{
 		SkillType Type = static_cast<SkillType>(i);
 		PlayerInfo_->AllSkillLevel_[Type] = 0;
 	}
-	// 기본스킬 입력 : 맵
+
+	// 기본 스킬 입력
+	PlayerInfo_->ActiveSkillSlot_.push_back(Character_->BaseSkill_);
+
+	// 기본스킬 레벨 입력
 	PlayerInfo_->AllSkillLevel_[Character_->BaseSkill_] = 1;
-
-
 
 }
 
 bool GameInfo::SkillLevelFull()
 {
-	//for (int i = 0; i < static_cast<int>(SkillType::MAX); i++)
-	//{
-	//	if (PlayerInfo_->SkillLevelInfo_[i] < SKILL_LEVELMAX)
-	//	{
-	//		return false;
-	//	}
-	//}
-
 	// 하나라도 8레벨 미만 스킬 있으면 HP/MONEY 박스 띄우지 않음
 	std::map<SkillType, int>::iterator FindIter = PlayerInfo_->AllSkillLevel_.begin();
 	std::map<SkillType, int>::iterator EndIter = PlayerInfo_->AllSkillLevel_.end();
@@ -148,9 +133,28 @@ SkillType GameInfo::CombinationSkill(SkillType _Type)
 	case SkillType::KNIFE:
 		return SkillType::BRACER;
 		break;
+	case SkillType::MAGICWAND:
+		return SkillType::EMPTYTOME;
+		break;
+	case SkillType::FIREWAND:
+		return SkillType::SPINACH;
+		break;
+	case SkillType::BRACER:
+		break;
+	case SkillType::CLOVER:
+		break;
+	case SkillType::THOUSANDEDGE:
+		break;
+	case SkillType::MAX:
+		break;
+	default:
+		break;
 	}
+
+	return SkillType::NONE;
 }
 
+// 콤비네이션 스킬 -> 각성스킬
 SkillType GameInfo::ChangeSkill(SkillType _Type)
 {
 	switch (_Type)
@@ -158,11 +162,17 @@ SkillType GameInfo::ChangeSkill(SkillType _Type)
 	case SkillType::BRACER:
 		return SkillType::THOUSANDEDGE;
 		break;
-	case SkillType::THOUSANDEDGE:
-		return SkillType::KNIFE;
+	case SkillType::EMPTYTOME:
+		return SkillType::HOLYWAND;
+		break;
+	case SkillType::SPINACH:
+		return SkillType::HELLFIRE;
 		break;
 	}
+
+	return SkillType::NONE;
 }
+
 
 void GameInfo::ChangeEvolvedSkill(SkillType _EvolvedType)
 {
@@ -179,6 +189,80 @@ void GameInfo::ChangeEvolvedSkill(SkillType _EvolvedType)
 		}
 	}
 
-	
 }
 
+
+// 	std::map<SkillType, std::map<int, SkillStat>> AllSkillStat_;
+std::map<SkillType, std::map<int, SkillStat>> GameInfo::SetAllSkillStat()
+{
+	std::map<SkillType, std::map<int, SkillStat>> AllSkillStat;
+
+	// 탄수		인터벌		쿨타임		데미지		속도			지속시간 
+	// KNIFE
+	{
+		std::map<int, SkillStat> Level;
+		Level[1] = SkillStat{ 2, 0.1f, 2.0f, 6.5f, 550.0f, 4.0f };
+		Level[2] = SkillStat{ 3, 0.1f, 2.0f, 6.5f, 550.0f, 4.0f };
+		Level[3] = SkillStat{ 3, 0.1f, 1.90f, 6.5f, 550.0f, 4.0f };
+		Level[4] = SkillStat{ 4, 0.1f, 1.90f, 6.5f, 550.0f, 4.0f };
+		Level[5] = SkillStat{ 4, 0.1f, 1.80f, 6.5f, 650.0f, 4.0f };
+		Level[6] = SkillStat{ 5, 0.1f, 1.80f, 6.5f, 650.0f, 4.0f };
+		Level[7] = SkillStat{ 5, 0.1f, 1.70f, 6.5f, 650.0f, 4.0f };
+		Level[8] = SkillStat{ 6, 0.1f, 1.70f, 6.5f, 650.0f, 4.0f };
+
+		AllSkillStat[SkillType::KNIFE] = Level;
+	}
+
+
+	// MAGICWAND
+	{
+		std::map<int, SkillStat> Level;
+		Level[1] = SkillStat{ 2, 0.08f, 2.0f, 10.0f, 500.0f, 4.0f };
+		Level[2] = SkillStat{ 3, 0.08f, 2.0f, 10.0f, 500.0f, 4.0f };
+		Level[3] = SkillStat{ 3, 0.08f, 1.90f, 10.0f, 500.0f, 4.0f };
+		Level[4] = SkillStat{ 4, 0.08f, 1.90f, 10.0f, 500.0f, 4.0f };
+		Level[5] = SkillStat{ 4, 0.08f, 1.80f, 10.0f, 500.0f, 4.0f };
+		Level[6] = SkillStat{ 5, 0.08f, 1.80f, 10.0f, 500.0f, 4.0f };
+		Level[7] = SkillStat{ 5, 0.08f, 1.70f, 10.0f, 500.0f, 4.0f };
+		Level[8] = SkillStat{ 6, 0.08f, 1.70f, 10.0f, 500.0f, 4.0f };
+
+		AllSkillStat[SkillType::MAGICWAND] = Level;
+	}
+
+	// FIREWAND
+	{
+		std::map<int, SkillStat> Level;
+		Level[1] = SkillStat{ 3, 0.0f, 5.0f, 20.0f, 250.0f, 4.0f };
+		Level[2] = SkillStat{ 3, 0.0f, 5.0f, 20.0f, 250.0f, 4.0f };
+		Level[3] = SkillStat{ 3, 0.0f, 4.9f, 20.0f, 250.0f, 4.0f };
+		Level[4] = SkillStat{ 4, 0.0f, 4.8f, 20.0f, 250.0f, 4.0f };
+		Level[5] = SkillStat{ 4, 0.0f, 4.5f, 20.0f, 250.0f, 4.0f };
+		Level[6] = SkillStat{ 4, 0.0f, 4.5f, 20.0f, 250.0f, 4.0f };
+		Level[7] = SkillStat{ 5, 0.0f, 4.0f, 20.0f, 250.0f, 4.0f };
+		Level[8] = SkillStat{ 5, 0.0f, 4.0f, 20.0f, 250.0f, 4.0f };
+
+		AllSkillStat[SkillType::FIREWAND] = Level;
+	}
+
+
+
+	// THOUSANDEDGE
+	{
+		std::map<int, SkillStat> Level;
+		Level[1] = SkillStat{ 1, 0.1f, 0.0f, 6.5f, 650.0f, 4.0f };
+		Level[2] = SkillStat{ 1, 0.1f, 0.0f, 6.5f, 650.0f, 4.0f };
+		Level[3] = SkillStat{ 1, 0.1f, 0.0f, 6.5f, 650.0f, 4.0f };
+		Level[4] = SkillStat{ 1, 0.1f, 0.0f, 6.5f, 650.0f, 4.0f };
+		Level[5] = SkillStat{ 1, 0.1f, 0.0f, 6.5f, 650.0f, 4.0f };
+		Level[6] = SkillStat{ 1, 0.1f, 0.0f, 6.5f, 650.0f, 4.0f };
+		Level[7] = SkillStat{ 1, 0.1f, 0.0f, 6.5f, 650.0f, 4.0f };
+		Level[8] = SkillStat{ 1, 0.1f, 0.0f, 6.5f, 650.0f, 4.0f };
+
+		AllSkillStat[SkillType::KNIFE] = Level;
+	}
+
+	/// PASSIVE
+
+
+	return AllSkillStat;
+}

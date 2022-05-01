@@ -90,6 +90,8 @@ private:
 	GameEngineRenderer* Treasure_;
 	Counter TreasureOnCounter_;
 
+	void SelectTreasure();
+
 
 	// STATE : BOXES
 	// Render1_ ~ Render4_ 액티브/패시브

@@ -106,6 +106,12 @@ void ProjectileShooter::Shooting(float _DeltaTime, float4 _PlayerPos, float4 _Mo
 	case SkillType::FIREWAND:
 		ShootFire();
 		break;
+
+	// °¢¼º
+	case SkillType::THOUSANDEDGE:
+		ShootKnife();
+		break;
+
 	default:
 		break;
 	}
@@ -116,16 +122,19 @@ void ProjectileShooter::Shooting(float _DeltaTime, float4 _PlayerPos, float4 _Mo
 void ProjectileShooter::UpdateSkillStat()
 {
 	SkillLevel_ = GameInfo::GetPlayerInfo()->AllSkillLevel_[SkillType_];
-	InitBulletCount_ = static_cast<int>(STAT_SHOOTER[static_cast<int>(SkillType_)][SkillLevel_][0]);
-	InitInterval_ = STAT_SHOOTER[static_cast<int>(SkillType_)][SkillLevel_][1];
-	InitCoolTime_ = STAT_SHOOTER[static_cast<int>(SkillType_)][SkillLevel_][2];
+	std::map<int, SkillStat> Skill = GameInfo::AllSkillStat_[SkillType_];
+
+	InitBulletCount_ = Skill[SkillLevel_].SkillCount_;
+	InitInterval_ = Skill[SkillLevel_].Interval_;
+	InitCoolTime_ = Skill[SkillLevel_].CoolTime_;
 }
 
 void ProjectileShooter::SetBulletStat(Projectile* _Bullet)
 {
-	_Bullet->SetDamage(STAT_SHOOTER[static_cast<int>(SkillType_)][SkillLevel_][3]);
-	_Bullet->SetSpeed(STAT_SHOOTER[static_cast<int>(SkillType_)][SkillLevel_][4]);
-	_Bullet->SetDuration(STAT_SHOOTER[static_cast<int>(SkillType_)][SkillLevel_][5]);
+	std::map<int, SkillStat> Skill = GameInfo::AllSkillStat_[SkillType_];
+	_Bullet->SetDamage(Skill[SkillLevel_].Damage_);
+	_Bullet->SetSpeed(Skill[SkillLevel_].Speed_);
+	_Bullet->SetDuration(Skill[SkillLevel_].Duration_);
 }
 
 void ProjectileShooter::ShootKnife()

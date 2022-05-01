@@ -88,6 +88,7 @@ void StatUI::SlotUpdate()
 		PassiveLevels_[i]->SetImage("WeaponLevel_" + std::to_string(SkillLevel) + ".bmp");
 	}
 
+
 }
 
 void StatUI::SetSlotBase()
