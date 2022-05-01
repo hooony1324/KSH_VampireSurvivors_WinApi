@@ -15,7 +15,7 @@
 #include "Player.h"
 #include <vector>
 
-std::vector<std::string> BossNameList = { "XLMummy"/*, "XLReaper"*/ };
+std::vector<std::string> BossNameList = { "XLMummy", "XLReaper" };
 int Boss::BossIndex_ = 0;
 
 Boss::Boss() 
@@ -31,11 +31,7 @@ void Boss::Start()
 	NextLevelOff();
 	MapColImage_ = PlayLevel::MapColImage_;
 
-	// ÀÎµ¦½º Á¶Á¤
-	if (BossIndex_ >= static_cast<int>(BOSSTYPE::MAX) - 1)
-	{
-		BossIndex_ = 0;
-	}
+
 
 	BossType_ = static_cast<BOSSTYPE>(BossIndex_);
 	BossName_ = BossNameList[BossIndex_];
@@ -337,10 +333,6 @@ void Boss::SetRenderer(BOSSTYPE _BossType)
 	case BOSSTYPE::MAX:
 		break;
 	default:
-		Renderer_->CreateFolderAnimationTimeKey(BossName_ + "_WalkLeft.bmp", BossName_ + "_WalkLeft", static_cast<int>(TIME_GROUP::MONSTER), 0, 3, 0.2f, true);
-		Renderer_->CreateFolderAnimationTimeKey(BossName_ + "_WalkRight.bmp", BossName_ + "_WalkRight", static_cast<int>(TIME_GROUP::MONSTER), 0, 3, 0.2f, true);
-		Renderer_->CreateFolderAnimationTimeKey(BossName_ + "_Dead.bmp", BossName_ + "_Dead", static_cast<int>(TIME_GROUP::MONSTER), 0, 29, 0.1f, false);
-		Renderer_->ChangeAnimation(BossName_ + "_WalkLeft");
 		break;
 	}
 }

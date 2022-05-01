@@ -20,7 +20,8 @@ public:
 	{
 		PLAY,
 		LEVELUP,
-		PAUSE
+		PAUSE,
+		GAMEOVER,
 	};
 
 public:
@@ -53,10 +54,13 @@ private:
 	void PlayStart();
 	void LevelUpStart();
 	void PauseStart();
+	void GameOverStart();
+
 
 	void PlayUpdate();
 	void LevelUpUpdate();
 	void PauseUpdate();
+	void GameOverUpdate();
 
 	LevelState LevelState_;
 
@@ -70,6 +74,8 @@ private:
 	GameEngineActor* KillCountUI_;
 	GameEngineActor* PauseUI_;
 	GameEngineActor* StatUI_;
+	
+	GameEngineActor* GameOverUI_;
 
 
 private:
@@ -77,6 +83,8 @@ private:
 	void GamePause();
 	void ShowPauseMenu();
 	void LevelUpUICheck();
+	void Freeze();
+	void FreezeOut();
 
 	// Map
 	void CreateMap();

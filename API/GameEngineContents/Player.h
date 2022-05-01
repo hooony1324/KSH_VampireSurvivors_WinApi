@@ -22,6 +22,10 @@ public:
 	Player& operator=(Player&& _Other) noexcept = delete;
 
 	void Attacked(float _Damage);
+	inline bool IsHpZero()
+	{
+		return HpZero_;
+	}
 
 private:
 	/*float Gravity_;
@@ -58,6 +62,7 @@ private:
 
 	// ·»´õ
 	GameEngineRenderer*		PlayerRenderer_;
+	GameEngineRenderer*		Hp_BarBack_;
 	GameEngineRenderer*		Hp_BarRed_;
 
 	void PlayerMove();
@@ -85,6 +90,7 @@ private:
 	ProjectileShooter* RuneShooter_;
 	ProjectileShooter* ThousandEdgeShooter_;
 
-	
+	// Á×À½
+	bool HpZero_;
 };
 

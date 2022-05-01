@@ -274,7 +274,7 @@ float Enemy::MapColCheck(float _Speed)
 
 void Enemy::SetRenderer()
 {
-	for (int i = 0; i < 4; i++)
+	for (int i = 0; i < static_cast<int>(EnemyNameList.size()); i++)
 	{
 		std::string EnemyName = EnemyNameList[i];
 		Renderer_->CreateFolderAnimationTimeKey(EnemyName + "_WalkLeft.bmp", EnemyName + "_WalkLeft", static_cast<int>(TIME_GROUP::MONSTER), 0, 3, 0.2f, true);

@@ -207,6 +207,10 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="GameOverUI.h">
+      <SubType>
+      </SubType>
+    </ClInclude>
     <ClInclude Include="GameStartMenu.h">
       <SubType>
       </SubType>
@@ -353,6 +357,10 @@
       </SubType>
     </ClCompile>
     <ClCompile Include="GameInfo.cpp">
+      <SubType>
+      </SubType>
+    </ClCompile>
+    <ClCompile Include="GameOverUI.cpp">
       <SubType>
       </SubType>
     </ClCompile>

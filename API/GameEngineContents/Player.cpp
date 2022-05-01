@@ -73,10 +73,12 @@ void Player::Start()
 	Speed_ = CharacterStat_->Speed_;
 
 	// 체력바
-	CreateRenderer("hpbar_back.bmp", static_cast<int>(RENDER_ORDER::PLAYER), RenderPivot::CENTER, {0, 35});
+	Hp_BarBack_ = CreateRenderer("hpbar_back.bmp", static_cast<int>(RENDER_ORDER::PLAYER), RenderPivot::CENTER, {0, 35});
 	Hp_BarRed_ = CreateRenderer("hpbar.bmp", static_cast<int>(RENDER_ORDER::PLAYER), RenderPivot::CENTER, { 0, 35 });
 	Hp_BarSize_ = Hp_BarRed_->GetScale();
 
+	// 죽음
+	HpZero_ = false;
 
 	// 충돌
 	MapColImage_ = PlayLevel::MapColImage_;
@@ -239,17 +241,15 @@ void Player::Attacked(float _Damage)
 
 	if (CurrentHp <= 0)
 	{
-		// 예시
 		//PlayerRenderer_->ChangeAnimation("CavalloDead");
-		GameEngine::GetInst().ChangeLevel("Result");
+		PlayerRenderer_->PauseOn();
+		HpZero_ = true;
 	}
 }
-
 
 void Player::AllCollisionCheck()
 {
 	EnemyAttackCheck();
-
 	BossAttackCheck();
 }
 

@@ -239,7 +239,11 @@ void EnemyController::SpawnBoss(bool _BossCounterEnd)
 
 		// 다음 보스 지정
 		Boss::BossIndex_ += 1;
-
+		// 인덱스 조정
+		if (BossIndex_ >= static_cast<int>(BOSSTYPE::MAX) - 1)
+		{
+			BossIndex_ = 0;
+		}
 	}
 
 }

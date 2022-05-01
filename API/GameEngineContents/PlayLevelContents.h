@@ -8,6 +8,7 @@
 #include "PauseUI.h"
 #include "StatUI.h"
 #include "LevelUpUI.h"
+#include "GameOverUI.h"
 
 #include "Player.h"
 #include "Library.h"

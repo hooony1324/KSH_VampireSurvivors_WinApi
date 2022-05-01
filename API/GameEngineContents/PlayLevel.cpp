@@ -73,8 +73,6 @@ void PlayLevel::LevelChangeStart(GameEngineLevel* _PrevLevel)
 	PauseUI_->Off();
 	StatUI_->Off();
 
-
-
 	//BgmPlayer = GameEngineSound::SoundPlayControl("bgm_elrond_library_quiet.MP3");
 
 	// 아이템 
@@ -107,7 +105,6 @@ void PlayLevel::LevelChangeEnd(GameEngineLevel* _NextLevel)
 
 void PlayLevel::Update()
 {
-
 	// 디버깅
 	{
 		if (true == GameEngineInput::GetInst()->IsDown("ColDebugger"))
@@ -140,6 +137,7 @@ void PlayLevel::Update()
 
 }
 
+
 void PlayLevel::CreateMap()
 {
 	Map_ = CreateActor<Library>(static_cast<int>(RENDER_ORDER::MONSTER), "Library");
@@ -170,6 +168,9 @@ void PlayLevel::UpdateState()
 	case LevelState::PAUSE:
 		PauseUpdate();
 		break;
+	case LevelState::GAMEOVER:
+		GameOverUpdate();
+		break;
 	default:
 		break;
 	}
@@ -188,6 +189,9 @@ void PlayLevel::ChangeState(LevelState _State)
 	case LevelState::PAUSE:
 		PauseStart();
 		break;
+	case LevelState::GAMEOVER:
+		GameOverStart();
+		break;
 	default:
 		break;
 	}
@@ -197,18 +201,12 @@ void PlayLevel::ChangeState(LevelState _State)
 
 void PlayLevel::PlayStart()
 {
-	GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::MONSTER), 1.0f);
-	GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::PLAYER), 1.0f);
-	GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::WEAPON), 1.0f);
-	GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::TIMER), 1.0f);
+	FreezeOut();
 }
 
 void PlayLevel::LevelUpStart()
 {
-	GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::MONSTER), 0.0f);
-	GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::PLAYER), 0.0f);
-	GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::WEAPON), 0.0f);
-	GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::TIMER), 0.0f);
+	Freeze();
 
 	CreateActor<LevelUpUI>(static_cast<int>(ACTOR_ORDER::UI), "UI");
 }
@@ -216,14 +214,24 @@ void PlayLevel::LevelUpStart()
 void PlayLevel::PauseStart()
 {
 	PauseUI::Activated_ = true;
-	GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::MONSTER), 0.0f);
-	GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::PLAYER), 0.0f);
-	GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::WEAPON), 0.0f);
-	GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::TIMER), 0.0f);
+
+	Freeze();
+}
+
+void PlayLevel::GameOverStart()
+{
+	Freeze();
+	GameEngineSound::SoundPlayOneShot("GameOver.mp3", 0);
+	GameOverUI_ = CreateActor<GameOverUI>(static_cast<int>(ACTOR_ORDER::BACKGROUND));
 }
 
 void PlayLevel::PlayUpdate()
 {
+	if (Player_->IsHpZero())
+	{
+		ChangeState(LevelState::GAMEOVER);
+	}
+
 	if (LevelUpUI::CreateCount_ > 0 && false == LevelUpUI::IsActivated())
 	{
 		ChangeState(LevelState::LEVELUP);
@@ -270,3 +278,31 @@ void PlayLevel::PauseUpdate()
 	PauseUI_->On();
 	StatUI_->On();
 }
+
+void PlayLevel::GameOverUpdate()
+{
+	if (true == GameEngineInput::GetInst()->IsDown("SpaceBar"))
+	{
+		// 게임 종료
+		GameEngineSound::SoundPlayOneShot("ButtonQuit.mp3", 0);
+		GameEngine::GetInst().ChangeLevel("Result");
+	}
+}
+
+
+void PlayLevel::Freeze()
+{
+	GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::MONSTER), 0.0f);
+	GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::PLAYER), 0.0f);
+	GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::WEAPON), 0.0f);
+	GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::TIMER), 0.0f);
+}
+
+void PlayLevel::FreezeOut()
+{
+	GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::MONSTER), 1.0f);
+	GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::PLAYER), 1.0f);
+	GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::WEAPON), 1.0f);
+	GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::TIMER), 1.0f);
+}
+

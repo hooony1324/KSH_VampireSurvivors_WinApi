@@ -110,6 +110,9 @@
     <ClCompile Include="ShadeRed.cpp">
       <Filter>2.Play\Enemies</Filter>
     </ClCompile>
+    <ClCompile Include="GameOverUI.cpp">
+      <Filter>2.Play\UI</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="VampireSurvivorsGame.h" />
@@ -226,6 +229,9 @@
     </ClInclude>
     <ClInclude Include="ShadeRed.h">
       <Filter>2.Play\Enemies</Filter>
+    </ClInclude>
+    <ClInclude Include="GameOverUI.h">
+      <Filter>2.Play\UI</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
