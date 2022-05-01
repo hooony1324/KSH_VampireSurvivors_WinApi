@@ -72,7 +72,7 @@ public:
 
 	static bool SkillLevelFull();
 	static SkillType SkillEvolveCheck();
-	static void ChangeEvolvedSkill(SkillType _EvolvedType);
+	static void PushEvolvedSkill(SkillType _EvolvedType);
 
 	// Type | Level(1~8) | Stat(6개)
 	static std::map<SkillType, std::map<int, SkillStat>> AllSkillStat_;
@@ -170,11 +170,12 @@ static std::string SkillTypeToName(SkillType _SkillType)
 	case SkillType::THOUSANDEDGE:
 		return "ThousandEdge";
 		break;
+	case SkillType::NONE:
+		return "None";
+		break;
 	default:
 		break;
 	}
-
-	MsgBoxAssert("존재하지 않는 스킬입니다");
 
 	return "None";
 }

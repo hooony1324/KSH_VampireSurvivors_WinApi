@@ -89,8 +89,9 @@ private:
 	GameEngineRenderer* BoxAnim_;
 	GameEngineRenderer* Treasure_;
 	Counter TreasureOnCounter_;
+	SkillType SelectedTreasure_;
 
-	void SelectTreasure();
+	SkillType SelectTreasure();
 
 
 	// STATE : BOXES

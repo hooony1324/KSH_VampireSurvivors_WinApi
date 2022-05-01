@@ -21,6 +21,7 @@ bool LevelUpUI::GetBox_ = false;
 
 
 LevelUpUI::LevelUpUI() 
+	: EvolveSkill_(SkillType::NONE)
 {
 	RandomSkills_.reserve(4);
 
@@ -65,8 +66,8 @@ void LevelUpUI::Start()
 	{
 		if (true == GetBox_)
 		{
-			ChangeState(STATE::TREASURE);
 			EvolveSkill_ = GameInfo::SkillEvolveCheck();
+			ChangeState(STATE::TREASURE);
 			GetBox_ = false;
 		}
 		else
@@ -88,10 +89,6 @@ void LevelUpUI::Render()
 }
 
 
-void LevelUpUI::SelectTreasure()
-{
-
-}
 
 void LevelUpUI::ShowRandomSkills()
 {
@@ -128,7 +125,7 @@ void LevelUpUI::ShowRandomSkills()
 		Renderer4_->SetImage("LevelUp" + SkillTypeToName(SelectSkill) + ".bmp");
 	}
 
-	
+
 }
 
 void LevelUpUI::SelectSkillBox()
@@ -142,10 +139,7 @@ void LevelUpUI::SelectSkillBox()
 		RandomSkills_.clear();
 
 		// 종료
-		Death();
-		CreateCount_--;
-		IsActivated_ = false;
-		StatUI_->Off();
+		UIEnd();
 		return;
 	}
 
@@ -158,10 +152,7 @@ void LevelUpUI::SelectSkillBox()
 		RandomSkills_.clear();
 
 		// 종료
-		Death();
-		CreateCount_--;
-		IsActivated_ = false;
-		StatUI_->Off();
+		UIEnd();
 		return;
 	}
 
@@ -174,10 +165,7 @@ void LevelUpUI::SelectSkillBox()
 		RandomSkills_.clear();
 
 		// 종료
-		Death();
-		CreateCount_--;
-		IsActivated_ = false;
-		StatUI_->Off();
+		UIEnd();
 		return;
 	}
 
@@ -190,34 +178,34 @@ void LevelUpUI::SelectSkillBox()
 		RandomSkills_.clear();
 
 		// 종료
-		Death();
-		CreateCount_--;
-		IsActivated_ = false;
-		StatUI_->Off();
+		UIEnd();
 		return;
 	}
 }
 
 void LevelUpUI::SelectSkill(SkillType _SkillType)
 {
-	// 레벨이 0, 없으면 추가
-	if (0 == GameInfo::GetPlayerInfo()->AllSkillLevel_[_SkillType])
-	{
+	std::map<SkillType, int>& AllSkillLevel = GameInfo::GetPlayerInfo()->AllSkillLevel_;
 
-		if ( static_cast<int>(_SkillType) < ACTIVE_MAX)
+	// 새로운 스킬
+	if ( 0 == AllSkillLevel[_SkillType])
+	{
+		if (ACTIVE_MAX > static_cast<int>(_SkillType))
 		{
 			GameInfo::GetPlayerInfo()->ActiveSkillSlot_.push_back(_SkillType);
 		}
-		else
+		else if (ACTIVE_MAX <= static_cast<int>(_SkillType) && SkillType::MAX > _SkillType)
 		{
 			GameInfo::GetPlayerInfo()->PassiveSkillSlot_.push_back(_SkillType);
 		}
 
+		AllSkillLevel[_SkillType] = 1;
 	}
-
-	// 스킬레벨업
-	auto val = GameInfo::GetPlayerInfo()->AllSkillLevel_[_SkillType] += 1;
-
+	else
+	{
+		// 이미 있는 스킬 레벨업
+		AllSkillLevel[_SkillType] += 1;
+	}
 }
 
 
@@ -326,7 +314,7 @@ void LevelUpUI::BoxesStart()
 			break;
 		}
 
-		if (SKILL_LEVELMAX <= (*FindIter).second)
+		if (SKILL_LEVELMAX <= (*FindIter).second || -1 == (*FindIter).second)
 		{
 			MaxLevelCount++;
 		}
@@ -345,8 +333,9 @@ void LevelUpUI::BoxesStart()
 		int Index = Random.RandomInt(0, static_cast<int>(SkillType::MAX) - 1);
 
 		// 8레벨 미만 스킬들만 고름
-		if (false == SelectedSkills[Index] && GameInfo::GetPlayerInfo()->AllSkillLevel_[(SkillType)Index] < SKILL_LEVELMAX)
+		if (false == SelectedSkills[Index] && GameInfo::GetPlayerInfo()->AllSkillLevel_[(SkillType)Index] < SKILL_LEVELMAX && -1 != GameInfo::GetPlayerInfo()->AllSkillLevel_[(SkillType)Index])
 		{
+
 			// 스킬슬릇(Active/Passive)에 6개 다 차면 뽑을 수 없음
 			// Active
 			if (Index < ACTIVE_MAX && 6 <= static_cast<int>(GameInfo::GetPlayerInfo()->ActiveSkillSlot_.size()))
@@ -385,16 +374,19 @@ void LevelUpUI::TreasureStart()
 	BoxAnim_->CreateAnimation("Box_Bounce.bmp", "Box_Bounce", 0, 89, 0.025f, true);
 	BoxAnim_->CreateAnimation("Box_Opening.bmp", "Box_Opening", 0, 209, 0.025f, false);
 	BoxAnim_->CreateAnimation("Box_Ending.bmp", "Box_Ending", 0, 172, 0.025f, false);
-	BoxAnim_->CreateAnimation("Box_End.bmp", "Box_End", 0, 132, 0.025f, true);
+	BoxAnim_->CreateAnimation("Box_End.bmp", "Box_End", 0, 132, 0.025f, false);
 	BoxAnim_->ChangeAnimation("Box_Bounce");
 
 	// Treasure
-	Treasure_ = CreateRenderer("Box_ThousandEdge.bmp", static_cast<int>(RENDER_ORDER::UI2));
+	SelectedTreasure_ = SelectTreasure();
+	Treasure_ = CreateRenderer("Box_" + SkillTypeToName(SelectedTreasure_) + ".bmp", static_cast<int>(RENDER_ORDER::UI2));
+	
+
 	Treasure_->CameraEffectOff();
 	Treasure_->Off();
 	Treasure_->SetPivot(GameEngineWindow::GetScale().Half() + float4{ 0, 10 });
 
-	TreasureOnCounter_.SetCount(6.5f);
+	TreasureOnCounter_.SetCount(6.25f);
 }
 
 void LevelUpUI::TreasureUpdate()
@@ -417,11 +409,11 @@ void LevelUpUI::TreasureOpeningUpdate()
 	if (true == TreasureOnCounter_.Start(GameEngineTime::GetDeltaTime()))
 	{
 		Treasure_->On();
-	}
 
-	if (true == BoxAnim_->IsEndAnimation())
-	{
-		ChangeState(STATE::TREASURE_END);
+		if (true == BoxAnim_->IsEndAnimation())
+		{
+			ChangeState(STATE::TREASURE_END);
+		}
 	}
 }
 
@@ -439,8 +431,16 @@ void LevelUpUI::TreasureEndingUpdate()
 
 	if (true == GameEngineInput::GetInst()->IsDown("SpaceBar"))
 	{
-		// 무기 획득 (각성무기 or 일반무기)
-		//GameInfo::ChangeEvolvedSkill(EvolveSkill_);
+		// 무기 획득 
+		if (SkillType::NONE != EvolveSkill_)
+		{
+			GameInfo::PushEvolvedSkill(EvolveSkill_);
+		}
+		else
+		{
+			SelectSkill(SelectedTreasure_);
+		}
+
 		UIEnd();
 	}
 }
@@ -458,12 +458,32 @@ void LevelUpUI::HpMoneyUpdate()
 
 }
 
+
+SkillType LevelUpUI::SelectTreasure()
+{
+	// EvolveSkill 이 있으면 그 스킬 선택
+	if (SkillType::NONE != EvolveSkill_)
+	{
+		return EvolveSkill_;
+	}
+	else
+	{
+		// 아니라면 ActiveSkillSlot 스킬 중 무작위
+		std::vector<SkillType>& ActiveSkillSlot = GameInfo::GetPlayerInfo()->ActiveSkillSlot_;
+		int RandomIndex = Random.RandomInt(0, static_cast<int>(ActiveSkillSlot.size()) - 1);
+
+		return ActiveSkillSlot[RandomIndex];
+	}
+
+}
+
 void LevelUpUI::UIEnd()
 {
 	Death();
 	CreateCount_--;
 	IsActivated_ = false;
 	GetBox_ = false;
+	SelectedTreasure_ = SkillType::NONE;
 	StatUI_->Off();
 	return;
 }

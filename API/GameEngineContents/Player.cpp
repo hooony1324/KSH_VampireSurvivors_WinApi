@@ -94,6 +94,9 @@ void Player::Start()
 	FireShooter_ = GetLevel()->CreateActor<ProjectileShooter>(static_cast<int>(RENDER_ORDER::PLAYER), "Shooter");
 	FireShooter_->SetShooter(SkillType::FIREWAND, 1.0f);
 
+	ThousandEdgeShooter_ = GetLevel()->CreateActor<ProjectileShooter>(static_cast<int>(RENDER_ORDER::PLAYER), "Shooter");
+	ThousandEdgeShooter_->SetShooter(SkillType::THOUSANDEDGE, 1.0f);
+
 	NextLevelOff();
 }
 
@@ -393,7 +396,7 @@ void Player::Shooting()
 
 	std::map<SkillType, int>& AllSkillLevel = GameInfo::GetPlayerInfo()->AllSkillLevel_;
 
-	if (0 < AllSkillLevel[SkillType::KNIFE] )
+	if (0 < AllSkillLevel[SkillType::KNIFE])
 	{
 		KnifeShooter_->Shooting(GameEngineTime::GetDeltaTime(static_cast<int>(TIME_GROUP::WEAPON)), PlayerPos_, MonsterPos, MoveDir_);
 	}
@@ -406,6 +409,12 @@ void Player::Shooting()
 	if (0 < AllSkillLevel[SkillType::FIREWAND])
 	{
 		FireShooter_->Shooting(GameEngineTime::GetDeltaTime(static_cast<int>(TIME_GROUP::WEAPON)), PlayerPos_, MonsterPos);
+	}
+
+	// 각성 스킬
+	if (0 < AllSkillLevel[SkillType::THOUSANDEDGE])
+	{
+		ThousandEdgeShooter_->Shooting(GameEngineTime::GetDeltaTime(static_cast<int>(TIME_GROUP::WEAPON)), PlayerPos_, MonsterPos, MoveDir_);
 	}
 }
 

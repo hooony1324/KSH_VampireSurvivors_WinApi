@@ -75,5 +75,6 @@ enum class SkillType
 	BLOODYTEAR,
 	HEAVENSWORD,
 	SOULEATER,
-	NONE, 
+	NONE,
+ 
 };

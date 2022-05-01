@@ -96,36 +96,28 @@ bool GameInfo::SkillLevelFull()
 
 SkillType GameInfo::SkillEvolveCheck()
 {
-	// 액티브 슬롯에서 8레벨 엑티브스킬확인
+	// 액티브 슬롯에서 8레벨 엑티브스킬 전부 확인
 	SkillType MaxLevelActiveSkill = SkillType::NONE;
 	for (int i = 0; i < static_cast<int>(PlayerInfo_->ActiveSkillSlot_.size()); i++)
 	{
 		if (8 <= PlayerInfo_->AllSkillLevel_[PlayerInfo_->ActiveSkillSlot_[i]])
 		{
 			MaxLevelActiveSkill = PlayerInfo_->ActiveSkillSlot_[i];
-			break;
+
+			// 그 스킬의 담당 패시브 8레벨 확인
+			SkillType Combination = CombinationSkill(MaxLevelActiveSkill);
+			if (8 == PlayerInfo_->AllSkillLevel_[Combination])
+			{
+				// 먼저 확인된 각성 스킬 리턴
+				return ChangeSkill(MaxLevelActiveSkill);
+			}
 		}
 	}
 
-	// 8레벨 없으면
-	if (MaxLevelActiveSkill == SkillType::NONE)
-	{
-		return MaxLevelActiveSkill;
-	}
-
-	// 그 스킬의 담당 패시브 8레벨 확인
-	SkillType Combination = CombinationSkill(MaxLevelActiveSkill);
-
-	if (8 == PlayerInfo_->AllSkillLevel_[Combination])
-	{
-		// 융합 스킬 리턴
-		return ChangeSkill(Combination);
-	}
-
 	return SkillType::NONE;
-
 }
 
+// 액티브의 조합용 패시브 스킬 반환
 SkillType GameInfo::CombinationSkill(SkillType _Type)
 {
 	switch (_Type)
@@ -139,14 +131,6 @@ SkillType GameInfo::CombinationSkill(SkillType _Type)
 	case SkillType::FIREWAND:
 		return SkillType::SPINACH;
 		break;
-	case SkillType::BRACER:
-		break;
-	case SkillType::CLOVER:
-		break;
-	case SkillType::THOUSANDEDGE:
-		break;
-	case SkillType::MAX:
-		break;
 	default:
 		break;
 	}
@@ -154,19 +138,29 @@ SkillType GameInfo::CombinationSkill(SkillType _Type)
 	return SkillType::NONE;
 }
 
-// 콤비네이션 스킬 -> 각성스킬
+// 액티브 스킬 -> 각성스킬  | 각성스킬 -> 액티브스킬
 SkillType GameInfo::ChangeSkill(SkillType _Type)
 {
 	switch (_Type)
 	{
-	case SkillType::BRACER:
+	case SkillType::KNIFE:
 		return SkillType::THOUSANDEDGE;
 		break;
-	case SkillType::EMPTYTOME:
+	case SkillType::MAGICWAND:
 		return SkillType::HOLYWAND;
 		break;
-	case SkillType::SPINACH:
+	case SkillType::FIREWAND:
 		return SkillType::HELLFIRE;
+
+
+	case SkillType::THOUSANDEDGE:
+		return SkillType::KNIFE;
+		break;
+	case SkillType::HOLYWAND:
+		return SkillType::MAGICWAND;
+		break;
+	case SkillType::HELLFIRE:
+		return SkillType::FIREWAND;
 		break;
 	}
 
@@ -174,18 +168,26 @@ SkillType GameInfo::ChangeSkill(SkillType _Type)
 }
 
 
-void GameInfo::ChangeEvolvedSkill(SkillType _EvolvedType)
+void GameInfo::PushEvolvedSkill(SkillType _EvolvedType)
 {
-	SkillType BeforeType = ChangeSkill(_EvolvedType);
+	if (_EvolvedType <= SkillType::MAX)
+	{
+		return;
+	}
 
+	SkillType ActiveSkill = ChangeSkill(_EvolvedType);
+
+	// ActiveSlot의 인덱스 찾아내기
 	for (int i = 0; i < static_cast<int>(PlayerInfo_->ActiveSkillSlot_.size()); i++)
 	{
-		if (BeforeType == PlayerInfo_->ActiveSkillSlot_[i])
+		if (ActiveSkill == PlayerInfo_->ActiveSkillSlot_[i])
 		{
-			// 그 인덱스 위치에 각성무기 삽입
+			// 기존 스킬 없앰
+			PlayerInfo_->AllSkillLevel_[ActiveSkill] = -1;
+
+			// 각성 스킬
 			PlayerInfo_->ActiveSkillSlot_[i] = _EvolvedType;
 			PlayerInfo_->AllSkillLevel_[_EvolvedType] = 1;
-			return;
 		}
 	}
 
@@ -258,7 +260,7 @@ std::map<SkillType, std::map<int, SkillStat>> GameInfo::SetAllSkillStat()
 		Level[7] = SkillStat{ 1, 0.1f, 0.0f, 6.5f, 650.0f, 4.0f };
 		Level[8] = SkillStat{ 1, 0.1f, 0.0f, 6.5f, 650.0f, 4.0f };
 
-		AllSkillStat[SkillType::KNIFE] = Level;
+		AllSkillStat[SkillType::THOUSANDEDGE] = Level;
 	}
 
 	/// PASSIVE

@@ -83,6 +83,7 @@ private:
 	ProjectileShooter* KnifeShooter_;
 	ProjectileShooter* FireShooter_;
 	ProjectileShooter* RuneShooter_;
+	ProjectileShooter* ThousandEdgeShooter_;
 
 	
 };
