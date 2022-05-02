@@ -122,6 +122,7 @@ void GameEngine::EngineLoop()
         CurrentLevel_->Reset();
         // 리셋되고 나서 로딩을 다시 호출하건 자신만의 뭐가 있건 알아서 해라.
         CurrentLevel_->UserResetEnd();
+        CurrentLevel_->IsReset = false;
     }
 
 }

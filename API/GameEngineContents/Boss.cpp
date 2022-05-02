@@ -15,8 +15,9 @@
 #include "Player.h"
 #include <vector>
 
-std::vector<std::string> BossNameList = { "XLMummy", "XLReaper" };
+std::vector<std::string> BossNameList = { "XLMummy", "XLReaper"};
 int Boss::BossIndex_ = 0;
+bool Boss::IsReaperSpawn_ = false;
 
 Boss::Boss() 
 {
@@ -31,10 +32,23 @@ void Boss::Start()
 	NextLevelOff();
 	MapColImage_ = PlayLevel::MapColImage_;
 
+	// 리퍼는 버튼 누르면 소환되는 걸로 변경 -> BossNameList의 마지막 인덱스는 리퍼 
+	if (BossIndex_ >= BossNameList.size() - 1)
+	{
+		BossIndex_ = 0;
+	}
 
+	if (true == IsReaperSpawn_)
+	{
+		BossName_ = BossNameList[static_cast<int>(BOSSTYPE::XLRREAPER)];
+		BossType_ = BOSSTYPE::XLRREAPER;
+	}
+	else
+	{
+		BossName_ = BossNameList[BossIndex_];
+		BossType_ = static_cast<BOSSTYPE>(BossIndex_);
+	}
 
-	BossType_ = static_cast<BOSSTYPE>(BossIndex_);
-	BossName_ = BossNameList[BossIndex_];
 	Renderer_ = CreateRenderer();
 
 	// 이름대로 애니메이션 세팅
@@ -171,12 +185,19 @@ void Boss::HitEnd()
 void Boss::DieStart()
 {
 	GameInfo::GetPlayerInfo()->KillCount_ += 1;
-	Renderer_->ChangeAnimation(BossNameList[BossIndex_] + "_Dead");
+	Renderer_->ChangeAnimation(BossName_ + "_Dead");
 	BossCol_->Off();
 
 	// 박스 떨굼
 	GameEngineActor* Ptr = GetLevel()->CreateActor<LevelUpBox>(static_cast<int>(ACTOR_ORDER::UI));
 	Ptr->SetPosition(BossPos_);
+
+
+	// 리퍼는 한번만 소환되도록
+	if (BOSSTYPE::XLRREAPER == BossType_)
+	{
+		IsReaperSpawn_ = false;
+	}
 }
 
 void Boss::DieUpdate()
@@ -296,8 +317,7 @@ void Boss::HitCheck()
 
 void Boss::SetStat()
 {
-	BOSSTYPE Type = static_cast<BOSSTYPE>(BossIndex_);
-	switch (Type)
+	switch (BossType_)
 	{
 	case BOSSTYPE::XLMUMMY:
 		Hp_ = 500.0f;

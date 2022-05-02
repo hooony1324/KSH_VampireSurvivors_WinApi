@@ -8,10 +8,10 @@
 
 FMOD::System* SoundSystem_ = nullptr;
 
-class SoundSystemCreater
+class SoundSystemCreater 
 {
 public:
-	SoundSystemCreater()
+	SoundSystemCreater() 
 	{
 		FMOD::System_Create(&SoundSystem_);
 
@@ -33,16 +33,16 @@ public:
 
 SoundSystemCreater CreateInst = SoundSystemCreater();
 
-GameEngineSound::GameEngineSound()
+GameEngineSound::GameEngineSound() 
 {
 	// FMOD::System_Create();
 }
 
-GameEngineSound::~GameEngineSound()
+GameEngineSound::~GameEngineSound() 
 {
 }
 
-bool GameEngineSound::Load(const std::string& _Path)
+bool GameEngineSound::Load(const std::string& _Path) 
 {
 	if (FMOD_OK != SoundSystem_->createSound(_Path.c_str(), FMOD_LOOP_NORMAL, nullptr, &Sound))
 	{
@@ -92,7 +92,7 @@ void GameEngineSound::SoundPlayOneShot(const std::string& _Name, int LoopCount /
 
 	PlayControl->setLoopCount(LoopCount);
 
-
+	
 
 }
 
@@ -110,7 +110,7 @@ void GameEngineSound::Update()
 std::map<std::string, GameEngineSound*> GameEngineSound::AllRes;
 
 
-GameEngineSound* GameEngineSound::FindRes(const std::string& _Name)
+GameEngineSound* GameEngineSound::FindRes(const std::string& _Name) 
 {
 	std::string UpperName = GameEngineString::ToUpperReturn(_Name);
 
@@ -164,7 +164,7 @@ void GameEngineSound::AllResourcesDestroy()
 
 ////////////////////////////////////////////////////////// 사운드 플레이어
 
-void GameEngineSoundPlayer::Stop()
+void GameEngineSoundPlayer::Stop() 
 {
 	if (nullptr == ControlHandle_)
 	{
@@ -175,15 +175,27 @@ void GameEngineSoundPlayer::Stop()
 	ControlHandle_->stop();
 }
 
+void GameEngineSoundPlayer::PlaySpeed(float _Speed)
+{
+	if (nullptr == ControlHandle_)
+	{
+		MsgBoxAssert("사운드 컨트롤 채널에 치명적인 문제가 있습니다.\n");
+		return;
+	}
 
-GameEngineSoundPlayer::GameEngineSoundPlayer()
+	ControlHandle_->setPitch(_Speed);
+}
+
+
+
+GameEngineSoundPlayer::GameEngineSoundPlayer() 
 	: Sound_(nullptr)
 	, ControlHandle_(nullptr)
 {
 
 }
 
-GameEngineSoundPlayer::GameEngineSoundPlayer(const GameEngineSoundPlayer& _Other)
+GameEngineSoundPlayer::GameEngineSoundPlayer(const GameEngineSoundPlayer& _Other) 
 	: Sound_(_Other.Sound_)
 	, ControlHandle_(_Other.ControlHandle_)
 {
@@ -194,10 +206,10 @@ GameEngineSoundPlayer::GameEngineSoundPlayer(GameEngineSound* _Sound, FMOD::Chan
 	: Sound_(_Sound)
 	, ControlHandle_(_ControlHandle)
 {
-
+	
 }
 
-GameEngineSoundPlayer::~GameEngineSoundPlayer()
+GameEngineSoundPlayer::~GameEngineSoundPlayer() 
 {
 
 }

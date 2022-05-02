@@ -63,7 +63,7 @@ void GameInfo::SetPlayerInfo()
 	PlayerInfo_->PassiveSkillSlot_.clear();
 
 	// 모든 스킬 레벨 정보 초기화
-	for (int i = 0; i < static_cast<int>(SkillType::MAX); i++)
+	for (int i = 0; i < EVOLVE_MAX; i++)
 	{
 		SkillType Type = static_cast<SkillType>(i);
 		PlayerInfo_->AllSkillLevel_[Type] = 0;
@@ -79,19 +79,29 @@ void GameInfo::SetPlayerInfo()
 
 bool GameInfo::SkillLevelFull()
 {
-	// 하나라도 8레벨 미만 스킬 있으면 HP/MONEY 박스 띄우지 않음
-	std::map<SkillType, int>::iterator FindIter = PlayerInfo_->AllSkillLevel_.begin();
-	std::map<SkillType, int>::iterator EndIter = PlayerInfo_->AllSkillLevel_.end();
 
-	for (; FindIter != EndIter; ++FindIter)
+	std::map<SkillType, int> AllSkillLevel = PlayerInfo_->AllSkillLevel_;
+
+	for (int i = 0; i < static_cast<int>(PlayerInfo_->ActiveSkillSlot_.size()); i++)
 	{
-		if ((*FindIter).second < SKILL_LEVELMAX)
+		if (SKILL_LEVELMAX > AllSkillLevel[PlayerInfo_->ActiveSkillSlot_[i]])
 		{
 			return false;
 		}
 	}
 
-	return true;
+	for (int i = 0; i < static_cast<int>(PlayerInfo_->PassiveSkillSlot_.size()); i++)
+	{
+		if (SKILL_LEVELMAX > AllSkillLevel[PlayerInfo_->PassiveSkillSlot_[i]])
+		{
+			return false;
+		}
+	}
+
+	if (PlayerInfo_->ActiveSkillSlot_.size() == ACTIVE_MAX && PlayerInfo_->PassiveSkillSlot_.size() == (int)SkillType::MAX - ACTIVE_MAX)
+	{
+		return true;
+	}
 }
 
 SkillType GameInfo::SkillEvolveCheck()
@@ -125,12 +135,6 @@ SkillType GameInfo::CombinationSkill(SkillType _Type)
 	case SkillType::KNIFE:
 		return SkillType::BRACER;
 		break;
-	case SkillType::MAGICWAND:
-		return SkillType::EMPTYTOME;
-		break;
-	case SkillType::FIREWAND:
-		return SkillType::SPINACH;
-		break;
 	default:
 		break;
 	}
@@ -143,24 +147,14 @@ SkillType GameInfo::ChangeSkill(SkillType _Type)
 {
 	switch (_Type)
 	{
+	// 액티브
 	case SkillType::KNIFE:
 		return SkillType::THOUSANDEDGE;
 		break;
-	case SkillType::MAGICWAND:
-		return SkillType::HOLYWAND;
-		break;
-	case SkillType::FIREWAND:
-		return SkillType::HELLFIRE;
 
-
+	// 각성
 	case SkillType::THOUSANDEDGE:
 		return SkillType::KNIFE;
-		break;
-	case SkillType::HOLYWAND:
-		return SkillType::MAGICWAND;
-		break;
-	case SkillType::HELLFIRE:
-		return SkillType::FIREWAND;
 		break;
 	}
 

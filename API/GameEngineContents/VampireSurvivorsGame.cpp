@@ -48,10 +48,6 @@ void VampireSurvivorsGame::GameInit()
 		GameEngineInput::GetInst()->CreateKey("SpaceBar", VK_SPACE);
 		GameEngineInput::GetInst()->CreateKey("Esc", VK_ESCAPE);
 		
-		// ChangeLevel(юс╫ц)
-		GameEngineInput::GetInst()->CreateKey("ChangeLevelNext", VK_RIGHT);
-		GameEngineInput::GetInst()->CreateKey("ChangeLevelPrev", VK_LEFT);
-
 		// Volume
 		/*GameEngineInput::GetInst()->CreateKey("VolumeUp", VK_UP);
 		GameEngineInput::GetInst()->CreateKey("VolumeDown", VK_DOWN);*/
@@ -65,6 +61,7 @@ void VampireSurvivorsGame::GameInit()
 		
 		GameEngineInput::GetInst()->CreateKey("ColDebugger", 'C');
 		GameEngineInput::GetInst()->CreateKey("GodMode", 'G');
+		GameEngineInput::GetInst()->CreateKey("SpawnReaper", 'R');
 
 
 	}

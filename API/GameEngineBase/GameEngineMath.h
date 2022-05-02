@@ -11,6 +11,21 @@ public:
 	static const float DegreeToRadian;
 	static const float RadianToDegree;
 
+	static float Lerp(float p1, float p2, float Time)
+	{
+		return (1.0f - Time) * p1 + Time * p2;
+	}
+
+	// 보통 누적된 시간을 Time
+	static float LerpLimit(float p1, float p2, float Time)
+	{
+		if (1.0f <= Time)
+		{
+			Time = 1.0f;
+		}
+
+		return Lerp(p1, p2, Time);
+	}
 
 private:
 	// constrcuter destructer
@@ -22,6 +37,8 @@ private:
 	GameEngineMath(GameEngineMath&& _Other) noexcept = delete;
 	GameEngineMath& operator=(const GameEngineMath& _Other) = delete;
 	GameEngineMath& operator=(GameEngineMath&& _Other) noexcept = delete;
+
+
 };
 
 class float4
@@ -48,6 +65,22 @@ public:
 		Rot.x = _Value.x * cosf(_Radian) - _Value.y * sinf(_Radian);
 		Rot.y = _Value.x * sinf(_Radian) + _Value.y * cosf(_Radian);
 		return Rot;
+	}
+
+	static float4 Lerp(float4 p1, float4 p2, float Time)
+	{
+		return p1 * (1.0f - Time) + p2 * Time;
+	}
+
+	// 보통 누적된 시간을 Time
+	static float4 LerpLimit(float4 p1, float4 p2, float Time)
+	{
+		if (1.0f <= Time)
+		{
+			Time = 1.0f;
+		}
+
+		return Lerp(p1, p2, Time);
 	}
 
 	//X = P1X * cosf(40) - P1Y * sinf(40)
@@ -144,6 +177,7 @@ public:
 		y *= _Max;
 		return;
 	}
+
 
 
 	

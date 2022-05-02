@@ -1,15 +1,14 @@
 #pragma once
 #include <GameEngine/GameEngineActor.h>
-#include <vector>
 #include "Counter.h"
 #include "GameEnum.h"
+#include <vector>
 
 // Ό³Έν :
 class GameEngineRenderer;
 class LevelUpUI : public GameEngineActor
 {
 public:
-
 	enum class STATE
 	{
 		NONE,
@@ -92,6 +91,7 @@ private:
 	SkillType SelectedTreasure_;
 
 	SkillType SelectTreasure();
+	SkillType SelectBoxSkills();
 
 
 	// STATE : BOXES
@@ -109,10 +109,9 @@ private:
 
 	GameEngineRenderer* Renderers_[4];
 
-
-	// STATE : EVOLVE
-
 	// STATE : HPMONEY
+	GameEngineRenderer* HpRenderer_;
+	GameEngineRenderer* MoneyRenderer_;
 
 };
 

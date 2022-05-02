@@ -5,6 +5,7 @@
 #include <GameEngine/GameEngineLevel.h>
 #include <GameEngine/GameEngineCollision.h>
 #include <GameEngineBase/GameEngineRandom.h>
+#include <GameEngineBase/GameEngineInput.h>
 
 #include "GameInfo.h"
 #include "GameEnum.h"
@@ -37,9 +38,6 @@ EnemyController::EnemyController()
 	{
 		for (int x = 0; x < PointNumX; x++)
 		{
-			// x: 0 y: 0 -> float4 {0, 0}
-			// x: 1 y: 0 -> float4 {40, 0}
-			// x: 2 y: 3 -> float4 {40*x, 45*y}
 			SpawnPoint[y][x] = float4{ x * CollisionSizeX, y * CollisionSizeY };
 		}
 	}
@@ -103,6 +101,8 @@ void EnemyController::Update()
 	}
 
 	SpawnBoss(BossCounter_.Start(DeltaTime));
+	SpawnReaperButton();
+
 	SpawnShadeRed(ShadeRedCounter_.Start(DeltaTime));
 }
 
@@ -203,6 +203,14 @@ void EnemyController::ChangeSpawnPosBase()
 	}
 }
 
+void EnemyController::SpawnReaperButton()
+{
+	if (true == GameEngineInput::GetInst()->IsDown("SpawnReaper"))
+	{
+		Boss::IsReaperSpawn_ = true;
+	}
+}
+
 void EnemyController::SpawnShadeRed(bool _CounterEnd)
 {
 	if (false == _CounterEnd)
@@ -240,10 +248,6 @@ void EnemyController::SpawnBoss(bool _BossCounterEnd)
 		// 다음 보스 지정
 		Boss::BossIndex_ += 1;
 		// 인덱스 조정
-		if (BossIndex_ >= static_cast<int>(BOSSTYPE::MAX) - 1)
-		{
-			BossIndex_ = 0;
-		}
 	}
 
 }

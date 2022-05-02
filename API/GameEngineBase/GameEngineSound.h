@@ -33,9 +33,9 @@ public:
 	static void SoundPlayOneShot(const std::string& _Name, int LoopCount = 0);
 	static void Update();
 
-	/// <summary>
-	/// ///////////////////////////////////// 리소스 매니지먼트
-	/// </summary>
+/// <summary>
+/// ///////////////////////////////////// 리소스 매니지먼트
+/// </summary>
 public:
 	static GameEngineSound* FindRes(const std::string& _Name);
 	static GameEngineSound* LoadRes(const std::string& _Path);
@@ -50,12 +50,13 @@ private:
 
 // 사운드 재생을 제어할수 있는 기능들을 넣을겁니다.
 class GameEngineSound;
-class GameEngineSoundPlayer
+class GameEngineSoundPlayer 
 {
 	friend GameEngineSound;
 
 public:
 	void Stop();
+	void PlaySpeed(float _Speed);
 
 	GameEngineSoundPlayer(const GameEngineSoundPlayer& _Other);
 

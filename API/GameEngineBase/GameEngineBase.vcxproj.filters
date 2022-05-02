@@ -72,6 +72,12 @@
     <ClInclude Include="GameEngineSound.h">
       <Filter>Resources</Filter>
     </ClInclude>
+    <ClInclude Include="GameEngineReadFile.h">
+      <Filter>IO</Filter>
+    </ClInclude>
+    <ClInclude Include="GameEngineWriteFile.h">
+      <Filter>IO</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="GameEngineWindow.cpp">
@@ -112,6 +118,12 @@
     </ClCompile>
     <ClCompile Include="GameEngineSound.cpp">
       <Filter>Resources</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineWriteFile.cpp">
+      <Filter>IO</Filter>
+    </ClCompile>
+    <ClCompile Include="GameEngineReadFile.cpp">
+      <Filter>IO</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

@@ -51,6 +51,7 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="GameEngineReadFile.h" />
     <ClInclude Include="GameEngineSound.h">
       <SubType>
       </SubType>
@@ -71,6 +72,7 @@
       <SubType>
       </SubType>
     </ClInclude>
+    <ClInclude Include="GameEngineWriteFile.h" />
     <None Include="ThirdParty\inc\fmod.h" />
     <None Include="ThirdParty\inc\fmod.hpp" />
   </ItemGroup>
@@ -107,6 +109,7 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="GameEngineReadFile.cpp" />
     <ClCompile Include="GameEngineSound.cpp">
       <SubType>
       </SubType>
@@ -127,6 +130,7 @@
       <SubType>
       </SubType>
     </ClCompile>
+    <ClCompile Include="GameEngineWriteFile.cpp" />
   </ItemGroup>
   <ItemGroup>
     <CopyFileToFolders Include="ThirdParty\bin\fmod.dll">

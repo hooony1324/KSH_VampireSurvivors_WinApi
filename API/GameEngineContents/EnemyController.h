@@ -49,6 +49,7 @@ private:
 
 // SpawnBoss°ü·Ã
 private:
+	void SpawnReaperButton();
 	Counter BossCounter_;
 	int BossIndex_;
 
