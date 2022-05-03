@@ -71,6 +71,7 @@ public:
 	};
 
 	static bool SkillLevelFull();
+	static bool EvolveSkillLevelFull();
 	static SkillType SkillEvolveCheck();
 	static void PushEvolvedSkill(SkillType _EvolvedType);
 

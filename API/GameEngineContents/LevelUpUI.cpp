@@ -60,8 +60,9 @@ void LevelUpUI::Start()
 	if (true == GetBox_)
 	{
 		EvolveSkill_ = GameInfo::SkillEvolveCheck();
-		// 스킬이 꽉 차지 않았다면
-		bool Full = GameInfo::SkillLevelFull();
+
+		// 스킬이 꽉 차지 않았다면(각성포함)
+		bool Full = GameInfo::EvolveSkillLevelFull();
 
 		if (false == Full)
 		{
@@ -339,10 +340,6 @@ void LevelUpUI::BoxesStart()
 		SelectNum_ = SelectableCount;
 	}
 
-	if (1 > SelectNum_)
-	{
-		ChangeState(STATE::BOXES);
-	}
 
 	std::set<SkillType> Skills;
 	// RandomSkills_에 SelectNum만큼의 스킬 Push
@@ -397,7 +394,7 @@ void LevelUpUI::TreasureStart()
 	Treasure_->Off();
 	Treasure_->SetPivot(GameEngineWindow::GetScale().Half() + float4{ 0, 10 });
 
-	TreasureOnCounter_.SetCount(6.25f);
+	TreasureOnCounter_.SetCount(6.10f);
 }
 
 void LevelUpUI::TreasureUpdate()
@@ -474,6 +471,12 @@ void LevelUpUI::HpMoneyUpdate()
 	if (true == GameEngineInput::GetInst()->IsDown("Num1"))
 	{
 		GameInfo::GetPlayerInfo()->CurrentHp_ += 30;
+		if (GameInfo::GetPlayerInfo()->CurrentHp_ > 100)
+		{
+			float OverHp = GameInfo::GetPlayerInfo()->CurrentHp_ - 100;
+			GameInfo::GetPlayerInfo()->CurrentHp_ = 100;
+			GameInfo::GetPlayerInfo()->MaxHp_ += OverHp;
+		}
 		UIEnd();
 	}
 
@@ -557,6 +560,7 @@ SkillType LevelUpUI::SelectBoxSkills()
 		return SkillType::NONE;
 	}
 
+	// 랜덤 스킬 리턴
 	int Index = Random.RandomInt(0, static_cast<int>(BoxSkills.size()) - 1);
 	return BoxSkills[Index];
 }

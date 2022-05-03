@@ -218,6 +218,7 @@ void ShadeRed::DieStart()
 {
 	Renderer_->ChangeAnimation("Dead");
 	RedCol_->Off();
+	Ring_->Off();
 }
 
 void ShadeRed::DieUpdate()

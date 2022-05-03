@@ -23,7 +23,7 @@ bool RectToRect(GameEngineCollision* _Left, GameEngineCollision* _Right)
 class CollisionInit
 {
 public:
-	CollisionInit()
+	CollisionInit() 
 	{
 		CollisionCheckArray[static_cast<int>(CollisionType::Rect)][static_cast<int>(CollisionType::Rect)] = RectToRect;
 	}
@@ -47,47 +47,52 @@ bool GameEngineCollision::CollisionCheck(
 	const std::string& _TargetGroup,
 	CollisionType _This /*= CollisionType::Circle*/,
 	CollisionType _Target /*= CollisionType::Rect*/
-)
+	)
 {
 	if (false == IsUpdate() || true == IsDeath())
 	{
 		return false;
 	}
 
-	std::map<std::string, std::list<GameEngineCollision*>>::iterator FindTargetGroup = GetActor()->GetLevel()->AllCollision_.find(_TargetGroup);
+	 std::map<std::string, std::list<GameEngineCollision*>>::iterator FindTargetGroup = GetActor()->GetLevel()->AllCollision_.find(_TargetGroup);
 
-	if (FindTargetGroup == GetActor()->GetLevel()->AllCollision_.end())
-	{
-		// MsgBoxAssert("존재하지 않는 충돌 그룹과 충돌하려고 했습니다.");
+	 if (FindTargetGroup == GetActor()->GetLevel()->AllCollision_.end())
+	 {
+		 // MsgBoxAssert("존재하지 않는 충돌 그룹과 충돌하려고 했습니다.");
 
-		return false;
-	}
+		 return false;
+	 }
 
-	if (nullptr == CollisionCheckArray[static_cast<int>(_This)][static_cast<int>(_Target)])
-	{
-		MsgBoxAssert("처리할수 없는 충돌체크 조합입니다.");
-		return false;
-	}
+	 if (nullptr == CollisionCheckArray[static_cast<int>(_This)][static_cast<int>(_Target)])
+	 {
+		 MsgBoxAssert("처리할수 없는 충돌체크 조합입니다.");
+		 return false;
+	 }
 
-	std::list<GameEngineCollision*>& TargetGroup = FindTargetGroup->second;
+	 std::list<GameEngineCollision*>& TargetGroup = FindTargetGroup->second;
 
-	std::list<GameEngineCollision*>::iterator StartIter = TargetGroup.begin();
-	std::list<GameEngineCollision*>::iterator EndIter = TargetGroup.end();
+	 std::list<GameEngineCollision*>::iterator StartIter = TargetGroup.begin();
+	 std::list<GameEngineCollision*>::iterator EndIter = TargetGroup.end();
 
-	for (; StartIter != EndIter; ++StartIter)
-	{
-		if (false == (*StartIter)->IsUpdate() || true == (*StartIter)->IsDeath())
-		{
-			continue;
-		}
+	 for (; StartIter != EndIter; ++StartIter)
+	 {
+		 if (false == (*StartIter)->IsUpdate() || true == (*StartIter)->IsDeath())
+		 {
+			 continue;
+		 }
 
-		if (CollisionCheckArray[static_cast<int>(_This)][static_cast<int>(_Target)](this, *StartIter))
-		{
-			return true;
-		}
-	}
+		 if ((*StartIter) == this)
+		 {
+			 continue;
+		 }
 
-	return false;
+		 if (CollisionCheckArray[static_cast<int>(_This)][static_cast<int>(_Target)](this, *StartIter))
+		 {
+			 return true;
+		 }
+	 }
+
+	 return false;
 }
 
 bool GameEngineCollision::NextPosCollisionCheck(
@@ -95,7 +100,7 @@ bool GameEngineCollision::NextPosCollisionCheck(
 	float4 _NextPos,
 	CollisionType _This /*= CollisionType::Circle*/,
 	CollisionType _Target /*= CollisionType::Circle*/
-)
+) 
 {
 	if (false == IsUpdate() || true == IsDeath())
 	{
@@ -131,6 +136,11 @@ bool GameEngineCollision::NextPosCollisionCheck(
 			continue;
 		}
 
+		if ((*StartIter) == this)
+		{
+			continue;
+		}
+
 		if (CollisionCheckArray[static_cast<int>(_This)][static_cast<int>(_Target)](this, *StartIter))
 		{
 			return true;
@@ -142,7 +152,7 @@ bool GameEngineCollision::NextPosCollisionCheck(
 	return false;
 }
 
-void GameEngineCollision::DebugRender()
+void GameEngineCollision::DebugRender() 
 {
 	if (false == IsUpdate() || true == IsDeath())
 	{
@@ -172,7 +182,7 @@ bool GameEngineCollision::CollisionResult(
 	std::vector<GameEngineCollision*>& _ColResult,
 	CollisionType _This /*= CollisionType::Circle*/,
 	CollisionType _Target /*= CollisionType::Circle*/
-)
+) 
 {
 	if (false == IsUpdate() || true == IsDeath())
 	{
@@ -186,7 +196,6 @@ bool GameEngineCollision::CollisionResult(
 	if (FindTargetGroup == GetActor()->GetLevel()->AllCollision_.end())
 	{
 		// MsgBoxAssert("존재하지 않는 충돌 그룹과 충돌하려고 했습니다.");
-
 		return false;
 	}
 
@@ -208,6 +217,10 @@ bool GameEngineCollision::CollisionResult(
 			continue;
 		}
 
+		if ((*StartIter) == this)
+		{
+			continue;
+		}
 
 		if (CollisionCheckArray[static_cast<int>(_This)][static_cast<int>(_Target)](this, *StartIter))
 		{

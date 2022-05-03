@@ -86,6 +86,40 @@ bool GameInfo::SkillLevelFull()
 	{
 		if (SKILL_LEVELMAX > AllSkillLevel[PlayerInfo_->ActiveSkillSlot_[i]])
 		{
+			// 각성 타입은 스킵
+			if (PlayerInfo_->ActiveSkillSlot_[i] > SkillType::MAX)
+			{
+				continue;
+			}
+
+			return false;
+		}
+	}
+
+	for (int i = 0; i < static_cast<int>(PlayerInfo_->PassiveSkillSlot_.size()); i++)
+	{
+		if (SKILL_LEVELMAX > AllSkillLevel[PlayerInfo_->PassiveSkillSlot_[i]])
+		{
+			return false;
+		}
+	}
+
+	if (PlayerInfo_->ActiveSkillSlot_.size() == ACTIVE_MAX && PlayerInfo_->PassiveSkillSlot_.size() == (int)SkillType::MAX - ACTIVE_MAX)
+	{
+		return true;
+	}
+
+	return false;
+}
+
+bool GameInfo::EvolveSkillLevelFull()
+{
+	std::map<SkillType, int> AllSkillLevel = PlayerInfo_->AllSkillLevel_;
+
+	for (int i = 0; i < static_cast<int>(PlayerInfo_->ActiveSkillSlot_.size()); i++)
+	{
+		if (SKILL_LEVELMAX > AllSkillLevel[PlayerInfo_->ActiveSkillSlot_[i]])
+		{
 			return false;
 		}
 	}

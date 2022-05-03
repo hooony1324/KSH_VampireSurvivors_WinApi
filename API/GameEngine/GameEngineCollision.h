@@ -62,8 +62,8 @@ public:
 
 	// 충돌한 대상이 있는지 없는지만 체크하는 함수
 	bool CollisionCheck(
-		const std::string& _TargetGroup,
-		CollisionType _This = CollisionType::Rect,
+		const std::string& _TargetGroup, 
+		CollisionType _This = CollisionType::Rect, 
 		CollisionType _Target = CollisionType::Rect
 	);
 
@@ -92,7 +92,7 @@ private:
 
 	std::string CollisionName_;
 
-	void NextPosReset()
+	void NextPosReset() 
 	{
 		NextPos_ = float4::ZERO;
 	}
