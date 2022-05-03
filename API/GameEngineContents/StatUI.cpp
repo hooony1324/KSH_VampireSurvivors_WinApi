@@ -45,6 +45,7 @@ void StatUI::Update()
 {
 	SlotUpdate();
 	
+	
 
 
 }

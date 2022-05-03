@@ -54,7 +54,7 @@ void Character::SetCharacter(CharacterType _CharacterType)
 		Duration_ = 3;
 		AddShootNum_ = 1;
 		CoolTime_ = 0;
-		Luck_ = 0;
+		Luck_ = 20;
 		Growth_ = 1;
 		Greed_ = 1;
 		Magnet_ = 1;

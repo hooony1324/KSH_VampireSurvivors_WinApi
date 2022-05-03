@@ -16,9 +16,11 @@
 #include "Character.h"
 
 #include "Vector2D.h"
-#include "ProjectileShooter.h"
 #include "PlayLevel.h"
 #include "Enemy.h"
+
+#include "ProjectileShooter.h"
+#include "KingBible.h"
 
 
 Player::Player() 
@@ -45,6 +47,8 @@ Player::~Player()
 
 void Player::Start()
 {
+	NextLevelOff();
+
 	SetPosition({ 1710, 770 });
 	SetScale({ 100, 100 });
 
@@ -87,19 +91,21 @@ void Player::Start()
 	PlayerShootRange_ = CreateCollision("PlayerShootRange", { 600, 600 });
 
 	// ½´ÆÃ
-	MagicShooter_ = GetLevel()->CreateActor<ProjectileShooter>(static_cast<int>(RENDER_ORDER::PLAYER), "Shooter");
+	MagicShooter_ = GetLevel()->CreateActor<ProjectileShooter>(static_cast<int>(RENDER_ORDER::WEAPON), "Shooter");
 	MagicShooter_->SetShooter(SkillType::MAGICWAND, 1.0f);
 
-	KnifeShooter_ = GetLevel()->CreateActor<ProjectileShooter>(static_cast<int>(RENDER_ORDER::PLAYER), "Shooter");
+	KnifeShooter_ = GetLevel()->CreateActor<ProjectileShooter>(static_cast<int>(RENDER_ORDER::WEAPON), "Shooter");
 	KnifeShooter_->SetShooter(SkillType::KNIFE, 1.0f);
 
-	FireShooter_ = GetLevel()->CreateActor<ProjectileShooter>(static_cast<int>(RENDER_ORDER::PLAYER), "Shooter");
+	FireShooter_ = GetLevel()->CreateActor<ProjectileShooter>(static_cast<int>(RENDER_ORDER::WEAPON), "Shooter");
 	FireShooter_->SetShooter(SkillType::FIREWAND, 1.0f);
 
-	ThousandEdgeShooter_ = GetLevel()->CreateActor<ProjectileShooter>(static_cast<int>(RENDER_ORDER::PLAYER), "Shooter");
+	ThousandEdgeShooter_ = GetLevel()->CreateActor<ProjectileShooter>(static_cast<int>(RENDER_ORDER::WEAPON), "Shooter");
 	ThousandEdgeShooter_->SetShooter(SkillType::THOUSANDEDGE, 1.0f);
 
-	NextLevelOff();
+	// ±âÅ¸
+	KingBible_ = GetLevel()->CreateActor<KingBible>(static_cast<int>(RENDER_ORDER::WEAPON), "KingBible");
+
 }
 
 void Player::Update()

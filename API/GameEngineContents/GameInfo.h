@@ -171,6 +171,9 @@ static std::string SkillTypeToName(SkillType _SkillType)
 	case SkillType::THOUSANDEDGE:
 		return "ThousandEdge";
 		break;
+	case SkillType::KINGBIBLE:
+		return "KingBible";
+		break;
 	case SkillType::NONE:
 		return "None";
 		break;

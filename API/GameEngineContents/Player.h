@@ -8,6 +8,7 @@ class Character;
 class GameEngineImage;
 class ProjectileShooter;
 class GameEngineCollision;
+class KingBible;
 class Player : public GameEngineActor
 {
 public:
@@ -89,6 +90,7 @@ private:
 	ProjectileShooter* FireShooter_;
 	ProjectileShooter* RuneShooter_;
 	ProjectileShooter* ThousandEdgeShooter_;
+	KingBible* KingBible_;
 
 	// Á×À½
 	bool HpZero_;

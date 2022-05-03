@@ -281,7 +281,6 @@
       <SubType>
       </SubType>
     </ClInclude>
-    <ClInclude Include="Skill_Stat.h" />
     <ClInclude Include="StatUI.h">
       <SubType>
       </SubType>

@@ -8,7 +8,6 @@
 #include "GameEnum.h"
 #include "Vector2D.h"
 #include "GameInfo.h"
-#include "Skill_Stat.h"
 
 ProjectileShooter::ProjectileShooter()
 	: BT_(ProjectileType::FLAME_BLUE)
@@ -37,12 +36,13 @@ void ProjectileShooter::Update()
 void ProjectileShooter::SetShooter(SkillType _SkillType, float _WaitTime)
 {
 	SkillLevel_ = GameInfo::GetPlayerInfo()->AllSkillLevel_[_SkillType];
+	std::map<int, SkillStat> Skill = GameInfo::AllSkillStat_[SkillType_];
 
 	//탄수		인터벌		쿨타임		데미지		속도			지속시간 
 	SkillType_ = _SkillType;
-	InitBulletCount_ = static_cast<int>(STAT_SHOOTER[static_cast<int>(SkillType_)][SkillLevel_][0]);
-	InitInterval_ = STAT_SHOOTER[static_cast<int>(SkillType_)][SkillLevel_][1];
-	InitCoolTime_ = STAT_SHOOTER[static_cast<int>(SkillType_)][SkillLevel_][2];
+	InitBulletCount_ = Skill[SkillLevel_].SkillCount_;
+	InitInterval_ = Skill[SkillLevel_].Interval_;
+	InitCoolTime_ = Skill[SkillLevel_].CoolTime_;
 	isShoot_ = false;
 	
 	CoolTimeCount_ = _WaitTime;

@@ -301,8 +301,8 @@ void LevelUpUI::BoxesStart()
 	Renderer3_->SetPivot(GameEngineWindow::GetScale().Half() + float4{ 2, Renderer1_->GetImageScale().y });
 
 	// 무기 선택 박스 4 띄울지 여부
+	GameInfo::GetPlayerInfo()->Luck_ += GameInfo::GetPlayerInfo()->AllSkillLevel_[SkillType::CLOVER] * 3;
 	float PlayerLuck = GameInfo::GetPlayerInfo()->Luck_;
-	PlayerLuck += 20;
 	int Success = Random.RandomInt(1, 101);
 
 	// 성공
