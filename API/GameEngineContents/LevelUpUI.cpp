@@ -528,7 +528,7 @@ SkillType LevelUpUI::SelectTreasure()
 			return SkillType::NONE;
 		}
 
-		int Index = Random.RandomInt(0, Treasures.size() - 1);
+		int Index = Random.RandomInt(0, static_cast<int>(Treasures.size()) - 1);
 		return Treasures[Index];
 	}
 
@@ -539,7 +539,6 @@ SkillType LevelUpUI::SelectBoxSkills()
 	std::vector<SkillType> BoxSkills;
 
 	// 레벨 8 미만 -1아닌 뽑을 수 있는 스킬 추가
-	// 액티브 슬릇에 각성무기 있으면 추가
 	std::map<SkillType, int>& AllSkillLevel = GameInfo::GetPlayerInfo()->AllSkillLevel_;
 
 	for (int i = 0; i < static_cast<int>(SkillType::MAX); i++)
@@ -552,24 +551,13 @@ SkillType LevelUpUI::SelectBoxSkills()
 		}
 	}
 
-	// 각성 스킬 1레벨 이상인지
-	for (int i = static_cast<int>(SkillType::MAX) + 1; i < EVOLVE_MAX; i++)
-	{
-		SkillType Type = static_cast<SkillType>(i);
-
-		if (8 > AllSkillLevel[Type] && 1 <= AllSkillLevel[Type])
-		{
-			BoxSkills.push_back(Type);
-		}
-	}
-
 	// 스킬이 모두 8레벨, 올릴게 패시브 스킬 밖에 없다면
 	if (0 == BoxSkills.size())
 	{
 		return SkillType::NONE;
 	}
 
-	int Index = Random.RandomInt(0, BoxSkills.size() - 1);
+	int Index = Random.RandomInt(0, static_cast<int>(BoxSkills.size()) - 1);
 	return BoxSkills[Index];
 }
 

@@ -102,6 +102,8 @@ bool GameInfo::SkillLevelFull()
 	{
 		return true;
 	}
+
+	return false;
 }
 
 SkillType GameInfo::SkillEvolveCheck()

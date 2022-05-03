@@ -53,6 +53,7 @@ void EnemyController::Start()
 	LiveEnemyNum = 0;
 	Enemy::EnemyNameListIndex = 0;
 	Boss::BossIndex_ = 0;
+	Boss::IsReaperSpawn_ = false;
 
 	// ÀÏ¹Ý¸÷
 	Enemies_.reserve(MaxEnemySpawn);

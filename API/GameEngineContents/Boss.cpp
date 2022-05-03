@@ -192,12 +192,6 @@ void Boss::DieStart()
 	GameEngineActor* Ptr = GetLevel()->CreateActor<LevelUpBox>(static_cast<int>(ACTOR_ORDER::UI));
 	Ptr->SetPosition(BossPos_);
 
-
-	// 리퍼는 한번만 소환되도록
-	if (BOSSTYPE::XLRREAPER == BossType_)
-	{
-		IsReaperSpawn_ = false;
-	}
 }
 
 void Boss::DieUpdate()

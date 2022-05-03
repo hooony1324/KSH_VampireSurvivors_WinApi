@@ -158,6 +158,7 @@ void ShadeRed::AlertChaseUpdate()
 			PlayerCol.clear();
 		}
 		// ÅÍÁö°í Á×À½
+		Ring_->Off();
 		GameEngineSound::SoundPlayOneShot("RedBlow.mp3", 0);
 		ChangeState(STATE::EXPLOSION);
 	}
@@ -202,7 +203,6 @@ void ShadeRed::HitEnd()
 void ShadeRed::ExplosionStart()
 {
 	Renderer_->ChangeAnimation("SmokeDead");
-	Ring_->Off();
 	RedCol_->Off();
 }
 
