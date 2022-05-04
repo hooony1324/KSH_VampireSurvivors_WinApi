@@ -2,6 +2,7 @@
 #include <GameEngine/GameEngineActor.h>
 #include <vector>
 #include <GameEngineBase/GameEngineSound.h>
+#include "PlayerAttack.h"
 
 enum class ProjectileType
 {
@@ -14,7 +15,7 @@ enum class ProjectileType
 // 플레이어의 발사체( 칼, 매직, 도끼, ...)
 class GameEngineRenderer;
 class GameEngineCollision;
-class Projectile : public GameEngineActor
+class Projectile : public PlayerAttack
 {	
 public:
 
@@ -32,18 +33,12 @@ public:
 
 	void SetDir(float4 _Direction);
 
-	GameEngineRenderer* GetProjImage()
-	{
-		return ProjImage_;
-	}
-
-
-	float GetDamage()
+	float GetDamage() override
 	{
 		return Damage_;
 	}
 
-	void SetDamage(float _Damage)
+	void SetDamage(float _Damage) override
 	{
 		Damage_ = _Damage;
 	}
@@ -58,7 +53,7 @@ public:
 		Speed_ = _Speed;
 	}
 
-	bool IsBullet()
+	bool IsBullet() override
 	{
 		return IsBullet_;
 	}
@@ -70,7 +65,11 @@ protected:
 	void Render() override;
 
 private:
+	
 	bool IsBullet_;
+	float Damage_;
+	float Speed_;
+	float Duration_;// 총알 지속시간
 
 	GameEngineRenderer* ProjImage_;
 	GameEngineCollision* ProjCol_;
@@ -78,9 +77,6 @@ private:
 	float4 ShootDir_;
 	
 	
-	float Damage_;
-	float Speed_;
-	float Duration_;// 총알 지속시간
 
 
 

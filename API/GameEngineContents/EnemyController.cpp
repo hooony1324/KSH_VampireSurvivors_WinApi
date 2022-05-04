@@ -13,7 +13,7 @@
 #include "Boss.h"
 #include "ShadeRed.h"
 
-const int MaxEnemySpawn = 150;
+const int MaxEnemySpawn = 100;
 int EnemyController::LiveEnemyNum = 0;
 const float SpawnCycle = 5.0f;
 

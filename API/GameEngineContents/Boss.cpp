@@ -11,9 +11,9 @@
 #include "LevelUpBox.h"
 #include "Vector2D.h"
 #include "PlayLevel.h"
-#include "Projectile.h"
 #include "Player.h"
 #include <vector>
+#include "PlayerAttack.h"
 
 std::vector<std::string> BossNameList = { "XLMummy", "XLReaper"};
 int Boss::BossIndex_ = 0;
@@ -294,8 +294,7 @@ void Boss::HitCheck()
 	// 공격 충돌체크
 	if (true == BossCol_->CollisionResult("PlayerAttack", PlayerAttack_))
 	{
-		GameEngineActor* ActorPtr = PlayerAttack_[0]->GetActor();
-		Projectile* Attack = dynamic_cast<Projectile*>(ActorPtr);
+		PlayerAttack* Attack = dynamic_cast<PlayerAttack*>(PlayerAttack_[0]->GetActor());
 		if (true == Attack->IsBullet())
 		{
 			// 원거리 공격이면 총알 없애야됨

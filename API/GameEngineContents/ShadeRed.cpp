@@ -10,11 +10,11 @@
 #include "GameInfo.h"
 #include "GameEnum.h"
 #include "Vector2D.h"
-#include "Projectile.h"
 #include "Player.h"
 #include <vector>
+#include "PlayerAttack.h"
 
-float KnockBackRatio = 2.3f;
+float KnockBackDis = 20.0f;
 
 ShadeRed::ShadeRed() 
 {
@@ -177,12 +177,14 @@ void ShadeRed::HitUpdate()
 		return;
 	}
 
-	float Distance = 40.0f;
-	SetMove(KnockBackDir_ * DeltaTime_ * Distance * KnockBackRatio);
-	KnockBackDir_ *= 0.90f;
+	KnockDelta_ += DeltaTime_;
+	
+	float4 KnockBackVec = float4::LerpLimit(KnockBackDir_, GetPosition(), KnockDelta_);
+	SetMove(KnockBackVec * DeltaTime_);
 
 	if (true == HitCounter_.Start(GameEngineTime::GetDeltaTime(static_cast<int>(TIME_GROUP::MONSTER))))
 	{
+		KnockDelta_ = 0;
 		HitEnd();
 	}
 
@@ -224,8 +226,8 @@ void ShadeRed::DieStart()
 void ShadeRed::DieUpdate()
 {
 	float Distance = 20.0f;
-	SetMove(KnockBackDir_ * DeltaTime_ * Distance * KnockBackRatio);
-	KnockBackDir_ *= 0.95f;
+	SetMove(KnockBackDir_ * DeltaTime_ * Distance);
+	KnockBackDir_ *= 0.65f;
 
 	if (true == Renderer_->IsEndAnimation())
 	{
@@ -248,19 +250,20 @@ void ShadeRed::HitCheck()
 	}
 
 	// 공격 충돌체크
-	std::vector<GameEngineCollision*> PlayerAttack;
-	if (true == RedCol_->CollisionResult("PlayerAttack", PlayerAttack))
+	std::vector<GameEngineCollision*> PlayerAttacks;
+	if (true == RedCol_->CollisionResult("PlayerAttack", PlayerAttacks))
 	{
-		GameEngineActor* ActorPtr = PlayerAttack[0]->GetActor();
-		Projectile* Attack = dynamic_cast<Projectile*>(ActorPtr);
+		PlayerAttack* Attack = dynamic_cast<PlayerAttack*>(PlayerAttacks[0]->GetActor());
 		if (true == Attack->IsBullet())
 		{
 			// 원거리 공격이면 총알 없애야됨
 			Attack->Death();
 		}
 		KnockBackDir_ = RedPos_ - Attack->GetPosition();
+		KnockBackDir_.Normal2D();
+		KnockBackDir_ *= 
 		Hp_ -= Attack->GetDamage();
-		PlayerAttack.clear();
+		PlayerAttacks.clear();
 
 		ChangeState(STATE::HIT);
 	}

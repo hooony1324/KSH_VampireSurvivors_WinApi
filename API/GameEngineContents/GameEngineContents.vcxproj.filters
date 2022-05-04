@@ -63,7 +63,7 @@
       <Filter>2.Play\Projectile</Filter>
     </ClCompile>
     <ClCompile Include="Timer.cpp">
-      <Filter>2.Play\Projectile\Timer</Filter>
+      <Filter>2.Play\UI\Digit</Filter>
     </ClCompile>
     <ClCompile Include="GameInfo.cpp">
       <Filter>Global</Filter>
@@ -112,6 +112,9 @@
     </ClCompile>
     <ClCompile Include="GameOverUI.cpp">
       <Filter>2.Play\UI</Filter>
+    </ClCompile>
+    <ClCompile Include="PlayerAttack.cpp">
+      <Filter>2.Play\Projectile\PlayerAttack</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -177,7 +180,7 @@
       <Filter>Global</Filter>
     </ClInclude>
     <ClInclude Include="Timer.h">
-      <Filter>2.Play\Projectile\Timer</Filter>
+      <Filter>2.Play\UI\Digit</Filter>
     </ClInclude>
     <ClInclude Include="GameInfo.h">
       <Filter>Global</Filter>
@@ -230,6 +233,9 @@
     <ClInclude Include="GameOverUI.h">
       <Filter>2.Play\UI</Filter>
     </ClInclude>
+    <ClInclude Include="PlayerAttack.h">
+      <Filter>2.Play\Projectile\PlayerAttack</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="0.Level">
@@ -262,11 +268,14 @@
     <Filter Include="2.Play\Item">
       <UniqueIdentifier>{a1bae2c5-4a5a-4ab0-b76a-7c421ff0dd19}</UniqueIdentifier>
     </Filter>
-    <Filter Include="2.Play\Projectile\Timer">
-      <UniqueIdentifier>{3af3fe68-9b87-40ba-be00-8cc596b308c6}</UniqueIdentifier>
-    </Filter>
     <Filter Include="1.Intro~Title">
       <UniqueIdentifier>{a1af0295-5ec4-49ba-ba07-e0db2f9ac90f}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2.Play\Projectile\PlayerAttack">
+      <UniqueIdentifier>{c3d2cc11-4de0-4611-a6c6-333e60402a45}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="2.Play\UI\Digit">
+      <UniqueIdentifier>{3af3fe68-9b87-40ba-be00-8cc596b308c6}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

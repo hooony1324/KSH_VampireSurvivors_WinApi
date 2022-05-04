@@ -79,6 +79,8 @@ private:
 	float Hp_;
 	float Speed_;
 	float4 KnockBackDir_;
+	float KnockBackDistance_;
+	float KnockDelta_;
 
 	GameEngineRenderer* Renderer_;
 	GameEngineRenderer* Ring_;

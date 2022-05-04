@@ -14,6 +14,7 @@
 #include "ExpGem.h"
 #include "PlayLevel.h"
 #include "EnemyController.h"
+#include "PlayerAttack.h"
 
 GameEngineImage* Enemy::MapColImage_ = nullptr;
 std::vector<std::string> EnemyNameList = {"Mud", "Medusa", "Ecto", "Mummy"};
@@ -126,9 +127,13 @@ void Enemy::Hit()
 	// ¸Â¾ÒÀ½
 	GameEngineSound::SoundPlayOneShot("EnemyHit.mp3", 0);
 
-	float Damage = dynamic_cast<Projectile*>(PlayerAttack_[0]->GetActor())->GetDamage();
-	float4 BulletPos = PlayerAttack_[0]->GetCollisionPos();
-	PlayerAttack_[0]->GetActor()->Death();
+	PlayerAttack* Attack = dynamic_cast<PlayerAttack*>(PlayerAttack_[0]->GetActor());
+	float Damage = Attack->GetDamage();
+	float4 BulletPos = Attack->GetPosition();
+	if (true == Attack->IsBullet())
+	{
+		Attack->Death();
+	}
 	PlayerAttack_.clear();
 
 	Hp_ -= Damage;
@@ -206,7 +211,7 @@ void Enemy::EnemyMove()
 	}
 
 	float Speed = MapColCheck(Speed_);
-	SetMove((DestDir_ + (KnockBackDir_ * 40.0f)) * DeltaTime_ * Speed);
+	SetMove((DestDir_ + (KnockBackDir_ * 20.0f)) * DeltaTime_ * Speed);
 }
 
 void Enemy::UpdateHeadDir()
