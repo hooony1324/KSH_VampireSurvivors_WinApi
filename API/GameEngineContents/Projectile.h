@@ -8,7 +8,8 @@ enum class ProjectileType
 {
 	KNIFE,
 	FLAME_BLUE,
-	FLAME_RED
+	FLAME_RED,
+	DIAMOND,
 };
 
 

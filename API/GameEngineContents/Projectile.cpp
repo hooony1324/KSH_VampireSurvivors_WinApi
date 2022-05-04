@@ -80,6 +80,10 @@ void Projectile::SetType(ProjectileType _BT)
 		ProjImage_->SetRotationFilter("ProjectileFlameRed_Filter.bmp");
 		break;
 
+	case ProjectileType::DIAMOND:
+		GameEngineSound::SoundPlayOneShot("ProjectileMagic.mp3", 0);
+		break;
+
 	}
 
 }

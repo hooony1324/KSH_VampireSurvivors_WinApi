@@ -177,14 +177,11 @@ void ShadeRed::HitUpdate()
 		return;
 	}
 
-	KnockDelta_ += DeltaTime_;
-	
-	float4 KnockBackVec = float4::LerpLimit(KnockBackDir_, GetPosition(), KnockDelta_);
-	SetMove(KnockBackVec * DeltaTime_);
+	KnockBackDistance_ *= 0.8f;
+	SetMove(KnockBackDir_ * KnockBackDistance_ * DeltaTime_);
 
 	if (true == HitCounter_.Start(GameEngineTime::GetDeltaTime(static_cast<int>(TIME_GROUP::MONSTER))))
 	{
-		KnockDelta_ = 0;
 		HitEnd();
 	}
 
@@ -192,6 +189,8 @@ void ShadeRed::HitUpdate()
 
 void ShadeRed::HitEnd()
 {
+	KnockBackDistance_ = 0;
+
 	if (ExState_ == STATE::CHASE)
 	{
 		ChangeState(STATE::CHASE);
@@ -261,7 +260,8 @@ void ShadeRed::HitCheck()
 		}
 		KnockBackDir_ = RedPos_ - Attack->GetPosition();
 		KnockBackDir_.Normal2D();
-		KnockBackDir_ *= 
+		KnockBackDistance_ = KnockBackDis;
+
 		Hp_ -= Attack->GetDamage();
 		PlayerAttacks.clear();
 

@@ -116,7 +116,7 @@ void Enemy::Hit()
 
 	if (KnockBackDir_.Len2D() >= 0.0f)
 	{
-		KnockBackDir_ -= KnockBackDir_ * 0.25f;
+		KnockBackDir_ = KnockBackDir_ * 0.25f;
 	}
 
 	if (false == Col_->CollisionResult("PlayerAttack", PlayerAttack_, CollisionType::Rect, CollisionType::Rect))

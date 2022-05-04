@@ -13,7 +13,7 @@
 #include "Boss.h"
 #include "ShadeRed.h"
 
-const int MaxEnemySpawn = 100;
+const int MaxEnemySpawn = 80;
 int EnemyController::LiveEnemyNum = 0;
 const float SpawnCycle = 5.0f;
 
@@ -230,7 +230,7 @@ void EnemyController::SpawnShadeRed(bool _CounterEnd)
 		Red->SetPosition(GetPosition() + SpawnPosBase_ + GetSpawnPos());
 	}
 
-	ShadeRedCounter_.SetCount(20);
+	ShadeRedCounter_.SetCount(60);
 }
 
 void EnemyController::SpawnBoss(bool _BossCounterEnd)
@@ -244,7 +244,7 @@ void EnemyController::SpawnBoss(bool _BossCounterEnd)
 		BossPtr->SetPosition(GetPosition() + SpawnPosBase_ + GetSpawnPos());
 
 		// 다음 보스 소환 주기
-		BossCounter_.SetCount(20.0f);
+		BossCounter_.SetCount(60.0f);
 
 		// 다음 보스 지정
 		Boss::BossIndex_ += 1;

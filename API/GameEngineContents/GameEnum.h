@@ -46,6 +46,7 @@ enum class SkillType
 	EMPTYTOME,
 	SPINACH,
 	WING,
+	MAGNET,
 	MAX,
 	THOUSANDEDGE,
 

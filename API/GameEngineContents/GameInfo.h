@@ -183,6 +183,9 @@ static std::string SkillTypeToName(SkillType _SkillType)
 	case SkillType::WING:
 		return "Wing";
 		break;
+	case SkillType::MAGNET:
+		return "Magnet";
+		break;
 	case SkillType::NONE:
 		return "None";
 		break;
