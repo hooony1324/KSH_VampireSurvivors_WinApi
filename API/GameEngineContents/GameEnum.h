@@ -34,7 +34,7 @@ enum class TIME_GROUP
 
 const int SKILL_LEVELMAX = 8;
 const int ACTIVE_MAX = 4;
-const int EVOLVE_MAX = 8;
+const int EVOLVE_MAX = 11;
 enum class SkillType
 {
 	KNIFE,
@@ -42,7 +42,10 @@ enum class SkillType
 	FIREWAND,
 	KINGBIBLE,
 	BRACER,				// + SWORD = THOUSANDEDGE
-	CLOVER,				// + CROSS = HEAVENSWORD
+	CLOVER,
+	EMPTYTOME,
+	SPINACH,
+	WING,
 	MAX,
 	THOUSANDEDGE,
 
@@ -61,8 +64,6 @@ enum class SkillType
 	//FIVESTAR,
 
 
-	//EMPTYTOME,		// + MAGICWAND = HOLYWAND
-	//SPINACH,			// + FIREWAND = HELLFIRE
 	//SPELLBINDER,		// + KINGBIBLE = UNHOLYVESPERS
 	//HOLLOWHEART,		// + WHIP = BLOODYTEAR
 	//PUMMAROLA,			// + GARLIC = SOULEATER

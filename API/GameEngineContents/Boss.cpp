@@ -319,8 +319,8 @@ void Boss::SetStat()
 		break;
 	case BOSSTYPE::XLRREAPER:
 		Hp_ = 10000.0f;
-		Speed_ = 400.0f;
-		KnockBackRatio_ = 0.1f;
+		Speed_ = 500.0f;
+		KnockBackRatio_ = 0.01f;
 		break;
 	default:
 		break;
