@@ -306,6 +306,7 @@ void PlayLevel::Freeze()
 	GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::PLAYER), 0.0f);
 	GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::WEAPON), 0.0f);
 	GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::TIMER), 0.0f);
+	GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::ITEM), 0.0f);
 }
 
 void PlayLevel::FreezeOut()
@@ -314,6 +315,7 @@ void PlayLevel::FreezeOut()
 	GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::PLAYER), LevelSpeed_);
 	GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::WEAPON), LevelSpeed_);
 	GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::TIMER), LevelSpeed_);
+	GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::ITEM), LevelSpeed_);
 }
 
 void PlayLevel::SpeedUp(float _Speed)
@@ -331,5 +333,6 @@ void PlayLevel::SpeedUp(float _Speed)
 	GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::PLAYER), LevelSpeed_);
 	GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::WEAPON), LevelSpeed_);
 	GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::TIMER), LevelSpeed_);
+	GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::ITEM), LevelSpeed_);
 }
 

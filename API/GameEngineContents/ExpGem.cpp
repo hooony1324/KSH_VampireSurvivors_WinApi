@@ -53,54 +53,79 @@ void ExpGem::SetType(GemType _Type)
 	}
 }
 
+void ExpGem::StateUpdate()
+{
+	switch (State_)
+	{
+	case ExpGem::STATE::IDLE:
+		IdleUpdate();
+		break;
+	case ExpGem::STATE::MOVEOUT:
+		MoveOutUpdate();
+		break;
+	case ExpGem::STATE::MOVEIN:
+		MoveInUpdate();
+		break;
+	default:
+		break;
+	}
+}
+
+void ExpGem::ChangeState(STATE _State)
+{
+	State_ = _State;
+}
+
+void ExpGem::IdleUpdate()
+{
+	MoveDir_ = Pos_ - PlayerPos_;
+	float MoveDis = MoveDir_.Len2D();
+	if (GameInfo::GetPlayerInfo()->Magnet_ * 80.0f > MoveDis)
+	{
+		MoveDir_.Normal2D();
+		MoveOutSpeed_ = 500.0f;
+		ChangeState(STATE::MOVEOUT);
+	}
+}
+
+void ExpGem::MoveOutUpdate()
+{
+	SetMove(MoveDir_ * DeltaTime_ * MoveOutSpeed_);
+	MoveOutSpeed_ *= 0.95f;
+
+	if (true == MoveOutCounter_.Start(DeltaTime_))
+	{
+		ChangeState(STATE::MOVEIN);
+	}
+}
+
+void ExpGem::MoveInUpdate()
+{
+	MoveDir_ = PlayerPos_ - Pos_;
+	MoveDir_.Normal2D();
+	SetMove(MoveDir_ * DeltaTime_ * 400.0f);
+	PlayerCheck();
+}
+
+
 void ExpGem::Start()
 {
+	NextLevelOff();
 	Renderer_ = CreateRenderer("GemGreen.bmp");
 	Col_ = CreateCollision("ExpGem", Renderer_->GetScale() + float4{15, 15});
 
-
-	NextLevelOff();
+	MoveOutCounter_.SetCount(0.3f);
+	ChangeState(STATE::IDLE);
 }
 
 void ExpGem::Update()
 {
 	Pos_ = GetPosition();
 	PlayerPos_ = GameInfo::GetPlayerInfo()->PlayerPos_;
+	DeltaTime_ = GameEngineTime::GetDeltaTime(static_cast<int>(TIME_GROUP::ITEM));
+	
+	StateUpdate();
 
-	if (false == Get_)
-	{
-		GetCheck();
-	}
-
-	MoveBeforeCheck();
-
-	PlayerCheck();
-}
-
-void ExpGem::GetCheck()
-{
-	// 사정거리안에 들어오면 Get
-	MoveDir_ = Pos_ - PlayerPos_;
-	if (GameInfo::GetPlayerInfo()->Magnet_ * 80.0f > MoveDir_.Len2D())
-	{
-		MoveDir_.Normal2D();
-		MoveDir_ *= 250.0f;
-		Get_ = true;
-	}
-}
-
-void ExpGem::MoveBeforeCheck()
-{
-	if (false == Get_)
-	{
-		return;
-	}
-
-	float4 PlayerDir = PlayerPos_ - Pos_;
-	PlayerDir.Normal2D();
-	MoveDir_ = MoveDir_ + PlayerDir * 5.0f;
-
-	SetMove(MoveDir_ * GameEngineTime::GetDeltaTime(static_cast<int>(TIME_GROUP::ITEM)));
 }
 
 void ExpGem::PlayerCheck()

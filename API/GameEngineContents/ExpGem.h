@@ -1,4 +1,5 @@
 #include <GameEngine/GameEngineActor.h>
+#include "Counter.h"
 
 enum class GemType
 {
@@ -12,11 +13,12 @@ enum class GemType
 class GameEngineCollision;
 class ExpGem : public GameEngineActor
 {
-public:
-	enum class GemState
+private:
+	enum class STATE
 	{
-		MOVE_BACK,
-		MOVE_FORWARD,
+		IDLE,
+		MOVEOUT,
+		MOVEIN,
 	};
 
 public:
@@ -37,15 +39,21 @@ public:
 
 	void SetType(GemType _Type);
 
-protected:
+private:
+	STATE State_;
+	void StateUpdate();
+	void ChangeState(STATE _State);
 
+	void IdleUpdate();
+	void MoveOutUpdate();
+	void MoveInUpdate();
+
+protected:
 	void Start() override;
 	void Update() override;
 
-
 private:
-	void GetCheck();
-	void MoveBeforeCheck();
+
 	void PlayerCheck();
 
 	static float RedExp_;
@@ -56,8 +64,12 @@ private:
 	GemType Type_;
 
 	// 플레이어 상호작용
+	float DeltaTime_;
 	float4 PlayerPos_;
 	float4 Pos_;
 	float4 MoveDir_;
 	bool Get_;
+	float SumDeltaTime_;
+	Counter MoveOutCounter_;
+	float MoveOutSpeed_;
 };
