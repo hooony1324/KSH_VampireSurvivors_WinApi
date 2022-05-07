@@ -358,6 +358,7 @@ void Enemy::HitCheck()
 			// 원거리 공격이면 총알 없애야됨
 			Attack->Death();
 		}
+
 		KnockBackDir_ = Pos_ - Attack->GetPosition();
 		KnockBackDir_.Normal2D();
 		Hp_ -= Attack->GetDamage();

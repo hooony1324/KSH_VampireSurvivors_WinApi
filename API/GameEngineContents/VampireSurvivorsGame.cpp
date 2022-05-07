@@ -64,7 +64,7 @@ void VampireSurvivorsGame::GameInit()
 		GameEngineInput::GetInst()->CreateKey("SpawnReaper", 'R');
 
 		GameEngineInput::GetInst()->CreateKey("Map", 'M');
-
+		GameEngineInput::GetInst()->CreateKey("FastMode", 'F');
 
 	}
 

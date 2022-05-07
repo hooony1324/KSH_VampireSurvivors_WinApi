@@ -80,11 +80,10 @@ private:
 
 private:
 	// Game
-	void GamePause();
-	void ShowPauseMenu();
-	void LevelUpUICheck();
+	void SpeedUp(float _Speed);
 	void Freeze();
 	void FreezeOut();
+	float LevelSpeed_;
 
 	// Map
 	void CreateMap();

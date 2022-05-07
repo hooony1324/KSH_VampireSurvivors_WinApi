@@ -25,6 +25,7 @@ PlayLevel::PlayLevel()
 	, KillCountUI_(nullptr)
 	, PauseUI_(nullptr)
 	, StatUI_(nullptr)
+	, LevelSpeed_(1.0f)
 {
 }
 
@@ -107,11 +108,13 @@ void PlayLevel::Update()
 {
 	// µð¹ö±ë
 	{
+		// C
 		if (true == GameEngineInput::GetInst()->IsDown("ColDebugger"))
 		{
 			IsDebugModeSwitch();
 		}
 
+		// L
 		if (true == GameEngineInput::GetInst()->IsDown("LevelUP"))
 		{
 			std::map<SkillType, int>& AllSkillLevel = GameInfo::GetPlayerInfo()->AllSkillLevel_;
@@ -129,6 +132,13 @@ void PlayLevel::Update()
 				AllSkillLevel[Type] = 8;
 			}
 		}
+
+		// F
+		if (true == GameEngineInput::GetInst()->IsDown("FastMode"))
+		{
+			SpeedUp(4.0f);
+		}
+
 	}
 
 
@@ -300,9 +310,26 @@ void PlayLevel::Freeze()
 
 void PlayLevel::FreezeOut()
 {
-	GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::MONSTER), 1.0f);
-	GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::PLAYER), 1.0f);
-	GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::WEAPON), 1.0f);
-	GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::TIMER), 1.0f);
+	GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::MONSTER), LevelSpeed_);
+	GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::PLAYER), LevelSpeed_);
+	GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::WEAPON), LevelSpeed_);
+	GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::TIMER), LevelSpeed_);
+}
+
+void PlayLevel::SpeedUp(float _Speed)
+{
+	if (LevelSpeed_ >= _Speed)
+	{
+		LevelSpeed_ = 1.0f;
+	}
+	else
+	{
+		LevelSpeed_ = _Speed;
+	}
+
+	GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::MONSTER), LevelSpeed_);
+	GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::PLAYER), LevelSpeed_);
+	GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::WEAPON), LevelSpeed_);
+	GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::TIMER), LevelSpeed_);
 }
 
