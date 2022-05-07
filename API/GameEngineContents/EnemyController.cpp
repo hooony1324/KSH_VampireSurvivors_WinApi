@@ -134,9 +134,7 @@ void EnemyController::SpawnWave()
 		// 죽어있으면 소환
 		if (true == Ptr->IsDead())
 		{
-			Ptr->On();
 			Ptr->SetLive();
-
 			
 			Ptr->SetEnemy(WaveIndex_);
 
@@ -147,6 +145,7 @@ void EnemyController::SpawnWave()
 			SpawnNum_++;
 			LiveEnemyNum++;
 		}
+
 		EnemiesIndex++;
 
 		if (EnemiesIndex == static_cast<int>(Enemies_.size()))

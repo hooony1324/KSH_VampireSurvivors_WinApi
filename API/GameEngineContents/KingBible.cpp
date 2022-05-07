@@ -30,16 +30,17 @@ void KingBible::Start()
 
 void KingBible::Update()
 {
-
-	PlayerPos_ = GameInfo::GetPlayerInfo()->PlayerPos_;
-	DeltaTime_ = GameEngineTime::GetDeltaTime(static_cast<int>(TIME_GROUP::WEAPON));
-	SetPosition(PlayerPos_);
-
 	// 스탯
 	Level_ = GameInfo::GetPlayerInfo()->AllSkillLevel_[SkillType::KINGBIBLE];
+	if (1 > Level_)
+	{
+		return;
+	}
 	Bible_ = GameInfo::AllSkillStat_[SkillType::KINGBIBLE];
-	SetDamage(Bible_[Level_].Damage_);
+	PlayerPos_ = GameInfo::GetPlayerInfo()->PlayerPos_;
+	DeltaTime_ = GameEngineTime::GetDeltaTime(static_cast<int>(TIME_GROUP::WEAPON));
 
+	SetPosition(PlayerPos_);	
 	StateUpdate();
 }
 
@@ -83,7 +84,9 @@ void KingBible::SpinStart()
 	// 초기설정
 	BookCount_ = Bible_[Level_].SkillCount_;
 	Range_ = GameInfo::GetPlayerInfo()->MeleeRange_ * 80.0f;
-	
+	auto damage = Bible_[Level_].Damage_;
+	SetDamage(Bible_[Level_].Damage_);
+
 	DurationCounter_.SetCount(Bible_[Level_].Duration_); // 불투명 시간
 	CoolTimeCounter_.SetCount(Bible_[Level_].CoolTime_); // 투명한 시간
 

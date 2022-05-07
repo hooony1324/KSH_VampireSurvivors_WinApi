@@ -3,11 +3,12 @@
 #include <GameEngine/GameEngineRenderer.h>
 #include <GameEngine/GameEngineCollision.h>
 #include <GameEngine/GameEngineImageManager.h>
-
+#include <GameEngineBase/GameEngineInput.h>
 
 #include "GameEnum.h"
 
 Library::Library() 
+	: ShowColMap_(false)
 {
 
 }
@@ -22,6 +23,10 @@ void Library::Start()
 	Map_->SetPivot(Map_->GetScale().Half()); // ·»´õ·¯ À§Ä¡
 	SetScale(Map_->GetScale());
 
+	ColMap_ = CreateRenderer("LibraryColMap.bmp", static_cast<int>(RENDER_ORDER::BACKGROUND), RenderPivot::CENTER);
+	ColMap_->SetPivot(Map_->GetScale().Half());
+	ColMap_->Off();
+
 	// ¸Ê 1Ä­ °¡·Î±æÀÌ
 	TelePortX_ = 3584.0f;
 
@@ -33,7 +38,19 @@ void Library::Start()
 
 void Library::Update()
 {
+	if (true == GameEngineInput::GetInst()->IsDown("Map"))
+	{
+		ShowColMap_ = !ShowColMap_;
+	}
 
+	if (true == ShowColMap_)
+	{
+		ColMap_->On();
+	}
+	else
+	{
+		ColMap_->Off();
+	}
 
 }
 

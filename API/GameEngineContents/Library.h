@@ -22,7 +22,9 @@ public:
 
 	
 
-protected:
+private:
+	bool ShowColMap_;
+
 
 private:
 	virtual void Start();
@@ -30,6 +32,7 @@ private:
 	virtual void Render();
 
 	GameEngineRenderer* Map_;
+	GameEngineRenderer* ColMap_;
 	float TelePortX_;
 
 	GameEngineCollision* MapEndLeft_;

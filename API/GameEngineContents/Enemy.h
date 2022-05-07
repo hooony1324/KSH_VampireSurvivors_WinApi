@@ -10,6 +10,35 @@ class GameEngineRenderer;
 class GameEngineImage;
 class Enemy : public GameEngineActor
 {
+private:
+	enum class STATE
+	{
+		DEAD,
+		DIE,
+		CHASE,
+		HIT,
+	};
+
+	STATE State_;
+
+	void UpdateState();
+	void ChangeState(STATE _State);
+
+	void DeadStart();
+	void DeadUpdate();
+
+	void DieStart();
+	void DieUpdate();
+
+	void ChaseUpdate();
+	
+	void HitStart();
+	void HitUpdate();
+	void HitEnd();
+
+	void HitCheck();
+	float HitDamage_;
+
 public:
 	// constrcuter destructer
 	Enemy();
@@ -26,15 +55,9 @@ public:
 		return Dead_;
 	}
 
-	inline void SetDead()
-	{
-		Dead_ = true;
-	}
+	void SetDead();
 
-	inline void SetLive()
-	{
-		Dead_ = false;
-	}
+	void SetLive();
 
 	// 외부에서 EnemySet 관련
 	void SetEnemy(int _Index);
@@ -46,7 +69,6 @@ private:
 private:
 	void Start() override;
 	void Update() override;
-	void Render() override;
 
 private:
 	// 렌더러 세팅
@@ -54,14 +76,9 @@ private:
 
 	// 콜리전 맵
 	float MapColCheck(float _DestDir);
-	// 피격
-	void Hit();
+
 	// 서로 밀어내기
 	void BlockOther();
-	// 죽음
-	void EnemyDead();
-
-	void EnemyMove();
 
 	void UpdateHeadDir();
 
@@ -84,19 +101,19 @@ private:
 	std::vector<GameEngineCollision*> PlayerAttack_;
 	GameEngineCollision* Col_;
 	float4 KnockBackDir_;
+	float KnockBackDis_;
+	bool Hitable_;
 
 	// 밀어내기
 	GameEngineCollision* OtherBlockLeft_;
 	GameEngineCollision* OtherBlockRight_;
 	std::vector<GameEngineCollision*> Others_;
 
-	Counter DeathCounter_;
-
-	// 외부에서 EnemySet 관련
-	
-
 	// Medusa 특수 움직임
 	float UpDown_;
+
+	Counter HitCounter_;
+	Counter DeathCounter_;
 	Counter UpDownCounter_;
 };
 

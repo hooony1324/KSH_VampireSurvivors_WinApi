@@ -20,6 +20,7 @@ GameEngineImage* Enemy::MapColImage_ = nullptr;
 std::vector<std::string> EnemyNameList = {"Mud", "Medusa", "Ecto", "Mummy"};
 int Enemy::EnemyNameListIndex = 0;
 
+
 Enemy::Enemy()
 	: Speed_(80.0f)
 	, Hp_(10)
@@ -29,6 +30,7 @@ Enemy::Enemy()
 	, OtherBlockRight_(nullptr)
 	, DestDir_(float4::ZERO)
 	, Dead_(false)
+	, Hitable_(true)
 {
 }
 
@@ -60,7 +62,6 @@ void Enemy::Start()
 	
 	Renderer_ = CreateRenderer();
 	SetRenderer();
-
 	Renderer_->ChangeAnimation(EnemyName_ + "_WalkRight");
 
 	SetScale({ 100, 100 });
@@ -68,9 +69,8 @@ void Enemy::Start()
 	Col_ = CreateCollision("Enemy", { 28, 45 });
 
 	Others_.reserve(4);
-	OtherBlockLeft_ = CreateCollision("OtherGuard", { 4, 45 }, { -18, 0 });
-	OtherBlockRight_ = CreateCollision("OtherGuard", { 4, 45 }, { 18, 0 });
 
+	HitCounter_.SetCount(0.2f);
 	DeathCounter_.SetCount(1.0f);
 	UpDownCounter_.SetCount(1.0f);
 
@@ -81,6 +81,8 @@ void Enemy::Start()
 
 	// 되살아날때 더 강해진다
 	DeadCount_ = 0;
+
+	ChangeState(STATE::DEAD);
 }
 
 void Enemy::Update()
@@ -88,135 +90,37 @@ void Enemy::Update()
 	DeltaTime_ = GameEngineTime::GetDeltaTime(static_cast<int>(TIME_GROUP::MONSTER));
 	Pos_ = GetPosition();
 
-	// 죽었음
-	EnemyDead();
-	if (true == Dead_)
+
+	UpdateState();
+
+	if (Hp_ <= 0)
 	{
-		return;
+		ChangeState(STATE::DIE);
 	}
-
-	// 살아있음
-	EnemyMove();
-	BlockOther();
-	Hit();
-	UpdateHeadDir();
-}
-
-void Enemy::Render()
-{
-
-}
-
-void Enemy::Hit()
-{
-	if (nullptr == Col_)
-	{
-		return;
-	}
-
-	if (KnockBackDir_.Len2D() >= 0.0f)
-	{
-		KnockBackDir_ = KnockBackDir_ * 0.25f;
-	}
-
-	if (false == Col_->CollisionResult("PlayerAttack", PlayerAttack_, CollisionType::Rect, CollisionType::Rect))
-	{
-		return;
-	}
-
-	// 맞았음
-	GameEngineSound::SoundPlayOneShot("EnemyHit.mp3", 0);
-
-	PlayerAttack* Attack = dynamic_cast<PlayerAttack*>(PlayerAttack_[0]->GetActor());
-	float Damage = Attack->GetDamage();
-	float4 BulletPos = Attack->GetPosition();
-	if (true == Attack->IsBullet())
-	{
-		Attack->Death();
-	}
-	PlayerAttack_.clear();
-
-	Hp_ -= Damage;
-
-	// 넉백 방향
-	KnockBackDir_ = Vector2D::GetDirection(BulletPos, Pos_);
-
 }
 
 void Enemy::BlockOther()
 {
 	// Monster끼리 부딪히면
 	// 서로 밀어냄
-	if (true == Col_->CollisionResult("OtherGuard", Others_, CollisionType::Rect, CollisionType::Rect))
+	if (true == Col_->CollisionResult("Enemy", Others_, CollisionType::Rect, CollisionType::Rect))
 	{
-		float4 OtherPos = Others_[0]->GetActor()->GetPosition();
-		Others_[0]->GetActor()->SetMove(Vector2D::GetDirection(Pos_, OtherPos) * GameEngineTime::GetDeltaTime(static_cast<int>(TIME_GROUP::MONSTER)) * 85.0f);
+		for (int i = 0; i < 3; i++)
+		{
+			if (i > Others_.size() - 1)
+			{
+				break;
+			}
+			float4 OtherPos = Others_[i]->GetActor()->GetPosition();
+			Others_[i]->GetActor()->SetMove(Vector2D::GetDirection(Pos_, OtherPos) * GameEngineTime::GetDeltaTime(static_cast<int>(TIME_GROUP::MONSTER)) * 100.0f);
+		}
 		Others_.clear();
 	}
 
 }
 
-void Enemy::EnemyDead()
-{
-	if (Hp_ > 0)
-	{
-		return;
-	}
-
-	if (false == Dead_)
-	{
-		GameInfo::GetPlayerInfo()->KillCount_ += 1;
-		Renderer_->ChangeAnimation(EnemyName_ + "_Dead");
-		KnockBackDir_.Normal2D();
-		Dead_ = true;
-	}
-
-
-	// 죽으면서 밀려남
-	SetMove(KnockBackDir_ * DeltaTime_ * 90.0f);
-
-	if (true == DeathCounter_.Start(DeltaTime_))
-	{
-		ExpGem* Gem = GetLevel()->CreateActor<ExpGem>(static_cast<int>(ACTOR_ORDER::ITEM), "ExpGem");
-		Gem->SetType(GemType::BLUE);
-		Gem->SetPosition(Pos_);
-		
-		Off();
-		EnemyController::LiveEnemyNum -= 1;
-		SetPosition(float4{ Pos_.x, -40 });
-		DeadCount_++;
-		Hp_ = static_cast<float>(100 + (DeadCount_ * 20));
-		Speed_ = 80.0f;
-	}
-
-	
-}
-
-void Enemy::EnemyMove()
-{
-	PlayerPos_ = GameInfo::GetPlayerInfo()->PlayerPos_;
-	DestDir_ = Vector2D::GetDirection(Pos_, PlayerPos_);
-
-	// 현재 몬스터가 Medusa 라면
-	if (0 == EnemyName_.compare("Medusa"))
-	{
-		Speed_ = 200.0f;
-		if (true == UpDownCounter_.Start(DeltaTime_))
-		{
-			UpDown_ *= -1;
-			UpDownCounter_.Reset();
-		}
-
-		DestDir_ = float4{ DestDir_.x, UpDown_};
-	}
-
-	float Speed = MapColCheck(Speed_);
-	SetMove((DestDir_ + (KnockBackDir_ * 20.0f)) * DeltaTime_ * Speed);
-}
-
 void Enemy::UpdateHeadDir()
 {
-
 	if (0 >= DestDir_.x)
 	{
 		Renderer_->ChangeAnimation(EnemyName_ + "_WalkLeft");
@@ -225,9 +129,7 @@ void Enemy::UpdateHeadDir()
 	{
 		Renderer_->ChangeAnimation(EnemyName_ + "_WalkRight");
 	}
-
 }
-
 
 float Enemy::MapColCheck(float _Speed)
 {
@@ -275,8 +177,6 @@ float Enemy::MapColCheck(float _Speed)
 	return _Speed;
 }
 
-
-
 void Enemy::SetRenderer()
 {
 	for (int i = 0; i < static_cast<int>(EnemyNameList.size()); i++)
@@ -286,4 +186,184 @@ void Enemy::SetRenderer()
 		Renderer_->CreateFolderAnimationTimeKey(EnemyName + "_WalkRight.bmp", EnemyName + "_WalkRight", static_cast<int>(TIME_GROUP::MONSTER), 0, 3, 0.2f, true);
 		Renderer_->CreateFolderAnimationTimeKey(EnemyName + "_Dead.bmp", EnemyName + "_Dead", static_cast<int>(TIME_GROUP::MONSTER), 0, 29, 0.1f, false);
 	}
+}
+
+void Enemy::SetDead()
+{
+	Dead_ = true;
+	ChangeState(STATE::DEAD);
+}
+
+void Enemy::SetLive()
+{
+	Dead_ = false;
+	On();
+	Col_->On();
+	Hp_ = static_cast<float>(10 + (DeadCount_ * 20));
+	Speed_ = 80.0f;
+
+	ChangeState(STATE::CHASE);
+}
+
+
+void Enemy::UpdateState()
+{
+	switch (State_)
+	{
+	case Enemy::STATE::DIE:
+		DieUpdate();
+		break;
+	case Enemy::STATE::CHASE:
+		ChaseUpdate();
+		break;
+	case Enemy::STATE::HIT:
+		HitUpdate();
+		break;
+	case Enemy::STATE::DEAD:
+		DeadUpdate();
+		break;
+	default:
+		break;
+	}
+}
+
+void Enemy::ChangeState(STATE _State)
+{
+	if (State_ != _State)
+	{
+		switch (_State)
+		{
+		case Enemy::STATE::DIE:
+			DieStart();
+			break;
+		case Enemy::STATE::CHASE:
+			break;
+		case Enemy::STATE::HIT:
+			HitStart();
+			break;
+		case Enemy::STATE::DEAD:
+			DeadStart();
+			break;
+		default:
+			break;
+		}
+	}
+
+	State_ = _State;
+}
+
+void Enemy::DeadStart()
+{
+	Off();
+
+	Dead_ = true;
+}
+
+void Enemy::DeadUpdate()
+{
+
+}
+
+void Enemy::ChaseUpdate()
+{
+	PlayerPos_ = GameInfo::GetPlayerInfo()->PlayerPos_;
+	DestDir_ = Vector2D::GetDirection(Pos_, PlayerPos_);
+
+	// 현재 몬스터가 Medusa 라면
+	if (0 == EnemyName_.compare("Medusa"))
+	{
+		Speed_ = 200.0f;
+		if (true == UpDownCounter_.Start(DeltaTime_))
+		{
+			UpDown_ *= -1;
+			UpDownCounter_.Reset();
+		}
+
+		DestDir_ = float4{ DestDir_.x, UpDown_ };
+	}
+
+	float Speed = MapColCheck(Speed_);
+
+	SetMove(DestDir_ * DeltaTime_ * Speed);
+	BlockOther();
+	UpdateHeadDir();
+
+	HitCheck();
+}
+
+void Enemy::HitStart()
+{
+	GameEngineSound::SoundPlayOneShot("EnemyHit.mp3", 0);
+	KnockBackDis_ = 150.0f;
+
+	if (Hp_ <= 0.0f)
+	{
+		ChangeState(STATE::DIE);
+	}
+}
+
+void Enemy::HitUpdate()
+{
+	SetMove(KnockBackDir_ * DeltaTime_ * KnockBackDis_);
+	KnockBackDis_ *= 0.95f;
+
+	if (true == HitCounter_.Start(GameEngineTime::GetDeltaTime(static_cast<int>(TIME_GROUP::MONSTER))))
+	{
+		HitCounter_.Reset();
+		HitEnd();
+	}
+}
+
+void Enemy::HitEnd()
+{
+	ChangeState(STATE::CHASE);
+}
+
+void Enemy::DieStart()
+{
+	GameInfo::GetPlayerInfo()->KillCount_ += 1;
+	Renderer_->ChangeAnimation(EnemyName_ + "_Dead");
+	Col_->Off();
+}
+
+void Enemy::DieUpdate()
+{
+	SetMove(KnockBackDir_ * DeltaTime_ * 80.0f);
+
+	if (true == Renderer_->IsEndAnimation())
+	{
+		ExpGem* Gem = GetLevel()->CreateActor<ExpGem>(static_cast<int>(ACTOR_ORDER::ITEM), "ExpGem");
+		Gem->SetType(GemType::BLUE);
+		Gem->SetPosition(Pos_);
+		EnemyController::LiveEnemyNum -= 1;
+		DeadCount_++;
+
+		ChangeState(STATE::DEAD);
+	}
+}
+
+void Enemy::HitCheck()
+{
+	if (false == IsUpdate())
+	{
+		return;
+	}
+
+	// 공격 충돌체크
+	if (true == Col_->CollisionResult("PlayerAttack", PlayerAttack_))
+	{
+		PlayerAttack* Attack = dynamic_cast<PlayerAttack*>(PlayerAttack_[0]->GetActor());
+		if (true == Attack->IsBullet())
+		{
+			// 원거리 공격이면 총알 없애야됨
+			Attack->Death();
+		}
+		KnockBackDir_ = Pos_ - Attack->GetPosition();
+		KnockBackDir_.Normal2D();
+		Hp_ -= Attack->GetDamage();
+		PlayerAttack_.clear();
+		ChangeState(STATE::HIT);
+
+	}
+
 }

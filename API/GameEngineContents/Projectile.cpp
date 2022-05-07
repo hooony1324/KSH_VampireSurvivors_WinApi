@@ -106,34 +106,36 @@ void Projectile::DiamondUpdate()
 void Projectile::SetType(ProjectileType _BT)
 {
 
-	ProjImage_->SetImage(ProjectileList[static_cast<int>(_BT)]);
+	ProjImage_->SetImage(ProjectileList[static_cast<int>(_BT) - 1]);
 
 	// 세부 설정
 	switch (_BT)
 	{
 	case ProjectileType::KNIFE:
 	{
+		Type_ = ProjectileType::KNIFE;
 		GameEngineSound::SoundPlayOneShot("ProjectileKnife.mp3", 0);
 		ProjImage_->SetRotationFilter("Sword_Filter.bmp");
 		break;
 	}
 	case ProjectileType::FLAME_BLUE:
 	{
+		Type_ = ProjectileType::FLAME_BLUE;
 		GameEngineSound::SoundPlayOneShot("ProjectileMagic.mp3", 0);
 		ProjImage_->SetRotationFilter("ProjectileHoly1_Filter.bmp");
 		break;
 	}
 	case ProjectileType::FLAME_RED:
-		
+		Type_ = ProjectileType::FLAME_RED;
 		GameEngineSound::SoundPlayOneShot("ProjectileMagic.mp3", 0);
 		ProjImage_->SetRotationFilter("ProjectileFlameRed_Filter.bmp");
 		break;
 
 	case ProjectileType::DIAMOND:
+		Type_ = ProjectileType::DIAMOND;
 		GameEngineSound::SoundPlayOneShot("ProjectileMagic.mp3", 0);
 		ProjImage_->SetRotationFilter("Diamond_Filter.bmp");
 		IsBullet_ = false;
-		Type_ = ProjectileType::DIAMOND;
 		break;
 
 	}

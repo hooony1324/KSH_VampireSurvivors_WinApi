@@ -6,6 +6,7 @@
 
 enum class ProjectileType
 {
+	NONE,
 	KNIFE,
 	FLAME_BLUE,
 	FLAME_RED,

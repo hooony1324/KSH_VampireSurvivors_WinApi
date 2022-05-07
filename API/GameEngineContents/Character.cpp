@@ -88,7 +88,7 @@ void Character::SetCharacter(CharacterType _CharacterType)
 		Magnet_ = 1;
 		Revival_ = 0;
 
-		BaseSkill_ = SkillType::KNIFE;
+		BaseSkill_ = SkillType::KINGBIBLE;
 		break;
 	}
 
