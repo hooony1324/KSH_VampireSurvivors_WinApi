@@ -16,6 +16,7 @@ enum class ProjectileType
 // 플레이어의 발사체( 칼, 매직, 도끼, ...)
 class GameEngineRenderer;
 class GameEngineCollision;
+class GameEngineImage;
 class Projectile : public PlayerAttack
 {	
 public:
@@ -65,8 +66,14 @@ protected:
 	void Update() override;
 	void Render() override;
 
+
 private:
-	
+
+	void DiamondUpdate();
+
+private:
+	ProjectileType Type_;
+
 	bool IsBullet_;
 	float Damage_;
 	float Speed_;
@@ -77,7 +84,7 @@ private:
 
 	float4 ShootDir_;
 	
-	
+	GameEngineImage* MapColImage_;
 
 
 

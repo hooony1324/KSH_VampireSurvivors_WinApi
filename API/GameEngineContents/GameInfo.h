@@ -162,6 +162,9 @@ static std::string SkillTypeToName(SkillType _SkillType)
 	case SkillType::FIREWAND:
 		return "FireWand";
 		break;
+	case SkillType::RUNETRACER:
+		return "Runetracer";
+		break;
 	case SkillType::BRACER:
 		return "Bracer";
 		break;

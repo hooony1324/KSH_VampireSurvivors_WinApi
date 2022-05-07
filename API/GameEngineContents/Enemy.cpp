@@ -186,7 +186,7 @@ void Enemy::EnemyDead()
 		SetPosition(float4{ Pos_.x, -40 });
 		DeadCount_++;
 		Hp_ = static_cast<float>(100 + (DeadCount_ * 20));
-
+		Speed_ = 80.0f;
 	}
 
 	

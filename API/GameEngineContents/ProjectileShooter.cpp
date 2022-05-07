@@ -35,11 +35,11 @@ void ProjectileShooter::Update()
 
 void ProjectileShooter::SetShooter(SkillType _SkillType, float _WaitTime)
 {
-	SkillLevel_ = GameInfo::GetPlayerInfo()->AllSkillLevel_[_SkillType];
+	SkillType_ = _SkillType;
+	SkillLevel_ = GameInfo::GetPlayerInfo()->AllSkillLevel_[SkillType_];
 	std::map<int, SkillStat> Skill = GameInfo::AllSkillStat_[SkillType_];
 
 	//탄수		인터벌		쿨타임		데미지		속도			지속시간 
-	SkillType_ = _SkillType;
 	InitBulletCount_ = Skill[SkillLevel_].SkillCount_;
 	InitInterval_ = Skill[SkillLevel_].Interval_;
 	InitCoolTime_ = Skill[SkillLevel_].CoolTime_;
@@ -63,7 +63,6 @@ void ProjectileShooter::Shooting(float _DeltaTime, float4 _PlayerPos, float4 _Mo
 	{
 		return;
 	}
-
 
 	// 쿨타임 아니면
 	if (0 < CoolTimeCount_)
@@ -106,6 +105,10 @@ void ProjectileShooter::Shooting(float _DeltaTime, float4 _PlayerPos, float4 _Mo
 	case SkillType::FIREWAND:
 		ShootFire();
 		break;
+	case SkillType::RUNETRACER:
+		ShootDiamond();
+		break;
+
 
 	// 각성
 	case SkillType::THOUSANDEDGE:
@@ -121,12 +124,17 @@ void ProjectileShooter::Shooting(float _DeltaTime, float4 _PlayerPos, float4 _Mo
 
 void ProjectileShooter::UpdateSkillStat()
 {
+	if (SkillType_ == SkillType::RUNETRACER)
+	{
+		int a = 0;
+	}
 	SkillLevel_ = GameInfo::GetPlayerInfo()->AllSkillLevel_[SkillType_];
 	std::map<int, SkillStat> Skill = GameInfo::AllSkillStat_[SkillType_];
 
 	InitBulletCount_ = Skill[SkillLevel_].SkillCount_;
 	InitInterval_ = Skill[SkillLevel_].Interval_;
 	InitCoolTime_ = Skill[SkillLevel_].CoolTime_;
+
 }
 
 void ProjectileShooter::SetBulletStat(Projectile* _Bullet)
@@ -186,6 +194,19 @@ void ProjectileShooter::ShootFire()
 	
 	BulletCount_ = 0;
 
+	isShoot_ = true;
+	IntervalCount_ = InitInterval_;
+}
+
+void ProjectileShooter::ShootDiamond()
+{
+	Projectile* Bullet = GetLevel()->CreateActor<Projectile>(static_cast<int>(ACTOR_ORDER::PLAYER), "Bullet");
+	Bullet->SetType(ProjectileType::DIAMOND);
+	SetBulletStat(Bullet);
+	Bullet->SetPosition(PlayerPos_);
+	Bullet->SetDir(Vector2D::GetDirection(PlayerPos_, MonsterPos_));
+
+	BulletCount_ -= 1;
 	isShoot_ = true;
 	IntervalCount_ = InitInterval_;
 }

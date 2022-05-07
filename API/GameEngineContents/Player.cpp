@@ -103,6 +103,9 @@ void Player::Start()
 	ThousandEdgeShooter_ = GetLevel()->CreateActor<ProjectileShooter>(static_cast<int>(RENDER_ORDER::WEAPON), "Shooter");
 	ThousandEdgeShooter_->SetShooter(SkillType::THOUSANDEDGE, 1.0f);
 
+	RuneTracerShooter_ = GetLevel()->CreateActor<ProjectileShooter>(static_cast<int>(RENDER_ORDER::WEAPON), "Shooter");
+	RuneTracerShooter_->SetShooter(SkillType::RUNETRACER, 1.0f);
+
 	// 기타
 	KingBible_ = GetLevel()->CreateActor<KingBible>(static_cast<int>(RENDER_ORDER::WEAPON), "KingBible");
 
@@ -139,6 +142,8 @@ void Player::Update()
 void Player::Render()
 {
 	HpBarRender();
+
+	
 }
 
 void Player::SetGameInfo()
@@ -415,6 +420,11 @@ void Player::Shooting()
 	if (0 < AllSkillLevel[SkillType::FIREWAND])
 	{
 		FireShooter_->Shooting(GameEngineTime::GetDeltaTime(static_cast<int>(TIME_GROUP::WEAPON)), PlayerPos_, MonsterPos);
+	}
+
+	if (0 < AllSkillLevel[SkillType::RUNETRACER])
+	{
+		RuneTracerShooter_->Shooting(GameEngineTime::GetDeltaTime(static_cast<int>(TIME_GROUP::WEAPON)), PlayerPos_, MonsterPos);
 	}
 
 	// 각성 스킬

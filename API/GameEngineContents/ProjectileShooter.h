@@ -45,6 +45,7 @@ private:
 	void ShootKnife();
 	void ShootMagic();
 	void ShootFire();
+	void ShootDiamond();
 
 	bool ShootAble_;
 

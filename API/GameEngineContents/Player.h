@@ -88,8 +88,8 @@ private:
 	ProjectileShooter* MagicShooter_;
 	ProjectileShooter* KnifeShooter_;
 	ProjectileShooter* FireShooter_;
-	ProjectileShooter* RuneShooter_;
 	ProjectileShooter* ThousandEdgeShooter_;
+	ProjectileShooter* RuneTracerShooter_;
 	KingBible* KingBible_;
 
 	// Á×À½

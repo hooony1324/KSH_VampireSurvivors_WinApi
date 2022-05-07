@@ -301,14 +301,33 @@ std::map<SkillType, std::map<int, SkillStat>> GameInfo::SetAllSkillStat()
 			std::map<int, SkillStat> Level;
 			Level[1] = SkillStat{ 2, 0.0f, 3.5f, 3.5f, 350.0f, 4.0f };
 			Level[2] = SkillStat{ 3, 0.0f, 3.0f, 3.5f, 350.0f, 4.0f };
-			Level[3] = SkillStat{ 3, 0.0f, 3.0f, 3.5f, 400.0f, 4.0f };
-			Level[4] = SkillStat{ 4, 0.0f, 2.5f, 3.5f, 400.0f, 4.0f };
-			Level[5] = SkillStat{ 4, 0.0f, 2.5f, 3.5f, 500.0f, 4.0f };
-			Level[6] = SkillStat{ 4, 0.0f, 2.0f, 6.5f, 500.0f, 4.0f };
-			Level[7] = SkillStat{ 5, 0.0f, 2.0f, 6.5f, 600.0f, 4.0f };
-			Level[8] = SkillStat{ 5, 0.0f, 1.8f, 6.5f, 600.0f, 4.0f };
+			Level[3] = SkillStat{ 3, 0.0f, 3.0f, 3.5f, 400.0f, 5.0f };
+			Level[4] = SkillStat{ 4, 0.0f, 2.5f, 3.5f, 400.0f, 5.0f };
+			Level[5] = SkillStat{ 4, 0.0f, 2.5f, 3.5f, 500.0f, 5.5f };
+			Level[6] = SkillStat{ 4, 0.0f, 2.0f, 6.5f, 500.0f, 5.5f };
+			Level[7] = SkillStat{ 5, 0.0f, 2.0f, 6.5f, 600.0f, 6.0f };
+			Level[8] = SkillStat{ 5, 0.0f, 1.8f, 6.5f, 600.0f, 6.0f };
 
 			AllSkillStat[SkillType::KINGBIBLE] = Level;
+		}
+	}
+
+	// RUNETRACER
+	// 탄수		인터벌		쿨타임		데미지		속도			지속시간 
+	{
+		{
+			// 탄수, 쿨타임, 데미지, 속도, 지속시간 이용
+			std::map<int, SkillStat> Level;
+			Level[1] = SkillStat{ 1, 0.1f, 3.0f, 7.0f, 350.0f, 4.0f };
+			Level[2] = SkillStat{ 2, 0.1f, 3.0f, 7.0f, 350.0f, 4.0f };
+			Level[3] = SkillStat{ 3, 0.1f, 3.0f, 7.0f, 400.0f, 4.0f };
+			Level[4] = SkillStat{ 4, 0.1f, 3.0f, 7.0f, 400.0f, 4.0f };
+			Level[5] = SkillStat{ 5, 0.1f, 3.0f, 7.0f, 500.0f, 4.0f };
+			Level[6] = SkillStat{ 6, 0.1f, 3.0f, 7.0f, 500.0f, 4.0f };
+			Level[7] = SkillStat{ 6, 0.1f, 3.0f, 7.0f, 600.0f, 4.0f };
+			Level[8] = SkillStat{ 6, 0.1f, 3.0f, 7.0f, 600.0f, 4.0f };
+
+			AllSkillStat[SkillType::RUNETRACER] = Level;
 		}
 	}
 

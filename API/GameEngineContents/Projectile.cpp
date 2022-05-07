@@ -8,8 +8,10 @@
 
 #include "Vector2D.h"
 #include "GameEnum.h"
+#include "GameInfo.h"
+#include "PlayLevel.h"
 
-std::vector<std::string> ProjectileList = { "Sword.bmp", "ProjectileHoly1.bmp", "ProjectileFlameRed.bmp" };
+std::vector<std::string> ProjectileList = { "Sword.bmp", "ProjectileHoly1.bmp", "ProjectileFlameRed.bmp", "Diamond.bmp"};
 
 Projectile::Projectile()
 	: ProjImage_(nullptr)
@@ -28,16 +30,24 @@ Projectile::~Projectile()
 
 void Projectile::Start()
 {
+	NextLevelOff();
 	ProjImage_ = CreateRenderer("Blank.bmp", static_cast<int>(RENDER_ORDER::WEAPON));
 	ProjCol_ = CreateCollision("PlayerAttack", float4{ 10, 10 });
 
 	SetScale({ 20, 20 });
-	NextLevelOff();
 	
+	MapColImage_ = PlayLevel::MapColImage_;
 }
 
 void Projectile::Update()
 {
+	if (Type_ == ProjectileType::DIAMOND)
+	{
+		// 플레이어 기준 벽 부딪히기
+		// 콜맵 부딪히기
+		DiamondUpdate();
+	}
+
 	float DeltaTime = GameEngineTime::GetDeltaTime(static_cast<int>(TIME_GROUP::WEAPON));
 	SetMove(ShootDir_ * DeltaTime * Speed_);
 	Duration_ -= DeltaTime;
@@ -51,6 +61,45 @@ void Projectile::Update()
 
 void Projectile::Render()
 {
+}
+
+void Projectile::DiamondUpdate()
+{
+	//1280 640
+	float4 PlayerPos = GameInfo::GetPlayerInfo()->PlayerPos_;
+
+	// PositionCheck
+	float LeftWall = PlayerPos.x - 635;
+	float RightWall = PlayerPos.x + 635;
+	float TopWall = PlayerPos.y - 340;
+	float BotWall = PlayerPos.y + 340;
+
+	// MapColCheck
+	int ColorTop = MapColImage_->GetImagePixel(GetPosition() + float4{ 0, -20 });
+	int ColorBot = MapColImage_->GetImagePixel(GetPosition() + float4{ 0, 20 });
+	int ColorLeft = MapColImage_->GetImagePixel(GetPosition() + float4{ -20, 0 });
+	int ColorRight = MapColImage_->GetImagePixel(GetPosition() + float4{ 20, 0 });
+
+	if (LeftWall >= GetPosition().x || ColorLeft == RGB(0, 0, 0))
+	{
+		ShootDir_ = { -ShootDir_.x, ShootDir_.y };
+	}
+
+	if (RightWall <= GetPosition().x || ColorRight == RGB(0, 0, 0))
+	{
+		ShootDir_ = { -ShootDir_.x, ShootDir_.y };
+	}
+
+	if (TopWall >= GetPosition().y || ColorTop == RGB(0, 0, 0))
+	{
+		ShootDir_ = { ShootDir_.x, -ShootDir_.y };
+	}
+
+	if (BotWall <= GetPosition().y || ColorBot == RGB(0, 0, 0))
+	{
+		ShootDir_ = { ShootDir_.x, -ShootDir_.y };
+	}
+
 }
 
 
@@ -82,6 +131,9 @@ void Projectile::SetType(ProjectileType _BT)
 
 	case ProjectileType::DIAMOND:
 		GameEngineSound::SoundPlayOneShot("ProjectileMagic.mp3", 0);
+		ProjImage_->SetRotationFilter("Diamond_Filter.bmp");
+		IsBullet_ = false;
+		Type_ = ProjectileType::DIAMOND;
 		break;
 
 	}
