@@ -154,10 +154,15 @@ void StatUI::SetSlotBase()
 
 void StatUI::TextDraw()
 {
-
+	//CLOVER, 
+	/*EMPTYTOME,
+		SPINACH,
+		WING,
+		MAGNET,*/
 	float TextWidth = 8;
 	float Space;
 	float TextX = 228.0f;
+	int Level;
 	std::string Stat;
 
 	float FirstY = 200;
@@ -174,14 +179,16 @@ void StatUI::TextDraw()
 	Space = static_cast<int>(Stat.length()) * TextWidth;
 	TextFont_.Draw(Stat, { TextX - Space, FirstY + FirstHeight * 2 }, RGB(255, 255, 255), 20, 800);
 
-	Stat = std::to_string((int)GameInfo::GetPlayerInfo()->Speed_);
+	Level = GameInfo::GetPlayerInfo()->AllSkillLevel_[SkillType::WING];
+	Stat = std::to_string((int)GameInfo::GetPlayerInfo()->Speed_ + (Level * 5));
 	Space = static_cast<int>(Stat.length()) * TextWidth;
 	TextFont_.Draw(Stat + "%", {TextX - Space - 8, FirstY + FirstHeight * 3}, RGB(255, 255, 255), 20, 800);
 
 
 	float SecondY = 297.0f;
 	float SecondHeight = 19;
-	Stat = std::to_string((int)GameInfo::GetPlayerInfo()->Power_);
+	Level = GameInfo::GetPlayerInfo()->AllSkillLevel_[SkillType::SPINACH];
+	Stat = std::to_string((int)GameInfo::GetPlayerInfo()->Power_ + (Level * 3));
 	Space = static_cast<int>(Stat.length()) * TextWidth;
 	TextFont_.Draw(Stat + "%", {TextX - Space - 8, SecondY}, RGB(255, 255, 255), 20, 800);
 
@@ -201,7 +208,8 @@ void StatUI::TextDraw()
 	Space = static_cast<int>(Stat.length()) * TextWidth;
 	TextFont_.Draw(Stat, { TextX - Space, SecondY + SecondHeight * 4 }, RGB(255, 255, 255), 20, 800);
 
-	Stat = std::to_string((int)GameInfo::GetPlayerInfo()->CoolTime_);
+	Level = GameInfo::GetPlayerInfo()->AllSkillLevel_[SkillType::EMPTYTOME];
+	Stat = std::to_string((int)GameInfo::GetPlayerInfo()->CoolTime_ + (Level * 3));
 	Space = static_cast<int>(Stat.length()) * TextWidth;
 	TextFont_.Draw(Stat + "%", { TextX - Space - 8, SecondY + SecondHeight * 5 }, RGB(255, 255, 255), 20, 800);
 
@@ -223,7 +231,8 @@ void StatUI::TextDraw()
 	// ÀúÁÖ
 	TextFont_.Draw("-", { TextX - Space, ThirdY + ThirdHeight * 3}, RGB(255, 255, 255), 20, 800);
 
-	Stat = std::to_string((int)GameInfo::GetPlayerInfo()->Magnet_);
+	Level = GameInfo::GetPlayerInfo()->AllSkillLevel_[SkillType::MAGNET];
+	Stat = std::to_string((int)GameInfo::GetPlayerInfo()->Magnet_ + Level);
 	Space = static_cast<int>(Stat.length()) * TextWidth;
 	TextFont_.Draw(Stat, { TextX - Space, ThirdY + ThirdHeight * 4}, RGB(255, 255, 255), 20, 800);
 
