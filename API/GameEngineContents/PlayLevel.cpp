@@ -74,7 +74,7 @@ void PlayLevel::LevelChangeStart(GameEngineLevel* _PrevLevel)
 	PauseUI_->Off();
 	StatUI_->Off();
 
-	//BgmPlayer = GameEngineSound::SoundPlayControl("bgm_elrond_library_quiet.MP3");
+	BgmPlayer = GameEngineSound::SoundPlayControl("bgm_elrond_library_quiet.MP3");
 
 	// 아이템 
 	ExpGem* FirstGem = CreateActor<ExpGem>(static_cast<int>(ACTOR_ORDER::ITEM), "ITEM");
@@ -100,7 +100,7 @@ void PlayLevel::LevelChangeStart(GameEngineLevel* _PrevLevel)
 void PlayLevel::LevelChangeEnd(GameEngineLevel* _NextLevel)
 {
 	// BGM 종료
-	//BgmPlayer.Stop();
+	BgmPlayer.Stop();
 }
 
 
@@ -140,8 +140,6 @@ void PlayLevel::Update()
 		}
 
 	}
-
-
 
 	UpdateState();
 
@@ -307,6 +305,7 @@ void PlayLevel::Freeze()
 	GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::WEAPON), 0.0f);
 	GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::TIMER), 0.0f);
 	GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::ITEM), 0.0f);
+	BgmPlayer.PlaySpeed(0.0f);
 }
 
 void PlayLevel::FreezeOut()
@@ -316,6 +315,7 @@ void PlayLevel::FreezeOut()
 	GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::WEAPON), LevelSpeed_);
 	GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::TIMER), LevelSpeed_);
 	GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::ITEM), LevelSpeed_);
+	BgmPlayer.PlaySpeed(LevelSpeed_);
 }
 
 void PlayLevel::SpeedUp(float _Speed)
@@ -334,5 +334,6 @@ void PlayLevel::SpeedUp(float _Speed)
 	GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::WEAPON), LevelSpeed_);
 	GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::TIMER), LevelSpeed_);
 	GameEngineTime::GetInst()->SetTimeScale(static_cast<int>(TIME_GROUP::ITEM), LevelSpeed_);
+	BgmPlayer.PlaySpeed(LevelSpeed_);
 }
 

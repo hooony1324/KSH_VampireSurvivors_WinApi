@@ -528,7 +528,7 @@ SkillType LevelUpUI::SelectTreasure()
 		// 스킬이 모두 8레벨, 올릴게 패시브 스킬 밖에 없다면
 		if (0 == Treasures.size())
 		{
-			return SkillType::NONE;
+			ChangeState(STATE::HPMONEY);
 		}
 
 		int Index = Random.RandomInt(0, static_cast<int>(Treasures.size()) - 1);

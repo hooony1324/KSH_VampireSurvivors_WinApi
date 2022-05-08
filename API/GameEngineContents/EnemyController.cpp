@@ -243,7 +243,7 @@ void EnemyController::SpawnBoss(bool _BossCounterEnd)
 		BossPtr->SetPosition(GetPosition() + SpawnPosBase_ + GetSpawnPos());
 
 		// 다음 보스 소환 주기
-		BossCounter_.SetCount(60.0f);
+		BossCounter_.SetCount(40.0f);
 
 		// 다음 보스 지정
 		Boss::BossIndex_ += 1;

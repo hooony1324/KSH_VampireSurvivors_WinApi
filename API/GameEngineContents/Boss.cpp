@@ -61,7 +61,7 @@ void Boss::Start()
 	BossCol_ = CreateCollision("Boss", { 28, 45 });
 	
 	// ««∞› 
-	HitCounter_.SetCount(0.3f);
+	HitCounter_.SetCount(0.15f);
 
 	ChangeState(BOSS_STATE::CHASE);
 
@@ -156,12 +156,10 @@ void Boss::HitUpdate()
 	// ≥À∫§ ∫§≈Õ ¡Ÿ¿Ã±‚ ~ 0 ±Ó¡ˆ
 	if (BossType_ == BOSSTYPE::XLRREAPER)
 	{
-		SetMove(DestDir_ * DeltaTime_ * Speed_);
+		ChangeState(BOSS_STATE::CHASE);
 	}
-	else
-	{
-		SetMove(KnockBackDir_ * DeltaTime_ * KnockBackDis_ * KnockBackRatio_);
-	}
+	SetMove(KnockBackDir_ * DeltaTime_ * KnockBackDis_ * KnockBackRatio_);
+
 	KnockBackDis_ *= 0.95f;
 
 	if (true == HitCounter_.Start(GameEngineTime::GetDeltaTime(static_cast<int>(TIME_GROUP::MONSTER))))
