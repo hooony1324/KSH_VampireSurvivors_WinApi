@@ -112,7 +112,7 @@ void LevelUpUI::ShowRandomSkills()
 {
 	if (0 >= SelectNum_)
 	{
-		int a = 0;
+		MsgBoxAssert("잘못된 LevelUPUI분기로 들어왔습니다");
 		return;
 	}
 

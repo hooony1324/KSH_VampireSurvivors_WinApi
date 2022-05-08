@@ -91,6 +91,7 @@ private:
 	// Ω∫≈»
 	float Hp_;
 	float Speed_;
+	float4 DestDir_;
 
 	// ±‚≈∏
 	float4 PlayerPos_;
@@ -106,6 +107,7 @@ private:
 	std::vector<GameEngineCollision*> PlayerAttack_;
 	float HitDamage_;
 	float4 KnockBackDir_;
+	float KnockBackDis_;
 	float KnockBackRatio_;
 
 

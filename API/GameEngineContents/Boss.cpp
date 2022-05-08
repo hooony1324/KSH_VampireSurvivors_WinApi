@@ -53,7 +53,6 @@ void Boss::Start()
 
 	// 이름대로 애니메이션 세팅
 	SetRenderer(BossType_);
-	
 
 	// 보스 인덱스로 스탯 조정
 	SetStat();
@@ -62,9 +61,7 @@ void Boss::Start()
 	BossCol_ = CreateCollision("Boss", { 28, 45 });
 	
 	// 피격 
-	KnockBackRatio_ = 1.0f;
 	HitCounter_.SetCount(0.3f);
-
 
 	ChangeState(BOSS_STATE::CHASE);
 
@@ -127,15 +124,15 @@ void Boss::ChangeState(BOSS_STATE _State)
 void Boss::ChaseUpdate()
 {
 	PlayerPos_ = GameInfo::GetPlayerInfo()->PlayerPos_;
-	float4 DestDir = Vector2D::GetDirection(BossPos_, PlayerPos_);
+	DestDir_ = Vector2D::GetDirection(BossPos_, PlayerPos_);
 
-	float Speed = MapColCheck(Speed_, DestDir);
-	SetMove(DestDir * DeltaTime_ * Speed);
+	float Speed = MapColCheck(Speed_, DestDir_);
+	SetMove(DestDir_ * DeltaTime_ * Speed);
 
 	HitCheck();
 
 	//왼쪽 오른쪽 쳐다보기
-	if (0 >= DestDir.x)
+	if (0 >= DestDir_.x)
 	{
 		Renderer_->ChangeAnimation(BossName_ + "_WalkLeft");
 	}
@@ -151,19 +148,26 @@ void Boss::HitStart()
 {
 	GameEngineSound::SoundPlayOneShot("EnemyHit.mp3", 0);
 	Hp_ -= HitDamage_;
-
+	KnockBackDis_ = 30.0f;
 }
 
 void Boss::HitUpdate()
 {
 	// 넉벡 벡터 줄이기 ~ 0 까지
-	float Distance = 40.0f;
-	SetMove(KnockBackDir_ * DeltaTime_ * Distance * KnockBackRatio_);
-	KnockBackDir_ *= 0.90f;
+	if (BossType_ == BOSSTYPE::XLRREAPER)
+	{
+		SetMove(DestDir_ * DeltaTime_ * Speed_);
+	}
+	else
+	{
+		SetMove(KnockBackDir_ * DeltaTime_ * KnockBackDis_ * KnockBackRatio_);
+	}
+	KnockBackDis_ *= 0.95f;
 
 	if (true == HitCounter_.Start(GameEngineTime::GetDeltaTime(static_cast<int>(TIME_GROUP::MONSTER))))
 	{
 		HitEnd();
+		HitCounter_.Reset();
 	}
 
 }
@@ -198,8 +202,7 @@ void Boss::DieUpdate()
 {
 	// 넉벡Dir 줄여야함
 	// 넉벡 벡터 줄이기 ~ 0 까지
-	float Distance = 20.0f;
-	SetMove(KnockBackDir_ * DeltaTime_ * Distance * KnockBackRatio_);
+	SetMove(KnockBackDir_ * DeltaTime_ * 80.0f);
 	KnockBackDir_ *= 0.95f;
 
 
@@ -300,7 +303,9 @@ void Boss::HitCheck()
 			// 원거리 공격이면 총알 없애야됨
 			Attack->Death();
 		}
+
 		KnockBackDir_ = BossPos_ - Attack->GetPosition();
+		KnockBackDir_.Normal2D();
 		HitDamage_ = Attack->GetDamage();
 		PlayerAttack_.clear();
 		ChangeState(BOSS_STATE::HIT);
@@ -315,12 +320,12 @@ void Boss::SetStat()
 	case BOSSTYPE::XLMUMMY:
 		Hp_ = 500.0f;
 		Speed_ = 50.0f;
-		KnockBackRatio_ = 0.6f;
+		KnockBackRatio_ = 1.0f;
 		break;
 	case BOSSTYPE::XLRREAPER:
-		Hp_ = 10000.0f;
+		Hp_ = 100000.0f;
 		Speed_ = 500.0f;
-		KnockBackRatio_ = 0.01f;
+		KnockBackRatio_ = 0.002f;
 		break;
 	default:
 		break;
