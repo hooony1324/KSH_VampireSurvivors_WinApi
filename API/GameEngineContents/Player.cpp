@@ -89,7 +89,6 @@ void Player::Start()
 
 	PlayerCol_ = CreateCollision("Player", { 40, 40 });
 	PlayerShootRange_ = CreateCollision("PlayerShootRange", { 600, 600 });
-	PlayerShootRange_->Off();
 
 	// ½´ÆÃ
 	MagicShooter_ = GetLevel()->CreateActor<ProjectileShooter>(static_cast<int>(RENDER_ORDER::WEAPON), "Shooter");
