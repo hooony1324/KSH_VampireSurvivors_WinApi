@@ -6,7 +6,8 @@
 #include <GameEngineBase/GameEngineNameObject.h>
 #include <GameEngineBase/GameEngineMath.h>
 
-class GameEngineActor;
+#include "GameEngineActor.h"
+
 struct ChangeOrderItem
 {
 	GameEngineActor* TargetObject; // ¿Ã≥‡ºÆ¿ª
@@ -14,7 +15,7 @@ struct ChangeOrderItem
 };
 
 class GameEngine;
-class GameEngineActor;
+
 class GameEngineCollision;
 class GameEngineRenderer;
 class GameEngineLevel : public GameEngineNameObject

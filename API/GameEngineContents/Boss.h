@@ -3,6 +3,7 @@
 #include <GameEngineBase/GameEngineMath.h>
 #include <string>
 #include "Counter.h"
+#include <vector>
 
 enum class BOSSTYPE
 {
@@ -13,6 +14,7 @@ enum class BOSSTYPE
 
 
 // Ό³Έν :
+class GameEngineCollision;
 class GameEngineRenderer;
 class GameEngineImage;
 class Boss : public GameEngineActor
@@ -109,9 +111,6 @@ private:
 	float4 KnockBackDir_;
 	float KnockBackDis_;
 	float KnockBackRatio_;
-
-
-	
 
 };
 

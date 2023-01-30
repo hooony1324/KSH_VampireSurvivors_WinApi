@@ -1,6 +1,8 @@
 #pragma once
 #include <GameEngine/GameEngineActor.h>
 
+#include <vector>
+
 // Ό³Έν :
 class GameEngineRenderer;
 class WeaponSlots : public GameEngineActor

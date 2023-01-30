@@ -1,5 +1,4 @@
 #pragma once
-#include "GameEngineLevel.h"
 #include <GameEngineBase/GameEngineNameObject.h>
 #include <GameEngineBase/GameEngineUpdateObject.h>
 #include <GameEngineBase/GameEngineMath.h>
@@ -41,10 +40,7 @@ public:
 	}
 
 
-	inline float4 GetCameraEffectPosition()
-	{
-		return Position_ - GetLevel()->GetCameraPos();
-	}
+	float4 GetCameraEffectPosition();
 
 	inline float4 GetPosition()
 	{
